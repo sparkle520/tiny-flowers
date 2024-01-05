@@ -1,0 +1,44 @@
+
+.absolute_center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.flex{
+  display: flex;
+}
+.absolute{
+  position: absolute;
+}
+.relative{
+  position: relative;
+}
+.fixed{
+  position: fixed;
+}
+.margin_0_auto{
+  margin: 0 auto;
+}
+.margin_auto_0{
+  margin:auto 0 ;
+}
+.align_items_center{
+  align-items: center;
+}
+.justify_content_space_around{
+  justify-content: space-around;
+}
+.justify_content_center{
+  justify-content: center;
+}
+.flex_direction_column{
+  flex-direction: column;
+}
+.flex_direction_row
+{
+  flex-direction: row;
+}
+li{
+  list-style: none;
+  padding: 0 0;
+}
