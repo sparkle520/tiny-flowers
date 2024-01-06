@@ -17,14 +17,11 @@ const props = defineProps({
     short_message: String,
   },
 });
-const getImageUrl = (path) => {
-    return new URL(path, import.meta.url).href;
-}
 </script>
 <template>
   <div id="main" class="flex flex_direction_column">
     <div class="img_box relative">
-      <img :src="getImageUrl(data.img)" alt="" />
+      <img :src="`/src/assets/imgs/${data.img}.png`" alt="" />
     </div>
     <div class="letter_box flex flex_direction_column">
       <div class="title_box">
