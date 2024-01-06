@@ -73,7 +73,6 @@ const switch_nav_active = () => {
     switch (active_item.value) {
       case "home":
         switch_nav_item(0);
-        console.log(nav_list);
         break;
         case "unknownWorldMap":
         switch_nav_item(1);
@@ -101,7 +100,6 @@ watch(
         ? to.split("/")[1]
         : "home";
     switch_nav_active();
-    console.log(active_item.value);
   },
   { immediate: true, deep: true }
 );
@@ -110,7 +108,7 @@ const link_to = (path) => {
 };
 </script>
 <template>
-  <div id="main">
+  <div id="main" class="">
     <div class="content flex flex_direction_column relative">
       <div class="cover_box absolute">
           <img src="/src/assets/imgs/me.jpg" class="absolute me" alt="" />
@@ -137,10 +135,24 @@ const link_to = (path) => {
 </template>
 <style lang="scss" scoped>
 #main {
-  background: rgb(215, 224, 232);
+  position: fixed;
+    background: rgba(65, 121, 170, 0.708);
+    
+    &::after{
+      filter: blur(5px);
+      content: "";
+    width:100%;
+    height:100%;
+    position: absolute;
+    left:0;
+    top:0;
+    background: inherit;
+    z-index: 2;
+    }  
   .content {
     width: 100%;
     height: 100%;
+    z-index: 11;
     .cover_box {
         width: 100%;
         height: 450px;

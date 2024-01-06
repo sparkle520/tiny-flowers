@@ -42,3 +42,22 @@ li{
   list-style: none;
   padding: 0 0;
 }
+.width_full{
+  width: 100%;
+}
+.striking_title_orange{
+  font-size: 30px;
+  font-weight: 600;
+    color: rgb(240, 104, 30);
+    &::after{
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 20px;
+      bottom: 5px;
+      border-radius: 100px;
+      background: #ff7b005b;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+}
