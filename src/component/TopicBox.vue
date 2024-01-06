@@ -21,7 +21,7 @@ const props = defineProps({
 <template>
   <div id="main" class="flex flex_direction_column">
     <div class="img_box relative">
-      <img :src="`/src/assets/imgs/${data.img}.png`" alt="" />
+      <img src="/src/assets/imgs/weatheringwithyou.png" alt="" />
     </div>
     <div class="letter_box flex flex_direction_column">
       <div class="title_box">
