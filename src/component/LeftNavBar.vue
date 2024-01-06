@@ -88,6 +88,7 @@ const switch_nav_active = () => {
         switch_nav_item(4);
         break;
       default:
+      switch_nav_item(0);
         break;
     }
   });
