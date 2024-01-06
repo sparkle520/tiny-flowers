@@ -46,6 +46,7 @@ const data = {
   width: 100%;
   margin-left: 0px;
   .content {
+    background: #f7f3f5;
     .show_yourself_box {
       width: 100%;
       height: 450px;

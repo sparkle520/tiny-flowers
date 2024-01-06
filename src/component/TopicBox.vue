@@ -78,7 +78,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 #main {
   width: 100%;
-  background: linear-gradient(#213);
+  background: #f1f7f0;
   height: 100%;
   border-radius: 10px;
   box-shadow: 2.5px 0.6px 5.5px -18px rgba(203, 66, 66, 0.112),
