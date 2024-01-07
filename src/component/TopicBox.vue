@@ -17,9 +17,12 @@ const props = defineProps({
     short_message: String,
   },
 });
+const link_handle = (path) =>{
+  router.push(path)
+}
 </script>
 <template>
-  <div id="main" class="flex flex_direction_column">
+  <div id="main" class="flex flex_direction_column" @click="link_handle(data.link)">
     <div class="img_box relative">
       <img src="/src/assets/imgs/weatheringwithyou.png" alt="" />
     </div>

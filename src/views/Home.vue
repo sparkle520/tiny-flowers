@@ -11,7 +11,7 @@ onMounted(() => {});
 const welcome_message = "欢迎访问我的私人博客";
 const data = {
   date: "1月6号?2024?7:06",
-  link: "sssss",
+  link: "/unknownWorldMap/topic/1",
   img: "weatheringwithyou",
   title: "Weathering With you(经典语录)",
   short_message: "「彼女と過ごした、あの年の夏。東京の空の上で僕たちは、世界の形を決定的に変えてしまったのだ」<br>那年夏天，在那个天空之上的我们，把这个世界的样貌，彻底的改变了"
@@ -43,7 +43,6 @@ const data = {
 <style lang="scss" scoped>
 #main {
   width: 100%;
-  margin-left: 0px;
   .content {
     background: #f7f3f5;
     .show_yourself_box {
@@ -66,7 +65,6 @@ const data = {
       .topic {
         width: 60%;
         margin: 20px 0;
-
       }
     }
   }

@@ -1,0 +1,1 @@
+import{_ as e,u as o,o as t,a as _,b as s,c as a}from"./index-150289c5.js";const c={id:"main"},n={__name:"AboutMe",setup(u){return o(),t(()=>{}),_(()=>{}),(r,p)=>(s(),a("div",c))}},i=e(n,[["__scopeId","data-v-571e12ce"]]);export{i as default};

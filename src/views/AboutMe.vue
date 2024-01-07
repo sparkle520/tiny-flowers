@@ -9,11 +9,7 @@ const router = useRouter()
 onBeforeMount(() => {
 })
 onMounted(() => {
-})
-
-
-
-
+})  
 </script>
 <template>
     <div id="main">

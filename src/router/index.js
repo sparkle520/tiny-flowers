@@ -26,6 +26,14 @@ const routes = [
     }
 },
     {
+    path: '/unknownWorldMap/topic/1',
+    component:() => import("/src/topic/Topic_1.vue"),
+    meta: {
+        isRouterAuth:false,
+
+    }
+},
+    {
     path: '/messageBoard',
     component:() => import("/src/views/MessageBoard.vue"),
     meta: {
