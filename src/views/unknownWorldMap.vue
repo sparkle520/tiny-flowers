@@ -12,9 +12,16 @@ const data = ref({
   topic_count: 1,
   visit_count: 1,
 });
+const page_data = ref({
+    total: 21,
+    current_index: 1,
+})
+const page_handle = (page_index) =>{
+  console.log(page_index);
+}
 </script>
 <template>
-  <div id="main">
+  <div id="main" class="relative">
     <div
       class="top_title flex align_items_center justify_content_center flex_direction_column"
     >
@@ -28,25 +35,27 @@ const data = ref({
         For all these words from probably.
       </div>
     </div>
-    <div class="statistics_box flex flex_direction_row justify_content_center relative">
+    <div
+      class="statistics_box flex flex_direction_row justify_content_center relative"
+    >
       <div class="topic_count flex flex_direction_column align_items_center">
         <p>文章</p>
         {{ data.topic_count }}
       </div>
-      <div class="absolute rectangle_2">
-      </div>
+      <div class="absolute rectangle_2"></div>
       <div class="visit_count flex flex_direction_column align_items_center">
         <p>访问</p>
         {{ data.visit_count }}
       </div>
-      <div class="content">
-      </div>
     </div>
+    <div class="content"></div>
+    <Pagination @page_change="page_handle" class="pagination absolute" :data="page_data"></Pagination>
   </div>
 </template>
 <style lang="scss" scoped>
 #main {
   width: 100%;
+  height: 1000px;
   background: #f7f3f5;
 
   .top_title {
@@ -77,27 +86,32 @@ const data = ref({
     font-weight: 800;
     margin-top: 20px;
     color: #f0681e;
-    p{
+    p {
       color: #705547;
     }
-    .topic_count{
+    .topic_count {
       margin-right: 150px;
       margin-bottom: 30px;
     }
-    .rectangle_2{
+    .rectangle_2 {
       width: 10px;
       height: 100%;
       left: 50%;
       background-color: #262220;
       transform: translateX(-50%);
       border-radius: 10px;
-
     }
-    .visit_count{
+    .visit_count {
       margin-left: 150px;
       margin-bottom: 30px;
-
     }
+  }
+  .pagination{
+    width: 70%;
+    left:50%;
+    height: 50px;
+    transform: translateX(-50%);
+    bottom: 40px;
   }
 }
 </style>

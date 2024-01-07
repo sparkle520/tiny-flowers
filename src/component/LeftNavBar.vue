@@ -177,7 +177,7 @@ const go_github = () => {
   }
   .content {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     z-index: 11;
     .cover_box {
       width: 100%;

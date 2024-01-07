@@ -1,14 +1,17 @@
 <script setup>
-import LeftNavBar from "@/component/LeftNavBar.vue";
 import { useRoute } from "vue-router";
-import { inject } from "vue";
-const route = useRoute();
+import { inject,onMounted } from "vue";
+ const route = useRoute();
 const key = route.path + Math.random();
 // const change_current_index =(index) =>{
 //     g_current_index = index
 // }
 // let g_current_index = inject('g_current_index')
-
+onMounted(()=>{
+setTimeout(()=>{
+  document.querySelector('.nav').style.width = '200px'
+},1000)
+})
 //鼠标特效
 
 function clickEffect() {
@@ -178,22 +181,26 @@ clickEffect();
   <div id="main" class="flex flex_direction_row">
     <LeftNavBar class="nav"></LeftNavBar>
     <div class="park"></div>
-    <router-view :key="key"></router-view>
+    <router-view :key="key" class="router_view"></router-view>
   </div>
 </template>
 
 <style scoped>
 #main {
   width: 100vw;
-  height: 100vh;
   .nav {
     z-index: 999;
-    width: 200px;
+    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .park{
     width: 200px;
     z-index: 99;
+    height: 100px;
+    left: 0;
+    background: transparent;
   }
-  
+  .router_view{
+    width: calc(100% - 200px);
+  }
 }
 </style>

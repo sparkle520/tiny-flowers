@@ -8,10 +8,14 @@ import "@/assets/css/normalize.css"
 import "@/assets/css/index.scss"
 import ElementPlus from 'element-plus'
 import 'element-plus/theme-chalk/index.css'
+import GlobalComponents from '/src/component/index'
+
+
 // let g_current_index = 0
 const app = createApp(App)
 // app.provide('g_current_index', g_current_index)
 // app.config.globalProperties.$g_current_index = g_current_index
+GlobalComponents(app)
 app.use(router)
 app.use(ElementPlus)
 app.config.globalProperties.$axios = axios

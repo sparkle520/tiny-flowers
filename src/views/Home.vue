@@ -6,7 +6,6 @@
 import { reactive, ref, toRefs, onBeforeMount, onMounted } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-import Topic from "/src/component/TopicBox.vue";
 onBeforeMount(() => {});
 onMounted(() => {});
 const welcome_message = "欢迎访问我的私人博客";
