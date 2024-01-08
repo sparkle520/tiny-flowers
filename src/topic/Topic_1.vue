@@ -69,9 +69,9 @@ const to_top = () => {
     <div class="content">
       <div class="title_box">
         <span class="title relative">Weathering With you(经典语录)</span>
-        <div class="time_bar flex flex_direction_row">
+        <div class="time_bar flex flex_direction_row align_items_center">
           2024-01-06
-          <div class="time flex justify_content_center align_items_center">
+          <div class="time flex  ">
             <svg
               t="1704628451767"
               class="icon"
@@ -221,8 +221,12 @@ const to_top = () => {
         font-size: 14px;
         color: #989e6a;
         .time {
-          margin-left: 30px;
+          margin-left: 10px;
           color: #5d6e4a;
+          svg{
+            margin-right: 3px;
+            transform: translateY(-1px);
+          }
         }
       }
     }
