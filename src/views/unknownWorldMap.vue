@@ -28,8 +28,9 @@ const topic_data = {
 </script>
 <template>
   <div id="main" class="relative">
+    <div class="decorate"></div>
     <div
-      class="top_title flex align_items_center justify_content_center flex_direction_column"
+      class="top_title relative flex align_items_center justify_content_center flex_direction_column"
     >
       UNKNOWN<br />WORLD<br />MAP
       <div class="rectangle_1"></div>
@@ -42,7 +43,7 @@ const topic_data = {
       </div>
     </div>
     <div
-      class="statistics_box flex flex_direction_row justify_content_center relative"
+      class="statistics_box relative flex flex_direction_row justify_content_center relative"
     >
       <div class="topic_count flex flex_direction_column align_items_center">
         <p>文章</p>
@@ -54,7 +55,10 @@ const topic_data = {
         {{ topic_data.visit_count }}
       </div>
     </div>
-    <div class="content flex flex_direction_column">
+    <div class="content relative flex flex_direction_column">
+      <Topic :data="topic_data" class="topic"></Topic>
+      <Topic :data="topic_data" class="topic"></Topic>
+      <Topic :data="topic_data" class="topic"></Topic>
       <Topic :data="topic_data" class="topic"></Topic>
     </div>
     <Pagination @page_change="page_handle" class="pagination absolute" :data="page_data"></Pagination>
@@ -64,6 +68,15 @@ const topic_data = {
 #main {
   width: 100%;
   background: #f7f3f5;
+  .decorate{
+    content: '';
+    position: absolute;
+    width: 2vw;
+      height: 100%;
+    right: 9%;
+    z-index: 0;
+    background: linear-gradient(to bottom,#f0681e 10%,#ed8262 40%,#f89d8a 60%,transparent 100%);
+  }
 
   .top_title {
     margin-top: 20px;
@@ -72,9 +85,10 @@ const topic_data = {
     text-align: center;
     line-height: 55px;
     color: #262220;
+    z-index: 1;
     font-family: "STHupo", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
     .rectangle_1 {
-      width: 10px;
+      width: .7vw;
       height: 150px;
       background: #262220;
       border-radius: 10px;
@@ -92,6 +106,7 @@ const topic_data = {
     font-size: 30px;
     font-weight: 800;
     margin-top: 20px;
+    z-index: 1;
     color: #f0681e;
     p {
       color: #705547;
@@ -101,7 +116,7 @@ const topic_data = {
       margin-bottom: 30px;
     }
     .rectangle_2 {
-      width: 10px;
+      width: .7vw;
       height: 100%;
       left: 50%;
       background-color: #262220;
@@ -114,6 +129,7 @@ const topic_data = {
     }
   }
   .content{
+    z-index: 1;
     margin-bottom: 100px;
     .topic{
       width: 40%;
@@ -122,10 +138,12 @@ const topic_data = {
   }
   .pagination{
     width: 70%;
+    z-index: 1;
     left:50%;
     height: 50px;
     transform: translateX(-50%);
     bottom: 40px;
+    background: transparent;
   }
 }
 </style>

@@ -16,22 +16,12 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
-  let carousel_img = document.querySelector(".carousel_img");
-
-  carousel_img.style.transform = "scale(1." + flash_img + ")";
-  flash_img++;
+  
 });
 onUnmounted(() => {
   clearInterval(cycle_carousel);
 });
-const welcome_message = "私人博客";
-// const data = {
-//   date: "1月6号?2024?7:06",
-//   link: "/unknownWorldMap/topic/1",
-//   img: "weatheringwithyou",
-//   title: "Weathering With you(经典语录)",
-//   short_message: "「彼女と過ごした、あの年の夏。東京の空の上で僕たちは、世界の形を決定的に変えてしまったのだ」<br>那年夏天，在那个天空之上的我们，把这个世界的样貌，彻底的改变了"
-// };
+
 const go_to_unknown_world_map = ()=>{
   router.push('/unknownWorldMap')
 }
@@ -52,10 +42,10 @@ const cycle_carousel = setInterval(() => {
   } else if (flash_img === 5) {
     flash_img = 0;
     carousel_img.style.transform = "scale(1)";
-    carousel_img.style.opacity = "0";
     carousel_img.style.transition = "all 0s linear";
-    current_img.value = current_img.value === 3 ? 0 : (current_img.value += 1);
 
+    carousel_img.style.opacity = "0";
+    current_img.value = current_img.value === 3 ? 0 : (current_img.value += 1);
     setTimeout(() => {
       carousel_img.style.opacity = "1";
       carousel_img.style.transition = "all 2s linear";
@@ -72,8 +62,11 @@ let flash_img = 0;
   <div id="main" class="flex flex_direction_column">
     <div class="first_page relative">
       <div class="word_box absolute flex flex_direction_column">
-        <span class="common first_word">TINY</span>
-        <span class="common second_word">FLOWERS</span>
+        <span class="common ">TINY</span>
+        <span class="common ">FLOWERS</span>
+      </div>
+      <div class="word_box_2 absolute">
+        <span class="common">PRIVATE BLOG</span>
       </div>
       <button class="cta absolute" @click="go_to_unknown_world_map">
         <span class="hover_underline_animation">Unknown World Map</span>
@@ -108,7 +101,7 @@ let flash_img = 0;
     .cta {
       border: none;
       background: none;
-      left: 1000px;
+      right: 4%;
       top: 85%;
       z-index: 1000;
       span {
@@ -160,6 +153,8 @@ let flash_img = 0;
     .word_box {
       left: 300px;
       top: 130px;
+      z-index: 100;
+
       &::after {
         content: "";
         position: absolute;
@@ -170,7 +165,6 @@ let flash_img = 0;
         top: 50%;
         transform: translateY(-50%);
       }
-      z-index: 100;
       .common {
         font-size: 140px;
         font-weight: 900;
@@ -178,9 +172,28 @@ let flash_img = 0;
         text-shadow: #3b77b0 10px 0 1px, #7bc5e3 -20px 0 1px;
         z-index: 100;
       }
-      .first_word {
+
+    }
+    .word_box_2{
+      right: 3%;
+      top: 60%;
+      z-index: 100;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 420px;
+        height: 60px;
+        background: #7bc5e33c;
+        left: -5%;
+        top: 50%;
+        transform: translateY(-50%);
       }
-      .second_word {
+      .common {
+        font-size: 40px;
+        font-weight: 900;
+        color: #2b4f7d;
+        text-shadow: #3b77b0 3px 0 1px, #7bc5e3 -7px 0 1px;
+        z-index: 100;
       }
     }
     overflow: hidden;
