@@ -180,7 +180,7 @@ clickEffect();
 <template>
   <div id="main" class="flex flex_direction_row">
     <LeftNavBar class="nav"></LeftNavBar>
-    <div class="park"></div>
+    <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view :key="key" class="router_view"></router-view>
   </div>
 </template>
@@ -200,7 +200,6 @@ clickEffect();
     background: transparent;
   }
   .router_view{
-    width: calc(100% - 200px);
   }
 }
 </style>

@@ -7,6 +7,7 @@ const routes = [
     alias: '/home',
     meta: {
         isRouterAuth:false,
+        screenFull:true,
     }
 },
     {
@@ -22,6 +23,7 @@ const routes = [
     component:() => import("/src/views/UnknownWorldMap.vue"),
     meta: {
         isRouterAuth:false,
+        screenFull:false,
 
     }
 },
@@ -30,6 +32,7 @@ const routes = [
     component:() => import("/src/topic/Topic_1.vue"),
     meta: {
         isRouterAuth:false,
+        screenFull:false,
 
     }
 },
@@ -38,6 +41,7 @@ const routes = [
     component:() => import("/src/views/MessageBoard.vue"),
     meta: {
         isRouterAuth:false,
+        screenFull:false,
 
     }
 },
@@ -46,6 +50,7 @@ const routes = [
     component:() => import("/src/views/UpdateLog.vue"),
     meta: {
         isRouterAuth:false,
+        screenFull:false,
 
     }
 },

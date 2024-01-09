@@ -114,7 +114,7 @@ const go_github = () => {
 <template>
   <div id="main" class="">
     <div class="content flex flex_direction_column relative">
-      <div class="cover_box absolute">
+      <!-- <div class="cover_box absolute">
         <div class="absolute me">
           <img src="/src/assets/imgs/me.jpg" alt="" />
         </div>
@@ -139,7 +139,7 @@ const go_github = () => {
           </svg>
         </div>
         <p class="absolute name">ferris</p>
-      </div>
+      </div> -->
       <div class="absolute nav_box flex flex_direction_column">
         <ul class="nav_list flex flex_direction_column">
           <li
@@ -162,7 +162,8 @@ const go_github = () => {
 <style lang="scss" scoped>
 #main {
   position: fixed;
-  background: #CCD9E2;
+   background: #CCD9E2;
+  // background: transparent;
 
   &::after {
     filter: blur(5px);

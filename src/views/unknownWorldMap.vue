@@ -8,17 +8,23 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {});
-const data = ref({
-  topic_count: 1,
-  visit_count: 1,
-});
+
 const page_data = ref({
-    total: 21,
+    total: 1,
     current_index: 1,
 })
 const page_handle = (page_index) =>{
   console.log(page_index);
 }
+const topic_data = {
+  topic_count: 1,
+  visit_count: 1,
+  date: "1月6号?2024?7:06",
+  link: "/unknownWorldMap/topic/1",
+  img: "https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg",
+  title: "Weathering With you(经典语录)",
+  short_message: "「彼女と過ごした、あの年の夏。東京の空の上で僕たちは、世界の形を決定的に変えてしまったのだ」<br>那年夏天，在那个天空之上的我们，把这个世界的样貌，彻底的改变了"
+};
 </script>
 <template>
   <div id="main" class="relative">
@@ -40,22 +46,23 @@ const page_handle = (page_index) =>{
     >
       <div class="topic_count flex flex_direction_column align_items_center">
         <p>文章</p>
-        {{ data.topic_count }}
+        {{ topic_data.topic_count }}
       </div>
       <div class="absolute rectangle_2"></div>
       <div class="visit_count flex flex_direction_column align_items_center">
         <p>访问</p>
-        {{ data.visit_count }}
+        {{ topic_data.visit_count }}
       </div>
     </div>
-    <div class="content"></div>
+    <div class="content flex flex_direction_column">
+      <Topic :data="topic_data" class="topic"></Topic>
+    </div>
     <Pagination @page_change="page_handle" class="pagination absolute" :data="page_data"></Pagination>
   </div>
 </template>
 <style lang="scss" scoped>
 #main {
   width: 100%;
-  height: 1000px;
   background: #f7f3f5;
 
   .top_title {
@@ -104,6 +111,13 @@ const page_handle = (page_index) =>{
     .visit_count {
       margin-left: 150px;
       margin-bottom: 30px;
+    }
+  }
+  .content{
+    margin-bottom: 100px;
+    .topic{
+      width: 40%;
+        margin: 20px auto;
     }
   }
   .pagination{

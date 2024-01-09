@@ -24,7 +24,7 @@ const link_handle = (path) =>{
 <template>
   <div id="main" class="flex flex_direction_column" @click="link_handle(data.link)">
     <div class="img_box relative">
-      <img src="/src/assets/imgs/weatheringwithyou.png" alt="" />
+      <img :src="data.img" alt="" />
     </div>
     <div class="letter_box flex flex_direction_column">
       <div class="title_box">
