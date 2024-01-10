@@ -16,15 +16,20 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
-  
+  init();
 });
 onUnmounted(() => {
   clearInterval(cycle_carousel);
 });
+const init = () => {
+  let carousel_img = document.querySelector(".carousel_img");
 
-const go_to_unknown_world_map = ()=>{
-  router.push('/unknownWorldMap')
-}
+  carousel_img.style.transform = "scale(1." + flash_img + ")";
+  flash_img++;
+};
+const go_to_unknown_world_map = () => {
+  router.push("/unknownWorldMap");
+};
 const carousel_data = ref([
   // {link:''},
   { link: "https://pic.imgdb.cn/item/659c09de871b83018ad377cb.png" },
@@ -50,7 +55,7 @@ const cycle_carousel = setInterval(() => {
       carousel_img.style.opacity = "1";
       carousel_img.style.transition = "all 2s linear";
       carousel_img.style.transform = "scale(1.05)";
-    }, 500);
+    }, 1000);
   } else {
     carousel_img.style.transform = "scale(1." + flash_img + ")";
   }
@@ -62,8 +67,8 @@ let flash_img = 0;
   <div id="main" class="flex flex_direction_column">
     <div class="first_page relative">
       <div class="word_box absolute flex flex_direction_column">
-        <span class="common ">TINY</span>
-        <span class="common ">FLOWERS</span>
+        <span class="common">TINY</span>
+        <span class="common">FLOWERS</span>
       </div>
       <div class="word_box_2 absolute">
         <span class="common">PRIVATE BLOG</span>
@@ -130,7 +135,7 @@ let flash_img = 0;
 
     .hover_underline_animation {
       position: relative;
-      color: #41A8a8;
+      color: #41a8a8;
       padding-bottom: 20px;
       &::after {
         content: "";
@@ -140,7 +145,7 @@ let flash_img = 0;
         height: 3px;
         bottom: 0;
         left: 0;
-        background-color: #41A8a8;
+        background-color: #41a8a8;
         transform-origin: bottom right;
         transition: transform 0.25s ease-out;
       }
@@ -154,6 +159,7 @@ let flash_img = 0;
       left: 300px;
       top: 130px;
       z-index: 100;
+      animation: to_right 5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       &::after {
         content: "";
@@ -172,12 +178,13 @@ let flash_img = 0;
         text-shadow: #3b77b0 10px 0 1px, #7bc5e3 -20px 0 1px;
         z-index: 100;
       }
-
     }
-    .word_box_2{
+    .word_box_2 {
       right: 3%;
       top: 60%;
       z-index: 100;
+      animation: to_left 5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
       &::after {
         content: "";
         position: absolute;
@@ -203,6 +210,22 @@ let flash_img = 0;
       object-fit: cover;
       transition: all 2s linear;
     }
+  }
+}
+@keyframes to_right {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 300px;
+  }
+}
+@keyframes to_left {
+  0% {
+    right: -3%;
+  }
+  100% {
+    right: 3%;
   }
 }
 </style>

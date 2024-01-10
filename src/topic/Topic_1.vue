@@ -71,7 +71,7 @@ const to_top = () => {
         <span class="title relative">Weathering With you(经典语录)</span>
         <div class="time_bar flex flex_direction_row align_items_center">
           2024-01-06
-          <div class="time flex  ">
+          <div class="time flex">
             <svg
               t="1704628451767"
               class="icon"
@@ -223,7 +223,7 @@ const to_top = () => {
         .time {
           margin-left: 10px;
           color: #5d6e4a;
-          svg{
+          svg {
             margin-right: 3px;
             transform: translateY(-1px);
           }
