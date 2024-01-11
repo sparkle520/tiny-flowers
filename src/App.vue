@@ -189,7 +189,7 @@ clickEffect();
 #main {
   width: 100vw;
   .nav {
-    z-index: 999;
+    z-index: 10000;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .park{
