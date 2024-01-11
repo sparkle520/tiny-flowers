@@ -110,6 +110,15 @@ const link_to = (path) => {
 const go_github = () => {
   window.location.href = "https://github.com/sparkle520";
 };
+const active_music = () =>{
+  music_active.value = !music_active.value
+}
+const emit = defineEmits(["music_change"]);
+
+const music_active = ref(false)
+watch(music_active,(newV,oldV)=>{
+  emit('music_change',newV)
+})
 </script>
 <template>
   <div id="main" class="">
@@ -156,13 +165,67 @@ const go_github = () => {
           </li>
         </ul>
       </div>
+      <div class="music absolute" @click="active_music">
+        <svg v-if="!music_active"
+        t="1704963079198"
+        class="svg_1"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="13968"
+        width="48"
+        height="48"
+      >
+        <path
+          d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
+          fill="#123"
+          p-id="13969"
+        ></path>
+        <path
+          d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
+          fill="#ffff"
+          p-id="13970"
+        ></path>
+        <path
+          d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
+          fill="#ffff"
+          p-id="13971"
+        ></path>
+      </svg>
+        <svg v-if="music_active"
+        t="1704963079198"
+        class="svg_2"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="13968"
+        width="48"
+        height="48"
+      >
+        <path
+          d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
+          fill="#EA5D5B"
+          p-id="13969"
+        ></path>
+        <path
+          d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
+          fill="#F5B4B5"
+          p-id="13970"
+        ></path>
+        <path
+          d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
+          fill="#FAD8D7"
+          p-id="13971"
+        ></path>
+      </svg>
+      </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 #main {
   position: fixed;
-   background: #CCD9E2;
+  background: #ccd9e2;
   // background: transparent;
 
   &::after {
@@ -204,7 +267,7 @@ const go_github = () => {
         background: #ffd5af;
         transform: translate(-50%);
         z-index: 20;
-        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transition: all 1s cubic-bezier(0.215, 0.610, 0.355, 1);
         &:hover {
           opacity: 1;
           top: 100px;
@@ -235,7 +298,7 @@ const go_github = () => {
         color: #285185;
         font-size: 40px;
         left: 50%;
-        font-family:'Microsoft YaHei';
+        font-family: "Microsoft YaHei";
 
         top: 200px;
         transform: translate(-50%);
@@ -287,6 +350,37 @@ const go_github = () => {
         }
       }
     }
+    .music {
+      left: 50%;
+      bottom: 10%;
+      transform: translateX(-50%);
+      transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      &:hover{
+        animation: jump 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+      }
+      .svg_1{
+        &:hover{
+          filter: drop-shadow(0px 10px 10px rgb(6, 2, 0));
+        }
+      }
+      .svg_2{
+        &:hover{
+          filter: drop-shadow(0px 10px 10px rgb(240, 121, 74));
+        }
+      }
+    }
+  }
+}
+@keyframes jump {
+  0%{
+    transform: translate(-50%,10%);
+
+  }40%{
+    transform: translate(-50%,-10%);
+
+  }100%{
+    transform: translate(-50%,0%);
   }
 }
 </style>

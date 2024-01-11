@@ -4,6 +4,9 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+.none{
+  display: none;
+}
 .flex{
   display: flex;
 }
@@ -19,8 +22,17 @@
 .margin_0_auto{
   margin: 0 auto;
 }
+.margin_right_1em{
+  margin-right: 1em;
+}
+.margin_left_1em{
+  margin-left: 1em;
+}
 .margin_auto_0{
   margin:auto 0 ;
+}
+.margin_4_percent{
+  margin:4%;
 }
 .align_items_center{
   align-items: center;

@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { inject,onMounted } from "vue";
+import { inject,onMounted ,ref} from "vue";
  const route = useRoute();
 const key = route.path + Math.random();
 // const change_current_index =(index) =>{
@@ -175,13 +175,19 @@ function clickEffect() {
   }
 }
 clickEffect();
+const music_handle = (status)=>{
+music.value = status
+}
+const music = ref(false)
 </script>
 
 <template>
   <div id="main" class="flex flex_direction_row">
-    <LeftNavBar class="nav"></LeftNavBar>
+    <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view :key="key" class="router_view"></router-view>
+    <MusicPlayer v-show="music" class="music_player absolute"></MusicPlayer>
+
   </div>
 </template>
 
@@ -200,6 +206,14 @@ clickEffect();
     background: transparent;
   }
   .router_view{
+  }
+  .music_player{
+    width: 400px;
+    right: 0;
+    top: 100px;
+    height: 150px;
+    z-index: 1000;
+    position: fixed;
   }
 }
 </style>
