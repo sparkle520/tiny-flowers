@@ -359,6 +359,7 @@ watch(music_active,(newV,oldV)=>{
         animation: jump 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       }
+    
       .svg_1{
         &:hover{
           filter: drop-shadow(0px 10px 10px rgb(6, 2, 0));

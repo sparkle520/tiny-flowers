@@ -1,17 +1,17 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { inject,onMounted ,ref} from "vue";
- const route = useRoute();
+import { inject, onMounted, ref } from "vue";
+const route = useRoute();
 const key = route.path + Math.random();
 // const change_current_index =(index) =>{
 //     g_current_index = index
 // }
 // let g_current_index = inject('g_current_index')
-onMounted(()=>{
-setTimeout(()=>{
-  document.querySelector('.nav').style.width = '200px'
-},1000)
-})
+onMounted(() => {
+  setTimeout(() => {
+    document.querySelector(".nav").style.width = "200px";
+  }, 1000);
+});
 //鼠标特效
 
 function clickEffect() {
@@ -175,10 +175,11 @@ function clickEffect() {
   }
 }
 clickEffect();
-const music_handle = (status)=>{
-music.value = status
-}
-const music = ref(false)
+const music = ref(false);
+const music_handle = (status) => {
+  music.value = status;
+  
+};
 </script>
 
 <template>
@@ -186,8 +187,7 @@ const music = ref(false)
     <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view :key="key" class="router_view"></router-view>
-    <MusicPlayer v-show="music" class="music_player absolute"></MusicPlayer>
-
+    <MusicPlayer v-show="music" class="music_player absolute "></MusicPlayer>
   </div>
 </template>
 
@@ -198,22 +198,31 @@ const music = ref(false)
     z-index: 10000;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
-  .park{
+  .park {
     width: 200px;
     z-index: 99;
     height: 100px;
     left: 0;
     background: transparent;
   }
-  .router_view{
+  .router_view {
   }
-  .music_player{
+  .music_player {
     width: 400px;
     right: 0;
     top: 100px;
     height: 150px;
     z-index: 1000;
     position: fixed;
+    animation: move .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  
+}
+@keyframes move {
+  0%{
+    right:-100%;
+  }100%{
+    right: 0;
   }
 }
 </style>
