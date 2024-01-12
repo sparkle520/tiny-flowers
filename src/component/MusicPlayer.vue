@@ -3,7 +3,15 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted, watch } from "vue";
+import {
+  reactive,
+  toRefs,
+  ref,
+  onBeforeMount,
+  onMounted,
+  watch,
+  nextTick,
+} from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 onBeforeMount(() => {});
@@ -17,7 +25,7 @@ const PLAY_MODE = {
 const current_play_mode = ref(0);
 const is_play = ref(false);
 const play_music_handle = () => {
-  if (music_list.value.length === 0) {
+  if (music_list.value.length === 0 || current_play.value.url === "") {
     return;
   }
 
@@ -31,8 +39,6 @@ const play_music_handle = () => {
 const play = () => {
   const music_img = document.querySelector(".record img");
   music_img.classList.add("record_img_active");
-  current_play.value.url = music_list.value[0].url;
-  current_play.value.name = music_list.value[0].name;
   let audio = document.querySelector(".audio");
   audio.play();
 };
@@ -42,6 +48,7 @@ const pause = () => {
   let audio = document.querySelector(".audio");
   audio.pause();
 };
+const show_music_list = ref(false)
 const music_list = ref([]);
 watch(
   music_list,
@@ -63,18 +70,59 @@ const music_file_handle = () => {
   }
 };
 const current_play = ref({
+  index: -1,
   name: "",
   url: "",
 });
+watch(()=>current_play.value.index,(newV,oldV)=>{
+  const item_list = document.querySelectorAll('.list_item .item')
+  if(oldV != -1){
+    item_list[oldV].classList.remove('item_active')
+  }
+  if(newV != -1){
+    item_list[newV].classList.add('item_active')
+
+  }
+},
+{deep:true})
 const update_music_files = ref();
 const switch_play_mode = () => {
-  current_play_mode.value =
     current_play_mode.value === 2 ? 0 : (current_play_mode.value += 1);
 };
+const remove_music = (index) => {
+  if (index === current_play.value.index) {
+    current_play.value = { index: -1, name: "", url: "" };
+    is_play.value = false;
+    pause();
+    music_list.value.splice(index, 1);
+  } else if (index > current_play.value.index) {
+    music_list.value.splice(index, 1);
+  } else {
+    current_play.value.index -= 1;
+    music_list.value.splice(index, 1);
+  }
+};
+const remove_all_music = () => {
+  current_play.value = { index: -1, name: "", url: "" };
+  is_play.value = false;
+  music_list.value.splice(0, music_list.value.length);
+};
+const switch_current_play = (item, index) => {
+  current_play.value.name = item.name;
+  current_play.value.url = item.url;
+  current_play.value.index = index;
+  is_play.value = true;
+  nextTick(() => {
+    play();
+  });
+};
+const switch_music_list = ()=>{
+  show_music_list.value = !show_music_list.value
+}
 </script>
 <template>
   <div id="main">
-    <audio class="audio" :src="current_play.url" autoplay loop></audio>
+    <audio class="audio" :src="current_play.url"></audio>
     <div class="content flex flex_direction_row relative">
       <div class="margin_4_percent">
         <div
@@ -276,7 +324,9 @@ const switch_play_mode = () => {
               ></path>
             </svg>
           </div>
-          <svg
+          <!-- music list -->
+          <svg 
+          @click="switch_music_list"
             t="1704979471090"
             class="icon"
             viewBox="0 0 1024 1024"
@@ -300,12 +350,107 @@ const switch_play_mode = () => {
         </div>
       </div>
     </div>
+    <!-- music list box -->
+    <div class="music_list_box flex flex_direction_column"
+    v-show="show_music_list">
+      <div class="margin_2_percent">
+        <div
+          class="flex width_full justify_content_space_around flex_direction_row"
+        >
+          <label
+            for="input_file"
+            class="gap_0_2_em flex flex_direction_row align_items_center"
+          >
+            <svg
+              t="1705036717774"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="3134"
+              width="32"
+              height="32"
+            >
+              <path
+                d="M785.066667 460.8 563.2 460.8 563.2 238.933333 460.8 238.933333 460.8 460.8 238.933333 460.8 238.933333 563.2 460.8 563.2 460.8 785.066667 563.2 785.066667 563.2 563.2 785.066667 563.2Z"
+                fill="#FF6600"
+                p-id="3135"
+              ></path>
+            </svg>
+            添加更多
+          </label>
+          <div
+            class="gap_0_5_em flex flex_direction_row align_items_center"
+            @click="remove_all_music"
+          >
+            <svg
+              t="1705037231697"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="8246"
+              width="18"
+              height="18"
+            >
+              <path
+                d="M380.342857 336.457143m-336.457143 0a336.457143 336.457143 0 1 0 672.914286 0 336.457143 336.457143 0 1 0-672.914286 0Z"
+                fill="transparent"
+                p-id="8247"
+              ></path>
+              <path
+                d="M943.542857 219.428571h-863.085714C59.977143 219.428571 43.885714 203.337143 43.885714 182.857143S59.977143 146.285714 80.457143 146.285714h863.085714c20.48 0 36.571429 16.091429 36.571429 36.571429S964.022857 219.428571 943.542857 219.428571zM394.971429 782.628571v-248.685714c0-20.48 16.091429-36.571429 36.571428-36.571428s36.571429 16.091429 36.571429 36.571428v248.685714c0 20.48-16.091429 36.571429-36.571429 36.571429S394.971429 803.108571 394.971429 782.628571z m175.542857 0v-248.685714c0-20.48 16.091429-36.571429 36.571428-36.571428s36.571429 16.091429 36.571429 36.571428v248.685714c0 20.48-16.091429 36.571429-36.571429 36.571429S570.514286 803.108571 570.514286 782.628571zM182.857143 292.571429c20.48 0 36.571429 16.091429 36.571428 36.571428v570.514286c0 27.794286 23.405714 51.2 51.2 51.2h497.371429c27.794286 0 51.2-23.405714 51.2-51.2v-570.514286c0-20.48 16.091429-36.571429 36.571429-36.571428s36.571429 16.091429 36.571428 36.571428v570.514286c0 68.754286-55.588571 124.342857-124.342857 124.342857h-497.371429C201.874286 1024 146.285714 968.411429 146.285714 899.657143v-570.514286C146.285714 308.662857 162.377143 292.571429 182.857143 292.571429z"
+                fill="#FF6600"
+                p-id="8248"
+              ></path>
+              <path
+                d="M512 0c57.051429 0 102.4 45.348571 102.4 102.4H409.6c0-57.051429 45.348571-102.4 102.4-102.4z"
+                fill="#d2736c"
+                p-id="8249"
+              ></path>
+            </svg>
+            清空列表
+          </div>
+        </div>
+        <div class="list_box width_full"
+       >
+          <div class="list_inner_box">
+            <div
+              v-for="(item, index) in music_list"
+              class="relative list_item flex flex_direction_row align_items_center"
+            >
+              <div @click="switch_current_play(item, index)" class="item">
+                {{ item.name }}
+              </div>
+              <svg
+                @click="remove_music(index)"
+                t="1705038830083"
+                class="icon absolute"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="11384"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M819.2 194.56a10.24 10.24 0 0 1 10.24 10.24v614.4a10.24 10.24 0 0 1-10.24 10.24H204.8a10.24 10.24 0 0 1-10.24-10.24V204.8a10.24 10.24 0 0 1 10.24-10.24z m-10.24 20.48H215.04v593.92h593.92V215.04zM675.84 501.76a10.24 10.24 0 0 1 1.19808 20.40832L675.84 522.24H348.16a10.24 10.24 0 0 1-1.19808-20.40832L348.16 501.76h327.68z"
+                  fill="#202020"
+                  p-id="11385"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
 #main {
   width: 100%;
   height: 100%;
+
   .content {
     width: inherit;
     height: inherit;
@@ -410,6 +555,46 @@ const switch_play_mode = () => {
       }
     }
   }
+  .music_list_box {
+    width: inherit;
+    height: 300px;
+    background: #e3eae1;
+    margin-top: 10px;
+    border-radius: 10px;
+    color: #d2736c;
+    animation: fade_in_out 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    .list_box {
+      overflow-y: scroll;
+      height: calc(300px - 50px);
+      background: #5c9dba11;
+      border-radius: 10px;
+      .list_inner_box {
+        margin-left: 30px;
+        margin-top: 10px;
+      }
+      .list_item {
+        padding-left: 12px;
+        height: 25px;
+        border-radius: 3px;
+        color: #4d6782;
+        svg {
+          opacity: 0;
+          right: 3em;
+        }
+        &:hover {
+          background: linear-gradient(45deg, #99d0d9, transparent);
+          svg {
+            opacity: 1;
+          }
+        }
+      }
+      .item_active{
+        color: #fd1212;
+        font-weight: bold;
+      }
+      
+    }
+  }
 }
 @keyframes cycle_rotate {
   0% {
@@ -425,6 +610,14 @@ const switch_play_mode = () => {
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+@keyframes fade_in_out {
+  0%{
+    opacity: 0;
+  }100%{
+    opacity: 1;
+
   }
 }
 </style>

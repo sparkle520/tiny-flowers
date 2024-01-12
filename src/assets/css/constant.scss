@@ -28,11 +28,26 @@
 .margin_left_1em{
   margin-left: 1em;
 }
+.margin_left_auto{
+  margin-left: auto;
+}
+.margin_right_auto{
+  margin-right: auto;
+}
+.margin_top_auto{
+  margin-top: auto;
+}
+.margin_bottom_auto{
+  margin-bottom: auto;
+}
 .margin_auto_0{
   margin:auto 0 ;
 }
 .margin_4_percent{
   margin:4%;
+}
+.margin_2_percent{
+  margin:2%;
 }
 .align_items_center{
   align-items: center;
@@ -49,6 +64,12 @@
 .flex_direction_row
 {
   flex-direction: row;
+}
+.gap_0_2_em{
+  gap: .2em;
+}
+.gap_0_5_em{
+  gap: .5em;
 }
 li{
   list-style: none;
