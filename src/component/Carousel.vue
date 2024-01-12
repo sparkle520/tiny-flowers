@@ -41,6 +41,7 @@ let position = 0;
 
   .content {
     width: 900px;
+    height: 450px;
     .item {
       height: 450px;
       width: 3600px;

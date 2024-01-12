@@ -25,13 +25,16 @@ const PLAY_MODE = {
 const current_play_mode = ref(0);
 const is_play = ref(false);
 const play_music_handle = () => {
-  if (music_list.value.length === 0 || current_play.value.url === "") {
+  if (music_list.value.length === 0) {
     return;
   }
-
+  current_play.value.index = 0
+  change_current_play_by_index()
   is_play.value = !is_play.value;
   if (is_play.value === true) {
-    play();
+    nextTick(()=>{
+      play();
+    })
   } else {
     pause();
   }
@@ -48,7 +51,7 @@ const pause = () => {
   let audio = document.querySelector(".audio");
   audio.pause();
 };
-const show_music_list = ref(false)
+const show_music_list = ref(false);
 const music_list = ref([]);
 watch(
   music_list,
@@ -74,20 +77,26 @@ const current_play = ref({
   name: "",
   url: "",
 });
-watch(()=>current_play.value.index,(newV,oldV)=>{
-  const item_list = document.querySelectorAll('.list_item .item')
-  if(oldV != -1){
-    item_list[oldV].classList.remove('item_active')
-  }
-  if(newV != -1){
-    item_list[newV].classList.add('item_active')
-
-  }
-},
-{deep:true})
+watch(
+  () => current_play.value.index,
+  (newV, oldV) => {
+    const item_list = document.querySelectorAll(".list_item .item");
+    if (oldV != -1) {
+      item_list[oldV].classList.remove("item_active");
+    }
+    if (newV != -1) {
+      item_list[newV].classList.add("item_active");
+    }
+  },
+  { deep: true }
+);
 const update_music_files = ref();
 const switch_play_mode = () => {
-    current_play_mode.value === 2 ? 0 : (current_play_mode.value += 1);
+  if(current_play_mode.value === 2){
+    current_play_mode.value = 0
+  }else{
+    current_play_mode.value +=1
+  }
 };
 const remove_music = (index) => {
   if (index === current_play.value.index) {
@@ -116,13 +125,104 @@ const switch_current_play = (item, index) => {
     play();
   });
 };
-const switch_music_list = ()=>{
-  show_music_list.value = !show_music_list.value
+const switch_music_list = () => {
+  show_music_list.value = !show_music_list.value;
+};
+const start_time_play = ()=>{
+  let audio = document.querySelector(".audio");
+  audio.currentTime = 0;
+}
+const pre_play = () => {
+  if (current_play.value === -1 || music_list.value.length === 1) {
+    start_time_play()
+    return;
+  }
+  filter_blur_music_name()
+  if (current_play.value.index === 0) {
+    current_play.value.index = music_list.value.length - 1;
+  } else {
+    current_play.value.index -= 1;
+  }
+ change_current_play_by_index()
+  nextTick(() => {
+    play();
+  });
+};
+const next_play = () => {
+  if (current_play.value === -1 || music_list.value.length === 1) {
+    start_time_play()
+    return;
+  }
+  filter_blur_music_name()
+  switch (current_play_mode.value) {
+    case PLAY_MODE.LIST:
+      list_single_strategy();
+      break;
+    case PLAY_MODE.RANDOM:
+      random_strategy();
+      break;
+    case PLAY_MODE.SINGLE:
+      list_single_strategy();
+      break;
+    default:
+      break;
+  }
+};
+const list_single_strategy = () => {
+  if (current_play.value.index === music_list.value.length - 1) {
+    current_play.value.index = 0;
+  } else {
+    current_play.value.index += 1;
+  }
+  change_current_play_by_index()
+  nextTick(() => {
+    play();
+  });
+};
+const random_strategy = () => {
+  if (music_list.value.length === 2) {
+    current_play.value.index = current_play.value.index === 1 ? 0 : 1;
+  } else {
+    let random = Math.floor(Math.random() * (music_list.value.length - 1));
+    while (random == current_play.value.index) {
+      random = Math.floor(Math.random() * (music_list.value.length - 1));
+    }
+    current_play.value.index = random;
+  }
+  change_current_play_by_index()
+  nextTick(() => {
+    play();
+  });
+};
+const update_time_handle = () => {
+  const music_audio = document.querySelector(".audio");
+  if (music_audio.currentTime >= music_audio.duration - 1) {
+    if(current_play_mode.value === PLAY_MODE.SINGLE){
+      music_audio.currentTime = 0
+    }else{
+      next_play();
+    }
+  }
+};
+const change_current_play_by_index = () =>{
+  current_play.value.name = music_list.value[current_play.value.index].name;
+  current_play.value.url = music_list.value[current_play.value.index].url;
+}
+const filter_blur_music_name = ()=>{
+  const music_name = document.querySelector('.music_name span')
+  music_name.style.filter = "blur(10px)"
+  setTimeout(()=>{
+    music_name.style.filter = "blur(0px)"
+  },500)
 }
 </script>
 <template>
   <div id="main">
-    <audio class="audio" :src="current_play.url"></audio>
+    <audio
+      class="audio"
+      :src="current_play.url"
+      @timeupdate="update_time_handle"
+    ></audio>
     <div class="content flex flex_direction_row relative">
       <div class="margin_4_percent">
         <div
@@ -170,8 +270,9 @@ const switch_music_list = ()=>{
         >
           <!-- left -->
           <svg
+            @click="pre_play"
             t="1704967907505"
-            class="icon"
+            class="icon left_btn"
             viewBox="0 0 1024 1024"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -234,8 +335,9 @@ const switch_music_list = ()=>{
 
           <!-- right -->
           <svg
+            @click="next_play"
             t="1704967967501"
-            class="icon"
+            class="icon right_btn"
             viewBox="0 0 1024 1024"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -325,8 +427,8 @@ const switch_music_list = ()=>{
             </svg>
           </div>
           <!-- music list -->
-          <svg 
-          @click="switch_music_list"
+          <svg
+            @click="switch_music_list"
             t="1704979471090"
             class="icon"
             viewBox="0 0 1024 1024"
@@ -351,8 +453,10 @@ const switch_music_list = ()=>{
       </div>
     </div>
     <!-- music list box -->
-    <div class="music_list_box flex flex_direction_column"
-    v-show="show_music_list">
+    <div
+      class="music_list_box flex flex_direction_column"
+      v-show="show_music_list"
+    >
       <div class="margin_2_percent">
         <div
           class="flex width_full justify_content_space_around flex_direction_row"
@@ -412,8 +516,7 @@ const switch_music_list = ()=>{
             清空列表
           </div>
         </div>
-        <div class="list_box width_full"
-       >
+        <div class="list_box width_full">
           <div class="list_inner_box">
             <div
               v-for="(item, index) in music_list"
@@ -529,6 +632,13 @@ const switch_music_list = ()=>{
         bottom: 0%;
         left: 50%;
         transform: translateX(-50%);
+        .left_btn,
+        .right_btn {
+          transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
         .play_pause_btn {
           width: 30px;
           height: 30px;
@@ -588,11 +698,10 @@ const switch_music_list = ()=>{
           }
         }
       }
-      .item_active{
+      .item_active {
         color: #fd1212;
         font-weight: bold;
       }
-      
     }
   }
 }
@@ -613,11 +722,11 @@ const switch_music_list = ()=>{
   }
 }
 @keyframes fade_in_out {
-  0%{
+  0% {
     opacity: 0;
-  }100%{
+  }
+  100% {
     opacity: 1;
-
   }
 }
 </style>

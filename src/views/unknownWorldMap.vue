@@ -26,13 +26,18 @@ const topic_data = {
   short_message:
     "「彼女と過ごした、あの年の夏。東京の空の上で僕たちは、世界の形を決定的に変えてしまったのだ」<br>那年夏天，在那个天空之上的我们，把这个世界的样貌，彻底的改变了",
 };
+const classification = [
+  {name:'学习笔记',},
+  {name:'技术分享',},
+  {name:'生活随想',},
+  {name:'二次元',},
+]
 </script>
 <template>
   <div id="main" class="relative">
     <div class="decorate flex align_items_center">
       <span>
         I dreamed of a world so far from here that's not on the map.
-
       </span>
     </div>
     <div
@@ -61,17 +66,18 @@ const topic_data = {
         {{ topic_data.visit_count }}
       </div>
     </div>
-    <div class="content relative flex flex_direction_column">
-      <Topic :data="topic_data" class="topic"></Topic>
-      <Topic :data="topic_data" class="topic"></Topic>
-      <Topic :data="topic_data" class="topic"></Topic>
-      <Topic :data="topic_data" class="topic"></Topic>
+    <div class="content width_full relative flex flex_direction_column">
+     <div class="class_box  flex flex_direction_row">
+      <div v-for="(item,index) in classification" class="relative item flex align_items_center justify_content_center">
+        {{ item.name }}
+      </div>
+     </div>
     </div>
-    <Pagination
+    <!-- <Pagination
       @page_change="page_handle"
       class="pagination absolute"
       :data="page_data"
-    ></Pagination>
+    ></Pagination> -->
   </div>
 </template>
 <style lang="scss" scoped>
@@ -79,7 +85,6 @@ const topic_data = {
   width: 100%;
   background: #f7f3f5;
   .decorate {
-    content: "";
     position: absolute;
     width: 2vw;
     height: 100%;
@@ -96,7 +101,7 @@ const topic_data = {
     );
     span{
       margin-top: 1em;
-      letter-spacing: .5em;
+      letter-spacing: .2em;
     }
   }
 
@@ -153,6 +158,55 @@ const topic_data = {
   .content {
     z-index: 1;
     margin-bottom: 100px;
+    .class_box{
+      justify-content:flex-start;
+      width: 70%;
+      margin: 20px auto;
+      gap:10px;
+      flex-wrap: wrap;
+      .item{
+        width: 13em;
+        height: 100px;
+        border-radius: 10px;
+        box-shadow: #91919127 2px 3px 10px;
+        background: #fffbf9;
+        color: #f0681e;
+        font-weight: bold;
+        overflow: hidden;
+        &:hover{
+          &::after{
+            transform: scale(1.4);
+          }
+          &::before{
+            transform: translateY(20px);
+          }
+        }
+        &::after{
+          content: '';
+          position: absolute;
+          width: 4em;
+          height: 4em;
+          background: #99d0d9;
+          border-radius: 50%;
+          right: -.4em;
+          top: -.6em;
+          transition:all  4s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        }
+        &::before{
+          content: '';
+          position: absolute;
+          width: 4em;
+          height: 4em;
+          background: #4d678233;
+          border-radius: 50%;
+          right: -1em;
+          top: 0em;
+          transition:all  4s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        }
+      }
+    }
     .topic {
       width: 40%;
       margin: 20px auto;
