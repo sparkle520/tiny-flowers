@@ -134,7 +134,7 @@ const link_handle = (path) =>{
     }
     .title_box {
       margin-top: 10px;
-      color: rgb(23, 62, 108);
+      color: #173e6c;
       .title {
         &::after {
           content: "";

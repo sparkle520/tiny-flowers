@@ -3,10 +3,13 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, onBeforeMount, onMounted, defineProps } from "vue";
+import { reactive, toRefs, onUnmounted,onBeforeMount, onMounted, defineProps } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 onBeforeMount(() => {});
+onUnmounted(()=>{
+  clearInterval(cycle)
+})
 onMounted(() => {});
 const props = defineProps({
   data: Array,

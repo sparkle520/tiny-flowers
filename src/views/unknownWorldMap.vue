@@ -5,6 +5,7 @@
 <script setup>
 import { reactive, ref, toRefs, onBeforeMount, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import data from "/src/assets/config/data.js"
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {});
@@ -17,21 +18,18 @@ const page_handle = (page_index) => {
   console.log(page_index);
 };
 const topic_data = {
-  topic_count: 1,
-  visit_count: 1,
-  date: "1月6号?2024?7:06",
-  link: "/unknownWorldMap/topic/1",
-  img: "https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg",
-  title: "Weathering With you(经典语录)",
-  short_message:
-    "「彼女と過ごした、あの年の夏。東京の空の上で僕たちは、世界の形を決定的に変えてしまったのだ」<br>那年夏天，在那个天空之上的我们，把这个世界的样貌，彻底的改变了",
+  topic_count: data.data.length,
+  visit_count: 100,
 };
 const classification = [
-  {name:'学习笔记',},
-  {name:'技术分享',},
-  {name:'生活随想',},
-  {name:'二次元',},
+  {name:'学习笔记'},
+  {name:'技术分享'},
+  {name:'生活随想'},
+  {name:'二次元'},
 ]
+const to_topic_list = (name)=>{
+router.push('/unknownWorldMap/list/'+name+'/0')
+}
 </script>
 <template>
   <div id="main" class="relative">
@@ -58,7 +56,7 @@ const classification = [
     >
       <div class="topic_count flex flex_direction_column align_items_center">
         <p>文章</p>
-        {{ topic_data.topic_count }}
+        {{topic_data.topic_count  }}
       </div>
       <div class="absolute rectangle_2"></div>
       <div class="visit_count flex flex_direction_column align_items_center">
@@ -68,7 +66,7 @@ const classification = [
     </div>
     <div class="content width_full relative flex flex_direction_column">
      <div class="class_box  flex flex_direction_row">
-      <div v-for="(item,index) in classification" class="relative item flex align_items_center justify_content_center">
+      <div @click="to_topic_list(item.name)" v-for="(item,index) in classification" class="relative item flex align_items_center justify_content_center">
         {{ item.name }}
       </div>
      </div>
@@ -116,7 +114,7 @@ const classification = [
     font-family: "STHupo", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
     .rectangle_1 {
       width: 0.7vw;
-      height: 150px;
+      height: 100px;
       background: #262220;
       border-radius: 10px;
     }
@@ -162,6 +160,7 @@ const classification = [
       justify-content:flex-start;
       width: 70%;
       margin: 20px auto;
+      margin-bottom: 0;
       gap:10px;
       flex-wrap: wrap;
       .item{

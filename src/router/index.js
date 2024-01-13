@@ -38,12 +38,20 @@ const routes = [
         }
     },
     {
+        path: '/unknownWorldMap/list/:classification/:page',
+        component: () => import("/src/views/TopicList.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: false,
+
+        }
+    },
+    {
         path: '/unknownWorldMap/topic/1',
         component: () => import("/src/topic/Topic_1.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: false,
-
         }
     },
     {

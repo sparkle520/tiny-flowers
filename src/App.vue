@@ -192,14 +192,17 @@ const music_handle = (status) => {
 </template>
 
 <style scoped>
+
 #main {
   width: 100vw;
+  min-height: 100vh;
+  background: #f7f3f5;
   .nav {
     z-index: 10000;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .park {
-    width: 200px;
+    width: 230px;
     z-index: 99;
     height: 100px;
     left: 0;
