@@ -31,7 +31,6 @@ const  scroll_handle = ()=>{
 }
 onUnmounted(()=>{
   document.removeEventListener('scroll', scroll_handle)
-
 })
 
 onBeforeMount(() => {
@@ -80,7 +79,7 @@ const jump_to_topic = (path) =>{
 </script>
 <template>
   <div id="main">
-    
+
     <div class="topic_box">
       <div
       @click="jump_to_topic(item.link)"

@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { inject, onMounted, ref } from "vue";
+
 const route = useRoute();
 const key = route.path + Math.random();
 // const change_current_index =(index) =>{
