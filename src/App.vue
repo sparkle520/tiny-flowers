@@ -195,7 +195,6 @@ const music_handle = (status) => {
 
 #main {
   width: 100vw;
-  min-height: 100vh;
   background: #f7f3f5;
   .nav {
     z-index: 10000;
