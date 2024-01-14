@@ -88,18 +88,18 @@ const play_dyn_text = () => {
     let pos = 0;
     const text = document.querySelector(".dyn_text");
     text.style.opacity = 0;
-        text.style.transform = "scale(.3) translate(-50%,-50%)";
+        text.style.transform = "scale(.3) translateX(-50%)";
     current_text.value = text_list[pos];
     text.style.transition = "none";
 
     setTimeout(() => {
       text.style.opacity = 1;
-      text.style.transform = "scale(1) translate(-50%,-50%)";
+      text.style.transform = "scale(1) translateX(-50%)";
           text.style.transition = "all 2s cubic-bezier(0.075, 0.82, 0.165, 1)";
     },1000);
     setTimeout(()=>{
             text.style.opacity = 0;
-            text.style.transform = "scale(.3) translate(-50%,-50%)";
+            text.style.transform = "scale(.3) translateX(-50)";
           },2500)
     pos++;
     let play = setInterval(() => {
@@ -110,18 +110,18 @@ const play_dyn_text = () => {
         current_text.value = text_list[pos];
         text.style.transition = "none";
         text.style.opacity = 0;
-        text.style.transform = "scale(.3) translate(-50%,-50%)";
+        text.style.transform = "scale(.3) translateX(-50%)";
         nextTick(() => {
           setTimeout(() => {
             text.style.transition =
               "all 2s cubic-bezier(0.075, 0.82, 0.165, 1)";
 
             text.style.opacity = 1;
-            text.style.transform = "scale(1) translate(-50%,-50%)";
+            text.style.transform = "scale(1) translateX(-50%)";
           }, 500);
           setTimeout(()=>{
             text.style.opacity = 0;
-            text.style.transform = "scale(.3) translate(-50%,-50%)";
+            text.style.transform = "scale(.3) translateX(-50%)";
           },2500)
         });
         pos++;
@@ -139,13 +139,13 @@ const play_dyn_text = () => {
         </div>
       </div>
     </div>
-    <div class="absolute flex flex_direction_row rect_box">
+    <div class="absolute flex flex_direction_column rect_box justify_content_center">
       <div @click="change_position(0)" class="rect"></div>
       <div @click="change_position(-900)" class="rect"></div>
       <div @click="change_position(-1800)" class="rect"></div>
       <div @click="change_position(-2700)" class="rect"></div>
     </div>
-    <div class="absolute dyn_text absolute_center" v-html="current_text"></div>
+    <div class="absolute dyn_text " v-html="current_text"></div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -155,40 +155,54 @@ const play_dyn_text = () => {
   overflow: hidden;
   // box-shadow: #e4b198 15px 16px 5px, #98cde4 -15px -16px 5px;
   box-shadow: #b5b5b5 5px 4px 5px;
-
   border-radius: 5px;
+
+  &::after {
+          content: "";
+          position: absolute;
+          width: 200px;
+          height: inherit;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(to left, #000000be 5%, transparent 95%);
+          border-radius: 5px;
+        }
   .dyn_text {
     font-size: 30px;
-    letter-spacing: 13px;
+    letter-spacing: 3px;
     font-weight: 900;
     font-family: "gabriola";
-    line-height: 50px;
+    line-height: 35px;
+    white-space: nowrap;
+    bottom: 15px;
     text-align: center;
+    left: 50%;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     opacity: 0;
-    transform: scale(0.3) translate(-50%, -50%);
+    transform: scale(0.3) translate(-50%);
   }
   .rect_box {
-    left: 50%;
-    transform: translateX(-50%);
+    right:10px;
     z-index: 1000;
+    height: 100%;
     bottom: 10px;
     .rect {
-      width: 30px;
-      transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      width: 10px;
       height: 10px;
-      border: #fef0e8 1px solid;
-      margin: 0 5px;
-      box-shadow: #fff8f4 2px 2px 1px;
-      border-radius: 2px;
+            transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      // border: #ffffff70 1px solid;
+      background: #ffffff55;
+      border-radius: 50%;
+
+      margin: 10px 0;
     }
     .rect_active {
-      width: 40px;
+      width: 10px;
       height: 10px;
-      border: #aaaaaa 1px solid;
-      background: #656565;
-      margin: 0 5px;
-      border-radius: 2px;
+      // border: #0064fb51 1px solid;
+      background: #fb571688;
+      border-radius: 50%;
+      margin: 10px 0;
     }
   }
 
@@ -204,16 +218,7 @@ const play_dyn_text = () => {
         width: 900px;
         height: inherit;
         border-radius: 5px;
-        &::after {
-          content: "";
-          position: absolute;
-          width: 900px;
-          height: 200px;
-          left: 0;
-          bottom: 0;
-          background: linear-gradient(to top, #000000b9 5%, transparent 95%);
-          border-radius: 5px;
-        }
+       
         &::before {
           content: "";
           position: absolute;
@@ -221,7 +226,7 @@ const play_dyn_text = () => {
           height: 200px;
           left: 0;
           top: 0;
-          background: linear-gradient(to bottom, #98c9e425 5%, transparent 95%);
+          background: linear-gradient(to bottom, #0d9ce943 5%, transparent 95%);
           border-radius: 5px;
         }
         img {
