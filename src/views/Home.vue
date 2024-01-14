@@ -156,7 +156,7 @@ let flash_img = 0;
       transform-origin: bottom left;
     }
     .word_box {
-      left: 300px;
+      left: 100px;
       top: 130px;
       z-index: 100;
       animation: to_right 5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -217,7 +217,7 @@ let flash_img = 0;
     left: 0;
   }
   100% {
-    left: 300px;
+    left: 100px;
   }
 }
 @keyframes to_left {

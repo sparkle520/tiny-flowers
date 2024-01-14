@@ -184,8 +184,9 @@ const music_handle = (status) => {
 </script>
 
 <template>
-  <div id="main" class="flex flex_direction_row">
-    <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar>
+  <div id="main" class="flex flex_direction_column">
+    <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->
+    <TopNavBar @music_change="music_handle" class="nav"></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view :key="key" class="router_view"></router-view>
     <MusicPlayer v-show="music" class="music_player absolute "></MusicPlayer>
@@ -198,17 +199,19 @@ const music_handle = (status) => {
   width: 100vw;
   background: #f7f3f5;
   .nav {
-    z-index: 10000;
+    z-index: 1000000;
+    width: 100vw;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .park {
-    width: 230px;
+    width: 100vw;
     z-index: 99;
-    height: 100px;
-    left: 0;
+    height: 70px;
+    top: 0;
     background: transparent;
   }
   .router_view {
+    
   }
   .music_player {
     width: 400px;

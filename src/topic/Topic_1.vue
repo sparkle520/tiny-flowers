@@ -193,6 +193,8 @@ const to_top = () => {
     width: 80%;
     border-radius: 4px;
     margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
     min-height: 80vh;
     background: #f7f3f5;
     margin-bottom: 100px;

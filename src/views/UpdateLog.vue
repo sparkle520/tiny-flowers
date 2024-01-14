@@ -75,12 +75,13 @@ const log = [
   width: 100%;
   background: #f7f3f5;
   .carousel {
-    width: 900px;
-    margin: 40px auto;
+    width: 100vw;
+    margin: 0 auto;
   }
   .content {
     min-height: 80vh;
     width: 90%;
+    margin-top: 50px;
     background: #f7f3f5;
     ul {
       .version {

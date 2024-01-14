@@ -15,7 +15,7 @@ const routes = [
         component: () => import("/src/views/AboutMe.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
 
         }
     },

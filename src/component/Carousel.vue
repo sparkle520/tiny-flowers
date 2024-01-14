@@ -28,10 +28,10 @@ const props = defineProps({
   data: Array,
 });
 let cycle = setInterval(() => {
-  if (position.value === -2700) {
+  if (position.value === -300) {
     position.value = 0;
   } else {
-    position.value -= 900;
+    position.value -= 100;
   }
 }, 4000);
 const add_rect_active = (dom_list, index) => {
@@ -48,24 +48,24 @@ const current_text = ref("");
 let position = ref(0);
 watch(position, (newVal, oldVal) => {
   let item = document.querySelector(".item");
-  item.style.transform = "translateX(" + position.value + "px)";
+  item.style.transform = "translateX(" + position.value + "vw)";
   const rect_list = document.querySelectorAll(".rect");
   if (newVal === 0) {
     add_rect_active(rect_list, 0);
-  } else if (newVal === -900) {
+  } else if (newVal === -100) {
     add_rect_active(rect_list, 1);
-  } else if (newVal === -1800) {
+  } else if (newVal === -200) {
     add_rect_active(rect_list, 2);
-  } else if (newVal === -2700) {
+  } else if (newVal === -300) {
     add_rect_active(rect_list, 3);
   }
   if (oldVal === 0) {
     remove_rect_active(rect_list, 0);
-  } else if (oldVal === -900) {
+  } else if (oldVal === -100) {
     remove_rect_active(rect_list, 1);
-  } else if (oldVal === -1800) {
+  } else if (oldVal === -200) {
     remove_rect_active(rect_list, 2);
-  } else if (oldVal === -2700) {
+  } else if (oldVal === -300) {
     remove_rect_active(rect_list, 3);
   }
 });
@@ -150,8 +150,8 @@ const play_dyn_text = () => {
 </template>
 <style lang="scss" scoped>
 #main {
-  width: 900px;
-  height: 300px;
+  width: 100vw;
+  height: 700px;
   overflow: hidden;
   // box-shadow: #e4b198 15px 16px 5px, #98cde4 -15px -16px 5px;
   box-shadow: #b5b5b5 5px 4px 5px;
@@ -160,7 +160,7 @@ const play_dyn_text = () => {
   &::after {
           content: "";
           position: absolute;
-          width: 200px;
+          width: 100vw;
           height: inherit;
           right: 0;
           bottom: 0;
@@ -168,13 +168,13 @@ const play_dyn_text = () => {
           border-radius: 5px;
         }
   .dyn_text {
-    font-size: 30px;
+    font-size: 45px;
     letter-spacing: 3px;
     font-weight: 900;
     font-family: "gabriola";
     line-height: 35px;
     white-space: nowrap;
-    bottom: 15px;
+    bottom: 20px;
     text-align: center;
     left: 50%;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -207,22 +207,21 @@ const play_dyn_text = () => {
   }
 
   .content {
-    width: 900px;
+    width: 100vw;
     height: inherit;
-
     .item {
       height: inherit;
-      width: 3600px;
+      width: 400vw;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       .img_box {
-        width: 900px;
+        width: 100vw;
         height: inherit;
         border-radius: 5px;
        
         &::before {
           content: "";
           position: absolute;
-          width: 900px;
+          width: 100vw;
           height: 200px;
           left: 0;
           top: 0;

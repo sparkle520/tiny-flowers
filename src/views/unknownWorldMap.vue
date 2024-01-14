@@ -65,7 +65,7 @@ router.push('/unknownWorldMap/list/'+name+'/0')
       </div>
     </div>
     <div class="content width_full relative flex flex_direction_column">
-     <div class="class_box  flex flex_direction_row">
+     <div class="class_box  flex flex_direction_row justify_content_center">
       <div @click="to_topic_list(item.name)" v-for="(item,index) in classification" class="relative item flex align_items_center justify_content_center">
         {{ item.name }}
       </div>
@@ -157,7 +157,6 @@ router.push('/unknownWorldMap/list/'+name+'/0')
     z-index: 1;
     margin-bottom: 100px;
     .class_box{
-      justify-content:flex-start;
       width: 70%;
       margin: 20px auto;
       margin-bottom: 0;
