@@ -63,8 +63,8 @@ const routes = [
         }
     },
     {
-        path: '/messageBoard',
-        component: () => import("/src/views/MessageBoard.vue"),
+        path: '/math',
+        component: () => import("/src/views/Math.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: false,

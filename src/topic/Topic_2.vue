@@ -31,7 +31,6 @@ const data = {
             }
             res = temp;
             if temp < 10 {
-                println!("sss{}", temp);
                 break;
             }
         }

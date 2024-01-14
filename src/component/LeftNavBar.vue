@@ -35,8 +35,8 @@ const nav_list = [
   },
   {
     index: 3,
-    name: "留言板",
-    path: "/messageBoard",
+    name: "数学",
+    path: "/math",
   },
   {
     index: 4,
@@ -81,7 +81,7 @@ const switch_nav_active = () => {
         switch_nav_item(2);
         break;
 
-      case "messageBoard":
+      case "math":
         switch_nav_item(3);
         break;
       case "updateLog":

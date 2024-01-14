@@ -1,0 +1,146 @@
+
+.flex{
+    display: flex;
+}
+.margin-right{
+    margin-right: auto;
+}
+.margin-left{
+    margin-left: auto;
+}
+
+
+.content{
+    margin: 0 auto;
+    width: 90%;
+    min-width: 960px;
+}
+.left-fix
+{
+  float: left;
+}
+
+.right-fix
+{
+  float: right;
+}
+
+.clearfix::after
+{
+  content: '';
+  display: block;
+  clear: both;
+}
+.link
+{
+    position: relative;
+}
+.link:hover::after
+{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+.width-100{
+    width: 100%;
+}
+.height-100{
+    height: 100%;
+}
+.link::after
+{
+    content: '';
+    background: #8eeda9;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-in-out;
+}
+/* new atom */
+.absolute-center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.flex{
+    display: flex;
+}
+.absolute{
+    position: absolute;
+}
+.relative{
+    position: relative;
+}
+.fixed{
+    position: fixed;
+}
+.margin-0-auto{
+    margin: 0 auto;
+}
+.margin-auto-0{
+    margin:auto 0 ;
+}
+.align-items-center{
+    align-items: center;
+}
+.justify-content-space-around{
+    justify-content: space-around;
+}
+.justify-content-center{
+    justify-content: center;
+}
+.flex-direction-column{
+    flex-direction: column;
+}
+.flex-direction-row
+{
+    flex-direction: row;
+}
+.align_items_center{
+    align-items: center;
+}
+.justify_content_space_around{
+    justify-content: space-around;
+}
+.justify_content_center{
+    justify-content: center;
+}
+.flex_direction_column{
+    flex-direction: column;
+}
+.flex_direction_row
+{
+    flex-direction: row;
+}
+/*  */
+
+.box-shadow-bottom-both{
+    position: relative;
+    }
+    .box-shadow-bottom-both::before,.box-shadow-bottom-both::after{
+        position: absolute;
+        content: "";
+        width: 50%;
+        height: 20%;
+        top:74%;
+        left: 3%;
+        box-shadow:  0 10px 15px #333;
+        transform: rotate(-6deg);
+        z-index: -1;
+    }
+    .box-shadow-bottom-both::after{
+        transform: rotate(6deg);
+    right: 3%;
+    left: auto;
+    }
+    .grid{
+        display: grid;
+    }
+    .inline-grid{
+        display: inline-grid;
+    }
+    
