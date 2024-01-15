@@ -151,10 +151,9 @@ const play_dyn_text = () => {
 <style lang="scss" scoped>
 #main {
   width: 100vw;
-  height: 700px;
+  height: 600px;
   overflow: hidden;
   // box-shadow: #e4b198 15px 16px 5px, #98cde4 -15px -16px 5px;
-  box-shadow: #b5b5b5 5px 4px 5px;
   border-radius: 5px;
 
   &::after {
@@ -175,6 +174,7 @@ const play_dyn_text = () => {
     line-height: 35px;
     white-space: nowrap;
     bottom: 20px;
+    z-index: 100;
     text-align: center;
     left: 50%;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);

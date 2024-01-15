@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { inject, onMounted, ref } from "vue";
+import { inject, onMounted, watch,ref } from "vue";
 
 const route = useRoute();
 const key = route.path + Math.random();
@@ -9,9 +9,7 @@ const key = route.path + Math.random();
 // }
 // let g_current_index = inject('g_current_index')
 onMounted(() => {
-  setTimeout(() => {
-    document.querySelector(".nav").style.width = "200px";
-  }, 1000);
+
 });
 //鼠标特效
 
@@ -181,26 +179,45 @@ const music_handle = (status) => {
   music.value = status;
   
 };
+const theme_handle = (status)=>{
+  current_theme.value = status;
+  console.log(status);
+}
+const current_theme = ref(false);
+watch(current_theme, (newV, oldV) => {
+  if (newV.theme) {
+    c_c("--bg_color", "#1e2433");
+    document.body.style.background = "#1e2433";
+   
+  } else {
+    c_c("--bg_color", "#f7f3f5");
+    document.body.style.background = "#f7f3f5";
+
+  }
+});
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
 </script>
 
 <template>
   <div id="main" class="flex flex_direction_column">
     <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->
-    <TopNavBar @music_change="music_handle" class="nav"></TopNavBar>
+    <TopNavBar @music_change="music_handle" class="nav" @theme_change="theme_handle" :theme="current_theme"></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
-    <router-view :key="key" class="router_view"></router-view>
-    <MusicPlayer v-show="music" class="music_player absolute "></MusicPlayer>
+    <router-view :key="key" class="router_view" :theme="current_theme"></router-view>
+    <MusicPlayer v-show="music" class="music_player absolute " :theme="current_theme"></MusicPlayer>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+  $bg_color: var(--bg_color, #f7f3f5);
 
 #main {
+background: $bg_color;
   width: 100vw;
-  background: #f7f3f5;
   .nav {
     z-index: 1000000;
-    width: 100vw;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .park {

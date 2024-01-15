@@ -28,13 +28,13 @@ const play_music_handle = () => {
   if (music_list.value.length === 0) {
     return;
   }
-  current_play.value.index = 0
-  change_current_play_by_index()
+  current_play.value.index = 0;
+  change_current_play_by_index();
   is_play.value = !is_play.value;
   if (is_play.value === true) {
-    nextTick(()=>{
+    nextTick(() => {
       play();
-    })
+    });
   } else {
     pause();
   }
@@ -92,10 +92,10 @@ watch(
 );
 const update_music_files = ref();
 const switch_play_mode = () => {
-  if(current_play_mode.value === 2){
-    current_play_mode.value = 0
-  }else{
-    current_play_mode.value +=1
+  if (current_play_mode.value === 2) {
+    current_play_mode.value = 0;
+  } else {
+    current_play_mode.value += 1;
   }
 };
 const remove_music = (index) => {
@@ -128,32 +128,32 @@ const switch_current_play = (item, index) => {
 const switch_music_list = () => {
   show_music_list.value = !show_music_list.value;
 };
-const start_time_play = ()=>{
+const start_time_play = () => {
   let audio = document.querySelector(".audio");
   audio.currentTime = 0;
-}
+};
 const pre_play = () => {
   if (current_play.value === -1 || music_list.value.length === 1) {
-    start_time_play()
+    start_time_play();
     return;
   }
-  filter_blur_music_name()
+  filter_blur_music_name();
   if (current_play.value.index === 0) {
     current_play.value.index = music_list.value.length - 1;
   } else {
     current_play.value.index -= 1;
   }
- change_current_play_by_index()
+  change_current_play_by_index();
   nextTick(() => {
     play();
   });
 };
 const next_play = () => {
   if (current_play.value === -1 || music_list.value.length === 1) {
-    start_time_play()
+    start_time_play();
     return;
   }
-  filter_blur_music_name()
+  filter_blur_music_name();
   switch (current_play_mode.value) {
     case PLAY_MODE.LIST:
       list_single_strategy();
@@ -174,7 +174,7 @@ const list_single_strategy = () => {
   } else {
     current_play.value.index += 1;
   }
-  change_current_play_by_index()
+  change_current_play_by_index();
   nextTick(() => {
     play();
   });
@@ -189,7 +189,7 @@ const random_strategy = () => {
     }
     current_play.value.index = random;
   }
-  change_current_play_by_index()
+  change_current_play_by_index();
   nextTick(() => {
     play();
   });
@@ -197,24 +197,24 @@ const random_strategy = () => {
 const update_time_handle = () => {
   const music_audio = document.querySelector(".audio");
   if (music_audio.currentTime >= music_audio.duration - 1) {
-    if(current_play_mode.value === PLAY_MODE.SINGLE){
-      music_audio.currentTime = 0
-    }else{
+    if (current_play_mode.value === PLAY_MODE.SINGLE) {
+      music_audio.currentTime = 0;
+    } else {
       next_play();
     }
   }
 };
-const change_current_play_by_index = () =>{
+const change_current_play_by_index = () => {
   current_play.value.name = music_list.value[current_play.value.index].name;
   current_play.value.url = music_list.value[current_play.value.index].url;
-}
-const filter_blur_music_name = ()=>{
-  const music_name = document.querySelector('.music_name span')
-  music_name.style.filter = "blur(10px)"
-  setTimeout(()=>{
-    music_name.style.filter = "blur(0px)"
-  },500)
-}
+};
+const filter_blur_music_name = () => {
+  const music_name = document.querySelector(".music_name span");
+  music_name.style.filter = "blur(10px)";
+  setTimeout(() => {
+    music_name.style.filter = "blur(0px)";
+  }, 500);
+};
 </script>
 <template>
   <div id="main">
@@ -553,12 +553,20 @@ const filter_blur_music_name = ()=>{
 #main {
   width: 100%;
   height: 100%;
+  background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 0.727273px solid rgba(255, 255, 255, 0.18);
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
 
   .content {
     width: inherit;
     height: inherit;
-    background: #dae6e7;
-    border-radius: 10px;
+    // background: #dae6e727;
+   
     .record {
       width: 7em;
       height: 7em;
@@ -668,9 +676,16 @@ const filter_blur_music_name = ()=>{
   .music_list_box {
     width: inherit;
     height: 300px;
-    background: #e3eae1;
-    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 0.727273px solid rgba(255, 255, 255, 0.18);
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
     border-radius: 10px;
+    -webkit-border-radius: 10px;
+
+    margin-top: 10px;
     color: #d2736c;
     animation: fade_in_out 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     .list_box {
@@ -684,15 +699,17 @@ const filter_blur_music_name = ()=>{
       }
       .list_item {
         padding-left: 12px;
-        height: 25px;
+        min-height: 25px;
         border-radius: 3px;
         color: #4d6782;
+        padding-top: 3px;
+        padding-bottom: 3px;
         svg {
           opacity: 0;
           right: 3em;
         }
         &:hover {
-          background: linear-gradient(45deg, #99d0d9, transparent);
+          background: linear-gradient(45deg, #ed4141, transparent);
           svg {
             opacity: 1;
           }

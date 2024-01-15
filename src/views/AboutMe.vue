@@ -91,7 +91,6 @@ const go_netEase_cloud_music = () => {
   .card {
     width: 330px;
     height: 450px;
-    border-radius: 5px;
     text-align: center;
     color: #5c9dba;
     z-index: 10;

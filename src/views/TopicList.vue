@@ -3,7 +3,7 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted,onUnmounted,nextTick } from "vue";
+import { reactive, toRefs, ref, onBeforeMount, watch,onMounted,onUnmounted,nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import data from "/src/assets/config/data.js";
@@ -12,6 +12,7 @@ const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   window.scrollTo(0, 0);
+  change_theme(props.theme)
 
   item_list = Array.from(document.querySelectorAll('.item'))
   document.addEventListener('scroll', scroll_handle)
@@ -22,7 +23,7 @@ let item_list = []
 const  scroll_handle = ()=>{
   for (let i = 0; i < item_list.length; i++) {
   let elem = item_list[i]
-  console.log(elem.offsetTop,window.scrollY);
+  // console.log(elem.offsetTop,window.scrollY);
   if (elem.offsetTop  <= window.scrollY + 900) {
     elem.style.opacity = '1'
     elem.classList.add('item_animation')
@@ -76,6 +77,40 @@ const data_handle = (array, page_num) => {
 const jump_to_topic = (path) =>{
   router.push(path)
 }
+const props = defineProps({
+  theme: Boolean,
+});
+
+watch(props, (newV, oldV) => {
+  change_theme(newV.theme)
+  
+});
+const change_theme = (current_theme) =>{
+  if (current_theme) {
+    c_c("--bg_color", "#0b0e14");
+    c_c("--color", "#f7f3f5");
+    c_c("--item_bg", "#242b3d");
+    c_c("--item_shadow", "#242b34");
+    c_c("--title_color", "#f7f3f5");
+    c_c("--title_af_bg", "#f7f3f58b");
+    c_c("--tag_box_bg", "#121721");
+    c_c("--tag_bg", "#f58d02");
+
+  } else {
+    c_c("--bg_color", "#f7f3f5");
+    c_c("--color", "#000000");
+    c_c("--item_bg", "#ffffff");
+    c_c("--item_shadow", "#cacaca4f");
+    c_c("--title_color", "#173e6c");
+    c_c("--title_af_bg", "#22113364");
+    c_c("--tag_box_bg", "#dae6e7");
+    c_c("--tag_bg", "#41a8a8");
+  }
+}
+//change scss var 
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
 </script>
 <template>
   <div id="main">
@@ -112,12 +147,22 @@ const jump_to_topic = (path) =>{
   </div>
 </template>
 <style lang="scss" scoped>
+$bg_color: var(--bg_color, #f7f3f5);
+$color: var(--color, #000000);
+$item_bg: var(--item_bg, #ffffff);
+$item_shadow: var(--item_shadow, #cacaca4f);
+$title_color: var(--title_color, #173e6c);
+$title_af_bg: var(--title_af_bg, #22113364);
+$tag_box_bg: var(--tag_box_bg, #dae6e7);
+$tag_bg: var(--tag_bg, #41a8a8);
 #main {
-  background: #f7f3f5;
+  background: $bg_color;
   width: 100%;
+  color:$color;
   .topic_box {
     margin-top: 100px;
     margin-left: 20px;
+    min-height: calc(100vh);
     width: 60vw;
     .item_animation {
       animation: fade_in 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -126,11 +171,11 @@ const jump_to_topic = (path) =>{
     .item {
       width: 60vw;
       min-height: 200px;
-      background: #ffffff;
+      background: $item_bg;
       margin: 20px 0;
       opacity: 0;
       border-radius: 5px;
-      box-shadow: #cacaca4f 2px 3px 10px;
+      box-shadow: $item_shadow 2px 3px 10px;
       overflow-y: hidden;
       &:active {
         animation: jelly .5s;
@@ -149,7 +194,7 @@ const jump_to_topic = (path) =>{
         font-size: 1.5em;
         font-weight: 900;
         margin-top: 10px;
-        color: #173e6c;
+        color: $title_color;
 
         &::after {
           content: "";
@@ -158,7 +203,7 @@ const jump_to_topic = (path) =>{
           bottom: 0;
           width: 100%;
           height: 15px;
-          background-color: rgba(34, 17, 51, 0.393);
+          background-color: $title_af_bg;
         }
       }
       .short_msg {
@@ -177,14 +222,14 @@ const jump_to_topic = (path) =>{
         opacity: 0;
         transform: translateY(100%);
         width: 100%;
-        background: #dae6e7;
+        background: $tag_box_bg;
         flex-wrap: wrap;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         .tag {
           margin: 10px;
-          color: #dae6e7;
+          color: $tag_box_bg;
           padding: 10px;
-          background: #41a8a8;
+          background: $tag_bg;
           border-radius: 5px;
         }
       }

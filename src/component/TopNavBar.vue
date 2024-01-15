@@ -9,6 +9,7 @@ import {
   toRefs,
   onBeforeMount,
   onMounted,
+  onUnmounted,
   watch,
   nextTick,
 } from "vue";
@@ -16,7 +17,24 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 onBeforeMount(() => {});
-onMounted(() => {});
+onMounted(() => {
+  document.addEventListener("scroll", nav_handle);
+});
+onUnmounted(() => {
+  document.removeEventListener("scroll", nav_handle);
+});
+const nav_handle = () => {
+  let wScrY = window.scrollY;
+  const nav_main = document.querySelector(".nav_main");
+  const content = document.querySelector(".content");
+  if (wScrY > 170) {
+    nav_main.classList.add("nav_fixed");
+  } else {
+    nav_main.classList.remove("nav_fixed");
+  }
+};
+const emits = defineEmits(["music_change", "theme_change"]);
+
 const nav_list = [
   {
     index: 0,
@@ -60,7 +78,6 @@ const switch_nav_active = () => {
     nav_list_item[pre_active_item.value].classList.remove("nav_item_active");
     nav_list_item[pre_active_item.value].classList.add("nav_item");
   }
-
   nextTick(() => {
     switch (active_item.value) {
       case "home":
@@ -102,165 +119,154 @@ const link_to = (path) => {
 const go_github = () => {
   window.location.href = "https://github.com/sparkle520";
 };
-const active_music = () =>{
-  music_active.value = !music_active.value
-}
-const emit = defineEmits(["music_change"]);
+const active_music = () => {
+  music_active.value = !music_active.value;
+};
+const music_active = ref(false);
+watch(music_active, (newV, oldV) => {
+  emits("music_change", newV);
+});
+const current_theme = ref();
+watch(current_theme, (newV, oldV) =>{
+  emits("theme_change", newV);
+});
+const props = defineProps({
+  theme: Boolean,
+});
+watch(props, (newV, oldV) => {
+  change_theme(newV.theme)
+});
+const change_theme = (theme) => {
+if(theme){
+  c_c("--nav_bg_color","transparent")
+  c_c("--nav_fixed_shadow","#123")
 
-const music_active = ref(false)
-watch(music_active,(newV,oldV)=>{
-  emit('music_change',newV)
-})
+}else{
+  c_c("--nav_bg_color","transparent")
+  c_c("--nav_fixed_shadow","#8e8e8e30")
+
+}
+}
+//change scss var 
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
 </script>
 <template>
-  <div id="main" class="">
+  <div id="main" class="nav_main">
     <div class="content flex flex_direction_row relative">
-      <!-- <div class="cover_box absolute">
-        <div class="absolute me">
-          <img src="/src/assets/imgs/me.jpg" alt="" />
-        </div>
-        <div
-          class="github_me absolute flex align_items_center justify_content_center"
-          @click="go_github"
-        >
-          <svg
-            t="1704550937774"
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            p-id="6229"
-            width="80"
-            height="80"
-          >
-            <path
-              d="M850.346667 155.008a42.666667 42.666667 0 0 0-22.741334-23.509333c-8.704-3.754667-85.717333-33.322667-200.32 39.168H396.714667c-114.773333-72.618667-191.701333-42.922667-200.32-39.168a42.88 42.88 0 0 0-22.741334 23.466666c-26.197333 66.218667-18.048 136.448-7.850666 176.896C134.272 374.016 128 413.098667 128 469.333333c0 177.877333 127.104 227.882667 226.730667 246.272a189.568 189.568 0 0 0-13.013334 46.549334A44.373333 44.373333 0 0 0 341.333333 768v38.613333c-19.498667-4.138667-41.002667-11.946667-55.168-26.112C238.08 732.416 188.330667 682.666667 128 682.666667v85.333333c25.002667 0 65.365333 40.362667 97.834667 72.832 51.029333 51.029333 129.066667 55.253333 153.386666 55.253333 3.114667 0 5.376-0.085333 6.528-0.128A42.666667 42.666667 0 0 0 426.666667 853.333333v-82.090666c4.266667-24.746667 20.224-49.621333 27.946666-56.362667a42.666667 42.666667 0 0 0-23.125333-74.581333C293.333333 624.554667 213.333333 591.488 213.333333 469.333333c0-53.12 5.632-70.741333 31.573334-99.285333 11.008-12.117333 14.08-29.568 7.978666-44.8-4.821333-11.904-18.773333-65.450667-6.485333-117.546667 20.650667-1.578667 59.904 4.565333 113.706667 40.96C367.104 253.44 375.466667 256 384 256h256a42.666667 42.666667 0 0 0 23.936-7.338667c54.016-36.522667 92.970667-41.770667 113.664-41.130666 12.330667 52.224-1.578667 105.770667-6.4 117.674666a42.666667 42.666667 0 0 0 8.021333 44.928C805.077333 398.464 810.666667 416.085333 810.666667 469.333333c0 122.581333-79.957333 155.52-218.069334 170.922667a42.666667 42.666667 0 0 0-23.125333 74.709333c19.797333 17.066667 27.861333 32.469333 27.861333 53.034667v128h85.333334v-128c0-20.437333-3.925333-38.101333-9.770667-53.12C769.92 695.765333 896 643.712 896 469.333333c0-56.362667-6.272-95.530667-37.76-137.514666 10.197333-40.405333 18.261333-110.506667-7.893333-176.810667z"
-              fill="#ffbb98"
-              p-id="6230"
-            ></path>
-          </svg>
-        </div>
-        <p class="absolute name">ferris</p>
-      </div> -->
-      <div class="absolute nav_box flex flex_direction_row  justify_content_space_around">
+      <div
+        class="absolute nav_box flex flex_direction_row justify_content_space_around"
+      >
         <ul class="nav_list flex flex_direction_row">
           <li
             class="nav_item nav_item_com flex flex_direction_row align_items_center"
-            v-for="(item, index) in nav_list.slice(0,2)"
+            v-for="(item, index) in nav_list.slice(0, 2)"
             @click="link_to(item.path)"
           >
-           
             {{ item.name }}
           </li>
         </ul>
-        <ul class="nav_list flex flex_direction_row">
-          <li
-            class="nav_item nav_item_com flex flex_direction_row align_items_center"
-            v-for="(item, index) in nav_list.slice(2)"
-            @click="link_to(item.path)"
-          >
-           
-            {{ item.name }}
-          </li>
-        </ul>
+        <div class="flex flex_direction_row">
+          <ul class="nav_list flex flex_direction_row">
+            <li
+              class="nav_item nav_item_com flex flex_direction_row align_items_center"
+              v-for="(item, index) in nav_list.slice(2)"
+              @click="link_to(item.path)"
+            >
+              {{ item.name }}
+            </li>
+          </ul>
+          <label class="switch" for="theme" @click="theme_change">
+            <input id="theme" type="checkbox" v-model="current_theme" />
+            <span class="slider"></span>
+          </label>
+        </div>
       </div>
       <div class="music absolute" @click="active_music">
-        <svg v-if="!music_active"
-        t="1704963079198"
-        class="svg_1"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="13968"
-        width="48"
-        height="48"
-      >
-        <path
-          d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
-          fill="#123"
-          p-id="13969"
-        ></path>
-        <path
-          d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
-          fill="#ffff"
-          p-id="13970"
-        ></path>
-        <path
-          d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
-          fill="#ffff"
-          p-id="13971"
-        ></path>
-      </svg>
-        <svg v-if="music_active"
-        t="1704963079198"
-        class="svg_2"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="13968"
-        width="48"
-        height="48"
-      >
-        <path
-          d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
-          fill="#EA5D5B"
-          p-id="13969"
-        ></path>
-        <path
-          d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
-          fill="#F5B4B5"
-          p-id="13970"
-        ></path>
-        <path
-          d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
-          fill="#FAD8D7"
-          p-id="13971"
-        ></path>
-      </svg>
+        <svg
+          v-if="!music_active"
+          t="1704963079198"
+          class="svg_1"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="13968"
+          width="48"
+          height="48"
+        >
+          <path
+            d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
+            fill="#123"
+            p-id="13969"
+          ></path>
+          <path
+            d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
+            fill="#ffff"
+            p-id="13970"
+          ></path>
+          <path
+            d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
+            fill="#ffff"
+            p-id="13971"
+          ></path>
+        </svg>
+        <svg
+          v-if="music_active"
+          t="1704963079198"
+          class="svg_2"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="13968"
+          width="48"
+          height="48"
+        >
+          <path
+            d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
+            fill="#EA5D5B"
+            p-id="13969"
+          ></path>
+          <path
+            d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
+            fill="#F5B4B5"
+            p-id="13970"
+          ></path>
+          <path
+            d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
+            fill="#FAD8D7"
+            p-id="13971"
+          ></path>
+        </svg>
       </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
+ $nav_bg_color: var(--nav_bg_color, transparent);
+ $nav_fixed_shadow: var(--nav_fixed_shadow, #8e8e8e30);
+
+.nav_fixed {
+  background: #ffffff40;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: $nav_fixed_shadow 0px 6px 15px 0px;
+  -webkit-box-shadow: $nav_fixed_shadow 0px 6px 15px 0px;
+  animation: fade_out 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
 #main {
   position: fixed;
-  background: #ccd9e2;
+  background: transparent;
   width: 100vw;
-  // background: transparent;
+   background: transparent;
 
-  &::after {
-    filter: blur(5px);
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: inherit;
-    z-index: 2;
-  }
   .content {
     width: 100vw;
     height: 70px;
-    background-color: #ccd9e2;
+    background: $nav_bg_color;
     z-index: 11;
-    .cover_box {
-      width: 100%;
-      height: 450px;
-      background: linear-gradient(
-        to bottom,
-        #d67940,
-        rgba(255, 255, 255, 0.336) 70%,
-        rgba(255, 255, 255, 0)
-      );
-      border-radius: 10px;
-      top: 0px;
-      left: 0px;
-      z-index: 0;
-      
-    
 
-    }
-     
     .nav_box {
       top: 50%;
       width: 100%;
@@ -268,22 +274,70 @@ watch(music_active,(newV,oldV)=>{
       .nav_list {
         .nav_item_active {
           font-size: 15px;
-          color: #6f4849;
+          color: #f76700;
           font-weight: 600;
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         .nav_item {
           font-size: 15px;
-          color: rgb(255, 250, 243);
+          color: rgb(24, 160, 209);
           font-weight: 600;
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
           &:hover {
-            color: rgb(180, 155, 137);
+            color: #f76700;
           }
         }
+      }
+
+      .switch {
+        font-size: 17px;
+        position: relative;
+        margin: auto 0;
+        width: 3.5em;
+        margin-left: 30px;
+        height: 2em;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f4f4f5;
+        transition: 0.4s;
+        border-radius: 30px;
+        &::before {
+          position: absolute;
+          content: "";
+          height: 1.4em;
+          width: 1.4em;
+          border-radius: 20px;
+          left: 0.3em;
+          bottom: 0.3em;
+          background: linear-gradient(40deg, #ff0080, #ff8c00 70%);
+          transition: 0.4s;
+        }
+      }
+
+      input:checked + .slider {
+        background-color: #303136;
+      }
+      input:checked + .slider:before {
+        transform: translateX(1.5em);
+        background: #303136;
+        box-shadow: inset -3px -2px 5px -2px #8983f7,
+          inset -10px -5px 0 0 #a3dafb;
       }
     }
     .music {
@@ -291,18 +345,17 @@ watch(music_active,(newV,oldV)=>{
       bottom: 10%;
       transform: translateX(-50%);
       transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-      &:hover{
+      &:hover {
         animation: jump 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
       }
-    
-      .svg_1{
-        &:hover{
+
+      .svg_1 {
+        &:hover {
           filter: drop-shadow(0px 10px 10px rgb(6, 2, 0));
         }
       }
-      .svg_2{
-        &:hover{
+      .svg_2 {
+        &:hover {
           filter: drop-shadow(0px 10px 10px rgb(240, 121, 74));
         }
       }
@@ -310,14 +363,22 @@ watch(music_active,(newV,oldV)=>{
   }
 }
 @keyframes jump {
-  0%{
-    transform: translate(-50%,10%);
-
-  }40%{
-    transform: translate(-50%,-10%);
-
-  }100%{
-    transform: translate(-50%,0%);
+  0% {
+    transform: translate(-50%, 10%);
+  }
+  40% {
+    transform: translate(-50%, -10%);
+  }
+  100% {
+    transform: translate(-50%, 0%);
+  }
+}
+@keyframes fade_out {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 </style>
