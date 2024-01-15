@@ -37,7 +37,6 @@ const props = defineProps({
 });
 watch(props, (newV, oldV) => {
   change_theme(newV.theme)
- 
 });
 //change scss var 
 const c_c = (mut_val, color) => {

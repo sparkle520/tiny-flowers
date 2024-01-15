@@ -139,12 +139,17 @@ watch(props, (newV, oldV) => {
 const change_theme = (theme) => {
 if(theme){
   c_c("--nav_bg_color","transparent")
-  c_c("--nav_fixed_shadow","#123")
+  c_c("--nav_fixed_shadow","#ffffff01")
+  c_c("--nav_item_color","#b5b9d6")
+  c_c("--nav_item_active_color","#e78287")
+  c_c("--nav_item_hover_color","#f67d61")
 
 }else{
   c_c("--nav_bg_color","transparent")
   c_c("--nav_fixed_shadow","#8e8e8e30")
-
+  c_c("--nav_item_color","#5e6d78")
+  c_c("--nav_item_active_color","#f67d61")
+  c_c("--nav_item_hover_color","#f76700")
 }
 }
 //change scss var 
@@ -245,6 +250,9 @@ const c_c = (mut_val, color) => {
 <style lang="scss" scoped>
  $nav_bg_color: var(--nav_bg_color, transparent);
  $nav_fixed_shadow: var(--nav_fixed_shadow, #8e8e8e30);
+ $nav_item_color: var(--nav_item_color, #5e6d78);
+ $nav_item_active_color: var(--nav_item_active_color, #f67d61);
+ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 
 .nav_fixed {
   background: #ffffff40;
@@ -260,7 +268,6 @@ const c_c = (mut_val, color) => {
   background: transparent;
   width: 100vw;
    background: transparent;
-
   .content {
     width: 100vw;
     height: 70px;
@@ -274,20 +281,20 @@ const c_c = (mut_val, color) => {
       .nav_list {
         .nav_item_active {
           font-size: 15px;
-          color: #f76700;
+          color: $nav_item_active_color;
           font-weight: 600;
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         .nav_item {
           font-size: 15px;
-          color: rgb(24, 160, 209);
+          color: $nav_item_color;
           font-weight: 600;
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
           &:hover {
-            color: #f76700;
+            color: $nav_item_hover_color;
           }
         }
       }

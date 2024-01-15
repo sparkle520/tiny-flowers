@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref ,onMounted,watch ,onUnmounted} from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -8,6 +8,9 @@ const current_subject = ref("");
 const current_difficult = ref("");
 const switch_tag_box = ref(false);
 const pass = ref(false);
+onMounted(()=>{
+  change_theme(props.theme)
+})
 const show_tag_box = () => {
   switch_tag_box.value = true;
 };
@@ -85,6 +88,61 @@ const current_difficult_list = [
   { value: "2", label: "中等" },
   { value: "3", label: "困难" },
 ];
+const props = defineProps({
+  theme: Boolean,
+});
+watch(props, (newV, oldV) => {
+  change_theme(newV.theme)
+});
+//change scss var 
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
+const change_theme = (current_theme) => {
+  if (current_theme) {
+    //night
+    c_c("--bg_color", "#1e2433");
+    c_c("--math_li_bg", "#2c273d");
+    c_c("--math_li_color", "#fdffff");
+    c_c("--math_com_box_bg", "#373544");
+    c_c("--math_com_box_shadow", "#37354445");
+    c_c("--condition_box", "#f0f0f0");
+    c_c("--tag_btn_color", "#2a3e4a");
+    c_c("--tag_btn_bg", "#d5e2e8");
+    c_c("--tag_choose_box_border", "#6b6b6b");
+    c_c("--tag_choose_box_bg", "#383c50");
+    c_c("--tag_item_bg", "#333547");
+    c_c("--tag_item_hover_bg", "#8d88e5");
+    c_c("--choose_top", "#a7a7a7");
+    c_c("--tag_sure_btn_color", "#333547");
+    c_c("--tag_sure_btn_bg", "#fff");
+    c_c("--math_color", "#f0f0f0");
+    c_c("--subject_hover_name_color", "#ffff");
+    c_c("--subject_name_color", "#ffff");
+
+  } else {
+
+    c_c("--bg_color", "#f7f3f5");
+    c_c("--math_li_bg", "#fec163");
+    c_c("--math_li_color", "#fdffff");
+    c_c("--math_com_box_bg", "#ffffff");
+    c_c("--math_com_box_shadow", "#d0cfcf45");
+    c_c("--condition_box", "#464879");
+    c_c("--tag_btn_color", "#146e57");
+    c_c("--tag_btn_bg", "#d5e2e8");
+    c_c("--tag_choose_box_border", "#6b6b6b");
+    c_c("--tag_choose_box_bg", "#ffffffeb");
+    c_c("--tag_item_bg", "#e3e9f0");
+    c_c("--tag_item_hover_bg", "#8d88e5");
+    c_c("--choose_top", "#a7a7a7");
+    c_c("--tag_sure_btn_color", "#3cd500");
+    c_c("--tag_sure_btn_bg", "#fff");
+    c_c("--math_color", "#282525");
+    c_c("--subject_hover_name_color", "#002661");
+    c_c("--subject_name_color", "#806262");
+
+  }
+}
 const select_tag_list = ref([]);
 </script>
 <template>
@@ -290,6 +348,24 @@ const select_tag_list = ref([]);
 </template>
 <style lang="scss" scoped>
 @import url("/src/assets/css/math.scss");
+$bg_color: var(--bg_color, #f7f3f5);
+$math_li_bg: var(--math_li_bg, #fec163);
+$math_li_color: var(--math_li_color, #fdffff);
+$math_com_box_bg: var(--math_com_box_bg, #ffffff);
+$math_com_box_shadow: var(--math_com_box_shadow, #d0cfcf45);
+$condition_box: var(--condition_box, #464879);
+$tag_btn_color: var(--tag_btn_color, #146e57);
+$tag_btn_bg: var(--tag_btn_bg, #d5e2e8);
+$tag_choose_box_border: var(--tag_choose_box_border, #6b6b6b);
+$tag_choose_box_bg: var(--tag_choose_box_bg, #ffffffeb);
+$tag_item_bg: var(--tag_item_bg, #e3e9f0);
+$tag_item_hover_bg: var(--tag_item_hover_bg, #8d88e5);
+$choose_top: var(--choose_top, #a7a7a7);
+$tag_sure_btn_color: var(--tag_sure_btn_color, #3cd500);
+$tag_sure_btn_bg: var(--tag_sure_btn_bg, #fff);
+$math_color: var(--math_color, #282525);
+$subject_hover_name_color: var(--subject_hover_name_color, #002661);
+$subject_name_color: var(--subject_name_color, #806262);
 ::-webkit-scrollbar {
   width: 0 !important;
 }
@@ -300,7 +376,8 @@ const select_tag_list = ref([]);
 }
 
 #main {
-  background: #f7f3f5;
+  background: $bg_color;
+  color: $math_color;
   .margin-0-10 {
     margin: 0 10px;
   }
@@ -317,13 +394,13 @@ const select_tag_list = ref([]);
         flex-wrap: wrap;
       padding: 0;
       li {
-        user-select:none; 
-        background: #fec163;
+        user-select:none;
+        background: $math_li_bg;
         padding: 10px;
         margin: 5px;
         font-weight: 900;
 
-        color: #fdffff;
+        color: $math_li_color;
         &:hover{
             svg{
                 transform: scale(1) translate(-50%,-50%);
@@ -342,17 +419,16 @@ const select_tag_list = ref([]);
 
   .com-box {
     border-radius: 5px;
-    box-shadow: 9px 9px 10px #d0cfcf45;
-    background: #ffffff;
+    box-shadow: 9px 9px 10px $math_com_box_shadow;
+    background: $math_com_box_bg;
     .condition-box {
       width: 96%;
       height: 60px;
       margin: 20px;
       font-weight: 600;
       // border-radius: 10px;
-      color: #464879;
-      // background: rgb(231, 240, 249);
-      border-bottom: #464879 2px solid;
+      color: $condition_box;
+      border-bottom: $condition_box 2px solid;
       .key-search-input-box {
         margin-left: auto;
         margin-right: 20px;
@@ -391,8 +467,8 @@ const select_tag_list = ref([]);
           border-radius: 5px;
           font-size: 14px;
           font-weight: 600;
-          color: #146e57;
-          background: linear-gradient(45deg, #d5e2e8, #97dbac);
+          color: $tag_btn_color;
+          background:  $tag_btn_bg;
           transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
           &:hover {
             transform: scale(1.05);
@@ -418,15 +494,15 @@ const select_tag_list = ref([]);
           height: 600px;
           left: 50%;
           top: 50%;
-          border: #6b6b6b 1px solid;
+          border: $tag_choose_box_border 1px solid;
           border-radius: 10px;
-          background-color: rgba(255, 255, 255, 0.922);
+          background-color: $tag_choose_box_bg;
 
-          transform: translate(-40%, -50%);
+          transform: translate(-50%, -50%);
           z-index: 10;
           animation: move_top 1s cubic-bezier(0.165, 0.84, 0.44, 1);
           .tag-item {
-            background-color: #e3e9f0;
+            background-color: $tag_item_bg;
             border-radius: 10px;
             padding: 0 10px;
             height: 40px;
@@ -446,8 +522,8 @@ const select_tag_list = ref([]);
             }
 
             &:hover {
-              color: #e3e9f0;
-              background: #8d88e5;
+              color: $tag_item_bg;
+              background: $tag_item_hover_bg;
             }
           }
 
@@ -458,7 +534,7 @@ const select_tag_list = ref([]);
 
           .choose-top {
             width: 100%;
-            border-bottom: rgb(167, 167, 167) 2px solid;
+            border-bottom: $choose_top 2px solid;
             height: 50px;
             border-top-right-radius: inherit;
             border-top-left-radius: inherit;
@@ -522,12 +598,12 @@ const select_tag_list = ref([]);
               align-items: center;
               justify-content: center;
               margin-right: 10px;
-              background-color: #fff;
+              background-color: $tag_sure_btn_bg;
               z-index: 1;
               position: relative;
               overflow: hidden;
-              color: #3cd500;
-              border: 3px solid #3cd500;
+              color: $tag_sure_btn_color;
+              border: 3px solid $tag_sure_btn_color;
               font-family: Arial;
               font-weight: 800;
               font-size: 1.05em;
@@ -540,7 +616,7 @@ const select_tag_list = ref([]);
                 height: 0px;
                 width: 0px;
                 position: absolute;
-                background-color: #3cd500;
+                background-color: $tag_sure_btn_color;
                 z-index: -1;
                 border-radius: 50%;
                 transition: all 0.7s ease;
@@ -551,7 +627,7 @@ const select_tag_list = ref([]);
               }
 
               &:hover {
-                color: #fff;
+                color: $tag_sure_btn_bg;
                 &::before {
                   height: 200px;
                   width: 200px;
@@ -605,7 +681,7 @@ const select_tag_list = ref([]);
           background: #fec163;
 
           .subject-name {
-            color: #002661;
+            color: $subject_hover_name_color;
           }
         }
 
@@ -634,7 +710,7 @@ const select_tag_list = ref([]);
 
         .subject-name {
           justify-self: flex-start;
-          color: #806262;
+          color: $subject_name_color;
         }
 
         .content-tag-box {
@@ -665,10 +741,10 @@ const select_tag_list = ref([]);
 }
 @keyframes move_top {
   0% {
-    transform: translate(-40%, -10%);
+    transform: translate(-50%, -10%);
   }
   100% {
-    transform: translate(-40%, -50%);
+    transform: translate(-50%, -50%);
   }
 }
 </style>

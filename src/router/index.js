@@ -76,7 +76,7 @@ const routes = [
         component: () => import("/src/views/UpdateLog.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
 
         }
     },

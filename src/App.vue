@@ -81,7 +81,6 @@ function clickEffect() {
       false
     );
   } else {
-    console.log("canvas or addEventListener is unsupported!");
   }
 
   function updateSize() {
@@ -181,7 +180,6 @@ const music_handle = (status) => {
 };
 const theme_handle = (status)=>{
   current_theme.value = status;
-  console.log(status);
 }
 const current_theme = ref(false);
 watch(current_theme, (newV, oldV) => {
