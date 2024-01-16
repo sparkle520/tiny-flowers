@@ -16,7 +16,7 @@ const carousel_data = ref([
   { link: "https://pic.imgdb.cn/item/65a417d5871b83018a50a4c9.jpg" },
   { link: "https://pic.imgdb.cn/item/65a4181b871b83018a517eb9.jpg" },
   { link: "https://pic.imgdb.cn/item/65a4185f871b83018a5241a0.jpg" },
-  { link: "https://pic.imgdb.cn/item/65a4189f871b83018a52ede6.jpg" },
+  { link: "https://pic.imgdb.cn/item/65a616a9871b83018acf90af.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e576871b83018a7eeee4.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e577871b83018a7ef617.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" },
@@ -135,9 +135,10 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
   .content {
     min-height: 80vh;
     width: 90%;
-    margin-top: 50px;
+    margin: 50px auto;
     background: $bg_color;
     ul {
+      padding: 0;
       .version {
         font-size: 19px;
         font-weight: 900;

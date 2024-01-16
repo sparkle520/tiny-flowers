@@ -33,7 +33,7 @@ const routes = [
         component: () => import("/src/views/UnknownWorldMap.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
 
         }
     },
@@ -65,6 +65,15 @@ const routes = [
     {
         path: '/math',
         component: () => import("/src/views/Math.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: false,
+
+        }
+    },
+    {
+        path: '/math/solution',
+        component: () => import("/src/MathSolution/T.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: false,

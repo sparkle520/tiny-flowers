@@ -19,6 +19,7 @@ const router = useRouter();
 onBeforeMount(() => {});
 onUnmounted(() => {
   clearInterval(cycle);
+  clearInterval(play);
 });
 onMounted(() => {
   const rect_list = document.querySelectorAll(".rect");
@@ -41,7 +42,6 @@ const remove_rect_active = (dom_list, index) => {
   dom_list[index].classList.remove("rect_active");
 };
 const change_position = (new_pos) => {
-
   position.value = new_pos;
 };
 const current_text = ref("");
@@ -83,26 +83,12 @@ const text_list = [
   // `<span style="color: #F6CEEC;text-shadow: #D939CD 1px 1px 5px;">我们的爱情呼唤 我们的声音</span>`,
   // `<span style="color: #FEC163;text-shadow: #DE4313 1px 1px 5px;">呼唤着:“出发吧” </span>`,
 ];
+let play = null;
 const play_dyn_text = () => {
   if (current_text.value === "") {
     let pos = 0;
     const text = document.querySelector(".dyn_text");
-    text.style.opacity = 0;
-        text.style.transform = "scale(.3) translateX(-50%)";
-    current_text.value = text_list[pos];
-    text.style.transition = "none";
-
-    setTimeout(() => {
-      text.style.opacity = 1;
-      text.style.transform = "scale(1) translateX(-50%)";
-          text.style.transition = "all 2s cubic-bezier(0.075, 0.82, 0.165, 1)";
-    },1000);
-    setTimeout(()=>{
-            text.style.opacity = 0;
-            text.style.transform = "scale(.3) translateX(-50)";
-          },2500)
-    pos++;
-    let play = setInterval(() => {
+   play = setInterval(() => {
       if (pos === text_list.length) {
         current_text.value = "";
         clearInterval(play);
@@ -110,19 +96,28 @@ const play_dyn_text = () => {
         current_text.value = text_list[pos];
         text.style.transition = "none";
         text.style.opacity = 0;
-        text.style.transform = "scale(.3) translateX(-50%)";
+        text.style.transform = "scale(.7) translate(-50%,-50%)";
         nextTick(() => {
           setTimeout(() => {
             text.style.transition =
-              "all 2s cubic-bezier(0.075, 0.82, 0.165, 1)";
-
+              "all 2s cubic-bezier(0.19, 1, 0.22, 1)";
             text.style.opacity = 1;
-            text.style.transform = "scale(1) translateX(-50%)";
+            if(pos %2 === 0){
+              let random = Math.random() * 10 + 5;
+              let random2 = Math.random() * 10 + 60;
+              text.style.transform = "scale(1) translate(-"+random2+"%,-50%) rotateX(0deg) skewY("+random+"deg)";
+            }else{
+              let random = Math.random() * 10 + 5;
+              let random2= Math.random() * 10 + 30;
+
+              text.style.transform = "scale(1) translate(-"+random2+"%,-50%) rotateX(0deg) skewY(-"+random+"deg)";
+
+            }
           }, 500);
-          setTimeout(()=>{
+          setTimeout(() => {
             text.style.opacity = 0;
-            text.style.transform = "scale(.3) translateX(-50%)";
-          },2500)
+            text.style.transform = "scale(.7) translate(-50%,-50%)";
+          }, 2500);
         });
         pos++;
       }
@@ -139,13 +134,15 @@ const play_dyn_text = () => {
         </div>
       </div>
     </div>
-    <div class="absolute flex flex_direction_column rect_box justify_content_center">
+    <div
+      class="absolute flex flex_direction_column rect_box justify_content_center"
+    >
       <div @click="change_position(0)" class="rect"></div>
-      <div @click="change_position(-900)" class="rect"></div>
-      <div @click="change_position(-1800)" class="rect"></div>
-      <div @click="change_position(-2700)" class="rect"></div>
+      <div @click="change_position(-100)" class="rect"></div>
+      <div @click="change_position(-200)" class="rect"></div>
+      <div @click="change_position(-300)" class="rect"></div>
     </div>
-    <div class="absolute dyn_text " v-html="current_text"></div>
+    <div class="absolute dyn_text" v-html="current_text"></div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -157,39 +154,39 @@ const play_dyn_text = () => {
   border-radius: 5px;
 
   &::after {
-          content: "";
-          position: absolute;
-          width: 100vw;
-          height: inherit;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(to left, #000000be 5%, transparent 95%);
-          border-radius: 5px;
-        }
+    content: "";
+    position: absolute;
+    width: 100vw;
+    height: inherit;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to left, #000000be 5%, transparent 95%);
+    border-radius: 5px;
+  }
   .dyn_text {
-    font-size: 45px;
+    font-size: 30px;
     letter-spacing: 3px;
     font-weight: 900;
-    font-family: "gabriola";
+    font-family: "Microsoft YaHei";
     line-height: 35px;
     white-space: nowrap;
-    bottom: 20px;
+    top: 50%;
     z-index: 100;
     text-align: center;
     left: 50%;
-    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
     opacity: 0;
-    transform: scale(0.3) translate(-50%);
+    transform: scale(0.7) translate(-50%,-50%);
   }
   .rect_box {
-    right:10px;
+    right: 10px;
     z-index: 1000;
     height: 100%;
     bottom: 10px;
     .rect {
       width: 10px;
       height: 10px;
-            transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
       // border: #ffffff70 1px solid;
       background: #ffffff55;
       border-radius: 50%;
@@ -217,7 +214,7 @@ const play_dyn_text = () => {
         width: 100vw;
         height: inherit;
         border-radius: 5px;
-       
+
         &::before {
           content: "";
           position: absolute;

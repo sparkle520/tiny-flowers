@@ -12,13 +12,8 @@ onMounted(() => {
   change_theme(props.theme)
 });
 
-const page_data = ref({
-  total: 1,
-  current_index: 1,
-});
-const page_handle = (page_index) => {
-  console.log(page_index);
-};
+
+
 const topic_data = {
   topic_count: data.data.length,
   visit_count: 100,
@@ -30,7 +25,7 @@ const classification = [
   {name:'二次元'},
 ]
 const to_topic_list = (name)=>{
-router.push('/unknownWorldMap/list/'+name+'/0')
+router.push('/unknownWorldMap/list/'+name+'/1')
 }
 const props = defineProps({
   theme: Boolean,
@@ -133,6 +128,7 @@ $item_bf_bg: var(--item_bf_bg, #4d678233);
 $item_af_bg: var(--item_af_bg, #99d0d9);
   width: 100%;
   background: $bg_color;
+  min-height: 100vh;
   .decorate {
     position: absolute;
     width: 2vw;
@@ -149,13 +145,14 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
       transparent 100%
     );
     span{
+      font-weight: 900;
       margin-top: 1em;
       letter-spacing: .2em;
     }
   }
 
   .top_title {
-    margin-top: 20px;
+    margin-top: 70px;
     font-size: 50px;
     font-weight: 700;
     text-align: center;

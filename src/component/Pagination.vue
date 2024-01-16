@@ -22,7 +22,7 @@ onMounted(() => {
 const init = () => {
   switch_left_right_button_status(current_page_index.value);
 
-  if (props.data.total - (current_page_index.value - 1) * 10 < 10) {
+  if (Math.ceil(props.data.total /10) <= (current_page_index.value)) {
     for (
       let i = (current_page_index.value - 1) * 10 + 1;
       i <= props.data.total;
@@ -58,6 +58,8 @@ const init = () => {
 };
 const emit = defineEmits(["page_change"]);
 const props = defineProps({
+  theme: Boolean,
+
   data: {
     total: Number,
     current_index: Number,
@@ -94,7 +96,7 @@ const switch_item_status = (newV, oldV) => {
   dom__add_class(item_new, "item_active");
   dom__remove_class(item_new, "item");
 };
-const current_page_index = ref(parseInt((props.data.current_index + 9) / 10));
+const current_page_index = ref(Math.ceil(props.data.current_index /10));
 watch(current_page_index, (newV, oldV) => {
   switch_left_right_button_status(newV);
 });
@@ -177,6 +179,29 @@ const switch_page_handle = (mode) => {
   current_index.value = page_array.value[0];
   current_page_index.value = parseInt((current_index.value + 9) / 10);
 };
+
+
+watch(props, (newV, oldV) => {
+  change_theme(newV.theme)
+});
+//change scss var 
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
+const change_theme = (current_theme) => {
+  if (current_theme) {
+    c_c("--page_item_active_color", "#efe3df");
+    c_c("--page_item_active_bg", "#9b9fb8");
+    c_c("--page_item_color", "#969696");
+    c_c("--page_item_bg", "#3d3d3f");
+    
+  } else {
+    c_c("--page_item_active_color", "#f2eaea");
+    c_c("--page_item_active_bg", "#e35904");
+    c_c("--page_item_color", "#2b2a2a");
+    c_c("--page_item_bg", "#dcdcdc");
+  }
+}
 </script>
 <template>
   <div
@@ -223,7 +248,9 @@ const switch_page_handle = (mode) => {
           v-for="(item, index) in page_array"
           @click="page_handle(item)"
         >
+        <span>
           {{ item }}
+        </span>
         </li>
       </ul>
     </div>
@@ -263,9 +290,13 @@ const switch_page_handle = (mode) => {
   </div>
 </template>
 <style lang="scss" scoped>
+$page_item_active_color: var(--page_item_active_color, #f2eaea);
+$page_item_active_bg: var(--page_item_active_bg, #e35904);
+$page_item_color: var(--page_item_color, #2b2a2a);
+$page_item_bg: var(--page_item_bg, #dcdcdc);
+
 #main {
   width: 100%;
-  height: 50px;
   .right_button {
     width: 32px;
     height: 32px;
@@ -308,29 +339,39 @@ const switch_page_handle = (mode) => {
   .mid_box {
     .item_list {
       padding: 0;
+      gap: 5px;
       .item {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         user-select: none;
         font-weight: 700;
-        color: #262220;
+        color: $page_item_color;
+        border-radius: 5px;
+
+        background: $page_item_bg;
       }
       .item_active {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         user-select: none;
         font-weight: 700;
-        color: #262220;
+        color: $page_item_active_color;
+        background: transparent;
+        border-radius: 5px;
+        span{
+          z-index: 2;
+        }
         &::after {
           content: "";
           position: absolute;
-          width: 10px;
-          height: 10px;
+          width: 100%;
+          z-index: 1;
+          height: 100%;
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
-          border-radius: 50%;
-          background: #f0671e73;
+          border-radius: 5px;
+          background: $page_item_active_bg;
         }
       }
     }

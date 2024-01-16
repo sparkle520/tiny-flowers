@@ -14,7 +14,7 @@ onMounted(() => {
   window.scrollTo(0, 0);
   change_theme(props.theme)
 
-  item_list = Array.from(document.querySelectorAll('.item'))
+  item_list = Array.from(document.querySelectorAll('.topic_item'))
   document.addEventListener('scroll', scroll_handle)
     scroll_handle()
 });
@@ -30,6 +30,13 @@ const  scroll_handle = ()=>{
   }
 }
 }
+const remove_all_animation = ()=>{
+  for (let i = 0; i < item_list.length; i++) {
+  let elem = item_list[i]
+    elem.style.opacity = '0'
+    elem.classList.remove('item_animation')
+}
+}
 onUnmounted(()=>{
   document.removeEventListener('scroll', scroll_handle)
 })
@@ -41,36 +48,50 @@ const per_page_count = 20;
 const current_data = ref([]);
 const page_data = ref({
   total: 0,
-  current_index: params.page + 1,
+  page_size:per_page_count,
+  current_index: params.page,
 });
 const init_data = () => {
   switch (params.classification) {
     case "学习笔记":
-      data_handle(data.study, params.page);
+      data_handle(data.study, page_data.value.current_index);
       break;
     case "技术分享":
-      data_handle(data.technique, params.page);
+      data_handle(data.technique, page_data.value.current_index);
 
       break;
     case "生活随想":
-      data_handle(data.life, params.page);
+      data_handle(data.life, page_data.value.current_index);
 
       break;
     case "二次元":
-      data_handle(data.acg, params.page);
+      data_handle(data.acg, page_data.value.current_index);
       break;
     default:
       break;
   }
+  remove_all_animation()
+
+ nextTick(()=>{
+  item_list = Array.from(document.querySelectorAll('.topic_item'))
+  document.addEventListener('scroll', scroll_handle)
+    scroll_handle()
+ })
 };
 const data_handle = (array, page_num) => {
-  if (page_num * per_page_count >= array.length - 20) {
-    current_data.value = array.slice(0);
+  console.log(page_num);
+  if ((page_num) * per_page_count >= array.length) {
+    current_data.value = array.slice(page_num * per_page_count - per_page_count);
+    console.log(array.length);
+    console.log(current_data.value);
+
   } else {
     current_data.value = array.slice(
-      page_num * per_page_count,
-      page_num * per_page_count + per_page_count
+      (page_num -1) * per_page_count,
+      (page_num -1) * per_page_count + per_page_count
+      
     );
+    console.log(array.length);
   }
   page_data.value.total = Math.ceil(array.length / per_page_count);
 };
@@ -88,13 +109,13 @@ watch(props, (newV, oldV) => {
 const change_theme = (current_theme) =>{
   if (current_theme) {
     c_c("--bg_color", "#0b0e14");
-    c_c("--color", "#f7f3f5");
+    c_c("--color", "#f7f7f7");
     c_c("--item_bg", "#242b3d");
     c_c("--item_shadow", "#242b34");
-    c_c("--title_color", "#f7f3f5");
-    c_c("--title_af_bg", "#f7f3f58b");
-    c_c("--tag_box_bg", "#121721");
-    c_c("--tag_bg", "#f58d02");
+    c_c("--title_color", "#f7f7f7");
+    c_c("--title_af_bg", "#a3a7c1aa");
+    c_c("--tag_box_bg", "#2d3041");
+    c_c("--tag_bg", "#9fa3bc");
 
   } else {
     c_c("--bg_color", "#f7f3f5");
@@ -106,6 +127,31 @@ const change_theme = (current_theme) =>{
     c_c("--tag_box_bg", "#dae6e7");
     c_c("--tag_bg", "#41a8a8");
   }
+}
+const page_handle = (index) =>{
+  switch (params.classification) {
+    case "学习笔记":
+    router.push('/unknownWorldMap/list/学习笔记/'+index)
+      break;
+    case "技术分享":
+    router.push('/unknownWorldMap/list/技术分享/'+index)
+
+      break;
+    case "生活随想":
+    router.push('/unknownWorldMap/list/生活随想/'+index)
+
+      break;
+    case "二次元":
+    router.push('/unknownWorldMap/list/二次元/'+index)
+      break;
+    default:
+      break;
+  }
+  nextTick(()=>{
+    window.scrollTo(0, 0);
+    page_data.value.current_index = index
+    init_data()
+  })
 }
 //change scss var 
 const c_c = (mut_val, color) => {
@@ -119,7 +165,7 @@ const c_c = (mut_val, color) => {
       <div
       @click="jump_to_topic(item.link)"
         v-for="(item, index) in current_data"
-        class="item flex flex_direction_column relative"
+        class="topic_item flex flex_direction_column relative"
       >
         <div class="item_inner_box margin_2_percent flex flex_direction_column">
           <div>
@@ -142,6 +188,7 @@ const c_c = (mut_val, color) => {
         @page_change="page_handle"
         class="pagination"
         :data="page_data"
+        :theme="props.theme"
       ></Pagination>
     </div>
   </div>
@@ -164,11 +211,12 @@ $tag_bg: var(--tag_bg, #41a8a8);
     margin-left: 20px;
     min-height: calc(100vh);
     width: 60vw;
+    padding-bottom: 30px;
     .item_animation {
       animation: fade_in 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     }
-    .item {
+    .topic_item {
       width: 60vw;
       min-height: 200px;
       background: $item_bg;
@@ -236,7 +284,6 @@ $tag_bg: var(--tag_bg, #41a8a8);
     }
     .pagination {
       align-self: center;
-      height: 50px;
     }
   }
 }
