@@ -18,13 +18,13 @@ const props = defineProps({
 });
 </script>
 <template>
-     <div class="title_box">
-        <span class="title relative">
+     <div class="topic_title_box">
+        <span class="topic_title relative">
           {{ data.title }}
         </span>
-        <div class="time_bar flex flex_direction_row">
+        <div class="topic_time_bar flex flex_direction_row">
           {{ data.date.split('?')[0] }}
-          <div class="time flex justify_content_center align_items_center">
+          <div class="topic_time flex justify_content_center align_items_center">
             <svg
               t="1704628451767"
               class="icon"
@@ -47,37 +47,7 @@ const props = defineProps({
       </div>
 </template>
 <style lang="scss" scoped>
-#main {
-    width: 100%;
-    .title_box {
-      width: 100%;
-      margin-top: 20px;
-      font-weight: 700;
-      font-size: 30px;
-      .title {
-        color: rgb(23, 62, 108);
 
-        margin-left: 30px;
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          height: 15px;
-          background-color: rgba(34, 17, 51, 0.393);
-        }
-      }
-      .time_bar {
-        margin-top: 10px;
-        margin-left: 30px;
-        font-size: 14px;
-        color: #989e6a;
-        .time {
-          margin-left: 30px;
-          color: #5d6e4a;
-        }
-      }
-    }
-}
+ @import url("/src/assets/css/topic.scss");
+
 </style>

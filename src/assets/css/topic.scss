@@ -1,0 +1,118 @@
+$topic_content_bg: var(--topic_content_bg, #f7f3f5);
+  $topic_bg: var(--topic_bg, #e1e4ea);
+  $normal_color: var(--normal_color, #0f1828);
+  $topic_title_color: var(--topic_title_color, #173e6c);
+  $topic_title_af_bg: var(--topic_title_af_bg, #22113364);
+  $topic_time_bar_color: var(--topic_time_bar_color, #989e6a);
+  $topic_time_color: var(--topic_time_color, #5d6e4a);
+
+#topic_main {
+    padding-top: 80px;
+  width: 100%;
+  background: $topic_bg;
+  min-height: 100vh;
+  font-family: "Microsoft YaHei";
+  color: $normal_color;
+  .topic_content {
+    width: 80%;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 80vh;
+    background: $topic_content_bg;
+    margin-bottom: 100px;
+   
+    .topic_text {
+      width: 80%;
+      margin: 10px auto;
+    }
+  }
+}
+img {
+  object-fit: cover;
+  width: 100%;
+  box-shadow: #100f0fbe 2px 3px 10px;
+  margin-bottom: 30px;
+}
+.normal {
+  font-size: 16px;
+  color: $normal_color;
+  line-height: 23px;
+  margin: 10px 0;
+}
+.center_18_title {
+  margin: 20px auto;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20px;
+}
+.orange {
+  color: #d77f57;
+}
+.pink {
+  color: #df4c58;
+}
+.line_height_30 {
+  line-height: 30px;
+}
+.font_weight_900 {
+  font-weight: 900;
+}
+.cyan {
+  color: #41a8a8;
+}
+.purple {
+  color: #84709b;
+}
+.blue {
+  color: #b6cad7;
+}
+.green {
+  color: #91b5a9;
+}
+.yellow {
+  color: #f3af27;
+}
+.tiffany_blue {
+  color: #81d8cf;
+}
+.titian_red {
+  color: #b05923;
+}
+.vandyke_brown {
+  color: #8f4b28;
+}
+.topic_title_box {
+    width: 100%;
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 30px;
+    .topic_title {
+      color: $topic_title_color;
+
+      margin-left: 30px;
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 15px;
+        background-color: $topic_title_af_bg;
+      }
+    }
+    .topic_time_bar {
+      margin-top: 10px;
+      margin-left: 30px;
+      font-size: 14px;
+      color: $topic_time_bar_color;
+      .topic_time {
+        margin-left: 30px;
+        color: $topic_time_color;
+      }
+    }
+  }
+
+
+

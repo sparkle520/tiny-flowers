@@ -3,7 +3,7 @@
     position: relative;
     display: block;
     display: flex;
-    color: #6090f0;
+    color: #b8c6e2;
     font-family: 'monaco';
     width: max-content;
     padding: 30px 10px 2px 0;
@@ -11,8 +11,7 @@
     font-size: 14px;
     line-height: 24px;
     text-align: left;
-    background: #f0e6ea;
-    box-shadow: 0 10px 30px 0 rgba(141, 140, 140, 0.119);
+    background: #282c3c;
   }
   
   /** 3个点 */
@@ -38,7 +37,7 @@
   :deep(.hljs) {
     overflow-x: auto;
     font-family: 'monaco';
-    background: #f0e6ea;
+    background: #282c3c;
 
   }
   

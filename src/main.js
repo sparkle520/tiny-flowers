@@ -11,7 +11,7 @@ import 'element-plus/theme-chalk/index.css'
 import GlobalComponents from '/src/component/index'
 import {VueLatex} from "vatex"
 
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github-dark.css'
 import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 

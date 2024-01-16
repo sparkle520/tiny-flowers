@@ -3,21 +3,49 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, onBeforeMount, onMounted } from "vue";
+import { reactive, toRefs, onBeforeMount, onMounted,watch } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 onBeforeMount(() => {});
-onMounted(() => {});
+onMounted(() => {
+  change_theme(props.theme)
+
+});
+const props = defineProps({
+  theme: Boolean,
+});
+watch(props, (newV, oldV) => {
+  change_theme(newV.theme)
+});
 const go_github = () => {
   window.location.href = "https://github.com/sparkle520";
 };
 const go_netEase_cloud_music = () => {
   window.location.href = "https://music.163.com/song?id=1401025134&userid=499623339";
 };
+//change scss var 
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
+const change_theme = (current_theme) =>{
+  if (current_theme) {
+    c_c("--bg_color", "#0b0e14");
+    
+
+  } else {
+    c_c("--bg_color", "#f7f3f5");
+
+  }
+}
 </script>
 <template>
   <div id="main" class="relative">
-    <div class="bg absolute">
+    <div class="layer1"></div>
+    <div class="layer2"></div>
+    <div class="layer3"></div>
+    
+
+    <!-- <div class="bg absolute">
       <img
         class="absolute"
         src="https://pic.imgdb.cn/item/659e6246871b83018a27b7cc.jpg"
@@ -71,104 +99,65 @@ const go_netEase_cloud_music = () => {
           ></path>
         </svg>
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
 <style lang="scss" scoped>
+  $bg_color: var(--bg_color, #f7f3f5);
+
 #main {
   width: 100vw;
   height: 100vh;
-  .bg {
-    width: inherit;
-    height: 100vh;
-    img {
-      width: inherit;
-      height: inherit;
-      object-fit: cover;
-      opacity: 1;
-    }
-  }
-  .card {
-    width: 330px;
-    height: 450px;
-    text-align: center;
-    color: #5c9dba;
-    z-index: 10;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-family: inherit;
-    animation: move_down 2s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-    background-color: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 0.727273px solid rgba(255, 255, 255, 0.18);
-    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-
-    z-index: 1;
-    .info_box {
-      span {
-        span {
-          color: #f9785f;
-        }
-      }
-    }
-    p {
-      opacity: 0;
-      transition: all 0.5s;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .img {
-      margin: 60px auto 10px auto;
-      width: 85px;
-      height: 85px;
-      border: 1px solid #f0f0f0;
-      border-radius: 50%;
-      font-size: 11px;
-      transition: all 0.5s;
-      z-index: 99;
-      img {
-        width: inherit;
-        height: inherit;
-        border-radius: inherit;
-      }
-    }
-    h1 {
-      padding: 10px;
-      font-weight: 500;
-      font-size: 18px;
-    }
-
-    svg {
-      cursor: pointer;
-    }
-    &:hover {
-      .img {
-        transform: scale(1.1);
-        border: 1px solid #f0f0f0;
-      }
-      h1,
-      p {
-        opacity: 1;
-      }
-    }
-  }
+  background-color: $bg_color;
 }
-@keyframes move_down {
-  0% {
-    top: 0;
-    transform: translate(-50%, 0%);
-  }
-  100% {
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
+@function createShadow($count) {
+    $boxShadow: 0 0 0 0 #fff;
+
+    @for $i from 0 through $count {
+        $boxShadow: "#{$boxShadow}, #{random(100)}vw #{random(100)}vh 0 0 #fff";
+    }
+
+    @return unquote($boxShadow);
+}
+
+$count: 300;
+$duration: 50;
+
+//.layer1 直径小 数量多 速度慢 
+//.layer2 直径中 数量中 速度中
+//.layer3 直径大 数量少 速度快
+
+@for $i from 1 through 3 {
+    $currentCount: floor(calc($count / $i));//.lqyer1~.layer3星星数量越来越少
+    $currentDuration: floor(calc($duration / $i));//.lqyer1~.layer3星星运动越来越快
+    .layer#{$i} {//.layer1//.layer2//.layer3
+        $size: #{$i}px;//.lqyer1~.layer3星星直径越来越大
+        width: $size;
+        height: $size;
+        position: fixed;
+        background-color: #fff;
+        border-radius: 50%;
+        box-shadow: createShadow($currentCount);
+        transform-origin: center bottom;
+        animation: moveUp #{$currentDuration}s linear infinite;
+
+        &::after {
+            content: "";
+            position: fixed;
+            left: 0;
+            top: 100vh;
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+            box-shadow: inherit;
+        }
+    }
+}
+
+
+@keyframes moveUp {
+    100% {
+        transform: translateY(-100vh);
+    }
 }
 </style>

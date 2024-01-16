@@ -51,7 +51,7 @@ const routes = [
         component: () => import("/src/topic/Topic_1.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
         }
     },
     {
@@ -59,7 +59,7 @@ const routes = [
         component: () => import("/src/topic/Topic_2.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
         }
     },
     {
@@ -86,7 +86,6 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-
         }
     },
 ]

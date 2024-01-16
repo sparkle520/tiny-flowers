@@ -18,6 +18,7 @@ const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   init();
+  change_theme(props.theme)
 });
 const init = () => {
   switch_left_right_button_status(current_page_index.value);
