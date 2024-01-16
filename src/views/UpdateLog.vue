@@ -29,7 +29,7 @@ const log = [
   //     content: ["Features:", "Fixed:", "Changed:", "Refactored:", "Removed:"],
   //   },
   {
-    version: "1.0.0",
+    version: "1.0.0孵化中",
     date: "2024-01-04",
     content: [
       "Features:",
