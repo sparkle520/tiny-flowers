@@ -28,13 +28,14 @@ $topic_content_bg: var(--topic_content_bg, #f7f3f5);
       margin: 10px auto;
     }
   }
+  img {
+    object-fit: cover;
+    width: 100%;
+    box-shadow: #100f0fbe 2px 3px 10px;
+    margin-bottom: 30px;
+  }
 }
-img {
-  object-fit: cover;
-  width: 100%;
-  box-shadow: #100f0fbe 2px 3px 10px;
-  margin-bottom: 30px;
-}
+
 .normal {
   font-size: 16px;
   color: $normal_color;
