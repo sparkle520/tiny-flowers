@@ -4,29 +4,22 @@
 
 <script setup>
 import {
-  reactive,
   ref,
-  toRefs,
   onBeforeMount,
   onUnmounted,
   onMounted,
   nextTick,
+  watch
 } from "vue";
 import { useRouter } from "vue-router";
+import FullCarousel from "../component/FullCarousel.vue";
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
-  init();
+  change_theme(props.theme)
 });
-onUnmounted(() => {
-  clearInterval(cycle_carousel);
-});
-const init = () => {
-  let carousel_img = document.querySelector(".carousel_img");
+onUnmounted(() => {});
 
-  carousel_img.style.transform = "scale(1." + flash_img + ")";
-  flash_img++;
-};
 const go_to_unknown_world_map = () => {
   router.push("/unknownWorldMap");
 };
@@ -37,31 +30,30 @@ const carousel_data = ref([
   { link: "https://pic.imgdb.cn/item/659c0a3a871b83018ad5736f.png" },
   { link: "https://pic.imgdb.cn/item/659bfd7e871b83018a917e4b.png" },
 ]);
-const current_img = ref(0);
-const cycle_carousel = setInterval(() => {
-  let carousel_img = document.querySelector(".carousel_img");
+const props = defineProps({
+  theme: Boolean,
+});
 
-  if (flash_img === 4) {
-    carousel_img.style.transform = "scale(1." + flash_img + ")";
-    carousel_img.style.opacity = "0";
-  } else if (flash_img === 5) {
-    flash_img = 0;
-    carousel_img.style.transform = "scale(1)";
-    carousel_img.style.transition = "all 0s linear";
-
-    carousel_img.style.opacity = "0";
-    current_img.value = current_img.value === 3 ? 0 : (current_img.value += 1);
-    setTimeout(() => {
-      carousel_img.style.opacity = "1";
-      carousel_img.style.transition = "all 2s linear";
-      carousel_img.style.transform = "scale(1.05)";
-    }, 1000);
+watch(props, (newV, oldV) => {
+  change_theme(newV.theme)
+});
+//change scss var 
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
+const change_theme = (current_theme) => {
+  if (current_theme) {
+    c_c("--bg_color", "#1e2433");
+    c_c("--first_page_cover_bg", "#1e2433");
+   
   } else {
-    carousel_img.style.transform = "scale(1." + flash_img + ")";
+    c_c("--bg_color", "#f7f3f5");
+    c_c("--first_page_cover_bg", "transparent");
+  
   }
-  flash_img++;
-}, 2000);
-let flash_img = 0;
+}
+
+
 </script>
 <template>
   <div id="main" class="flex flex_direction_column">
@@ -91,14 +83,20 @@ let flash_img = 0;
           ></path>
         </svg>
       </button>
-      <img class="carousel_img" :src="carousel_data[current_img].link" alt="" />
+      <FullCarousel :carousel_data="carousel_data"></FullCarousel>
+      <div class="first_page_cover absolute"></div>
+    </div>
+    <div class="second_page relative">
+
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
+$bg_color: var(--bg_color, #f7f3f5);
+$first_page_cover_bg: var(--first_page_cover_bg, #1e2433);
 #main {
   width: 100vw;
-  background: #f7f3f5;
+  background: $bg_color;
   .first_page {
     width: 100vw;
     height: 100vh;
@@ -158,7 +156,7 @@ let flash_img = 0;
     .word_box {
       left: 100px;
       top: 130px;
-      z-index: 100;
+      z-index: 1;
       animation: to_right 5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       &::after {
@@ -182,7 +180,7 @@ let flash_img = 0;
     .word_box_2 {
       right: 3%;
       top: 60%;
-      z-index: 100;
+      z-index: 1;
       animation: to_left 5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       &::after {
@@ -204,11 +202,13 @@ let flash_img = 0;
       }
     }
     overflow: hidden;
-    img {
+    .first_page_cover{
       width: 100vw;
       height: 100vh;
-      object-fit: cover;
-      transition: all 2s linear;
+      left: 0;
+      top: 0;
+      z-index: 199;
+      background: linear-gradient(to right, $first_page_cover_bg 1%,transparent 50%, $first_page_cover_bg 100%);
     }
   }
 }

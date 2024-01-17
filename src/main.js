@@ -14,8 +14,6 @@ import {VueLatex} from "vatex"
 import 'highlight.js/styles/github-dark.css'
 import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
-
-
 // let g_current_index = 0
 const app = createApp(App)
 // app.provide('g_current_index', g_current_index)

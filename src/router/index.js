@@ -63,8 +63,8 @@ const routes = [
         }
     },
     {
-        path: '/math',
-        component: () => import("/src/views/Math.vue"),
+        path: '/yourName',
+        component: () => import("/src/views/YourName.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: false,

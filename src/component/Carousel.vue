@@ -19,7 +19,6 @@ const router = useRouter();
 onBeforeMount(() => {});
 onUnmounted(() => {
   clearInterval(cycle);
-  clearInterval(play);
 });
 onMounted(() => {
   const rect_list = document.querySelectorAll(".rect");
@@ -83,12 +82,11 @@ const text_list = [
   // `<span style="color: #F6CEEC;text-shadow: #D939CD 1px 1px 5px;">我们的爱情呼唤 我们的声音</span>`,
   // `<span style="color: #FEC163;text-shadow: #DE4313 1px 1px 5px;">呼唤着:“出发吧” </span>`,
 ];
-let play = null;
 const play_dyn_text = () => {
   if (current_text.value === "") {
     let pos = 0;
     const text = document.querySelector(".dyn_text");
-   play = setInterval(() => {
+   let play = setInterval(() => {
       if (pos === text_list.length) {
         current_text.value = "";
         clearInterval(play);
@@ -148,7 +146,7 @@ const play_dyn_text = () => {
 <style lang="scss" scoped>
 #main {
   width: 100vw;
-  height: 600px;
+  height: 500px;
   overflow: hidden;
   // box-shadow: #e4b198 15px 16px 5px, #98cde4 -15px -16px 5px;
   border-radius: 5px;

@@ -5,10 +5,12 @@
 <script setup>
 import { reactive, toRefs, onBeforeMount, ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+import change_theme from "../assets/theme/UpdateLog";
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   change_theme(props.theme)
+  window.scrollTo(0, 0);
 
 });
 const carousel_data = ref([
@@ -47,27 +49,7 @@ const props = defineProps({
 watch(props, (newV, oldV) => {
   change_theme(newV.theme)
 });
-//change scss var 
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    c_c("--bg_color", "#1e2433");
-    c_c("--color", "#f7f3f5");
-    c_c("--li", "#242b3d");
-    c_c("--li_shadow", "#242b34");
-    c_c("--striking_title_orange_color", "#f7f3f5");
-    c_c("--striking_title_orange_bg", "#f7f3f5");
-  } else {
-    c_c("--bg_color", "#f7f3f5");
-    c_c("--color", "#000000");
-    c_c("--li", "#fff");
-    c_c("--li_shadow", "#f4f2f2");
-    c_c("--striking_title_orange_color", "#f0681e");
-    c_c("--striking_title_orange_bg", "#ff7b005b");
-  }
-}
+
 </script>
 <template>
   <div id="main" class="flex flex_direction_column">
@@ -131,12 +113,15 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
   .carousel {
     width: 100vw;
     margin: 0 auto;
+    animation: move_bottom 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .content {
     min-height: 80vh;
     width: 90%;
     margin: 50px auto;
     background: $bg_color;
+    animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     ul {
       padding: 0;
       .version {
@@ -185,5 +170,19 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
 }
 .removed {
   color: #ff0000;
+}
+@keyframes move_bottom {
+  0%{
+    transform: translateY(-100vh);
+  }100%{
+    transform: translateY(0);
+  }
+}
+@keyframes move_top {
+  0%{
+    transform: translateY(100vh);
+  }100%{
+    transform: translateY(0);
+  }
 }
 </style>

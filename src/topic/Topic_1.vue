@@ -6,7 +6,6 @@
 import { reactive, toRefs, ref, onBeforeMount, onMounted ,watch} from "vue";
 import { useRouter } from "vue-router";
 import {change_theme} from '/src/assets/js/topic.js'
-import TopicTop from '/src/component/TopicTop.vue'
 import TopicTitle from '/src/component/TopicTitle.vue'
 
 const router = useRouter();
@@ -123,7 +122,7 @@ const data = {
       </div>
     </div>
   </div>
-  <TopicTop></TopicTop>
+  <Utils :theme="props.theme"></Utils>
 
 </template>
 <style lang="scss" scoped>

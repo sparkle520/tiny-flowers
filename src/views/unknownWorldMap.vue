@@ -6,16 +6,19 @@
 import { reactive, ref, toRefs, onBeforeMount, onMounted,watch } from "vue";
 import { useRouter } from "vue-router";
 import data from "/src/assets/config/data.js"
+import change_theme  from "../assets/theme/UnknownWorldMap";
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
+  window.scrollTo(0, 0);
+
   change_theme(props.theme)
 });
 
 
 
 const topic_data = {
-  topic_count: data.data.length,
+  topic_count: data.length(),
   visit_count: 100,
 };
 const classification = [
@@ -33,38 +36,8 @@ const props = defineProps({
 watch(props, (newV, oldV) => {
   change_theme(newV.theme)
 });
-//change scss var 
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    //night
-    c_c("--bg_color", "#1e2433");
-    c_c("--color", "#e3eae1");
-    c_c("--p", "#e3eae1");
-    c_c("--decorate_bg_1", "#e3eae1");
-    c_c("--decorate_bg_2", "#e3eae1");
-    c_c("--decorate_bg_3", "#ffff");
-    c_c("--item_bg", "#242b3d");   
-    c_c("--item_shadow", "#242b34");
-    c_c("--item_color", "#f0e6e4");
-    c_c("--item_bf_bg", "#d2c3d522");
-    c_c("--item_af_bg", "#94709b");
-  } else {
-    c_c("--bg_color", "#f7f3f5");
-    c_c("--color", "#262220");
-    c_c("--p", "#705547");
-    c_c("--decorate_bg_1", "#f0681e");
-    c_c("--decorate_bg_2", "#ed8262");
-    c_c("--decorate_bg_3", "#f89d8a");
-    c_c("--item_bg", "#fffbf9");
-    c_c("--item_shadow", "#ff7b005b");
-    c_c("--item_color", "#f0681e");
-    c_c("--item_bf_bg", "#4d678233");
-    c_c("--item_af_bg", "#99d0d9");
-  }
-}
+
+
 </script>
 <template>
   <div id="main" class="relative">
@@ -76,7 +49,7 @@ const change_theme = (current_theme) => {
     <div
       class="top_title relative flex align_items_center justify_content_center flex_direction_column"
     >
-      UNKNOWN<br />WORLD<br />MAP
+      <span class="top_head">UNKNOWN<br />WORLD<br />MAP</span>
       <div class="rectangle_1"></div>
       <div class="message">
         If only our voices speak at night.<br />
@@ -136,6 +109,7 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
     right: 9%;
     color: $bg_color;
     writing-mode: vertical-rl;
+    animation: move_bottom 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     z-index: 0;
     background: linear-gradient(
       to bottom,
@@ -160,17 +134,25 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
     color: $color;
     z-index: 1;
     font-family: "STHupo", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+.top_head{
+  animation: move_bottom 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+}
     .rectangle_1 {
       width: 0.7vw;
       height: 100px;
       background: $color;
       border-radius: 10px;
+      animation: move_top 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     }
     .message {
       margin-top: 10px;
       font-family: "Microsoft YaHei";
       font-size: 15px;
       line-height: 20px;
+      animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     }
   }
   .statistics_box {
@@ -181,19 +163,23 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
     margin-top: 20px;
     z-index: 1;
     color: $item_color;
+    animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     p {
       color: $p;
+
     }
     .topic_count {
       margin-right: 150px;
       margin-bottom: 30px;
+
     }
     .rectangle_2 {
       width: 0.7vw;
       height: 100%;
-      left: 50%;
+     margin: 0 auto;
       background-color: $color;
-      transform: translateX(-50%);
+   
       border-radius: 10px;
     }
     .visit_count {
@@ -203,10 +189,10 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
   }
   .content {
     z-index: 1;
-    margin-bottom: 100px;
+
     .class_box{
       width: 70%;
-      margin: 20px auto;
+      margin: 20px auto 0 auto;
       margin-bottom: 0;
       gap:10px;
       flex-wrap: wrap;
@@ -219,6 +205,8 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
         color: $item_color;
         font-weight: bold;
         overflow: hidden;
+        animation: move_top 2.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+
         &:hover{
           &::after{
             transform: scale(1.4);
@@ -253,19 +241,22 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
         }
       }
     }
-    .topic {
-      width: 40%;
-      margin: 20px auto;
-    }
+    
   }
-  .pagination {
-    width: 70%;
-    z-index: 1;
-    left: 50%;
-    height: 50px;
-    transform: translateX(-50%);
-    bottom: 40px;
-    background: transparent;
+
+}
+@keyframes move_bottom {
+  0%{
+    transform: translateY(-100vh);
+  }100%{
+    transform: translateY(0);
+  }
+}
+@keyframes move_top {
+  0%{
+    transform: translateY(100vh);
+  }100%{
+    transform: translateY(0);
   }
 }
 </style>

@@ -1,196 +1,44 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { inject, onMounted, watch,ref } from "vue";
+import { inject, onMounted, watch, ref,onUnmounted,nextTick } from "vue";
+import { clickEffect} from "/src/assets/js/mouse.js";
+import emitter from "@/assets/config/mitt_bus.js"
 
 const route = useRoute();
-const key = route.path + Math.random();
+ const key = route.path + Math.random();
 // const change_current_index =(index) =>{
 //     g_current_index = index
 // }
-// let g_current_index = inject('g_current_index')
+// let g_side_bar = inject('g_side_bar')
+let current_side_view = true;
 onMounted(() => {
-
+    emitter.emit('new_side_view', {current_side_view:current_side_view})
 });
 //鼠标特效
-
-function clickEffect() {
-  let balls = [];
-  let longPressed = false;
-  let longPress;
-  let multiplier = 0;
-  let width, height;
-  let origin;
-  let normal;
-  let ctx;
-  const colours = ["#F73859", "#14FFEC", "#00E0FF", "#FF99FE", "#FAF15D"];
-  const canvas = document.createElement("canvas");
-  document.body.appendChild(canvas);
-  canvas.setAttribute(
-    "style",
-    "width: 100%; height: 100%; top: 0; left: 0; z-index: 99999; position: fixed; pointer-events: none;"
-  );
-  const pointer = document.createElement("span");
-  pointer.classList.add("pointer");
-  document.body.appendChild(pointer);
-
-  if (canvas.getContext && window.addEventListener) {
-    ctx = canvas.getContext("2d");
-    updateSize();
-    window.addEventListener("resize", updateSize, false);
-    loop();
-    window.addEventListener(
-      "mousedown",
-      function (e) {
-        pushBalls(randBetween(10, 20), e.clientX, e.clientY);
-        document.body.classList.add("is-pressed");
-        longPress = setTimeout(function () {
-          document.body.classList.add("is-longpress");
-          longPressed = true;
-        }, 500);
-      },
-      false
-    );
-    window.addEventListener(
-      "mouseup",
-      function (e) {
-        clearInterval(longPress);
-        if (longPressed == true) {
-          document.body.classList.remove("is-longpress");
-          pushBalls(
-            randBetween(
-              50 + Math.ceil(multiplier),
-              100 + Math.ceil(multiplier)
-            ),
-            e.clientX,
-            e.clientY
-          );
-          longPressed = false;
-        }
-        document.body.classList.remove("is-pressed");
-      },
-      false
-    );
-    window.addEventListener(
-      "mousemove",
-      function (e) {
-        let x = e.clientX;
-        let y = e.clientY;
-        pointer.style.top = y + "px";
-        pointer.style.left = x + "px";
-      },
-      false
-    );
-  } else {
-  }
-
-  function updateSize() {
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
-    ctx.scale(2, 2);
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-    origin = {
-      x: width / 2,
-      y: height / 2,
-    };
-    normal = {
-      x: width / 2,
-      y: height / 2,
-    };
-  }
-  class Ball {
-    constructor(x = origin.x, y = origin.y) {
-      this.x = x;
-      this.y = y;
-      this.angle = Math.PI * 2 * Math.random();
-      if (longPressed == true) {
-        this.multiplier = randBetween(14 + multiplier, 15 + multiplier);
-      } else {
-        this.multiplier = randBetween(6, 12);
-      }
-      this.vx = (this.multiplier + Math.random() * 0.5) * Math.cos(this.angle);
-      this.vy = (this.multiplier + Math.random() * 0.5) * Math.sin(this.angle);
-      this.r = randBetween(1, 5) + 3 * Math.random();
-      this.color = colours[Math.floor(Math.random() * colours.length)];
-    }
-    update() {
-      this.x += this.vx - normal.x;
-      this.y += this.vy - normal.y;
-      normal.x = (-2 / window.innerWidth) * Math.sin(this.angle);
-      normal.y = (-2 / window.innerHeight) * Math.cos(this.angle);
-      this.r -= 0.3;
-      this.vx *= 0.9;
-      this.vy *= 0.9;
-    }
-  }
-
-  function pushBalls(count = 1, x = origin.x, y = origin.y) {
-    for (let i = 0; i < count; i++) {
-      balls.push(new Ball(x, y));
-    }
-  }
-
-  function randBetween(min, max) {
-    return Math.floor(Math.random() * max) + min;
-  }
-
-  function loop() {
-    ctx.fillStyle = "rgba(255, 255, 255, 0)";
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < balls.length; i++) {
-      let b = balls[i];
-      if (b.r < 0) continue;
-      ctx.fillStyle = b.color;
-      ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
-      ctx.fill();
-      b.update();
-    }
-    if (longPressed == true) {
-      multiplier += 0.2;
-    } else if (!longPressed && multiplier >= 0) {
-      multiplier -= 0.4;
-    }
-    removeBall();
-    requestAnimationFrame(loop);
-  }
-
-  function removeBall() {
-    for (let i = 0; i < balls.length; i++) {
-      let b = balls[i];
-      if (
-        b.x + b.r < 0 ||
-        b.x - b.r > width ||
-        b.y + b.r < 0 ||
-        b.y - b.r > height ||
-        b.r < 0
-      ) {
-        balls.splice(i, 1);
-      }
-    }
-  }
+onUnmounted(()=>{
+  emitter.all.clear()
+})
+const side_view_handle = () => {
+  current_side_view = !current_side_view
+  emitter.emit('new_side_view', {current_side_view:current_side_view})
 }
+emitter.on('side_view_change', () => side_view_handle())
 clickEffect();
 const music = ref(false);
 const music_handle = (status) => {
   music.value = status;
-  
 };
-const theme_handle = (status)=>{
+const theme_handle = (status) => {
   current_theme.value = status;
-}
+};
 const current_theme = ref(false);
 watch(current_theme, (newV, oldV) => {
   if (newV.theme) {
     c_c("--bg_color", "#1e2433");
     document.body.style.background = "#1e2433";
-   
   } else {
     c_c("--bg_color", "#f7f3f5");
     document.body.style.background = "#f7f3f5";
-
   }
 });
 const c_c = (mut_val, color) => {
@@ -201,18 +49,32 @@ const c_c = (mut_val, color) => {
 <template>
   <div id="main" class="flex flex_direction_column">
     <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->
-    <TopNavBar @music_change="music_handle" class="nav" @theme_change="theme_handle" :theme="current_theme"></TopNavBar>
+    <TopNavBar
+      @music_change="music_handle"
+      class="nav"
+      @theme_change="theme_handle"
+      :theme="current_theme"
+    ></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
-    <router-view :key="key" class="router_view" :theme="current_theme"></router-view>
-    <MusicPlayer v-show="music" class="music_player absolute " :theme="current_theme"></MusicPlayer>
+    <router-view
+      :key="key"
+      class="router_view"
+      :theme="current_theme"
+      :layout="current_side_view"
+    ></router-view>
+    <MusicPlayer
+      v-show="music"
+      class="music_player absolute"
+      :theme="current_theme"
+    ></MusicPlayer>
   </div>
 </template>
 
 <style lang="scss" scoped>
-  $bg_color: var(--bg_color, #f7f3f5);
+$bg_color: var(--bg_color, #f7f3f5);
 
 #main {
-background: $bg_color;
+  background: $bg_color;
   width: 100vw;
   .nav {
     z-index: 1000000;
@@ -226,7 +88,6 @@ background: $bg_color;
     background: transparent;
   }
   .router_view {
-    
   }
   .music_player {
     width: 400px;
@@ -235,14 +96,14 @@ background: $bg_color;
     height: 150px;
     z-index: 1000;
     position: fixed;
-    animation: move .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation: move 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
-  
 }
 @keyframes move {
-  0%{
-    right:-100%;
-  }100%{
+  0% {
+    right: -100%;
+  }
+  100% {
     right: 0;
   }
 }

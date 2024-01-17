@@ -14,6 +14,7 @@ import {
   nextTick,
 } from "vue";
 import { useRouter } from "vue-router";
+import change_theme  from "../assets/theme/TopNavBar";
 const router = useRouter();
 
 onBeforeMount(() => {});
@@ -53,8 +54,8 @@ const nav_list = [
   },
   {
     index: 3,
-    name: "数学",
-    path: "/math",
+    name: "你的名字",
+    path: "/yourName",
   },
   {
     index: 4,
@@ -90,7 +91,7 @@ const switch_nav_active = () => {
         switch_nav_item(2);
         break;
 
-      case "math":
+      case "yourName":
         switch_nav_item(3);
         break;
       case "updateLog":
@@ -136,26 +137,9 @@ const props = defineProps({
 watch(props, (newV, oldV) => {
   change_theme(newV.theme)
 });
-const change_theme = (theme) => {
-if(theme){
-  c_c("--nav_bg_color","transparent")
-  c_c("--nav_fixed_shadow","#ffffff01")
-  c_c("--nav_item_color","#b5b9d6")
-  c_c("--nav_item_active_color","#e78287")
-  c_c("--nav_item_hover_color","#f67d61")
 
-}else{
-  c_c("--nav_bg_color","transparent")
-  c_c("--nav_fixed_shadow","#8e8e8e30")
-  c_c("--nav_item_color","#5e6d78")
-  c_c("--nav_item_active_color","#f67d61")
-  c_c("--nav_item_hover_color","#f76700")
-}
-}
-//change scss var 
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
+
+
 </script>
 <template>
   <div id="main" class="nav_main">

@@ -3,52 +3,84 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, watch,onMounted,onUnmounted,nextTick } from "vue";
+import {
+  reactive,
+  toRefs,
+  ref,
+  onBeforeMount,
+  watch,
+  onMounted,
+  onUnmounted,
+  nextTick,
+} from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import data from "/src/assets/config/data.js";
+import emitter from "@/assets/config/mitt_bus.js";
+import change_theme from "@/assets/theme/TopicList.js";
+
 const { params } = useRoute();
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
-  window.scrollTo(0, 0);
-  change_theme(props.theme)
-
-  item_list = Array.from(document.querySelectorAll('.topic_item'))
-  document.addEventListener('scroll', scroll_handle)
-    scroll_handle()
+  init();
 });
-let item_list = []
+const init = () => {
+  window.scrollTo(0, 0);
+  change_theme(props.theme);
+  change_layout(props.layout);
+  item_list = Array.from(document.querySelectorAll(".topic_item"));
+  document.addEventListener("scroll", scroll_handle);
+  scroll_handle();
+};
+let item_list = [];
+const side_view_handle = (v) => {
+  change_layout(v.current_side_view);
+};
+const change_layout = (flag) => {
+  const topic_box = document.querySelector(".topic_box");
 
-const  scroll_handle = ()=>{
-  for (let i = 0; i < item_list.length; i++) {
-  let elem = item_list[i]
-  // console.log(elem.offsetTop,window.scrollY);
-  if (elem.offsetTop  <= window.scrollY + 900) {
-    elem.style.opacity = '1'
-    elem.classList.add('item_animation')
+  if (flag) {
+    topic_box.style.width = "60vw";
+    topic_box.style.margin = "100px 0 0 60px";
+    show_personal_info.value = true;
+  } else {
+    topic_box.style.width = "80vw";
+    topic_box.style.margin = "100px auto 0 auto";
+    show_personal_info.value = false;
   }
-}
-}
-const remove_all_animation = ()=>{
+};
+emitter.on("new_side_view", (v) => side_view_handle(v));
+const scroll_handle = () => {
   for (let i = 0; i < item_list.length; i++) {
-  let elem = item_list[i]
-    elem.style.opacity = '0'
-    elem.classList.remove('item_animation')
-}
-}
-onUnmounted(()=>{
-  document.removeEventListener('scroll', scroll_handle)
-})
+    let elem = item_list[i];
+    // console.log(elem.offsetTop,window.scrollY);
+    if (elem.offsetTop <= window.scrollY + 900) {
+      elem.style.opacity = "1";
+      elem.classList.add("item_animation");
+    }
+  }
+};
+const remove_all_animation = () => {
+  for (let i = 0; i < item_list.length; i++) {
+    let elem = item_list[i];
+    elem.style.opacity = "0";
+    elem.classList.remove("item_animation");
+  }
+};
+onUnmounted(() => {
+  document.removeEventListener("scroll", scroll_handle);
+});
 
 onBeforeMount(() => {
   init_data();
 });
+const show_personal_info = ref(true);
 const per_page_count = 20;
 const current_data = ref([]);
 const page_data = ref({
   total: 0,
-  page_size:per_page_count,
+  page_size: per_page_count,
   current_index: params.page,
 });
 const init_data = () => {
@@ -70,100 +102,108 @@ const init_data = () => {
     default:
       break;
   }
-  remove_all_animation()
+  remove_all_animation();
 
- nextTick(()=>{
-  item_list = Array.from(document.querySelectorAll('.topic_item'))
-  document.addEventListener('scroll', scroll_handle)
-    scroll_handle()
- })
+  nextTick(() => {
+    item_list = Array.from(document.querySelectorAll(".topic_item"));
+    document.addEventListener("scroll", scroll_handle);
+    scroll_handle();
+  });
 };
 const data_handle = (array, page_num) => {
-  console.log(page_num);
-  if ((page_num) * per_page_count >= array.length) {
-    current_data.value = array.slice(page_num * per_page_count - per_page_count);
-    console.log(array.length);
-    console.log(current_data.value);
-
+  // console.log(page_num);
+  if (page_num * per_page_count >= array.length) {
+    current_data.value = array.slice(
+      page_num * per_page_count - per_page_count
+    );
+    // console.log(array.length);
+    // console.log(current_data.value);
   } else {
     current_data.value = array.slice(
-      (page_num -1) * per_page_count,
-      (page_num -1) * per_page_count + per_page_count
-      
+      (page_num - 1) * per_page_count,
+      (page_num - 1) * per_page_count + per_page_count
     );
-    console.log(array.length);
+    // console.log(array.length);
   }
   page_data.value.total = Math.ceil(array.length / per_page_count);
 };
-const jump_to_topic = (path) =>{
-  router.push(path)
-}
+const jump_to_topic = (path) => {
+  router.push(path);
+};
 const props = defineProps({
   theme: Boolean,
+  layout: Boolean,
 });
 
 watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-  
+  change_theme(newV.theme);
 });
-const change_theme = (current_theme) =>{
-  if (current_theme) {
-    c_c("--bg_color", "#0b0e14");
-    c_c("--color", "#f7f7f7");
-    c_c("--item_bg", "#242b3d");
-    c_c("--item_shadow", "#242b34");
-    c_c("--title_color", "#f7f7f7");
-    c_c("--title_af_bg", "#a3a7c1aa");
-    c_c("--tag_box_bg", "#2d3041");
-    c_c("--tag_bg", "#9fa3bc");
 
-  } else {
-    c_c("--bg_color", "#f7f3f5");
-    c_c("--color", "#000000");
-    c_c("--item_bg", "#ffffff");
-    c_c("--item_shadow", "#cacaca4f");
-    c_c("--title_color", "#173e6c");
-    c_c("--title_af_bg", "#22113364");
-    c_c("--tag_box_bg", "#dae6e7");
-    c_c("--tag_bg", "#41a8a8");
-  }
-}
-const page_handle = (index) =>{
+const page_handle = (index) => {
   switch (params.classification) {
     case "学习笔记":
-    router.push('/unknownWorldMap/list/学习笔记/'+index)
+      router.push("/unknownWorldMap/list/学习笔记/" + index);
       break;
     case "技术分享":
-    router.push('/unknownWorldMap/list/技术分享/'+index)
+      router.push("/unknownWorldMap/list/技术分享/" + index);
 
       break;
     case "生活随想":
-    router.push('/unknownWorldMap/list/生活随想/'+index)
+      router.push("/unknownWorldMap/list/生活随想/" + index);
 
       break;
     case "二次元":
-    router.push('/unknownWorldMap/list/二次元/'+index)
+      router.push("/unknownWorldMap/list/二次元/" + index);
       break;
     default:
       break;
   }
-  nextTick(()=>{
+  nextTick(() => {
     window.scrollTo(0, 0);
-    page_data.value.current_index = index
-    init_data()
+    page_data.value.current_index = index;
+    init_data();
+  });
+};
+let new_topic_data = [];
+const new_topic = () => {
+  new_topic_data.push(data.life[0]);
+  new_topic_data.push(data.study[0]);
+  new_topic_data.push(data.technique[0]);
+  new_topic_data.push(data.acg[0]);
+};
+new_topic();
+const classification_handle = (classification) => {
+  params.classification = classification
+  nextTick(()=>{
+    page_handle(1)
   })
 }
-//change scss var 
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+const run_time = () => {
+  return 'null'
+}
+const last_update = () => {
+  return 'null'
+}
+const personal_info = {
+  img: "https://pic.imgdb.cn/item/659e63dc871b83018a2d7de3.jpg",
+  name: "花降らし",
+  signature: "Dream State",
+  topic_total: data.length(),
+  classification_total: 4,
+  new_topic: new_topic_data,
+  site_info: {
+    name:'Tiny Flowers',
+    run_time:run_time(),
+    last_update:last_update(),
+  },
 };
+
 </script>
 <template>
-  <div id="main">
-
+  <div id="main" class="flex flex-direction-row">
     <div class="topic_box">
       <div
-      @click="jump_to_topic(item.link)"
+        @click="jump_to_topic(item.link)"
         v-for="(item, index) in current_data"
         class="topic_item flex flex_direction_column relative"
       >
@@ -172,10 +212,10 @@ const c_c = (mut_val, color) => {
             <span class="relative title">{{ item.title }}</span>
           </div>
           <span class="short_msg" v-html="item.short_message"></span>
-          <div class="data flex flex_direction_row justify_content_center">
+          <div class="date flex flex_direction_row justify_content_center">
             sparkle /
-            {{ item.data.split("?")[0] }} / {{ item.data.split("?")[1] }} /
-            {{ item.data.split("?")[2] }}
+            {{ item.date.split("?")[0] }} / {{ item.date.split("?")[1] }} /
+            {{ item.date.split("?")[2] }}
           </div>
         </div>
         <div class="absolute tag_box flex flex_direction_row">
@@ -191,7 +231,99 @@ const c_c = (mut_val, color) => {
         :theme="props.theme"
       ></Pagination>
     </div>
+
+    <!-- personal info -->
+    <div
+      v-show="show_personal_info"
+      class="personal_box flex flex_direction_column"
+    >
+      <div
+        class="personal_item intro flex flex_direction_column align_items_center"
+      >
+        <img :src="personal_info.img" alt="" />
+        <span class="personal_name" v-text="personal_info.name"></span>
+        <span
+          class="personal_signature"
+          v-text="personal_info.signature"
+        ></span>
+        <div class="width_full flex flex_direction_row">
+          <div
+            class="topic_classification_total_box flex flex_direction_column align_items_center"
+          >
+            <h3>文章</h3>
+            <span v-text="personal_info.topic_total"></span>
+          </div>
+          <div
+            class="topic_classification_total_box flex flex_direction_column align_items_center"
+          >
+            <h3>分类</h3>
+            <span v-text="personal_info.classification_total"></span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="personal_item new_topic_box flex flex_direction_column align_items_center"
+      >
+        <h3>最新文章</h3>
+        <ul class="flex flex_direction_column">
+          <li
+            @click="$router.push(item.link)"
+            v-for="item in personal_info.new_topic"
+            class="flex flex_direction_column"
+            :key="item.id"
+          >
+            <span> {{ item.title }} </span>
+            <span class="new_topic_date">
+              {{ item.date.split("?")[1] }}-{{
+                item.date.split("?")[0].split("月")[0]
+              }}-{{ item.date.split("?")[0].split("号")[0].split("月")[1] }}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="personal_item classification_box flex flex_direction_column align_items_center"
+      >
+        <h3>分类</h3>
+        <ul class="flex flex_direction_column">
+          <li @click="classification_handle('学习笔记')" class="flex flex_direction_row">
+            <span>学习笔记</span>
+            <span>{{data.study.length}}</span>
+          </li>
+          <li @click="classification_handle('技术分享')" class="flex flex_direction_row">
+            <span>技术分享</span>
+            <span>{{data.technique.length}}</span>
+          </li>
+          <li @click="classification_handle('生活随想')" class="flex flex_direction_row">
+            <span>生活随想</span>
+            <span>{{data.life.length}}</span>
+          </li>
+          <li @click="classification_handle('二次元')" class="flex flex_direction_row">
+            <span>二次元</span>
+            <span>{{data.acg.length}}</span>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="personal_item site_info_box flex flex_direction_column align_items_center"
+      >
+        <h3>网站信息</h3>
+        <ul class="flex flex_direction_column">
+         <li>
+           <span>网站名称: Tiny Flowers</span>
+         </li>
+         <li>
+           <span>存活时间: {{ personal_info.site_info.run_time }}</span>
+         </li>
+         <li>
+           <span>上次更新时间: {{ personal_info.site_info.last_update }}</span>
+         </li>
+        </ul>
+      </div>
+    </div>
   </div>
+  <Utils :theme="props.theme"></Utils>
 </template>
 <style lang="scss" scoped>
 $bg_color: var(--bg_color, #f7f3f5);
@@ -202,31 +334,34 @@ $title_color: var(--title_color, #173e6c);
 $title_af_bg: var(--title_af_bg, #22113364);
 $tag_box_bg: var(--tag_box_bg, #dae6e7);
 $tag_bg: var(--tag_bg, #41a8a8);
+$topic_classification_color: var(--topic_classification_color, #41a8a8);
+$topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 #main {
   background: $bg_color;
   width: 100%;
-  color:$color;
+  color: $color;
   .topic_box {
-    margin-top: 100px;
-    margin-left: 20px;
+    margin: 100px 0 0 60px;
     min-height: calc(100vh);
     width: 60vw;
     padding-bottom: 30px;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     .item_animation {
       animation: fade_in 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
     }
     .topic_item {
-      width: 60vw;
+      width: 100%;
       min-height: 200px;
       background: $item_bg;
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       margin: 20px 0;
       opacity: 0;
       border-radius: 5px;
       box-shadow: $item_shadow 2px 3px 10px;
       overflow-y: hidden;
       &:active {
-        animation: jelly .5s;
+        animation: jelly 0.5s;
       }
       &:hover {
         .tag_box {
@@ -259,7 +394,7 @@ $tag_bg: var(--tag_bg, #41a8a8);
         line-height: 25px;
         font-weight: 600;
       }
-      .data {
+      .date {
         font-weight: 900;
         letter-spacing: 0.1em;
         margin-top: auto;
@@ -287,6 +422,131 @@ $tag_bg: var(--tag_bg, #41a8a8);
     }
   }
 }
+
+//personal info
+.personal_box {
+  width: calc(40vw - 160px);
+  margin-left: 40px;
+  margin-top: 120px;
+  .personal_item {
+    width: 100%;
+    background-color: $item_bg;
+    animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    border-radius: 5px;
+    box-shadow: $item_shadow 2px 3px 10px;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+  
+  }
+  .intro {
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 30px 0;
+    }
+    .personal_name {
+      font-size: 25px;
+      font-weight: 900;
+      color: $color;
+    }
+    .personal_signature {
+      margin: 20px 0;
+      color: $color;
+    }
+    .topic_classification_total_box {
+      width: 50%;
+      h3 {
+        color: $topic_classification_color;
+        margin: 0;
+        font-size: 25px;
+      }
+      span {
+        color: $topic_classification_num_color;
+
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: 900;
+      }
+    }
+  }
+  .new_topic_box {
+    ul {
+      width: 90%;
+      padding: 0;
+      gap: 10px;
+      li {
+        span {
+          margin: 5px;
+          font-weight: 900;
+        }
+        &:hover {
+          color: $topic_classification_num_color;
+        }
+      }
+    }
+    .new_topic_date {
+      font-size: 12px;
+      color: $title_color;
+    }
+  }
+  .classification_box{
+    ul {
+      width: 90%;
+      padding: 0;
+      li {
+        width: 100%;
+
+        span {
+          padding: 10px;
+          font-weight: 900;
+          &:last-child{
+            margin-left: auto;
+          }
+          transition: margin 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        }
+        &:hover {
+          color: $bg_color;
+          background: $topic_classification_num_color;
+          border-radius:5px;
+          span{
+            margin-left: 10px;
+            &:last-child{
+            margin-left: auto;
+            margin-right: 10px;
+
+
+          }          }
+        }
+      }
+    }
+    
+  }
+  .site_info_box{
+    ul {
+      width: 90%;
+      padding: 0;
+      gap: 15px;
+      li {
+        span {
+          margin: 5px;
+          font-weight: 900;
+        }
+      }
+    }
+  }
+}
+
+@keyframes move_left {
+  0% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
 @keyframes jelly {
   0%,
   100% {
@@ -302,10 +562,11 @@ $tag_bg: var(--tag_bg, #41a8a8);
   }
 }
 @keyframes fade_in {
- 0%{
-  transform: translateY(100px);
- }100%{
-  transform: translateY(0px);
- }
+  0% {
+    transform: translateY(100px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 </style>

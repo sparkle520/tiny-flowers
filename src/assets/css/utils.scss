@@ -1,0 +1,22 @@
+$to_top_btn_fill: var(--to_top_btn_fill, #c0c0c0);
+$to_top_btn_bg: var(--to_top_btn_bg, #ffffff);
+$to_top_btn_hover_bg: var(--to_top_btn_hover_bg, #e2e2e2);
+
+.to_top_btn {
+   
+    width: 35px;
+    height: 35px;
+    background: $to_top_btn_bg;
+    border-radius: 5px;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    z-index: 100;
+    .to_top_path{
+      fill:$to_top_btn_fill;
+    }
+    
+
+    &:hover {
+      background-color: $to_top_btn_hover_bg;
+    }
+  }
