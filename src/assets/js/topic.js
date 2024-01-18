@@ -13,6 +13,7 @@ export const c_c = (mut_val, color) => {
       c_c("--topic_title_af_bg", "#22113364");
       c_c("--topic_time_bar_color", "#c4c3d4");
       c_c("--topic_time_color", "#c4c3d4");
+      c_c("--directory_list_cover_bg", "#b5b9d6");
     
     } else {
       c_c("--topic_content_bg", "#f7f3f5");
@@ -22,6 +23,7 @@ export const c_c = (mut_val, color) => {
       c_c("--topic_title_af_bg", "#22113364");
       c_c("--topic_time_bar_color", "#989e6a");
       c_c("--topic_time_color", "#5d6e4a");
+      c_c("--directory_list_cover_bg", "#e06530");
     
   
     }

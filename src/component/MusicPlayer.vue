@@ -238,7 +238,7 @@ const change_theme = (current_theme) => {
     c_c("--list_item_color", "#f7f3f5");
     c_c("--list_item_hover_color", "#343d53");
     c_c("--list_item_active_color", "#f67d61");
-    c_c("--player_bg", "#8e8e8e0f");
+    // c_c("--player_bg", "#8e8e8e0f");
     c_c("--play_btn_fill", "#b5b9d6");
     c_c("--left_right_btn_path_1", "#e8eeee");
     c_c("--left_right_btn_path_2", "#e8eeee");
@@ -255,7 +255,7 @@ const change_theme = (current_theme) => {
     c_c("--list_item_color", "#4d6782");
     c_c("--list_item_hover_color", "#ffb8b8");
     c_c("--list_item_active_color", "#fd1212");
-    c_c("--player_bg", "#8e8e8e0f");
+    // c_c("--player_bg", "#8e8e8e0f");
     c_c("--play_btn_fill", "#f9785f");
     c_c("--left_right_btn_path_1", "#fcb071");
     c_c("--left_right_btn_path_2", "#fc9f88");
@@ -264,13 +264,15 @@ const change_theme = (current_theme) => {
 }
 </script>
 <template>
-  <div id="main">
+  <div id="music_player_main">
     <audio
       class="audio"
       :src="current_play.url"
       @timeupdate="update_time_handle"
     ></audio>
     <div class="content flex flex_direction_row relative">
+      <img class="play_bg_img" src="https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" alt="">
+
       <div class="margin_4_percent">
         <div
           class="record flex align_items_center justify_content_center relative"
@@ -620,7 +622,7 @@ const change_theme = (current_theme) => {
  $left_right_btn_path_2: var(--left_right_btn_path_2, #fc9f88);
  $music_list_fill: var(--music_list_fill, #FF2C2C);
 
-#main {
+#music_player_main {
   width: 100%;
   height: 100%;
   background-color: $player_bg;
@@ -629,19 +631,41 @@ const change_theme = (current_theme) => {
     border: 0.727273px solid rgba(255, 255, 255, 0.18);
     box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
     -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    
+  
+  
     .play_mode{
         fill:$file_label_color;
       }
       .music_list_fill{
         fill:$music_list_fill;
       }
+      
+  
   .content {
     width: inherit;
     height: inherit;
+    overflow: hidden;
     // background: #dae6e727;
-   
+    &:hover{
+      .play_bg_img{
+        transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+        content: url('https://pic.imgdb.cn/item/65a3e57b871b83018a7f0821.jpg');
+        transform: scale(1.2);
+      }
+    }
+    .play_bg_img{
+    width: 100%;
+    height: calc(100% + 40px);
+    transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    position: absolute;
+    z-index: -1;
+    object-fit: cover;
+    opacity: .4;
+    border-radius: 5px;
+  }
     .record {
       width: 7em;
       height: 7em;
@@ -771,8 +795,8 @@ const change_theme = (current_theme) => {
     border: 0.727273px solid rgba(255, 255, 255, 0.18);
     box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
     -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
 
     margin-top: 10px;
     color: $file_label_color;
@@ -781,7 +805,7 @@ const change_theme = (current_theme) => {
       overflow-y: scroll;
       height: calc(300px - 50px);
       background: #f3ded812;
-      border-radius: 10px;
+      border-radius: 5px;
       .list_inner_box {
         margin-left: 30px;
         margin-top: 10px;
