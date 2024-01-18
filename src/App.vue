@@ -5,7 +5,6 @@ import { clickEffect} from "/src/assets/js/mouse.js";
 import emitter from "@/assets/config/mitt_bus.js"
 
 const route = useRoute();
- const key = route.path + Math.random();
 // const change_current_index =(index) =>{
 //     g_current_index = index
 // }
@@ -23,6 +22,7 @@ const side_view_handle = () => {
   emitter.emit('new_side_view', {current_side_view:current_side_view})
 }
 emitter.on('side_view_change', () => side_view_handle())
+
 clickEffect();
 const music = ref(false);
 const music_handle = (status) => {
@@ -57,7 +57,7 @@ const c_c = (mut_val, color) => {
     ></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view
-      :key="key"
+      :key="$route.path"
       class="router_view"
       :theme="current_theme"
       :layout="current_side_view"

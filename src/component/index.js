@@ -5,6 +5,7 @@ import Carousel from "/src/component/Carousel.vue"
 import MusicPlayer from "/src/component/MusicPlayer.vue"
 import TopNavBar from "/src/component/TopNavBar.vue"
 import Utils from "/src/component/Utils.vue"
+import DirectoryList from "/src/component/DirectoryList.vue"
 const components = {
     LeftNavBar,
     Pagination,
@@ -13,6 +14,7 @@ const components = {
     Carousel,
     MusicPlayer,
     Utils,
+    DirectoryList,
 }
 
 const GlobalComponents = (app) => {

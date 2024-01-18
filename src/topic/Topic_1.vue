@@ -3,32 +3,52 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted ,watch} from "vue";
+import { reactive, toRefs, ref, onBeforeMount, onUnmounted,onMounted ,watch} from "vue";
 import { useRouter } from "vue-router";
 import {change_theme} from '/src/assets/js/topic.js'
 import TopicTitle from '/src/component/TopicTitle.vue'
+import emitter from "@/assets/config/mitt_bus.js";
 
 const router = useRouter();
-const show_to_top_btn = ref(false);
 onBeforeMount(() => {});
 onMounted(()=>{
   change_theme(props.theme)
+  change_layout(props.layout);
+  emitter.on("new_side_view", (v) => side_view_handle(v));
+
 })
 const props = defineProps({
   theme: Boolean,
+  layout:Boolean,
 });
 watch(props, (newV, oldV) => {
   change_theme(newV.theme)
 });
-
-
+onUnmounted(()=>{
+  emitter.off("new_side_view")
+})
+ 
+const side_view_handle = (v) => {
+  change_layout(v.current_side_view);
+};
+const change_layout = (flag) => {
+  const topic_content = document.querySelector(".topic_content");
+  if (flag) {
+    topic_content.style.width = "60vw";
+    topic_content.style.margin = " 20px 30px 80px calc(10vw - 10px)";
+    // show_personal_info.value = true;
+  } else {
+    topic_content.style.width = "80vw";
+    // show_personal_info.value = false;
+  }
+};
 const data = {
   title:'Weathering With you(经典语录)',
   date:'2024-01-06?7:06'
 }
 </script>
 <template>
-  <div id="topic_main" class="flex align_items_center flex_direction_column">
+  <div id="topic_main" class="flex  flex_direction_row">
    
     <div class="topic_content">
       <TopicTitle :data="data"></TopicTitle>
@@ -121,10 +141,14 @@ const data = {
         </span>
       </div>
     </div>
+    <DirectoryList :theme="props.theme"   :layout="props.layout" class="directoryList"></DirectoryList>
   </div>
   <Utils :theme="props.theme"></Utils>
 
+
 </template>
 <style lang="scss" scoped>
-
+.directoryList{
+  margin-top: 20px;
+}
 </style>

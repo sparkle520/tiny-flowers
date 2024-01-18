@@ -8,21 +8,20 @@ $topic_content_bg: var(--topic_content_bg, #f7f3f5);
 
 #topic_main {
     padding-top: 80px;
-  width: 100%;
+  width: 100vw;
   background: $topic_bg;
   min-height: 100vh;
   font-family: "Microsoft YaHei";
   color: $normal_color;
   .topic_content {
-    width: 80%;
+    width: 60vw;
     border-radius: 4px;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    min-height: 80vh;
+   margin: 20px 20px 80px calc(10vw - 10px);
+    
     background: $topic_content_bg;
     margin-bottom: 100px;
-   
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     .topic_text {
       width: 80%;
       margin: 10px auto;

@@ -33,7 +33,9 @@ onMounted(() => {
     }
   });
 });
-onUnmounted(() => {});
+onUnmounted(() => {
+  
+});
 const to_top = () => {
   let t = setInterval(() => {
     let wScrY = window.scrollY - 50;
@@ -136,6 +138,7 @@ const change_theme = (current_theme) => {
 
 }
 .to_top_box {
+  transform: translateX(100px);
   transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 </style>

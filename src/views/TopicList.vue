@@ -24,6 +24,8 @@ const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   init();
+  emitter.on("new_side_view", (v) => side_view_handle(v));
+
 });
 const init = () => {
   window.scrollTo(0, 0);
@@ -32,6 +34,7 @@ const init = () => {
   item_list = Array.from(document.querySelectorAll(".topic_item"));
   document.addEventListener("scroll", scroll_handle);
   scroll_handle();
+  run_time(birthday_date);
 };
 let item_list = [];
 const side_view_handle = (v) => {
@@ -50,7 +53,12 @@ const change_layout = (flag) => {
     show_personal_info.value = false;
   }
 };
-emitter.on("new_side_view", (v) => side_view_handle(v));
+const classification = [
+  {name:'学习笔记'},
+  {name:'技术分享'},
+  {name:'生活随想'},
+  {name:'二次元'},
+]
 const scroll_handle = () => {
   for (let i = 0; i < item_list.length; i++) {
     let elem = item_list[i];
@@ -70,6 +78,9 @@ const remove_all_animation = () => {
 };
 onUnmounted(() => {
   document.removeEventListener("scroll", scroll_handle);
+  clearInterval(interval_run_time)
+  emitter.off("new_side_view")
+
 });
 
 onBeforeMount(() => {
@@ -164,6 +175,7 @@ const page_handle = (index) => {
     init_data();
   });
 };
+
 let new_topic_data = [];
 const new_topic = () => {
   new_topic_data.push(data.life[0]);
@@ -173,31 +185,84 @@ const new_topic = () => {
 };
 new_topic();
 const classification_handle = (classification) => {
-  params.classification = classification
-  nextTick(()=>{
-    page_handle(1)
-  })
-}
-const run_time = () => {
-  return 'null'
+  router.push(`/unknownWorldMap/list/${classification}/1`);
+
+  // params.classification = classification;
+  // nextTick(()=>{
+  //   router.go(0);
+
+  // })
+  // params.page = 1
+  
+};
+const birthday_date = "2024-01-05 11:01:01";
+const current_run_time = ref("");
+const  run_time = (date)=> {
+  let date_start = new Date(date);
+  let date_end = new Date();
+  let date_diff = date_end.getTime() - date_start.getTime();
+  let day_diff = Math.floor(date_diff / (24 * 3600 * 1000));
+  let leave1 = date_diff % (24 * 3600 * 1000);
+  let hours = Math.floor(leave1 / (3600 * 1000));
+  let leave2 = leave1 % (3600 * 1000);
+  let minutes = Math.floor(leave2 / (60 * 1000));
+  let leave3 = leave2 % (60 * 1000);
+  let seconds = Math.round(leave3 / 1000);
+  current_run_time.value = `${day_diff}天${hours}小时${minutes}分钟`;
 }
 const last_update = () => {
-  return 'null'
-}
+  let date_array = [
+    format_date(data.life[0].date),
+    format_date(data.study[0].date),
+    format_date(data.technique[0].date),
+    format_date(data.acg[0].date),
+  ];
+  let date_array_sort = date_array.sort((a, b) => {
+    let temp_1 = b.split("-");
+    let temp_2 = a.split("-");
+    return (
+      new Date(temp_1[0], temp_1[1] - 1, temp_1[2], temp_1[3], temp_1[4]) -
+      new Date(temp_2[0], temp_2[1] - 1, temp_2[2], temp_2[3], temp_2[4])
+    );
+  });
+  let temp = date_array_sort[0].split("-");
+  let date_start = new Date(temp[0], temp[1] - 1, temp[2], temp[3], temp[4]);
+  let date_end = new Date();
+
+  let date_diff = date_end.getTime() - date_start.getTime();
+  let day_diff = Math.floor(date_diff / (24 * 3600 * 1000));
+  return day_diff + "天前";
+};
+// xx月xx号?xxxx?xx:xx  ..?年?时:分 -> xxxx-xx-xx-xx-xx  年-月-日-时-分
+const format_date = (date) => {
+  return (
+    date.split("?")[1] +
+    "-" +
+    date.split("?")[0].split("月")[0] +
+    "-" +
+    date.split("?")[0].split("月")[1].split("号")[0] +
+    "-" +
+    date.split("?")[2].split(":")[0] +
+    "-" +
+    date.split("?")[2].split(":")[1]
+  );
+};
+let interval_run_time = setInterval(() => {
+  run_time(birthday_date);
+}, 60000);
 const personal_info = {
   img: "https://pic.imgdb.cn/item/659e63dc871b83018a2d7de3.jpg",
   name: "花降らし",
-  signature: "Dream State",
+  signature: "人一旦失去重要的东西，就很难再获得了",
   topic_total: data.length(),
   classification_total: 4,
   new_topic: new_topic_data,
   site_info: {
-    name:'Tiny Flowers',
-    run_time:run_time(),
-    last_update:last_update(),
+    name: "Tiny Flowers",
+    run_time: current_run_time,
+    last_update: last_update(),
   },
 };
-
 </script>
 <template>
   <div id="main" class="flex flex-direction-row">
@@ -271,7 +336,7 @@ const personal_info = {
             @click="$router.push(item.link)"
             v-for="item in personal_info.new_topic"
             class="flex flex_direction_column"
-            :key="item.id"
+            :key="item.link"
           >
             <span> {{ item.title }} </span>
             <span class="new_topic_date">
@@ -287,21 +352,33 @@ const personal_info = {
       >
         <h3>分类</h3>
         <ul class="flex flex_direction_column">
-          <li @click="classification_handle('学习笔记')" class="flex flex_direction_row">
+          <li
+            @click="classification_handle(classification[0].name)"
+            class="flex flex_direction_row"
+          >
             <span>学习笔记</span>
-            <span>{{data.study.length}}</span>
+            <span>{{ data.study.length }}</span>
           </li>
-          <li @click="classification_handle('技术分享')" class="flex flex_direction_row">
+          <li
+          @click="classification_handle(classification[1].name)"
+            class="flex flex_direction_row"
+          >
             <span>技术分享</span>
-            <span>{{data.technique.length}}</span>
+            <span>{{ data.technique.length }}</span>
           </li>
-          <li @click="classification_handle('生活随想')" class="flex flex_direction_row">
+          <li
+          @click="classification_handle(classification[2].name)"
+            class="flex flex_direction_row"
+          >
             <span>生活随想</span>
-            <span>{{data.life.length}}</span>
+            <span>{{ data.life.length }}</span>
           </li>
-          <li @click="classification_handle('二次元')" class="flex flex_direction_row">
+          <li
+          @click="classification_handle(classification[3].name)"
+            class="flex flex_direction_row"
+          >
             <span>二次元</span>
-            <span>{{data.acg.length}}</span>
+            <span>{{ data.acg.length }}</span>
           </li>
         </ul>
       </div>
@@ -310,15 +387,15 @@ const personal_info = {
       >
         <h3>网站信息</h3>
         <ul class="flex flex_direction_column">
-         <li>
-           <span>网站名称: Tiny Flowers</span>
-         </li>
-         <li>
-           <span>存活时间: {{ personal_info.site_info.run_time }}</span>
-         </li>
-         <li>
-           <span>上次更新时间: {{ personal_info.site_info.last_update }}</span>
-         </li>
+          <li>
+            <span>网站名称: Tiny Flowers</span>
+          </li>
+          <li>
+            <span>存活时间: {{ personal_info.site_info.run_time.value }}</span>
+          </li>
+          <li>
+            <span>上次更新时间: {{ personal_info.site_info.last_update }}</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -437,7 +514,6 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 30px;
     margin-bottom: 20px;
-  
   }
   .intro {
     img {
@@ -491,7 +567,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       color: $title_color;
     }
   }
-  .classification_box{
+  .classification_box {
     ul {
       width: 90%;
       padding: 0;
@@ -501,30 +577,27 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
         span {
           padding: 10px;
           font-weight: 900;
-          &:last-child{
+          &:last-child {
             margin-left: auto;
           }
           transition: margin 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-
         }
         &:hover {
           color: $bg_color;
           background: $topic_classification_num_color;
-          border-radius:5px;
-          span{
+          border-radius: 5px;
+          span {
             margin-left: 10px;
-            &:last-child{
-            margin-left: auto;
-            margin-right: 10px;
-
-
-          }          }
+            &:last-child {
+              margin-left: auto;
+              margin-right: 10px;
+            }
+          }
         }
       }
     }
-    
   }
-  .site_info_box{
+  .site_info_box {
     ul {
       width: 90%;
       padding: 0;
@@ -533,6 +606,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
         span {
           margin: 5px;
           font-weight: 900;
+          letter-spacing: 0.1em;
         }
       }
     }

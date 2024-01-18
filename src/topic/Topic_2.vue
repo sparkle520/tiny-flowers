@@ -3,23 +3,45 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted ,watch} from "vue";
+import { reactive, toRefs, ref, onBeforeMount, onMounted ,onUnmounted,watch} from "vue";
 import { useRouter } from "vue-router";
 import TopicTitle from '/src/component/TopicTitle.vue'
 import {change_theme} from '/src/assets/js/topic.js'
+import emitter from "@/assets/config/mitt_bus.js";
 
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(()=>{
   change_theme(props.theme)
+  change_layout(props.layout)
+  emitter.on("new_side_view", (v) => side_view_handle(v));
+
 })
 const props = defineProps({
   theme: Boolean,
+  layout:Boolean,
 });
 watch(props, (newV, oldV) => {
   change_theme(newV.theme)
 });
-
+onUnmounted(()=>{
+  emitter.off("new_side_view")
+})
+ 
+const side_view_handle = (v) => {
+  change_layout(v.current_side_view);
+};
+const change_layout = (flag) => {
+  const topic_content = document.querySelector(".topic_content");
+  if (flag) {
+    topic_content.style.width = "60vw";
+    topic_content.style.margin = " 20px 30px 80px calc(10vw - 10px)";
+    // show_personal_info.value = true;
+  } else {
+    topic_content.style.width = "80vw";
+    // show_personal_info.value = false;
+  }
+};
 
 const data = {
   title:'Rust写的第一个算法',
@@ -51,7 +73,7 @@ const data = {
     `
 </script>
 <template>
-  <div id="topic_main" class="flex  flex_direction_column">
+  <div id="topic_main" class="flex  flex_direction_row">
     <div class="topic_content">
     <TopicTitle :data="data"></TopicTitle>
       <div class="topic_text flex flex_direction_column">
@@ -64,12 +86,16 @@ const data = {
     </div>
       </div>
     </div>
+    <DirectoryList :theme="props.theme"   :layout="props.layout" class="directoryList"></DirectoryList>
+
   </div>
   <Utils :theme="props.theme"></Utils>
 </template>
 <style lang="scss" scoped>
 @import "/src/assets/css/line.scss";
-
+.directoryList{
+  margin-top: 20px;
+}
 
 
 </style>
