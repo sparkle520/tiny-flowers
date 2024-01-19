@@ -14,11 +14,18 @@ import {
   nextTick,
 } from "vue";
 import { useRouter } from "vue-router";
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+})
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   init();
-  change_theme(props.theme)
+  change_theme(theme.value)
 });
 const init = () => {
   switch_left_right_button_status(current_page_index.value);
@@ -59,7 +66,6 @@ const init = () => {
 };
 const emit = defineEmits(["page_change"]);
 const props = defineProps({
-  theme: Boolean,
 
   data: {
     total: Number,
@@ -182,9 +188,7 @@ const switch_page_handle = (mode) => {
 };
 
 
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
+
 //change scss var 
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);

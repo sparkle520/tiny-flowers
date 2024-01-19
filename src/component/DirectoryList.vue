@@ -14,36 +14,36 @@ import {
 } from "vue";
 import { useRouter } from "vue-router";
 import emitter from "@/assets/config/mitt_bus.js";
-
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+const {layout}  = storeToRefs(store);
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+  change_layout(state.layout)
+})
 const router = useRouter();
 onBeforeMount(() => {});
 onUnmounted(() => {
-  emitter.off("new_side_view");
   emitter.off("new_titles_list");
 });
 onMounted(() => {
-  change_theme(props.theme);
-  change_layout(props.layout);
-  emitter.on("new_side_view", (v) => side_view_handle(v));
+  change_theme(theme.value);
+  change_layout(layout.value);
   emitter.on("new_titles_list", (v) => titles_list_handle(v));
 });
 const titles_list_handle = (v) => {
   current_titles.value = v;
 };
 const props = defineProps({
-  theme: Boolean,
-  layout: Boolean,
+  titles: Array,
 });
 const current_titles = ref(props.titles);
 let currentTitle = ref({});
 let progress = ref(0);
-const show_directory_list = ref(props.layout);
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme);
-});
-const side_view_handle = (v) => {
-  change_layout(v.current_side_view);
-};
+
+
 const change_layout = (flag) => {
   const directory_list_main = document.querySelector("#directory_list_main");
 
@@ -51,11 +51,9 @@ const change_layout = (flag) => {
     directory_list_main.style.opacity = "1";
     directory_list_main.style.transform = "translateX(0)";
 
-    show_directory_list.value = true;
   } else {
     directory_list_main.style.opacity = "0";
     directory_list_main.style.transform = "translateX(100%)";
-    show_directory_list.value = false;
   }
 };
 const c_c = (mut_val, color) => {
@@ -123,7 +121,7 @@ function scrollToView(scrollTop) {
 </script>
 <template>
   <div id="directory_list_main" class="fixed">
-    <div class="catalog-card" v-show="show_directory_list">
+    <div class="catalog-card" v-show="layout">
       <div class="catalog-card-header">
         <div>
           <span

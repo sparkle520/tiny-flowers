@@ -20,17 +20,25 @@ import emitter from "@/assets/config/mitt_bus.js";
 import change_theme from "@/assets/theme/TopicList.js";
 
 const { params } = useRoute();
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+const {layout}  = storeToRefs(store);
 const router = useRouter();
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+  change_layout(state.layout)
+})
 onBeforeMount(() => {});
 onMounted(() => {
   init();
-  emitter.on("new_side_view", (v) => side_view_handle(v));
-
+  
 });
 const init = () => {
   window.scrollTo(0, 0);
-  change_theme(props.theme);
-  change_layout(props.layout);
+  change_layout(layout.value)
+  change_theme(theme.value)
   item_list = Array.from(document.querySelectorAll(".topic_item"));
   document.addEventListener("scroll", scroll_handle);
   scroll_handle();
@@ -79,15 +87,13 @@ const remove_all_animation = () => {
 onUnmounted(() => {
   document.removeEventListener("scroll", scroll_handle);
   clearInterval(interval_run_time)
-  emitter.off("new_side_view")
-
 });
 
 onBeforeMount(() => {
   init_data();
 });
 const show_personal_info = ref(true);
-const per_page_count = 20;
+const per_page_count = 10;
 const current_data = ref([]);
 const page_data = ref({
   total: 0,
@@ -141,14 +147,8 @@ const data_handle = (array, page_num) => {
 const jump_to_topic = (path) => {
   router.push(path);
 };
-const props = defineProps({
-  theme: Boolean,
-  layout: Boolean,
-});
 
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme);
-});
+
 
 const page_handle = (index) => {
   switch (params.classification) {
@@ -293,7 +293,6 @@ const personal_info = {
         @page_change="page_handle"
         class="pagination"
         :data="page_data"
-        :theme="props.theme"
       ></Pagination>
     </div>
 
@@ -400,7 +399,7 @@ const personal_info = {
       </div>
     </div>
   </div>
-  <Utils :theme="props.theme"></Utils>
+  <Utils></Utils>
 </template>
 <style lang="scss" scoped>
 $bg_color: var(--bg_color, #f7f3f5);

@@ -14,11 +14,18 @@ import {
   nextTick,
 } from "vue";
 import { useRouter } from "vue-router";
-import change_theme  from "../assets/theme/TopNavBar";
+import change_theme from "../assets/theme/TopNavBar";
 const router = useRouter();
-
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const { theme } = storeToRefs(store);
+store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
 onBeforeMount(() => {});
 onMounted(() => {
+  change_theme(theme.value);
   document.addEventListener("scroll", nav_handle);
 });
 onUnmounted(() => {
@@ -34,7 +41,7 @@ const nav_handle = () => {
     nav_main.classList.remove("nav_fixed");
   }
 };
-const emits = defineEmits(["music_change", "theme_change"]);
+const emits = defineEmits(["music_change"]);
 
 const nav_list = [
   {
@@ -127,19 +134,10 @@ const music_active = ref(false);
 watch(music_active, (newV, oldV) => {
   emits("music_change", newV);
 });
-const current_theme = ref();
-watch(current_theme, (newV, oldV) =>{
-  emits("theme_change", newV);
-});
-const props = defineProps({
-  theme: Boolean,
-});
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
 
-
-
+const theme_change = () => {
+  store.change_g_theme();
+};
 </script>
 <template>
   <div id="main" class="nav_main">
@@ -166,8 +164,8 @@ watch(props, (newV, oldV) => {
               {{ item.name }}
             </li>
           </ul>
-          <label class="switch" for="theme" @click="theme_change">
-            <input id="theme" type="checkbox" v-model="current_theme" />
+          <label class="switch" for="theme" >
+            <input id="theme" type="checkbox" @click="theme_change"/>
             <span class="slider"></span>
           </label>
         </div>
@@ -232,11 +230,11 @@ watch(props, (newV, oldV) => {
   </div>
 </template>
 <style lang="scss" scoped>
- $nav_bg_color: var(--nav_bg_color, transparent);
- $nav_fixed_shadow: var(--nav_fixed_shadow, #8e8e8e30);
- $nav_item_color: var(--nav_item_color, #5e6d78);
- $nav_item_active_color: var(--nav_item_active_color, #f67d61);
- $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
+$nav_bg_color: var(--nav_bg_color, transparent);
+$nav_fixed_shadow: var(--nav_fixed_shadow, #8e8e8e30);
+$nav_item_color: var(--nav_item_color, #5e6d78);
+$nav_item_active_color: var(--nav_item_active_color, #f67d61);
+$nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 
 .nav_fixed {
   background: #ffffff40;
@@ -251,7 +249,7 @@ watch(props, (newV, oldV) => {
   position: fixed;
   background: transparent;
   width: 100vw;
-   background: transparent;
+  background: transparent;
   .content {
     width: 100vw;
     height: 70px;

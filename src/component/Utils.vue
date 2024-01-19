@@ -13,13 +13,20 @@ import {
   onMounted,
 } from "vue";
 import { useRouter } from "vue-router";
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+const {layout}  = storeToRefs(store);
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+})
 
-import emitter from "@/assets/config/mitt_bus.js";
 const router = useRouter();
 onBeforeMount(() => {});
 import "/src/assets/css/utils.scss";
 onMounted(() => {
-  change_theme(props.theme);
+  change_theme(theme.value);
 
   window.scrollTo(0, 0);
   document.addEventListener("scroll", () => {
@@ -46,14 +53,10 @@ const to_top = () => {
   }, 2);
 };
 const view_change = () => {
-  emitter.emit("side_view_change");
+  store.change_g_layout();
 };
-const props = defineProps({
-  theme: Boolean,
-});
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme);
-});
+
+
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
 };

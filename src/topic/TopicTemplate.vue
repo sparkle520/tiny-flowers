@@ -7,17 +7,25 @@ import { reactive, toRefs, ref, onBeforeMount, onMounted ,watch} from "vue";
 import { useRouter } from "vue-router";
 import TopicTitle from '/src/component/TopicTitle.vue'
 import {change_theme} from '/src/assets/js/topic.js'
+import { useConfigStore } from "../store/config";
+import {change_layout} from '/src/assets/js/topic.js'
+
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+const {layout}  = storeToRefs(store);
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+  change_layout(state.layout)
+})
 const router = useRouter();
 onBeforeMount(() => {});
-const props = defineProps({
-  theme: Boolean,
-});
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
+
+
 //change scss var 
 onMounted(()=>{
-  change_theme(props.theme)
+  change_theme(theme.value)
+  change_layout(layout.value)
 })
 const data = {
   title:'HELLO WORLD',
@@ -29,15 +37,17 @@ const data = {
     </div> */
 </script>
 <template>
-  <div id="main" class="flex  flex_direction_column">
-    <div class="content">
+  <div id="topic_main" class="flex  flex_direction_row">
+    <div class="topic_content">
     <TopicTitle :data="data"></TopicTitle>
-      <div class="text flex flex_direction_column">
+    <div class="topic_text flex flex_direction_column">
        
       </div>
     </div>
+    <DirectoryList class="directoryList"></DirectoryList>
+
   </div>
-  <Utils :theme="props.theme"></Utils>
+  <Utils ></Utils>
 </template>
 <style lang="scss" scoped>
   

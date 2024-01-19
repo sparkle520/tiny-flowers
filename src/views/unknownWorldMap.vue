@@ -7,12 +7,19 @@ import { reactive, ref, toRefs, onBeforeMount, onMounted,watch } from "vue";
 import { useRouter } from "vue-router";
 import data from "/src/assets/config/data.js"
 import change_theme  from "../assets/theme/UnknownWorldMap";
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+})
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   window.scrollTo(0, 0);
 
-  change_theme(props.theme)
+  change_theme(theme.value)
 });
 
 
@@ -30,12 +37,8 @@ const classification = [
 const to_topic_list = (name)=>{
 router.push('/unknownWorldMap/list/'+name+'/1')
 }
-const props = defineProps({
-  theme: Boolean,
-});
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
+
+
 
 
 </script>

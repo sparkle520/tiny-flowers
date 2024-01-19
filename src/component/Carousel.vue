@@ -28,10 +28,10 @@ const props = defineProps({
   data: Array,
 });
 let cycle = setInterval(() => {
-  if (position.value === -300) {
+  if (position.value === width * 3) {
     position.value = 0;
   } else {
-    position.value -= 100;
+    position.value += width;
   }
 }, 4000);
 const add_rect_active = (dom_list, index) => {
@@ -51,23 +51,24 @@ watch(position, (newVal, oldVal) => {
   const rect_list = document.querySelectorAll(".rect");
   if (newVal === 0) {
     add_rect_active(rect_list, 0);
-  } else if (newVal === -100) {
+  } else if (newVal ===  width) {
     add_rect_active(rect_list, 1);
-  } else if (newVal === -200) {
+  } else if (newVal === width * 2) {
     add_rect_active(rect_list, 2);
-  } else if (newVal === -300) {
+  } else if (newVal === width* 3) {
     add_rect_active(rect_list, 3);
   }
   if (oldVal === 0) {
     remove_rect_active(rect_list, 0);
-  } else if (oldVal === -100) {
+  } else if (oldVal === width) {
     remove_rect_active(rect_list, 1);
-  } else if (oldVal === -200) {
+  } else if (oldVal === width * 2) {
     remove_rect_active(rect_list, 2);
-  } else if (oldVal === -300) {
+  } else if (oldVal === width * 3) {
     remove_rect_active(rect_list, 3);
   }
 });
+const width = -90
 const text_list = [
   `<span style="color: #ABDCFF;text-shadow: #0396FF 1px 1px 5px;">Words like "tomorrow" or "future" or "fate".</span>`,
   `<span style="color: #FEB692;text-shadow: #EA5455 1px 1px 5px;">No matter how far they extend their hands.</span>`,
@@ -136,16 +137,16 @@ const play_dyn_text = () => {
       class="absolute flex flex_direction_column rect_box justify_content_center"
     >
       <div @click="change_position(0)" class="rect"></div>
-      <div @click="change_position(-100)" class="rect"></div>
-      <div @click="change_position(-200)" class="rect"></div>
-      <div @click="change_position(-300)" class="rect"></div>
+      <div @click="change_position(width)" class="rect"></div>
+      <div @click="change_position(width*2)" class="rect"></div>
+      <div @click="change_position(width * 3)" class="rect"></div>
     </div>
     <div class="absolute dyn_text" v-html="current_text"></div>
   </div>
 </template>
 <style lang="scss" scoped>
 #main {
-  width: 100vw;
+  width: 90vw;
   height: 500px;
   overflow: hidden;
   // box-shadow: #e4b198 15px 16px 5px, #98cde4 -15px -16px 5px;
@@ -154,7 +155,7 @@ const play_dyn_text = () => {
   &::after {
     content: "";
     position: absolute;
-    width: 100vw;
+    width: 90vw;
     height: inherit;
     right: 0;
     bottom: 0;
@@ -202,21 +203,21 @@ const play_dyn_text = () => {
   }
 
   .content {
-    width: 100vw;
+    width: 90vw;
     height: inherit;
     .item {
       height: inherit;
-      width: 400vw;
+      width: 360vw;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       .img_box {
-        width: 100vw;
+        width: 90vw;
         height: inherit;
         border-radius: 5px;
 
         &::before {
           content: "";
           position: absolute;
-          width: 100vw;
+          width: inherit;
           height: 200px;
           left: 0;
           top: 0;
@@ -224,8 +225,8 @@ const play_dyn_text = () => {
           border-radius: 5px;
         }
         img {
-          width: inherit;
-          height: inherit;
+          width: 90vw;
+          height: 670px;
           object-fit: cover;
           border-radius: inherit;
         }

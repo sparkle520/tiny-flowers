@@ -3,135 +3,47 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onUnmounted,onMounted ,watch,nextTick} from "vue";
+import {
+  
+  onBeforeMount,
+  onUnmounted,
+  onMounted,
+  nextTick,
+} from "vue";
 import { useRouter } from "vue-router";
-import {change_theme} from '/src/assets/js/topic.js'
-import TopicTitle from '/src/component/TopicTitle.vue'
+import { change_theme } from "/src/assets/js/topic.js";
+import { getTitles } from "/src/assets/js/topic.js";
+import { change_layout } from "/src/assets/js/topic.js";
+import TopicTitle from "/src/component/TopicTitle.vue";
 import emitter from "@/assets/config/mitt_bus.js";
-
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const { theme } = storeToRefs(store);
+const { layout } = storeToRefs(store);
+store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+  change_layout(state.layout);
+});
 const router = useRouter();
 onBeforeMount(() => {});
-onMounted(()=>{
-  change_theme(props.theme)
-  change_layout(props.layout);
-  emitter.on("new_side_view", (v) => side_view_handle(v));
-nextTick(()=>{
-  emitter.emit("new_titles_list", getTitles());
-
-})   
-})
-
-        // 获取目录的标题
-        function getTitles() {
-            let titles = [];
-            let levels = ["h1", "h2", "h3"];
-
-            let articleElement = document.querySelector('.topic_text');
-            if (!articleElement) {
-                return titles;
-            }
-
-            let elements = Array.from(articleElement.querySelectorAll("*"));
-            // 调整标签等级
-            let tagNames = new Set(
-                elements.map((el) => el.tagName.toLowerCase())
-            );
-            for (let i = levels.length - 1; i >= 0; i--) {
-                if (!tagNames.has(levels[i])) {
-                    levels.splice(i, 1);
-                }
-            }
-
-            let serialNumbers = levels.map(() => 0);
-            for (let i = 0; i < elements.length; i++) {
-                const element = elements[i];
-                let tagName = element.tagName.toLowerCase();
-                let level = levels.indexOf(tagName);
-                if (level == -1) continue;
-
-                let id = tagName + "-" + element.innerText + "-" + i;
-                let node = {
-                    id,
-                    level,
-                    parent: null,
-                    children: [],
-                    rawName: element.innerText,
-                    scrollTop: element.offsetTop,
-                };
-
-                if (titles.length > 0) {
-                    let lastNode = titles.at(-1);
-
-                    // 遇到子标题
-                    if (lastNode.level < node.level) {
-                        node.parent = lastNode;
-                        lastNode.children.push(node);
-                    }
-                    // 遇到上一级标题
-                    else if (lastNode.level > node.level) {
-                        serialNumbers.fill(0, level + 1);
-                        let parent = lastNode.parent;
-                        while (parent) {
-                            if (parent.level < node.level) {
-                                parent.children.push(node);
-                                node.parent = parent;
-                                break;
-                            }
-                            parent = parent.parent;
-                        }
-                    }
-                    // 遇到平级
-                    else if (lastNode.parent) {
-                        node.parent = lastNode.parent;
-                        lastNode.parent.children.push(node);
-                    }
-                }
-
-                serialNumbers[level] += 1;
-                let serialNumber = serialNumbers.slice(0, level + 1).join(".");
-
-                node.isVisible = node.parent == null;
-                node.name = serialNumber + ". " + element.innerText;
-                titles.push(node);
-            }
-            return titles;
-        }
-const props = defineProps({
-  theme: Boolean,
-  layout:Boolean,
+onMounted(() => {
+  change_theme(theme.value);
+  change_layout(layout.value);
+  nextTick(() => {
+    emitter.emit("new_titles_list", getTitles());
+  });
 });
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
-onUnmounted(()=>{
-  emitter.off("new_side_view")
-})
- 
-const side_view_handle = (v) => {
-  change_layout(v.current_side_view);
-};
-const change_layout = (flag) => {
-  const topic_content = document.querySelector(".topic_content");
-  if (flag) {
-    topic_content.style.width = "60vw";
-    topic_content.style.margin = " 20px 30px 80px calc(10vw - 10px)";
-    // show_personal_info.value = true;
-  } else {
-    topic_content.style.width = "80vw";
-    // show_personal_info.value = false;
-  }
-};
+
+
 const data = {
-  title:'Weathering With you(经典语录)',
-  date:'2024-01-06?7:06'
-}
-setTimeout(() => {
-  emitter.emit("new_titles_list", getTitles());
-}, 100000);
+  title: "Weathering With you(经典语录)",
+  date: "2024-01-06?7:06",
+};
+
 </script>
 <template>
-  <div id="topic_main" class="flex  flex_direction_row">
-   
+  <div id="topic_main" class="flex flex_direction_row">
     <div class="topic_content">
       <TopicTitle :data="data"></TopicTitle>
 
@@ -222,16 +134,15 @@ setTimeout(() => {
           “相比于蓝天，我更需要阳菜”
         </span>
       </div>
-      <div class="width_full" style="height:200px;background: transparent;"></div>
+      <div
+        class="width_full"
+        style="height: 200px; background: transparent"
+      ></div>
     </div>
-    <DirectoryList :theme="props.theme" :layout="props.layout" class="directoryList"></DirectoryList>
+    <DirectoryList class="directoryList"></DirectoryList>
   </div>
-  <Utils :theme="props.theme"></Utils>
-
-
+  <Utils></Utils>
 </template>
 <style lang="scss" scoped>
-.directoryList{
-  margin-top: 20px;
-}
+
 </style>

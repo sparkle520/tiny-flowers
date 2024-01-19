@@ -12,11 +12,18 @@ import {
   watch,
   nextTick,
 } from "vue";
+import { storeToRefs } from "pinia";
+import { useConfigStore } from "../store/config.js";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+})
 import { useRouter } from "vue-router";
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
-  change_theme(props.theme)
+  change_theme(theme.value)
 });
 const contain_music = ref(false);
 const PLAY_MODE = {
@@ -217,12 +224,8 @@ const filter_blur_music_name = () => {
     music_name.style.filter = "blur(0px)";
   }, 500);
 };
-const props = defineProps({
-  theme: Boolean,
-});
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
+
+
 //change scss var 
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);

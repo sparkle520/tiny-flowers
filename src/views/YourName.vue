@@ -6,18 +6,20 @@
 import { reactive, toRefs, onBeforeMount, onMounted ,watch} from "vue";
 import { useRouter } from "vue-router";
 import c_c from "@/assets/js/utils.js"
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
 const router = useRouter();
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+})
 onBeforeMount(() => {});
 onMounted(() => {
-    change_theme(props.theme)
-});
-const props = defineProps({
-  theme: Boolean,
+    change_theme(theme.value)
 });
 
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
+
 const change_theme = (current_theme) =>{
   if (current_theme) {
     c_c("--bg_color", "#0b0e14");

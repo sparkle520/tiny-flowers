@@ -2,7 +2,7 @@
 import { useRoute } from "vue-router";
 import { inject, onMounted, watch, ref,onUnmounted,nextTick } from "vue";
 import { clickEffect} from "/src/assets/js/mouse.js";
-import emitter from "@/assets/config/mitt_bus.js"
+// import emitter from "@/assets/config/mitt_bus.js"
 
 const route = useRoute();
 // const change_current_index =(index) =>{
@@ -11,36 +11,34 @@ const route = useRoute();
 // let g_side_bar = inject('g_side_bar')
 let current_side_view = true;
 onMounted(() => {
-    emitter.emit('new_side_view', {current_side_view:current_side_view})
+    // emitter.emit('new_side_view', {current_side_view:current_side_view})
 });
 //鼠标特效
 onUnmounted(()=>{
-  emitter.all.clear()
+  // emitter.all.clear()
 })
 const side_view_handle = () => {
   current_side_view = !current_side_view
-  emitter.emit('new_side_view', {current_side_view:current_side_view})
+  // emitter.emit('new_side_view', {current_side_view:current_side_view})
 }
-emitter.on('side_view_change', () => side_view_handle())
+// emitter.on('side_view_change', () => side_view_handle())
 
 clickEffect();
 const music = ref(false);
 const music_handle = (status) => {
   music.value = status;
 };
-const theme_handle = (status) => {
-  current_theme.value = status;
-};
-const current_theme = ref(false);
-watch(current_theme, (newV, oldV) => {
-  if (newV.theme) {
-    c_c("--bg_color", "#1e2433");
-    document.body.style.background = "#1e2433";
-  } else {
-    c_c("--bg_color", "#f7f3f5");
-    document.body.style.background = "#f7f3f5";
-  }
-});
+
+
+// watch(current_theme, (newV, oldV) => {
+//   if (newV.theme) {
+//     c_c("--bg_color", "#1e2433");
+//     document.body.style.background = "#1e2433";
+//   } else {
+//     c_c("--bg_color", "#f7f3f5");
+//     document.body.style.background = "#f7f3f5";
+//   }
+// });
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
 };
@@ -53,19 +51,15 @@ const c_c = (mut_val, color) => {
       @music_change="music_handle"
       class="nav"
       @theme_change="theme_handle"
-      :theme="current_theme"
     ></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view
       :key="$route.path"
       class="router_view"
-      :theme="current_theme"
-      :layout="current_side_view"
     ></router-view>
     <MusicPlayer
       v-show="music"
       class="music_player absolute"
-      :theme="current_theme"
     ></MusicPlayer>
   </div>
 </template>

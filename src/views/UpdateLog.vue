@@ -6,17 +6,23 @@
 import { reactive, toRefs, onBeforeMount, ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import change_theme from "../assets/theme/UpdateLog";
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
 const router = useRouter();
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+})
 onBeforeMount(() => {});
 onMounted(() => {
-  change_theme(props.theme)
+  change_theme(theme.value)
   window.scrollTo(0, 0);
-
 });
 const carousel_data = ref([
   // {link:''},
+  { link: "https://pic.imgdb.cn/item/65a97eb8871b83018a6fc35c.jpg" },
   { link: "https://pic.imgdb.cn/item/65a417d5871b83018a50a4c9.jpg" },
-  { link: "https://pic.imgdb.cn/item/65a4181b871b83018a517eb9.jpg" },
   { link: "https://pic.imgdb.cn/item/65a4185f871b83018a5241a0.jpg" },
   { link: "https://pic.imgdb.cn/item/65a616a9871b83018acf90af.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e576871b83018a7eeee4.jpg" },
@@ -42,13 +48,9 @@ const log = [
     ],
   },
 ];
-const props = defineProps({
-  theme: Boolean,
-});
 
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
+
+
 
 </script>
 <template>
@@ -111,7 +113,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
   color: $color;
   background: $bg_color;
   .carousel {
-    width: 100vw;
+    width: 90vw;
     margin: 0 auto;
     animation: move_bottom 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
@@ -132,7 +134,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
         line-height: 25px;
         margin: 10px 0;
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 5px;
         background: $li;
         box-shadow: 0 0 10px $li_shadow;
       }
@@ -147,7 +149,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
         position: absolute;
         width: 120%;
         height: 20%;
-        border-radius: 10px;
+        border-radius: 5px;
         background: $striking_title_orange_bg;
         left: 50%;
         bottom: -10px;

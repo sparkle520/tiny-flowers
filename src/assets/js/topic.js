@@ -28,4 +28,92 @@ export const c_c = (mut_val, color) => {
   
     }
   }
-  
+
+  // 获取目录的标题
+  export function getTitles() {
+    let titles = [];
+    let levels = ["h1", "h2", "h3"];
+
+    let articleElement = document.querySelector('.topic_text');
+    if (!articleElement) {
+        return titles;
+    }
+
+    let elements = Array.from(articleElement.querySelectorAll("*"));
+    // 调整标签等级
+    let tagNames = new Set(
+        elements.map((el) => el.tagName.toLowerCase())
+    );
+    for (let i = levels.length - 1; i >= 0; i--) {
+        if (!tagNames.has(levels[i])) {
+            levels.splice(i, 1);
+        }
+    }
+
+    let serialNumbers = levels.map(() => 0);
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        let tagName = element.tagName.toLowerCase();
+        let level = levels.indexOf(tagName);
+        if (level == -1) continue;
+
+        let id = tagName + "-" + element.innerText + "-" + i;
+        let node = {
+            id,
+            level,
+            parent: null,
+            children: [],
+            rawName: element.innerText,
+            scrollTop: element.offsetTop,
+        };
+
+        if (titles.length > 0) {
+            let lastNode = titles.at(-1);
+
+            // 遇到子标题
+            if (lastNode.level < node.level) {
+                node.parent = lastNode;
+                lastNode.children.push(node);
+            }
+            // 遇到上一级标题
+            else if (lastNode.level > node.level) {
+                serialNumbers.fill(0, level + 1);
+                let parent = lastNode.parent;
+                while (parent) {
+                    if (parent.level < node.level) {
+                        parent.children.push(node);
+                        node.parent = parent;
+                        break;
+                    }
+                    parent = parent.parent;
+                }
+            }
+            // 遇到平级
+            else if (lastNode.parent) {
+                node.parent = lastNode.parent;
+                lastNode.parent.children.push(node);
+            }
+        }
+
+        serialNumbers[level] += 1;
+        let serialNumber = serialNumbers.slice(0, level + 1).join(".");
+
+        node.isVisible = node.parent == null;
+        node.name = serialNumber + ". " + element.innerText;
+        titles.push(node);
+    }
+    return titles;
+}
+
+
+export const change_layout = (flag) => {
+  const topic_content = document.querySelector(".topic_content");
+  if (flag) {
+    topic_content.style.width = "60vw";
+    topic_content.style.margin = " 20px 30px 80px calc(10vw - 10px)";
+    // show_personal_info.value = true;
+  } else {
+    topic_content.style.width = "80vw";
+    // show_personal_info.value = false;
+  }
+};

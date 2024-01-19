@@ -5,18 +5,21 @@
 <script setup>
 import { reactive, toRefs, onBeforeMount, onMounted,watch } from "vue";
 import { useRouter } from "vue-router";
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+const store = useConfigStore();
+const {theme}  = storeToRefs(store);
+store.$subscribe((mutation,state)=>{
+  change_theme(state.theme)
+})
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
-  change_theme(props.theme)
+  change_theme(theme.value)
 
 });
-const props = defineProps({
-  theme: Boolean,
-});
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme)
-});
+
+
 const go_github = () => {
   window.location.href = "https://github.com/sparkle520";
 };
