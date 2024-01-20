@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useRoutesStore } from "../store/routes";
+import { defineAsyncComponent } from 'vue';
 import {length} from "/src/assets/config/data"
 import Home from '../views/Home.vue'
 const routes = [
@@ -102,6 +103,7 @@ router.beforeEach((to, from, next) => {
         next()
     }
 })
+const modules = import.meta.glob('../topic/*.vue')
  const create_routes = async ()=> {
         for(let i = 1;i <= length();++i){
             router.addRoute({
@@ -110,7 +112,7 @@ router.beforeEach((to, from, next) => {
                     isRouterAuth: false,
                     screenFull: true,
                 },
-                component: modules[`/src/topic/Topic_${i}.vue`]
+                component: ()=> defineAsyncComponent(()=>import(`/src/topic/Topic_${i}.vue`))
             })
         }
         
