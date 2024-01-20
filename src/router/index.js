@@ -112,7 +112,7 @@ const modules = import.meta.glob('../topic/*.vue')
                     isRouterAuth: false,
                     screenFull: true,
                 },
-                component: ()=> defineAsyncComponent(()=>import(`/src/topic/Topic_${i}.vue`))
+                component: defineAsyncComponent(()=>import(`/src/topic/Topic_${i}.vue`))
             })
         }
         
