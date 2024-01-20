@@ -49,8 +49,7 @@ const data = {
        
        </span>
        <h1>最后</h1>
-       <span class="normal">感谢github提供免费的静态网页托管服务<br>感谢vue3和vue-router提供的前端框架<br>感谢vite提供的前端打包工具<br>感谢highlightjs提供的高亮插件<br>感谢
-        vue-latex提供的前端latex插件<br>感谢pinia提供的前端状态管理工具。</span>
+      
       </div>
     </div>
     <!-- <DirectoryList class="directoryList"></DirectoryList> -->

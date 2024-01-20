@@ -49,22 +49,38 @@ const routes = [
 
         }
     },
-    // {
-    //     path: '/unknownWorldMap/topic/1',
-    //     component: () => import("/src/topic/Topic_1.vue"),
-    //     meta: {
-    //         isRouterAuth: false,
-    //         screenFull: true,
-    //     }
-    // },
-    // {
-    //     path: '/unknownWorldMap/topic/2',
-    //     component: () => import("/src/topic/Topic_2.vue"),
-    //     meta: {
-    //         isRouterAuth: false,
-    //         screenFull: true,
-    //     }
-    // },
+    {
+        path: '/unknownWorldMap/topic/1',
+        component: () => import("/src/topic/Topic_1.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
+        }
+    },
+    {
+        path: '/unknownWorldMap/topic/2',
+        component: () => import("/src/topic/Topic_2.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
+        }
+    },
+    {
+        path: '/unknownWorldMap/topic/3',
+        component: () => import("/src/topic/Topic_3.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
+        }
+    },
+    {
+        path: '/unknownWorldMap/topic/4',
+        component: () => import("/src/topic/Topic_4.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
+        }
+    },
     {
         path: '/yourName',
         component: () => import("/src/views/YourName.vue"),
@@ -103,21 +119,24 @@ router.beforeEach((to, from, next) => {
         next()
     }
 })
-const modules = import.meta.glob('../topic/*.vue')
- const create_routes = async ()=> {
-        for(let i = 1;i <= length();++i){
-            router.addRoute({
-                path: `/unknownWorldMap/topic/${i}`,
-                meta: {
-                    isRouterAuth: false,
-                    screenFull: true,
-                },
-                component: defineAsyncComponent(()=>import(`/src/topic/Topic_${i}.vue`))
-            })
-        }
+//  const create_routes = async ()=> {
+//     const modules = import.meta.glob('../topic/*.vue')
+//         const components = import.meta.globEager('../topic/*.vue')
+      
+
+//         for(let i = 1;i <= length();++i){
+//             router.addRoute({
+//                 path: `/unknownWorldMap/topic/${i}`,
+//                 meta: {
+//                     isRouterAuth: false,
+//                     screenFull: true,
+//                 },
+//                 component: defineAsyncComponent(modules[`/src/topic/Topic_${i}.vue`])
+//             })
+//         }
         
-}
-create_routes()
+// }
+// create_routes()
 
 
 export default router
