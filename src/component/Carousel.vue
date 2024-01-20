@@ -196,7 +196,7 @@ const play_dyn_text = () => {
       width: 10px;
       height: 10px;
       // border: #0064fb51 1px solid;
-      background: #fb571688;
+      background: #e1e0e0;
       border-radius: 50%;
       margin: 10px 0;
     }

@@ -84,11 +84,10 @@ onMounted(() => {
   change_theme(theme.value)
 });
 `,
-`
+  `
 ////store为获取到的实例 也就是 useConfigStore()返回的对象
 store.change_g_theme()
-`
-,
+`,
 ];
 </script>
 <template>
@@ -126,17 +125,15 @@ store.change_g_theme()
           alt=""
         />
         <h1 class="">定义store</h1>
-        <span class="normal">通过defineStore来定义store.</span>
         <span class="normal"
-          >第一个参数是你的应用中store的唯一ID,要求它是独一无二的,必须传入的.</span
-        >
+          >通过defineStore来定义store.<br />
+          第一个参数是你的应用中store的唯一ID,要求它是独一无二的,必须传入的.<br />
 
-        <span class="normal"
-          >defineStore() 的第二个参数可接受两类值：Setup函数或Option对象.</span
-        >
-        <span class="normal">这里采用的是option对象.</span>
-        <span class="normal"
-          >你可以认为 state 是 store 的数据 (data)，而 actions 则是方法
+          defineStore() 的第二个参数可接受两类值：Setup函数或Option对象.<br />
+
+          这里采用的是option对象.<br />
+
+          你可以认为 state 是 store 的数据 (data)，而 actions 则是方法
           (methods).</span
         >
         <div class="hljs_container" style="width: 100%" codetype="JavaScript">
@@ -151,15 +148,17 @@ store.change_g_theme()
         <span class="normal"
           >在组件中访问state,通过use...Store()返回的对象访问,并能直接对其读写.</span
         >
-        <span class="normal " style="line-height: 25px;"
+        <span class="normal" style="line-height: 25px"
           >subscribe中的mutation主要包含三个属性值： <br />
           events：当前state改变的具体数据,包括改变前的值和改变后的值等等数据
           <br />
           storeId：是当前store的id <br />
           type：用于记录这次数据变化是通过什么途径,主要有三个分别是 <br />
           &emsp14;&emsp14;&emsp14;&emsp14;"direct" ：通过 action 变化的<br />
-          &emsp14;&emsp14;&emsp14;&emsp14;"patch object"：通过 $patch 传递对象的方式改变的 <br />
-          &emsp14;&emsp14;&emsp14;&emsp14;"patch function" ：通过 $patch 传递函数的方式改变的 <br />
+          &emsp14;&emsp14;&emsp14;&emsp14;"patch object"：通过 $patch
+          传递对象的方式改变的 <br />
+          &emsp14;&emsp14;&emsp14;&emsp14;"patch function" ：通过 $patch
+          传递函数的方式改变的 <br />
           &emsp14;&emsp14;&emsp14;&emsp14;detached:布尔值，默认是
           false,正常情况下,当订阅所在的组件被卸载时,订阅将被停止删除, <br />
           如果设置detached值为 true 时,即使所在组件被卸载,订阅依然在生效</span
@@ -173,7 +172,9 @@ store.change_g_theme()
           ></highlightjs>
         </div>
         <h1>改变state</h1>
-        <span class="normal">在切换主题的按钮的点击事件中将我们写好的action作为store的方法调用</span>
+        <span class="normal"
+          >在切换主题的按钮的点击事件中将我们写好的action作为store的方法调用</span
+        >
         <div class="hljs_container" style="width: 100%" codetype="JavaScript">
           <highlightjs
             style="width: 700px"

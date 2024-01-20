@@ -56,8 +56,8 @@ const nav_list = [
   },
   {
     index: 2,
-    name: "关于我",
-    path: "/aboutMe",
+    name: "关于",
+    path: "/about",
   },
   {
     index: 3,
@@ -94,7 +94,7 @@ const switch_nav_active = () => {
       case "unknownWorldMap":
         switch_nav_item(1);
         break;
-      case "aboutMe":
+      case "about":
         switch_nav_item(2);
         break;
 
@@ -134,9 +134,9 @@ const music_active = ref(false);
 watch(music_active, (newV, oldV) => {
   emits("music_change", newV);
 });
-
+const current_theme = ref(false)
 const theme_change = () => {
-  store.change_g_theme();
+  store.theme = !current_theme.value;
 };
 </script>
 <template>
@@ -165,7 +165,7 @@ const theme_change = () => {
             </li>
           </ul>
           <label class="switch" for="theme" >
-            <input id="theme" type="checkbox" @click="theme_change"/>
+            <input id="theme" type="checkbox" @click="theme_change" v-model="current_theme"/>
             <span class="slider"></span>
           </label>
         </div>

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useRoutesStore } from "../store/routes";
+import {length} from "/src/assets/config/data"
 import Home from '../views/Home.vue'
 const routes = [
     {
@@ -12,8 +13,8 @@ const routes = [
         }
     },
     {
-        path: '/aboutMe',
-        component: () => import("/src/views/AboutMe.vue"),
+        path: '/about',
+        component: () => import("/src/views/About.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: true,
@@ -102,7 +103,7 @@ router.beforeEach((to, from, next) => {
     }
 })
  const create_routes = async ()=> {
-        for(let i = 1;i <= 3;++i){
+        for(let i = 1;i <= length();++i){
             router.addRoute({
                 path: `/unknownWorldMap/topic/${i}`,
                 meta: {

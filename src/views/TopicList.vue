@@ -23,22 +23,21 @@ const { params } = useRoute();
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const {theme}  = storeToRefs(store);
-const {layout}  = storeToRefs(store);
+const { theme } = storeToRefs(store);
+const { layout } = storeToRefs(store);
 const router = useRouter();
-store.$subscribe((mutation,state)=>{
-  change_theme(state.theme)
-  change_layout(state.layout)
-})
+store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+  change_layout(state.layout);
+});
 onBeforeMount(() => {});
 onMounted(() => {
   init();
-  
 });
 const init = () => {
   window.scrollTo(0, 0);
-  change_layout(layout.value)
-  change_theme(theme.value)
+  change_layout(layout.value);
+  change_theme(theme.value);
   item_list = Array.from(document.querySelectorAll(".topic_item"));
   document.addEventListener("scroll", scroll_handle);
   scroll_handle();
@@ -62,11 +61,11 @@ const change_layout = (flag) => {
   }
 };
 const classification = [
-  {name:'学习笔记'},
-  {name:'技术分享'},
-  {name:'生活随想'},
-  {name:'二次元'},
-]
+  { name: "学习笔记" },
+  { name: "技术分享" },
+  { name: "生活随想" },
+  { name: "二次元" },
+];
 const scroll_handle = () => {
   for (let i = 0; i < item_list.length; i++) {
     let elem = item_list[i];
@@ -86,7 +85,7 @@ const remove_all_animation = () => {
 };
 onUnmounted(() => {
   document.removeEventListener("scroll", scroll_handle);
-  clearInterval(interval_run_time)
+  clearInterval(interval_run_time);
 });
 
 onBeforeMount(() => {
@@ -148,8 +147,6 @@ const jump_to_topic = (path) => {
   router.push(path);
 };
 
-
-
 const page_handle = (index) => {
   switch (params.classification) {
     case "学习笔记":
@@ -193,11 +190,10 @@ const classification_handle = (classification) => {
 
   // })
   // params.page = 1
-  
 };
 const birthday_date = "2024-01-05 11:01:01";
 const current_run_time = ref("");
-const  run_time = (date)=> {
+const run_time = (date) => {
   let date_start = new Date(date);
   let date_end = new Date();
   let date_diff = date_end.getTime() - date_start.getTime();
@@ -209,7 +205,7 @@ const  run_time = (date)=> {
   let leave3 = leave2 % (60 * 1000);
   let seconds = Math.round(leave3 / 1000);
   current_run_time.value = `${day_diff}天${hours}小时${minutes}分钟`;
-}
+};
 const last_update = () => {
   let date_array = [
     format_date(data.life[0].date),
@@ -226,12 +222,26 @@ const last_update = () => {
     );
   });
   let temp = date_array_sort[0].split("-");
+
   let date_start = new Date(temp[0], temp[1] - 1, temp[2], temp[3], temp[4]);
   let date_end = new Date();
 
   let date_diff = date_end.getTime() - date_start.getTime();
   let day_diff = Math.floor(date_diff / (24 * 3600 * 1000));
-  return day_diff + "天前";
+
+  let leave1 = date_diff % (24 * 3600 * 1000);
+  let hours = Math.floor(leave1 / (3600 * 1000));
+  let leave2 = leave1 % (3600 * 1000);
+  let minutes = Math.floor(leave2 / (60 * 1000));
+  if (day_diff == 0 && hours < 24) {
+    if (hours === 0) {
+      return minutes + "分钟前";
+    } else {
+      return hours + "小时前";
+    }
+  } else {
+    return day_diff + "天前";
+  }
 };
 // xx月xx号?xxxx?xx:xx  ..?年?时:分 -> xxxx-xx-xx-xx-xx  年-月-日-时-分
 const format_date = (date) => {
@@ -359,21 +369,21 @@ const personal_info = {
             <span>{{ data.study.length }}</span>
           </li>
           <li
-          @click="classification_handle(classification[1].name)"
+            @click="classification_handle(classification[1].name)"
             class="flex flex_direction_row"
           >
             <span>技术分享</span>
             <span>{{ data.technique.length }}</span>
           </li>
           <li
-          @click="classification_handle(classification[2].name)"
+            @click="classification_handle(classification[2].name)"
             class="flex flex_direction_row"
           >
             <span>生活随想</span>
             <span>{{ data.life.length }}</span>
           </li>
           <li
-          @click="classification_handle(classification[3].name)"
+            @click="classification_handle(classification[3].name)"
             class="flex flex_direction_row"
           >
             <span>二次元</span>
@@ -416,6 +426,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
   background: $bg_color;
   width: 100%;
   color: $color;
+
   .topic_box {
     margin: 100px 0 0 60px;
     min-height: calc(100vh);
@@ -520,6 +531,13 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       height: 150px;
       border-radius: 50%;
       margin: 30px 0;
+      border: $item_shadow 2px solid;
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+      &:hover {
+        transform: rotate(360deg);
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
     }
     .personal_name {
       font-size: 25px;

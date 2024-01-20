@@ -76,7 +76,7 @@ const data = {
     </div>
       </div>
     </div>
-    <DirectoryList class="directoryList"></DirectoryList>
+    <!-- <DirectoryList class="directoryList"></DirectoryList> -->
 
   </div>
   <Utils></Utils>

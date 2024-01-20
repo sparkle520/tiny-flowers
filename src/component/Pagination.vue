@@ -17,20 +17,20 @@ import { useRouter } from "vue-router";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const {theme}  = storeToRefs(store);
-store.$subscribe((mutation,state)=>{
-  change_theme(state.theme)
-})
+const { theme } = storeToRefs(store);
+store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   init();
-  change_theme(theme.value)
+  change_theme(theme.value);
 });
 const init = () => {
   switch_left_right_button_status(current_page_index.value);
 
-  if (Math.ceil(props.data.total /10) <= (current_page_index.value)) {
+  if (Math.ceil(props.data.total / 10) <= current_page_index.value) {
     for (
       let i = (current_page_index.value - 1) * 10 + 1;
       i <= props.data.total;
@@ -66,7 +66,6 @@ const init = () => {
 };
 const emit = defineEmits(["page_change"]);
 const props = defineProps({
-
   data: {
     total: Number,
     current_index: Number,
@@ -103,7 +102,7 @@ const switch_item_status = (newV, oldV) => {
   dom__add_class(item_new, "item_active");
   dom__remove_class(item_new, "item");
 };
-const current_page_index = ref(Math.ceil(props.data.current_index /10));
+const current_page_index = ref(Math.ceil(props.data.current_index / 10));
 watch(current_page_index, (newV, oldV) => {
   switch_left_right_button_status(newV);
 });
@@ -171,7 +170,6 @@ const switch_page_handle = (mode) => {
         for (let index = 0; index < page_array.value.length; index++) {
           page_array.value[index] += 10;
         }
-
       } else {
         let temp = page_array.value[0] + 10;
         page_array.value = [];
@@ -187,9 +185,7 @@ const switch_page_handle = (mode) => {
   current_page_index.value = parseInt((current_index.value + 9) / 10);
 };
 
-
-
-//change scss var 
+//change scss var
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
 };
@@ -199,14 +195,13 @@ const change_theme = (current_theme) => {
     c_c("--page_item_active_bg", "#9b9fb8");
     c_c("--page_item_color", "#969696");
     c_c("--page_item_bg", "#3d3d3f");
-    
   } else {
     c_c("--page_item_active_color", "#f2eaea");
     c_c("--page_item_active_bg", "#e35904");
     c_c("--page_item_color", "#2b2a2a");
     c_c("--page_item_bg", "#dcdcdc");
   }
-}
+};
 </script>
 <template>
   <div
@@ -253,9 +248,9 @@ const change_theme = (current_theme) => {
           v-for="(item, index) in page_array"
           @click="page_handle(item)"
         >
-        <span>
-          {{ item }}
-        </span>
+          <span>
+            {{ item }}
+          </span>
         </li>
       </ul>
     </div>
@@ -354,6 +349,25 @@ $page_item_bg: var(--page_item_bg, #dcdcdc);
         border-radius: 5px;
 
         background: $page_item_bg;
+        &:hover {
+          color: $page_item_active_color;
+          background: transparent;
+          span {
+            z-index: 2;
+          }
+          &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+            height: 100%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 5px;
+            background: $page_item_active_bg;
+          }
+        }
       }
       .item_active {
         width: 40px;
@@ -363,7 +377,7 @@ $page_item_bg: var(--page_item_bg, #dcdcdc);
         color: $page_item_active_color;
         background: transparent;
         border-radius: 5px;
-        span{
+        span {
           z-index: 2;
         }
         &::after {
