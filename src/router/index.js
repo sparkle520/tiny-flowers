@@ -110,7 +110,7 @@ router.beforeEach((to, from, next) => {
                     isRouterAuth: false,
                     screenFull: true,
                 },
-                component: () => import(`/src/topic/Topic_${i}.vue`)
+                component: modules[`/src/topic/Topic_${i}.vue`]
             })
         }
         
