@@ -195,7 +195,7 @@ const music_handle = (status) => {
 
 <template>
   <div id="main" class="flex flex_direction_column">
-    <canvas  id="canvas" width="800" height="500" class="absolute"></canvas>
+    <!-- <canvas  id="canvas" width="800" height="500" class="absolute"></canvas> -->
     <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->
     <TopNavBar
       @music_change="music_handle"

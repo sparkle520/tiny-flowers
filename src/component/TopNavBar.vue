@@ -61,8 +61,8 @@ const nav_list = [
   },
   {
     index: 3,
-    name: "你的名字",
-    path: "/yourName",
+    name: "网站导航",
+    path: "/siteNav",
   },
   {
     index: 4,
@@ -98,7 +98,7 @@ const switch_nav_active = () => {
         switch_nav_item(2);
         break;
 
-      case "yourName":
+      case "siteNav":
         switch_nav_item(3);
         break;
       case "updateLog":

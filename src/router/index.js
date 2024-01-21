@@ -82,11 +82,20 @@ const routes = [
         }
     },
     {
-        path: '/yourName',
-        component: () => import("/src/views/YourName.vue"),
+        path: '/siteNav',
+        component: () => import("/src/views/SiteNav.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
+
+        }
+    },
+    {
+        path: '/game/2048',
+        component: () => import("/src/game/Game2048.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
 
         }
     },
