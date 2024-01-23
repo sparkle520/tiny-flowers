@@ -655,7 +655,7 @@ const change_theme = (current_theme) => {
     &:hover{
       .play_bg_img{
         transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
-        content: url('https://pic.imgdb.cn/item/65a3e57b871b83018a7f0821.jpg');
+        // content: url('https://pic.imgdb.cn/item/65a3e57b871b83018a7f0821.jpg');
         transform: scale(1.2);
       }
     }

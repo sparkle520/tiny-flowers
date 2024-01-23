@@ -22,7 +22,11 @@ store.$subscribe((mutation, state) => {
 const router = useRouter();
 onBeforeMount(() => {});
 onUnmounted(() => {
-  window.removeEventListener("resize", func, false);
+  window.removeEventListener("resize", func);
+  // window.removeEventListener("touchstart", touch_start.bind(this));
+  // window.removeEventListener("mousedown", mouse_down);
+  // window.removeEventListener("touchmove", touch_move);
+  // window.removeEventListener("mousemove", mouse_move);
 });
 onMounted(() => {
   change_theme(theme.value);
@@ -360,39 +364,33 @@ onMounted(() => {
 
     Build.prototype.run = function () {
       this.anim();
+      const mouse_move = (e) => {
+        this.toX = (e.clientX - this.canvas.width / 2) * -0.8;
+        this.toY = (e.clientY - this.canvas.height / 2) * 0.8;
+      };
+      window.addEventListener("mousemove", mouse_move.bind(this));
 
-      window.addEventListener(
-        "mousemove",
-        function (e) {
-          this.toX = (e.clientX - this.canvas.width / 2) * -0.8;
-          this.toY = (e.clientY - this.canvas.height / 2) * 0.8;
-        }.bind(this)
-      );
-      window.addEventListener(
-        "touchmove",
-        function (e) {
-          e.preventDefault();
-          this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8;
-          this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8;
-        }.bind(this)
-      );
-      window.addEventListener(
-        "mousedown",
-        function (e) {
-          for (let i = 0; i < 100; i++) {
-            this.add();
-          }
-        }.bind(this)
-      );
-      window.addEventListener(
-        "touchstart",
-        function (e) {
-          e.preventDefault();
-          for (let i = 0; i < 100; i++) {
-            this.add();
-          }
-        }.bind(this)
-      );
+      const touch_move = (e) => {
+        e.preventDefault();
+        this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8;
+        this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8;
+      };
+      window.addEventListener("touchmove", touch_move.bind(this));
+
+      const mouse_down = (e) => {
+        for (let i = 0; i < 100; i++) {
+          this.add();
+        }
+      };
+      window.addEventListener("mousedown", mouse_down.bind(this));
+
+      const touch_start = (e) => {
+        e.preventDefault();
+        for (let i = 0; i < 100; i++) {
+          this.add();
+        }
+      };
+      window.addEventListener("touchstart", touch_start.bind(this));
     };
     let app = new Build();
     app.run();
