@@ -14,7 +14,14 @@ onUnmounted(() => {
 });
 const init = () => {
   let carousel_img = document.querySelector(".carousel_img");
-
+  if(props.width != undefined){
+    const full_carousel_main = document.querySelector("#full_carousel_main");
+    full_carousel_main.style.width = props.width + "vw";
+  }
+  if(props.height != undefined){
+    const full_carousel_main = document.querySelector("#full_carousel_main");
+    full_carousel_main.style.height = props.height + "vh";
+  }
   carousel_img.style.transform = "scale(1." + flash_img + ")";
   flash_img++;
 };
@@ -45,20 +52,23 @@ const cycle_carousel = setInterval(() => {
 let flash_img = 0;
 const props = defineProps({
   carousel_data: Array,
+  width: Number,
+  height: Number,
 })
 </script>
 <template>
-    <div id="main">
+    <div id="full_carousel_main">
         <img class="carousel_img" :src="carousel_data[current_img].link" alt="" />
     </div>
 </template>
 <style lang="scss" scoped>
-#main {
+#full_carousel_main {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     img {
-      width: 100vw;
-      height: 100vh;
+      width: inherit;
+      height: inherit;
       object-fit: cover;
       transition: all 2s linear;
     }

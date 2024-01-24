@@ -33,6 +33,7 @@ const change_theme = (current_theme) =>{
     c_c("--color", "#000000");
     c_c("--site_content_color", "#c5b4e5");
     c_c("--site_item_color", "#4d1225");
+    c_c("--site_item_hover_color", "#917979");
   }
 }
 const go_to = (url) =>{
@@ -96,8 +97,8 @@ const site_data = [
         </div>
     </div>
 </div> -->
-<img src="https://pic.imgdb.cn/item/65af8e10871b83018aa8fc8b.png" class="miku  fixed absolute_center" alt="">
-<img src="https://pic.imgdb.cn/item/65afa1e5871b83018ae90cd9.png" class="flower  fixed absolute_center" alt="">
+<img src="https://pic.imgdb.cn/item/65b0127d871b83018a75ffc4.png" class="miku  fixed absolute_center" alt="">
+<!-- <img src="https://pic.imgdb.cn/item/65afa1e5871b83018ae90cd9.png" class="flower  fixed absolute_center" alt=""> -->
 <div class="site_content flex flex_direction_column">
     <div class="site_item" v-for="item in site_data">
         <h1>{{ item.collect_name }}</h1>
@@ -118,6 +119,7 @@ $bg_color: var(--bg_color, #f7f3f5);
 $color: var(--color, #000000);
 $site_content_color: var(--site_content_color, #8d8d93);
 $site_item_color: var(--site_item_color, #4d1225);
+$site_item_hover_color: var(--site_item_hover_color, #917979);
 #main {
   width: 100%;
   min-height: 100vh;
@@ -140,7 +142,8 @@ $site_item_color: var(--site_item_color, #4d1225);
   .miku{
     opacity: .4;
 z-index: 1;    
-filter:drop-shadow(10px 10px 4px rgb(52, 50, 50));
+width: 600px;
+// filter:drop-shadow(10px 10px 4px rgb(52, 50, 50));
 animation: miku 4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   }
@@ -150,7 +153,7 @@ animation: miku 4s cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 0;
     left: 54%;
     top: 55%;
-    filter:drop-shadow(10px 10px 4px rgb(52, 50, 50));
+    // filter:drop-shadow(10px 10px 4px rgb(52, 50, 50));
     animation: flower 4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   }
@@ -200,6 +203,12 @@ transform: translate(-50%,-50%) scale(.4);
                     height: 2px;
                     background: $site_item_color;
                     left: 0;
+                }
+                &:hover{
+                  color: $site_item_hover_color;
+                  &::after{
+                 background:$site_item_hover_color;
+                }
                 }
                }
             }

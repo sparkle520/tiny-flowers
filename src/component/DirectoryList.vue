@@ -41,7 +41,7 @@ const props = defineProps({
 });
 const current_titles = ref(props.titles);
 let currentTitle = ref({});
-let progress = ref(0);
+// let progress = ref(0);
 
 
 const change_layout = (flag) => {
@@ -69,9 +69,9 @@ const change_theme = (current_theme) => {
 };
 
 window.addEventListener("scroll", function () {
-  progress.value =
-    parseInt((window.scrollY / document.documentElement.scrollHeight) * 100) +
-    "%";
+  // progress.value =
+  //   parseInt((window.scrollY / document.documentElement.scrollHeight) * 100) +
+  //   "%";
   if (current_titles.value == undefined || current_titles.value == null) {
     return;
   }
@@ -156,7 +156,7 @@ function scrollToView(scrollTop) {
           >
        </div>
         </div>
-        <span class="progress">{{ progress }}</span>
+        <!-- <span class="progress">{{ progress }}</span> -->
       </div>
 
       <div class="catalog-content">
@@ -186,16 +186,16 @@ $normal_color: var(--normal_color, #e06530);
 #directory_list_main {
   width: 20vw;
   border-radius: 5px;
-  background: $directory_list_bg;
+  background: transparent;
   right: calc(10vw - 10px);
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   animation: move_left 4s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .catalog-card {
-  background: $directory_list_bg;
-  border-radius: 5px;
-  box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
+  background: transparent;
+  border-left: $directory_list_cover_bg 2px solid;
+ // border-radius: 5px;
   padding: 20px 24px;
   width: 100%;
   box-sizing: border-box;

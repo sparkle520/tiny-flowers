@@ -19,17 +19,17 @@ onMounted(() => {
   change_theme(theme.value)
   window.scrollTo(0, 0);
 });
-const carousel_data = ref([
+//const carousel_data = ref([
   // {link:''},
-  { link: "https://pic.imgdb.cn/item/65a97eb8871b83018a6fc35c.jpg" },
-  { link: "https://pic.imgdb.cn/item/65a417d5871b83018a50a4c9.jpg" },
-  { link: "https://pic.imgdb.cn/item/65a4185f871b83018a5241a0.jpg" },
-  { link: "https://pic.imgdb.cn/item/65a616a9871b83018acf90af.jpg" },
+  // { link: "https://pic.imgdb.cn/item/65a97eb8871b83018a6fc35c.jpg" },
+  // { link: "https://pic.imgdb.cn/item/65a417d5871b83018a50a4c9.jpg" },
+  // { link: "https://pic.imgdb.cn/item/65a4185f871b83018a5241a0.jpg" },
+  // { link: "https://pic.imgdb.cn/item/65a616a9871b83018acf90af.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e576871b83018a7eeee4.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e577871b83018a7ef617.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" },
   //   { link: "https://pic.imgdb.cn/item/65a3e57b871b83018a7f0821.jpg" },
-]);
+//]);
 const log = [
   //   {
   //     version: "1.0.0",
@@ -55,7 +55,8 @@ const log = [
 </script>
 <template>
   <div id="main" class="flex flex_direction_column">
-    <Carousel :data="carousel_data" class="carousel"></Carousel>
+    <img src="https://pic.imgdb.cn/item/65b00809871b83018a6489f8.png" class="absolute_center fixed w_w_y" alt="">
+    <!-- <Carousel :data="carousel_data" class="carousel"></Carousel> -->
     <div class="content flex margin_0_auto flex_direction_column">
       <div class="margin_0_auto">
         <span class="striking_title_orange margin_0_auto relative"
@@ -104,7 +105,7 @@ const log = [
 <style lang="scss" scoped>
 $bg_color: var(--bg_color, #f7f3f5);
 $color: var(--color, #000000);
-$li: var(--li, #fff);
+$li: var(--li, #242b3d12);
 $li_shadow: var(--li_shadow, #f4f2f2);
 $striking_title_orange_color: var(--striking_title_orange_color, #f0681e);
 $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
@@ -112,16 +113,23 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
   width: 100%;
   color: $color;
   background: $bg_color;
+  min-height: 100vh;
+  .w_w_y{
+    width: 450px;
+    opacity: .8;
+    z-index: 0;
+    // filter:drop-shadow(3px 3px 4px rgba(97, 85, 79, 0.731));
+
+  }
   .carousel {
     width: 90vw;
     margin: 0 auto;
     animation: move_bottom 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .content {
-    min-height: 80vh;
     width: 90%;
-    margin: 50px auto;
-    background: $bg_color;
+    margin: 80px auto;
+    z-index: 1;
     animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     ul {
@@ -136,6 +144,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
         padding: 10px;
         border-radius: 5px;
         background: $li;
+        
         box-shadow: 0 0 10px $li_shadow;
       }
     }
