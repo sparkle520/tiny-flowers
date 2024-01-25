@@ -440,6 +440,7 @@ $word_box_color: var(--word_box_color, #003153);
       height: 100vh;
       top: 0;
       color: #fff;
+      overflow: hidden;
 
       background: $home_bg_color;
       // &::after {
@@ -457,7 +458,6 @@ $word_box_color: var(--word_box_color, #003153);
         top: 50%;
         transform: translate(-50%, -40%);
         background: $home_bg_color;
-        overflow: hidden;
 
         &::after{
           content: '';
@@ -465,11 +465,11 @@ $word_box_color: var(--word_box_color, #003153);
           background: none;
           width: 110%;
           background: $home_bg_color;
-          height: 200px;
+          height: 28vh;
           left: 50%;
           transform: translateX(-50%);
           border-radius: 100%;
-          bottom: -25%;
+          bottom: -28%;
           box-shadow: inset 2px 3px 20px #123;
         }
         &::before{
@@ -478,7 +478,7 @@ $word_box_color: var(--word_box_color, #003153);
           background: none;
           width: 110%;
           background: $home_bg_color;
-          height: 200px;
+          height: 26vh;
           left: 50%;
           transform: translateX(-50%);
           border-radius: 100%;
@@ -496,7 +496,7 @@ $word_box_color: var(--word_box_color, #003153);
       }
       .s_animation_box_bg_2 {
         width: 100vw;
-        height: 68vh;
+        height: 70vh;
         opacity: 1;
         border-radius: 5px;
         
