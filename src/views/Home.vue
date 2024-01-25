@@ -22,16 +22,20 @@ store.$subscribe((mutation, state) => {
 onBeforeMount(() => {});
 onMounted(() => {
   change_theme(theme.value);
-  update_animation_map();
-  update_animation_map_style();
+  init_s_animation_map();
+  update_s_animation_map_style();
 
-  window.addEventListener("scroll", update_animation_map_style);
+  window.addEventListener("scroll", scroll_handle);
 });
 const router = useRouter();
 onBeforeMount(() => {});
 
-onUnmounted(() => {});
-
+onUnmounted(() => {
+  window.removeEventListener("scroll", scroll_handle);
+});
+const scroll_handle = () => {
+  update_s_animation_map_style();
+};
 const go_to_unknown_world_map = () => {
   router.push("/unknownWorldMap");
 };
@@ -46,8 +50,8 @@ const go_to_unknown_world_map = () => {
 //   // { link: "https://pic.imgdb.cn/item/659bfd7e871b83018a917e4b.png" },
 // ]);
 
-const animation_map = new Map();
-const update_animation_map = () => {
+const s_animation_map = new Map();
+const init_s_animation_map = () => {
   const animation_item = document.querySelectorAll(".animation_item");
   const start =
     document.querySelector(".second_page").getBoundingClientRect().top +
@@ -57,12 +61,12 @@ const update_animation_map = () => {
     window.scrollY -
     window.innerHeight;
   for (const item of animation_item) {
-    animation_map.set(item, get_dom_animation(start, end, item));
+    s_animation_map.set(item, get_s_dom_animation(start, end, item));
   }
 };
-const get_dom_animation = (start, end, dom) => {
+const get_s_dom_animation = (start, end, dom) => {
   const opacity_animation = create_animation(start, end, 0, 1);
-  const ul = document.querySelector(".animation_box ul");
+  const ul = document.querySelector(".s_animation_box ul");
   const { clientWidth, clientHeight, offsetTop, offsetLeft } = dom;
   const rect = ul.getBoundingClientRect();
   const opacity = (x) => {
@@ -87,19 +91,33 @@ const get_dom_animation = (start, end, dom) => {
     transform,
   };
 };
-const update_animation_map_style = () => {
+const update_s_animation_map_style = () => {
   const scroll_y = window.scrollY;
   const more = document.querySelector(".more");
   const first_page = document.querySelector(".first_page");
+  const s_animation_box_bg_2 = document.querySelector(".s_animation_box_bg_2");
+  const start =
+    document.querySelector(".second_page").getBoundingClientRect().top +
+    window.scrollY;
+  const end =
+    document.querySelector(".second_page").getBoundingClientRect().bottom +
+    window.scrollY -
+    window.innerHeight;
   first_page.style.opacity =
     first_page.getBoundingClientRect().bottom / first_page.clientHeight;
-  console.log(first_page.style.opacity);
+  s_animation_box_bg_2.style.webkitMaskPosition = `${create_animation(
+    start,
+    end,
+    0,
+    100
+  )(scroll_y)}% ${create_animation(start, end, 100, 0)(scroll_y)}%`;
+
   if (scroll_y > 0) {
     more.style.opacity = 0;
   } else {
     more.style.opacity = 1;
   }
-  for (const [dom, animations] of animation_map) {
+  for (const [dom, animations] of s_animation_map) {
     for (const prop in animations) {
       const v = animations[prop](scroll_y);
       dom.style[prop] = v;
@@ -175,16 +193,22 @@ const change_theme = (current_theme) => {
       <div class="first_page_cover absolute"></div>
     </div>
     <div class="second_page relative">
-      <div class="animation_box">
+      <div class="s_animation_box">
+        <img
+          src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
+          class="s_animation_box_bg_1 absolute"
+          alt=""
+        />
+        <div class="s_animation_box_bg_2 absolute"></div>
         <span class="absolute">喜欢的作品</span>
         <ul class="flex flex_direction_row absolute absolute_center">
-          <li data-order="0" class="animation_item">
+          <li data-order="0" class="animation_item relative">
             <img
               src="https://pic.imgdb.cn/item/65b15382871b83018a4d9b0b.webp"
               alt=""
             />
           </li>
-          <li data-order="1" class="animation_item">
+          <li data-order="1" class="animation_item relative">
             <img
               src="https://pic.imgdb.cn/item/65b152e5871b83018a4c46be.webp"
               alt=""
@@ -193,7 +217,9 @@ const change_theme = (current_theme) => {
         </ul>
       </div>
     </div>
-    <div class="third_page relative"></div>
+    <div class="third_page relative">
+      <div class="t_animation_box"></div>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -397,32 +423,86 @@ $word_box_color: var(--word_box_color, #003153);
   }
   .second_page {
     width: 100vw;
-    height: 300vh;
-    background: $home_bg_color;
+    height: 400vh;
+
     // scroll-snap-align: start;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    .animation_box {
+    .s_animation_box {
       position: sticky;
       width: 100vw;
       height: 100vh;
       top: 0;
-      color: $word_box_color;
+      color: #fff;
 
       background: $home_bg_color;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100vw;
+        height: 40vh;
+        background: linear-gradient(to top, rgb(38, 41, 44), transparent);
+        bottom: 0;
+      }
+
+      .s_animation_box_bg_1 {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        opacity: 1;
+      }
+      .s_animation_box_bg_2 {
+        width: 100vw;
+        height: 100vh;
+        opacity: 1;
+        background-size: cover;
+        background-image: url(https://pic.imgdb.cn/item/65b21d96871b83018a08d73b.png);
+        -webkit-mask-image: linear-gradient(
+          to right,
+          transparent 47.5%,
+          #fff 52.5%
+        );
+        background-repeat: no-repeat;
+        -webkit-mask-size: 210%;
+        -webkit-mask-position: left;
+      }
       ul {
         margin: 0;
-        width: calc(51vw + 15px);
+        padding: 0;
+        width: calc(51vw + 20px);
         height: 64vh;
-        gap: 15px;
+        gap: 20px;
         .animation_item {
           width: 25.5vw;
           height: 64vh;
           border-radius: 5px;
+          overflow: hidden;
+          &::after {
+            position: absolute;
+            left: -140%;
+            content: "";
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0),
+              rgba(255, 255, 255, 0.5),
+              rgba(255, 255, 255, 0)
+            );
+            transform: skew(-30deg);
+          }
+          &:hover {
+            &::after {
+              left: 140%;
+              transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+          }
           img {
             width: inherit;
             object-fit: cover;
             height: inherit;
             border-radius: inherit;
+            box-shadow: #003153 4px 5px 10px;
           }
         }
       }
@@ -440,8 +520,15 @@ $word_box_color: var(--word_box_color, #003153);
   }
   .third_page {
     width: 100vw;
-    height: 100vh;
+    height: 300vh;
     background: $home_bg_color;
+    .t_animation_box {
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      position: sticky;
+      background: #dfeef9;
+    }
     // scroll-snap-align: start;
   }
 }
