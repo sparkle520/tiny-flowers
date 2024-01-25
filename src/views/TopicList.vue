@@ -288,7 +288,7 @@ const personal_info = {
           </div>
           <span class="short_msg" v-html="item.short_message"></span>
           <div class="date flex flex_direction_row justify_content_center">
-            sparkle /
+            {{personal_info.name}} /
             {{ item.date.split("?")[0] }} / {{ item.date.split("?")[1] }} /
             {{ item.date.split("?")[2] }}
           </div>

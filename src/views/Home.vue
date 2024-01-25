@@ -194,14 +194,16 @@ const change_theme = (current_theme) => {
     </div>
     <div class="second_page relative">
       <div class="s_animation_box">
+       <div class="s_animation_box_bg_box absolute">
         <img
           src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
-          class="s_animation_box_bg_1 absolute"
+          class="s_animation_box_bg_1 absolute "
           alt=""
         />
-        <div class="s_animation_box_bg_2 absolute"></div>
+        <div class="s_animation_box_bg_2 absolute "></div>
+       </div>
         <span class="absolute">喜欢的作品</span>
-        <ul class="flex flex_direction_row absolute absolute_center">
+        <ul class="flex flex_direction_row absolute ">
           <li data-order="0" class="animation_item relative">
             <img
               src="https://pic.imgdb.cn/item/65b15382871b83018a4d9b0b.webp"
@@ -218,7 +220,10 @@ const change_theme = (current_theme) => {
       </div>
     </div>
     <div class="third_page relative">
-      <div class="t_animation_box"></div>
+      <div class="t_animation_box relative">
+        <div class="t_circle absolute"></div>
+        <div class="t_circle absolute"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -424,6 +429,8 @@ $word_box_color: var(--word_box_color, #003153);
   .second_page {
     width: 100vw;
     height: 400vh;
+    
+    background: $home_bg_color;
 
     // scroll-snap-align: start;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -435,25 +442,64 @@ $word_box_color: var(--word_box_color, #003153);
       color: #fff;
 
       background: $home_bg_color;
-      &::after {
-        content: "";
-        position: absolute;
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   width: 100vw;
+      //   height: 40vh;
+      //   background: linear-gradient(to top, rgb(38, 41, 44), transparent);
+      //   bottom: 0;
+      // }
+      .s_animation_box_bg_box{
         width: 100vw;
-        height: 40vh;
-        background: linear-gradient(to top, rgb(38, 41, 44), transparent);
-        bottom: 0;
+        height: 68vh;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -40%);
+        background: $home_bg_color;
+        overflow: hidden;
+
+        &::after{
+          content: '';
+          position: absolute;
+          background: none;
+          width: 110%;
+          background: $home_bg_color;
+          height: 200px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 100%;
+          bottom: -25%;
+          box-shadow: inset 2px 3px 20px #123;
+        }
+        &::before{
+          content: '';
+          position: absolute;
+          background: none;
+          width: 110%;
+          background: $home_bg_color;
+          height: 200px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 100%;
+          top: -25%;
+          z-index: 1;
+          
+        }
       }
 
       .s_animation_box_bg_1 {
         width: 100vw;
-        height: 100vh;
-        object-fit: cover;
+        border-radius: 5px;
         opacity: 1;
+        
       }
       .s_animation_box_bg_2 {
         width: 100vw;
-        height: 100vh;
+        height: 68vh;
         opacity: 1;
+        border-radius: 5px;
+        
         background-size: cover;
         background-image: url(https://pic.imgdb.cn/item/65b21d96871b83018a08d73b.png);
         -webkit-mask-image: linear-gradient(
@@ -470,6 +516,9 @@ $word_box_color: var(--word_box_color, #003153);
         padding: 0;
         width: calc(51vw + 20px);
         height: 64vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -40%);
         gap: 20px;
         .animation_item {
           width: 25.5vw;
@@ -510,11 +559,12 @@ $word_box_color: var(--word_box_color, #003153);
         font-size: 4em;
       }
       span {
-        top: 3em;
+        top: 4.5em;
         font-weight: 900;
         left: 50%;
         transform: translateX(-50%);
         font-size: 2em;
+        color: #003153;
       }
     }
   }
@@ -522,12 +572,31 @@ $word_box_color: var(--word_box_color, #003153);
     width: 100vw;
     height: 300vh;
     background: $home_bg_color;
-    .t_animation_box {
+     .t_animation_box {
       width: 100vw;
       height: 100vh;
       top: 0;
       position: sticky;
       background: #dfeef9;
+      overflow: hidden;
+      .t_circle{
+        width: 25vw;
+        height: 25vw;
+        border-radius: 50%;
+        background: #ff5232;
+        filter: blur(110px);
+        top: 50%;
+        transform: translateY(-50%);
+        &:first-child{
+          left: 4em;
+        }
+        &:last-child{
+          right: 4em;
+          background: #00aaff;
+
+        }
+      }
+     
     }
     // scroll-snap-align: start;
   }

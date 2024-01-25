@@ -274,7 +274,7 @@ const change_theme = (current_theme) => {
       @timeupdate="update_time_handle"
     ></audio>
     <div class="content flex flex_direction_row relative">
-      <img class="play_bg_img" src="https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" alt="">
+      <!-- <img class="play_bg_img" src="https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" alt=""> -->
 
       <div class="margin_4_percent">
         <div
