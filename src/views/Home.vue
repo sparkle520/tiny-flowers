@@ -35,6 +35,7 @@ onUnmounted(() => {
 });
 const scroll_handle = () => {
   update_s_animation_map_style();
+  update_t_future_instance();
 };
 const go_to_unknown_world_map = () => {
   router.push("/unknownWorldMap");
@@ -49,6 +50,44 @@ const go_to_unknown_world_map = () => {
 //   // { link: "https://pic.imgdb.cn/item/659c0a3a871b83018ad5736f.png" },
 //   // { link: "https://pic.imgdb.cn/item/659bfd7e871b83018a917e4b.png" },
 // ]);
+const future_instance = [
+  'あぁ　答えがある問いばかりを　教わってきたよ　だけど明日からは<br /><span class="t_small">啊 一直以来 我们掌握的都是那些有解的问题</span>',
+  '僕だけの正解をいざ　探しにゆくんだ　また逢う日まで<br><span class="t_small">但从明日开始 我将追寻 属于我的答案 直至再度重逢</span>',
+  '次の空欄に当てはまる言葉を書き入れなさい<br><span class="t_small">请在下方空栏 填入恰当的空白词语</span>',
+  '「君のいない　明日からの日々を僕は／私は　　きっと　□□□□□□□□□□□□□□□□□□」<br><span class="t_small">“从今往后 在没有你的日子里,我一定 □□□□□□□□□□□□□□□□□□”</span>',
+  '制限時間は　あなたのこれからの人生<br><span class="t_small">答题时间：你未来的人生</span>',
+  '解答用紙は　あなたのこれからの人生<br><span class="t_small">答题试纸：你未来的人生</span>',
+  '答え合わせの　時に私はもういない<br><span class="t_small">批改答案的时候 我或将不再存在</span>',
+  'だから　採点基準は　あなたのこれからの人生<br><span class="t_small">所以 评分标准：你未来的人生</span>',
+  '「よーい、はじめ」<br><span class="t_small">“准备好了吗？那就开始吧”</span>',
+];
+const update_t_future_instance = () => {
+  const t_future_instance = document.querySelector(".t_future_instance");
+  const third_page = document.querySelector(".third_page");
+  const rect = third_page.getBoundingClientRect();
+  const start = rect.top + window.scrollY;
+  const end = rect.bottom + window.scrollY - window.innerHeight;
+  const scroll_y = window.scrollY;
+  const interval = (end - start) / future_instance.length;
+
+  if (scroll_y >= start && scroll_y <= end) {
+    const index = Math.floor((scroll_y - start) / interval);
+    t_future_instance.innerHTML = future_instance[index];
+    t_future_instance.style.transform = `scale(${create_animation(
+      start + index * interval,
+      start + (index + 1) * interval,
+      0.5,
+      1
+    )(scroll_y)}) translateY(${create_animation(
+      start + index * interval,
+      start + (index + 1) * interval,
+      3,
+      0
+    )(scroll_y)}em)`;
+    t_future_instance.style.opacity = create_animation( start + index * interval,
+      start + (index + 1) * interval,.5,1)(scroll_y)
+  }
+};
 
 const s_animation_map = new Map();
 const init_s_animation_map = () => {
@@ -194,16 +233,16 @@ const change_theme = (current_theme) => {
     </div>
     <div class="second_page relative">
       <div class="s_animation_box">
-       <div class="s_animation_box_bg_box absolute">
-        <img
-          src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
-          class="s_animation_box_bg_1 absolute "
-          alt=""
-        />
-        <div class="s_animation_box_bg_2 absolute "></div>
-       </div>
+        <div class="s_animation_box_bg_box absolute">
+          <img
+            src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
+            class="s_animation_box_bg_1 absolute"
+            alt=""
+          />
+          <div class="s_animation_box_bg_2 absolute"></div>
+        </div>
         <span class="absolute">喜欢的作品</span>
-        <ul class="flex flex_direction_row absolute ">
+        <ul class="flex flex_direction_row absolute">
           <li data-order="0" class="animation_item relative">
             <img
               src="https://pic.imgdb.cn/item/65b15382871b83018a4d9b0b.webp"
@@ -220,11 +259,15 @@ const change_theme = (current_theme) => {
       </div>
     </div>
     <div class="third_page relative">
-      <div class="t_animation_box relative">
-        <div class="t_circle absolute"></div>
-        <div class="t_circle absolute"></div>
+      <div
+        class="t_animation_box relative flex justify_content_center align_items_center"
+      >
+        <span class="t_future_instance absolute"></span>
+        <div class="t_circle_1 absolute"></div>
+        <div class="t_circle_2 absolute"></div>
       </div>
     </div>
+    <div class="fourth_page relative"></div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -429,11 +472,11 @@ $word_box_color: var(--word_box_color, #003153);
   .second_page {
     width: 100vw;
     height: 400vh;
-    
+
     background: $home_bg_color;
 
     // scroll-snap-align: start;
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
     .s_animation_box {
       position: sticky;
       width: 100vw;
@@ -451,7 +494,7 @@ $word_box_color: var(--word_box_color, #003153);
       //   background: linear-gradient(to top, rgb(38, 41, 44), transparent);
       //   bottom: 0;
       // }
-      .s_animation_box_bg_box{
+      .s_animation_box_bg_box {
         width: 100vw;
         height: 68vh;
         left: 50%;
@@ -459,8 +502,8 @@ $word_box_color: var(--word_box_color, #003153);
         transform: translate(-50%, -40%);
         background: $home_bg_color;
 
-        &::after{
-          content: '';
+        &::after {
+          content: "";
           position: absolute;
           background: none;
           width: 110%;
@@ -472,8 +515,8 @@ $word_box_color: var(--word_box_color, #003153);
           bottom: -28%;
           box-shadow: inset 2px 3px 20px #123;
         }
-        &::before{
-          content: '';
+        &::before {
+          content: "";
           position: absolute;
           background: none;
           width: 110%;
@@ -484,7 +527,6 @@ $word_box_color: var(--word_box_color, #003153);
           border-radius: 100%;
           top: -25%;
           z-index: 1;
-          
         }
       }
 
@@ -492,14 +534,13 @@ $word_box_color: var(--word_box_color, #003153);
         width: 100vw;
         border-radius: 5px;
         opacity: 1;
-        
       }
       .s_animation_box_bg_2 {
         width: 100vw;
         height: 70vh;
         opacity: 1;
         border-radius: 5px;
-        
+
         background-size: cover;
         background-image: url(https://pic.imgdb.cn/item/65b21d96871b83018a08d73b.png);
         -webkit-mask-image: linear-gradient(
@@ -572,33 +613,55 @@ $word_box_color: var(--word_box_color, #003153);
     width: 100vw;
     height: 300vh;
     background: $home_bg_color;
-     .t_animation_box {
+    .t_animation_box {
       width: 100vw;
       height: 100vh;
       top: 0;
       position: sticky;
       background: #dfeef9;
       overflow: hidden;
-      .t_circle{
+      .t_future_instance {
+        font-size: 2em;
+        font-weight: 900;
+        text-align: center;
+        line-height: 2em;
+        transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        .t_small {
+          font-size: 0.8em;
+        }
+      }
+      .t_circle_1 {
         width: 25vw;
         height: 25vw;
         border-radius: 50%;
-        background: #ff5232;
         filter: blur(110px);
         top: 50%;
+        
         transform: translateY(-50%);
-        &:first-child{
+        
           left: 4em;
-        }
-        &:last-child{
-          right: 4em;
-          background: #00aaff;
+          background: #ff5232;
 
-        }
+        
       }
-     
+      .t_circle_2{
+        right: 4em;
+          background: #00aaff;
+          width: 25vw;
+        height: 25vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 50%;
+        
+        transform: translateY(-50%);
+      }
     }
     // scroll-snap-align: start;
+  }
+  .fourth_page {
+    width: 100vw;
+    height: 300vh;
   }
 }
 // @keyframes to_right {
