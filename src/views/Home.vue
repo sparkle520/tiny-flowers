@@ -14,9 +14,12 @@ import {
 import { useRouter } from "vue-router";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
-const store = useConfigStore();
-const { theme } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
+import { useUserStore } from "../store/user";
+
+const config_store = useConfigStore();
+const { theme } = storeToRefs(config_store);
+const user_store = useUserStore();
+config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
 onBeforeMount(() => {});
@@ -24,7 +27,6 @@ onMounted(() => {
   change_theme(theme.value);
   init_s_animation_map();
   update_s_animation_map_style();
-
   window.addEventListener("scroll", scroll_handle);
 });
 const router = useRouter();
@@ -36,9 +38,42 @@ onUnmounted(() => {
 const scroll_handle = () => {
   update_s_animation_map_style();
   update_t_future_instance();
+  update_f_animation();
+  update_fif_animation()
 };
 const go_to_unknown_world_map = () => {
   router.push("/unknownWorldMap");
+};
+const update_fif_animation = ()=>{
+  const latter_list = document.querySelectorAll(".latter_box span");
+  const fifth_page = document.querySelector(".fifth_page");
+  if (window.scrollY + 250 >= fifth_page.offsetTop) {
+ for(let i = 0;i<latter_list.length;i++){
+      latter_list[i].style.transform = `rotate(${(i+1)* 12}deg) translate(${i}em,${i}em)`
+      latter_list[i].style.opacity = `${1-i*0.2}`
+    }
+  }else{
+for(let i = 0;i<latter_list.length;i++){
+      latter_list[i].style.transform = `rotate(0)`
+      latter_list[i].style.opacity = `0`
+    }
+  }
+}
+const update_f_animation = () => {
+  const fourth_page = document.querySelector(".fourth_page");
+  const f_word_inner_box = document.querySelector(".f_word_inner_box");
+  const c_1 = document.querySelector(".c_1");
+  const c_2 = document.querySelector(".c_2");
+  if (window.scrollY + 250 >= fourth_page.offsetTop) {
+    c_1.style.transform = "scale(1) rotate(3deg) translateZ(0)";
+    c_2.style.transform = "scale(1) rotate(-10deg) translateZ(0)";
+    f_word_inner_box.style.transform = "scale(1)";
+   
+  } else {
+    c_1.style.transform = "scale(.4) rotate(-10deg) translateZ(0) ";
+    c_2.style.transform = "scale(.4) rotate(10deg) translateZ(0) ";
+    f_word_inner_box.style.transform = "scale(0)";
+  }
 };
 // const carousel_data = ref([
 //   {link:''},
@@ -51,15 +86,15 @@ const go_to_unknown_world_map = () => {
 //   // { link: "https://pic.imgdb.cn/item/659bfd7e871b83018a917e4b.png" },
 // ]);
 const future_instance = [
-  'あぁ　答えがある問いばかりを　教わってきたよ　だけど明日からは<br /><span class="t_small">啊 一直以来 我们掌握的都是那些有解的问题</span>',
-  '僕だけの正解をいざ　探しにゆくんだ　また逢う日まで<br><span class="t_small">但从明日开始 我将追寻 属于我的答案 直至再度重逢</span>',
-  '次の空欄に当てはまる言葉を書き入れなさい<br><span class="t_small">请在下方空栏 填入恰当的空白词语</span>',
-  '「君のいない　明日からの日々を僕は／私は　　きっと　□□□□□□□□□□□□□□□□□□」<br><span class="t_small">“从今往后 在没有你的日子里,我一定 □□□□□□□□□□□□□□□□□□”</span>',
-  '制限時間は　あなたのこれからの人生<br><span class="t_small">答题时间：你未来的人生</span>',
-  '解答用紙は　あなたのこれからの人生<br><span class="t_small">答题试纸：你未来的人生</span>',
-  '答え合わせの　時に私はもういない<br><span class="t_small">批改答案的时候 我或将不再存在</span>',
-  'だから　採点基準は　あなたのこれからの人生<br><span class="t_small">所以 评分标准：你未来的人生</span>',
-  '「よーい、はじめ」<br><span class="t_small">“准备好了吗？那就开始吧”</span>',
+  "あぁ　答えがある問いばかりを　教わってきたよ　だけど明日からは<br /><span>啊 一直以来 我们掌握的都是那些有解的问题</span>",
+  "僕だけの正解をいざ　探しにゆくんだ　また逢う日まで<br><span>但从明日开始 我将追寻 属于我的答案 直至再度重逢</span>",
+  "次の空欄に当てはまる言葉を書き入れなさい<br><span>请在下方空栏 填入恰当的空白词语</span>",
+  "「君のいない　明日からの日々を僕は／私は　　きっと　□□□□□□□□□□□□□□□□□□」<br><span  >“从今往后 在没有你的日子里,我一定 □□□□□□□□□□□□□□□□□□”</span>",
+  "制限時間は　あなたのこれからの人生<br><span>答题时间：你未来的人生</span>",
+  "解答用紙は　あなたのこれからの人生<br><span>答题试纸：你未来的人生</span>",
+  "答え合わせの　時に私はもういない<br><span>批改答案的时候 我或将不再存在</span>",
+  "だから　採点基準は　あなたのこれからの人生<br><span>所以 评分标准：你未来的人生</span>",
+  "「よーい、はじめ」<br><span>“准备好了吗？那就开始吧”</span>",
 ];
 const update_t_future_instance = () => {
   const t_future_instance = document.querySelector(".t_future_instance");
@@ -84,8 +119,16 @@ const update_t_future_instance = () => {
       3,
       0
     )(scroll_y)}em)`;
-    t_future_instance.style.opacity = create_animation( start + index * interval,
-      start + (index + 1) * interval,.5,1)(scroll_y)
+    t_future_instance.style.opacity = create_animation(
+      start + index * interval,
+      start + (index + 1) * interval,
+      0.5,
+      1
+    )(scroll_y);
+  } else if (scroll_y < start) {
+    t_future_instance.innerHTML = future_instance[0];
+  } else {
+    t_future_instance.innerHTML = future_instance[future_instance.length - 1];
   }
 };
 
@@ -134,7 +177,7 @@ const update_s_animation_map_style = () => {
   const scroll_y = window.scrollY;
   const more = document.querySelector(".more");
   const first_page = document.querySelector(".first_page");
-  const s_animation_box_bg_2 = document.querySelector(".s_animation_box_bg_2");
+  // const s_animation_box_bg_2 = document.querySelector(".s_animation_box_bg_2");
   const start =
     document.querySelector(".second_page").getBoundingClientRect().top +
     window.scrollY;
@@ -144,12 +187,12 @@ const update_s_animation_map_style = () => {
     window.innerHeight;
   first_page.style.opacity =
     first_page.getBoundingClientRect().bottom / first_page.clientHeight;
-  s_animation_box_bg_2.style.webkitMaskPosition = `${create_animation(
-    start,
-    end,
-    0,
-    100
-  )(scroll_y)}% ${create_animation(start, end, 100, 0)(scroll_y)}%`;
+  // s_animation_box_bg_2.style.webkitMaskPosition = `${create_animation(
+  //   start,
+  //   end,
+  //   0,
+  //   100
+  // )(scroll_y)}% ${create_animation(start, end, 100, 0)(scroll_y)}%`;
 
   if (scroll_y > 0) {
     more.style.opacity = 0;
@@ -163,6 +206,7 @@ const update_s_animation_map_style = () => {
     }
   }
 };
+
 //change scss var
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
@@ -208,11 +252,11 @@ const change_theme = (current_theme) => {
         Unknown World Map
       </button> -->
 
-      <img
+      <!-- <img
         class="f_bg"
         src="https://pic.imgdb.cn/item/65b0f614871b83018ab94e81.png"
         alt=""
-      />
+      /> -->
       <svg
         t="1706081571224"
         class="icon absolute more"
@@ -233,14 +277,14 @@ const change_theme = (current_theme) => {
     </div>
     <div class="second_page relative">
       <div class="s_animation_box">
-        <div class="s_animation_box_bg_box absolute">
+        <!-- <div class="s_animation_box_bg_box absolute">
           <img
             src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
             class="s_animation_box_bg_1 absolute"
             alt=""
           />
           <div class="s_animation_box_bg_2 absolute"></div>
-        </div>
+        </div> -->
         <span class="absolute">喜欢的作品</span>
         <ul class="flex flex_direction_row absolute">
           <li data-order="0" class="animation_item relative">
@@ -267,7 +311,37 @@ const change_theme = (current_theme) => {
         <div class="t_circle_2 absolute"></div>
       </div>
     </div>
-    <div class="fourth_page relative"></div>
+    <div class="fourth_page relative">
+      <div
+        class="f_animation_box relative flex justify_content_center align_items_center"
+      >
+        <div class="f_circle absolute"></div>
+        <div class="f_word_box absolute">
+          <div class="f_word_inner_box absolute flex flex_direction_column">
+            <span class="w_1">Searching</span>
+            <span class="w_2"> all the world </span>
+            <span class="w_3">For one thing</span>
+          </div>
+        </div>
+        <div class="card c_1 absolute">
+          <img
+            src="https://pic.imgdb.cn/item/65b3c514871b83018a87b510.png"
+            alt=""
+          />
+        </div>
+        <div class="card c_2 absolute"></div>
+      </div>
+    </div>
+    <div class="fifth_page relative">
+      <div class="latter_box absolute">
+        <span class="absolute" v-for="item in user_store.name.split('')">{{
+          item
+        }}</span>
+      </div>
+      <div>
+
+      </div>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -284,9 +358,40 @@ $word_box_color: var(--word_box_color, #003153);
   .first_page {
     width: 100vw;
     height: 100vh;
+    background: $home_bg_color;
+z-index: 100;
+    &::after {
+        width: 40vw;
+        height: 30vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 70%;
+        content: '';
+        left: 5vw;
+        position: absolute;
+        transform: translateY(-50%);
+
+      
+        background: #a900ff;
+      }
+      &::before {
+        right: 10vw;
+        content: '';
+        position: absolute;
+        z-index: 1;
+        background: #ffac86;
+        width: 20vw;
+        height: 20vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 20%;
+
+        transform: translateY(-50%);
+      }
     // scroll-snap-align: start;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    animation: first_page 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    // animation: first_page 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     // &::after{
     //   width: 100vw;
     //   height: 30vh;
@@ -337,20 +442,21 @@ $word_box_color: var(--word_box_color, #003153);
         }
       }
     }
-    .f_bg {
-      position: absolute;
-      right: 3em;
-      width: 70vw;
-      height: 80vh;
-      top: 50%;
-      border-radius: 0.3em;
-      transform: translateY(-50%);
-    }
+    // .f_bg {
+    //   position: absolute;
+    //   right: 3em;
+    //   width: 50vw;
+    //   height: 50vh;
+    //   top: 50%;
+    //   border-radius: 0.3em;
+    //   z-index: 100;
+    //   transform: translateY(-50%);
+    // }
 
     .word_box {
       left: 3em;
       top: 40%;
-      z-index: 1;
+      z-index: 1000;
       transform: translateY(-50%);
 
       // &::after {
@@ -364,7 +470,7 @@ $word_box_color: var(--word_box_color, #003153);
       //   transform: translateY(-50%);
       // }
       .common {
-        font-size: 4.9em;
+        font-size: 7em;
         font-weight: 900;
         line-height: 1em;
         color: $word_box_color;
@@ -393,7 +499,7 @@ $word_box_color: var(--word_box_color, #003153);
     }
     .word_box_2 {
       left: 4em;
-      top: 51%;
+      top: 54%;
       color: $word_box_color;
       z-index: 1;
 
@@ -411,7 +517,7 @@ $word_box_color: var(--word_box_color, #003153);
       //   transform: translateY(-50%);
       // }
       .common {
-        font-size: 1em;
+        font-size: 2em;
         font-weight: 900;
         z-index: 100;
         // text-shadow: #e60000 -.1em .0em 2px;
@@ -472,20 +578,46 @@ $word_box_color: var(--word_box_color, #003153);
   .second_page {
     width: 100vw;
     height: 400vh;
-
+    z-index: 21;
     background: $home_bg_color;
 
-    // scroll-snap-align: start;
-    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+   
     .s_animation_box {
       position: sticky;
       width: 100vw;
       height: 100vh;
       top: 0;
       color: #fff;
-      overflow: hidden;
+      background: transparent;
+      &::after {
+        width: 40vw;
+        height: 30vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 70%;
+        content: '';
+        left: 5vw;
+        position: absolute;
+        transform: translateY(-50%);
+        
+      
+        background: #00aaff;
+      }
+      &::before {
+        right: 10vw;
+        content: '';
+        position: absolute;
+        z-index: 1;
+        background: #22c32e;
+        width: 20vw;
+        height: 10vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 40%;
 
-      background: $home_bg_color;
+        transform: translateY(-50%);
+      }
       // &::after {
       //   content: "";
       //   position: absolute;
@@ -502,56 +634,59 @@ $word_box_color: var(--word_box_color, #003153);
         transform: translate(-50%, -40%);
         background: $home_bg_color;
 
-        &::after {
-          content: "";
-          position: absolute;
-          background: none;
-          width: 110%;
-          background: $home_bg_color;
-          height: 28vh;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 100%;
-          bottom: -28%;
-          box-shadow: inset 2px 3px 20px #123;
-        }
-        &::before {
-          content: "";
-          position: absolute;
-          background: none;
-          width: 110%;
-          background: $home_bg_color;
-          height: 26vh;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 100%;
-          top: -25%;
-          z-index: 1;
-        }
+        // &::after {
+        //   content: "";
+        //   position: absolute;
+        //   background: none;
+        //   width: 130%;
+        //   background: $home_bg_color;
+        //   height: 26vh;
+        //   left: 50%;
+        //   transform: translateX(-50%);
+        //   border-radius: 50%;
+        //   bottom: -28%;
+        //   box-shadow: inset 2px 3px 20px #123;
+        // }
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   background: none;
+        //   width: 130%;
+        //   background: $home_bg_color;
+        //   height: 26vh;
+        //   left: 50%;
+        //   transform: translateX(-50%);
+        //   border-bottom-left-radius: 50%;
+        //   border-bottom-right-radius: 50%;
+        //   top: -30%;
+        //   z-index: 1;
+
+        // }
       }
 
-      .s_animation_box_bg_1 {
-        width: 100vw;
-        border-radius: 5px;
-        opacity: 1;
-      }
-      .s_animation_box_bg_2 {
-        width: 100vw;
-        height: 70vh;
-        opacity: 1;
-        border-radius: 5px;
+      // .s_animation_box_bg_1 {
+      //   width: 100vw;
+      //   border-radius: 5px;
+      //   height: 10vh;
+      //   opacity: 1;
+      // }
+      // .s_animation_box_bg_2 {
+      //   width: 100vw;
+      //   height: 20vh;
+      //   opacity: 1;
+      //   border-radius: 5px;
 
-        background-size: cover;
-        background-image: url(https://pic.imgdb.cn/item/65b21d96871b83018a08d73b.png);
-        -webkit-mask-image: linear-gradient(
-          to right,
-          transparent 47.5%,
-          #fff 52.5%
-        );
-        background-repeat: no-repeat;
-        -webkit-mask-size: 210%;
-        -webkit-mask-position: left;
-      }
+      //   background-size: cover;
+      //   background-image: url(https://pic.imgdb.cn/item/65b21d96871b83018a08d73b.png);
+      //   -webkit-mask-image: linear-gradient(
+      //     to right,
+      //     transparent 47.5%,
+      //     #fff 52.5%
+      //   );
+      //   background-repeat: no-repeat;
+      //   -webkit-mask-size: 210%;
+      //   -webkit-mask-position: left;
+      // }
       ul {
         margin: 0;
         padding: 0;
@@ -561,6 +696,7 @@ $word_box_color: var(--word_box_color, #003153);
         left: 50%;
         transform: translate(-50%, -40%);
         gap: 20px;
+        z-index: 11;
         .animation_item {
           width: 25.5vw;
           height: 64vh;
@@ -613,47 +749,42 @@ $word_box_color: var(--word_box_color, #003153);
     width: 100vw;
     height: 300vh;
     background: $home_bg_color;
+    // scroll-snap-align: start;
+
     .t_animation_box {
       width: 100vw;
       height: 100vh;
       top: 0;
       position: sticky;
-      background: #dfeef9;
-      overflow: hidden;
+      background: $home_bg_color;
       .t_future_instance {
         font-size: 2em;
         font-weight: 900;
         text-align: center;
         line-height: 2em;
-        transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-        .t_small {
-          font-size: 0.8em;
-        }
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       }
       .t_circle_1 {
-        width: 25vw;
-        height: 25vw;
+        width: 20vw;
+        height: 20vw;
         border-radius: 50%;
         filter: blur(110px);
         top: 50%;
-        
-        transform: translateY(-50%);
-        
-          left: 4em;
-          background: #ff5232;
 
-        
+        transform: translateY(-50%);
+
+        left: 5em;
+        background: #ff5232;
       }
-      .t_circle_2{
-        right: 4em;
-          background: #00aaff;
-          width: 25vw;
-        height: 25vw;
+      .t_circle_2 {
+        right: 5em;
+        background: #f7ff00;
+        width: 20vw;
+        height: 20vw;
         border-radius: 50%;
         filter: blur(110px);
         top: 50%;
-        
+
         transform: translateY(-50%);
       }
     }
@@ -661,7 +792,181 @@ $word_box_color: var(--word_box_color, #003153);
   }
   .fourth_page {
     width: 100vw;
-    height: 300vh;
+    height: 100vh ;
+    background: $home_bg_color;
+    // border-bottom:3px #11223318 solid ;
+    // border-top:3px #11223318 solid ;
+    // scroll-snap-align: start;
+    &::after {
+        width: 50vw;
+        height: 30vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 50%;
+        content: '';
+        left: 5vw;
+        position: absolute;
+        transform: translateY(-50%);
+
+      z-index: 10;
+        background: #ffd9e6;
+      }
+      &::before {
+        right: 5em;
+        content: '';
+        position: absolute;
+        z-index: 1;
+        background: #ff80bf;
+        width: 20vw;
+        height: 20vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 70%;
+
+        transform: translateY(-50%);
+      }
+    .f_animation_box {
+      background: $home_bg_color;
+      width: inherit;
+      height: inherit;
+
+      // .f_circle {
+      //   width: 30vw;
+      //   height: 30vw;
+      //   right: -15vw;
+      //   bottom: -15vw;
+      //   border-radius: 50%;
+      //   background: #f4bbbb7b;
+      //   &::after {
+      //     content: "";
+      //     position: absolute;
+      //     width: 70%;
+      //     height: 70%;
+      //     right: 40vw;
+      //     border-radius: 50%;
+      //     background: #f4bbbb7b;
+      //     top: -10vw;
+      //   }
+      // }
+      .f_word_box {
+        left: 0vw;
+        top: 0%;
+        color: #0a0606;
+        font-size: 1.5em;
+        
+        font-weight: 900;
+       z-index: 11;
+        height: 70vh;
+        width: 50vw;
+        span {
+        }
+        .f_word_inner_box {
+          
+          transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+          top: 30vh;
+          left: 10vw;
+          .w_1 {
+            font-size: 4em;
+            color: transparent;
+            -webkit-text-stroke: #6640ff 2px;
+            text-shadow: #6640ff 0px 13px 10px;
+
+          }
+          .w_2 {
+            font-size: 3em;
+            font-weight: 600;
+            color: #ff6666;
+            margin: 1vh 0;
+            text-shadow: #ff6666 0px 13px 10px;
+
+          }
+          .w_3 {
+            font-size: 3.5em;
+            font-family: 900;
+            color: #ff9d00;
+            text-shadow: #ff4d00 0px 13px 10px;
+          }
+        }
+      }
+
+      .card {
+        width: 23vw;
+        height: 53vh;
+      }
+      .c_1 {
+        background: rgb(19, 20, 21);
+        box-shadow: #62676b54 0px 13px 10px;
+
+        z-index: 1;
+        right: 14vw;
+        top: 27vh;
+        transform: rotate(3deg);
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .c_2 {
+        background: #e72626;
+        z-index: 0;
+        right: 17vw;
+        box-shadow: #62676be8 0px 13px 10px;
+
+        top: 29vh;
+        transform: rotate(-10deg);
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+    }
+  }
+  .fifth_page {
+    width: 100vw;
+    height: 100vh;
+        //  scroll-snap-align: start;
+
+    background: $home_bg_color;
+    &::after {
+        width: 40vw;
+        height: 30vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 70%;
+        content: '';
+        left: 5vw;
+        position: absolute;
+        transform: translateY(-50%);
+
+      
+        background: #ff9d00;
+      }
+      &::before {
+        right: 10vw;
+        content: '';
+        position: absolute;
+        z-index: 1;
+        background: #00ff93;
+        width: 20vw;
+        height: 20vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 20%;
+
+        transform: translateY(-50%);
+      }
+    .latter_box {
+      left: 10vw;
+      z-index: 100;
+      top: 38vh;
+      color: #ff9028;
+      font-size: 3em;
+      font-weight: 900;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
+    }
   }
 }
 // @keyframes to_right {
@@ -696,12 +1001,13 @@ $word_box_color: var(--word_box_color, #003153);
 //     background-position: 0 -300px;
 //   }
 // }
+
 @keyframes first_page {
   0% {
-    transform: rotateZ(20deg);
+    transform: rotateY(-90deg);
   }
   100% {
-    transform: rotateZ(0deg);
+    transform: rotateY(0deg);
   }
 }
 </style>

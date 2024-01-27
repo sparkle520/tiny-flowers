@@ -196,7 +196,6 @@ $item_af_bg: var(--item_af_bg, #99d0d9);
     .class_box{
       width: 70%;
       margin: 20px auto 0 auto;
-      margin-bottom: 0;
       gap:10px;
       flex-wrap: wrap;
       .item{
