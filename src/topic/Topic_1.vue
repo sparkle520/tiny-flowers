@@ -27,6 +27,10 @@ store.$subscribe((mutation, state) => {
 });
 const router = useRouter();
 onBeforeMount(() => {});
+const img_load_handle = ()=>{
+  emitter.emit("new_titles_list", getTitles());
+
+}
 onMounted(() => {
   change_theme(theme.value);
   change_layout(layout.value);
@@ -48,12 +52,12 @@ const data = {
       <TopicTitle :data="data"></TopicTitle>
 
       <div class="topic_text flex flex_direction_column">
-        <img src="/src/assets/imgs/weatheringwithyou.png" alt="" />
+        <img @load="img_load_handle" src="/src/assets/imgs/weatheringwithyou.png" alt="" />
         <span class="normal"
           >新海诚的新作《天气之子》已经上映一周了。新海诚的作品，散发着独有的文艺气息，很多台词都具有现实意义；它不如宫崎骏那样深邃，去探讨人世哲理，但也一样阐述了很多现实的残酷。今天，我们就一起看一下《天气之子》中，最能打动人心的10句台词：</span
         >
         <h1 class="center_18_title">No.1</h1>
-        <img src="/src/assets/imgs/topic/w_t_y_1.png" alt="" />
+        <img @load="img_load_handle" src="/src/assets/imgs/topic/w_t_y_1.png" alt="" />
         <span class="normal orange line_height_30 font_weight_900">
           「世界なんてさーどうせもともと狂ってんだから」<br />
            “世界从一开始，就是疯狂的”
@@ -64,7 +68,7 @@ const data = {
           “世界是疯狂的”，帆高和阳菜做的一切，并不是“不正常”，而是“一开始就是疯狂的”。人们制定规则束缚了自己，没有什么是绝对正确，或者绝对错误的，而我们却在下意识里，选择了大家认为“正确”的事情。须贺的话，是想让帆高没有罪恶感，他虽然违背了规则，但却没有做错。
         </span>
         <h1 class="center_18_title">No.2</h1>
-        <img src="/src/assets/imgs/topic/w_t_y_2.jpg" alt="" />
+        <img @load="img_load_handle" src="/src/assets/imgs/topic/w_t_y_2.jpg" alt="" />
         <span class="normal line_height_30 font_weight_900 cyan"
           >「俺はただ、もう一度あの人に会いたいんだっ！」<br />
           “我只不过……想再见她一次！”</span
@@ -74,7 +78,7 @@ const data = {
           帆高一个人跨过千难万险，从池袋跑到新宿，一路上都在回想自己和阳菜的邂逅，小小的幸福；但这小小的幸福，却要经历世界冷漠的洗刷，这个世界，连这小小的心愿都不愿意满足他。
         </span>
         <h1 class="center_18_title">No.3</h1>
-        <img src="/src/assets/imgs/topic/w_t_y_3.jpg" alt="" />
+        <img @load="img_load_handle" src="/src/assets/imgs/topic/w_t_y_3.jpg" alt="" />
         <span class="normal line_height_30 font_weight_900 pink">
           「天気ってなんて不思議なのだろうと、ただの空模様に、人間はこんなにも気持ちを動かされてしまう」<br />
 
@@ -84,7 +88,7 @@ const data = {
           来自男主角帆高的内心独白，但这时候男主角还没有意识到，改变自己心情的不是天气，而是那个改变自己心情的人。
         </span>
         <h1 class="center_18_title">No.4</h1>
-        <img src="/src/assets/imgs/topic/w_t_y_4.jpg" alt="" />
+        <img @load="img_load_handle" src="/src/assets/imgs/topic/w_t_y_4.jpg" alt="" />
         <span class="normal line_height_30 font_weight_900 vandyke_brown">
           「ねえ、もうすぐ晴(は)れるよ！」<br />
 
@@ -128,7 +132,7 @@ const data = {
            “天气什么的，就让它这么混乱下去吧！”
         </span>
         <h1 class="center_18_title">No.10</h1>
-        <img src="/src/assets/imgs/topic/w_t_y_10.jpg" alt="" />
+        <img @load="img_load_handle" src="/src/assets/imgs/topic/w_t_y_10.jpg" alt="" />
         <span class="normal line_height_30 font_weight_900 blue">
           「青空よりも俺は陽菜がいい」<br />
           “相比于蓝天，我更需要阳菜”

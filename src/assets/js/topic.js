@@ -64,7 +64,7 @@ export const c_c = (mut_val, color) => {
             parent: null,
             children: [],
             rawName: element.innerText,
-            scrollTop: element.offsetTop,
+            scrollTop: element.offsetTop - 70,
         };
 
         if (titles.length > 0) {

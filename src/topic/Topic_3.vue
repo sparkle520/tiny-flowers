@@ -19,7 +19,10 @@ store.$subscribe((mutation, state) => {
   change_layout(state.layout);
 });
 onBeforeMount(() => {});
+const img_load_handle = ()=>{
+  emitter.emit("new_titles_list", getTitles());
 
+}
 //change scss var
 onMounted(() => {
   change_theme(theme.value);
@@ -119,7 +122,7 @@ store.change_g_theme()
         <span class="normal"
           >并在store下新建一个config.js用于配置我们主题的全局状态</span
         >
-        <img
+        <img @load="img_load_handle"
           src="https://pic.imgdb.cn/item/65aab24b871b83018a614f60.jpg"
           style="width: 50%"
           alt=""

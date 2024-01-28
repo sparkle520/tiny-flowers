@@ -15,7 +15,8 @@ import {
 } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
-import data from "/src/assets/config/data.js";
+import { useTopicStore } from "/src/store/topic.js";
+import { useUserStore } from "/src/store/user.js";
 import emitter from "@/assets/config/mitt_bus.js";
 import change_theme from "@/assets/theme/TopicList.js";
 
@@ -23,6 +24,8 @@ const { params } = useRoute();
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
+const topic_store = useTopicStore();
+const user_store = useUserStore();
 const { theme } = storeToRefs(store);
 const { layout } = storeToRefs(store);
 const router = useRouter();
@@ -102,18 +105,18 @@ const page_data = ref({
 const init_data = () => {
   switch (params.classification) {
     case "学习笔记":
-      data_handle(data.study, page_data.value.current_index);
+      data_handle(topic_store.study, page_data.value.current_index);
       break;
     case "技术分享":
-      data_handle(data.technique, page_data.value.current_index);
+      data_handle(topic_store.technique, page_data.value.current_index);
 
       break;
     case "生活随想":
-      data_handle(data.life, page_data.value.current_index);
+      data_handle(topic_store.life, page_data.value.current_index);
 
       break;
     case "二次元":
-      data_handle(data.acg, page_data.value.current_index);
+      data_handle(topic_store.acg, page_data.value.current_index);
       break;
     default:
       break;
@@ -175,10 +178,10 @@ const page_handle = (index) => {
 
 let new_topic_data = [];
 const new_topic = () => {
-  new_topic_data.push(data.life[0]);
-  new_topic_data.push(data.study[0]);
-  new_topic_data.push(data.technique[0]);
-  new_topic_data.push(data.acg[0]);
+  new_topic_data.push(topic_store.life[0]);
+  new_topic_data.push(topic_store.study[0]);
+  new_topic_data.push(topic_store.technique[0]);
+  new_topic_data.push(topic_store.acg[0]);
 };
 new_topic();
 const classification_handle = (classification) => {
@@ -208,10 +211,10 @@ const run_time = (date) => {
 };
 const last_update = () => {
   let date_array = [
-    format_date(data.life[0].date),
-    format_date(data.study[0].date),
-    format_date(data.technique[0].date),
-    format_date(data.acg[0].date),
+    format_date(topic_store.life[0].date),
+    format_date(topic_store.study[0].date),
+    format_date(topic_store.technique[0].date),
+    format_date(topic_store.acg[0].date),
   ];
   let date_array_sort = date_array.sort((a, b) => {
     let temp_1 = b.split("-");
@@ -246,25 +249,21 @@ const last_update = () => {
 // xx月xx号?xxxx?xx:xx  ..?年?时:分 -> xxxx-xx-xx-xx-xx  年-月-日-时-分
 const format_date = (date) => {
   return (
+    date.split("?")[0] +
+    "-" +
     date.split("?")[1] +
     "-" +
-    date.split("?")[0].split("月")[0] +
+    date.split("?")[2] +
     "-" +
-    date.split("?")[0].split("月")[1].split("号")[0] +
+    date.split("?")[3].split(":")[0] +
     "-" +
-    date.split("?")[2].split(":")[0] +
-    "-" +
-    date.split("?")[2].split(":")[1]
+    date.split("?")[3].split(":")[1]
   );
 };
 let interval_run_time = setInterval(() => {
   run_time(birthday_date);
 }, 60000);
 const personal_info = {
-  img: "https://pic.imgdb.cn/item/659e63dc871b83018a2d7de3.jpg",
-  name: "花降らし",
-  signature: "人一旦失去重要的东西，就很难再获得了",
-  topic_total: data.length(),
   classification_total: 4,
   new_topic: new_topic_data,
   site_info: {
@@ -288,9 +287,10 @@ const personal_info = {
           </div>
           <span class="short_msg" v-html="item.short_message"></span>
           <div class="date flex flex_direction_row justify_content_center">
-            {{personal_info.name}} /
-            {{ item.date.split("?")[0] }} / {{ item.date.split("?")[1] }} /
-            {{ item.date.split("?")[2] }}
+            {{ user_store.name }} / {{ item.date.split("?")[1].replace(/^0+/,'') }}月{{
+              item.date.split("?")[2].replace(/^0+/,'')
+            }}日 / {{ item.date.split("?")[0] }} /
+            {{ item.date.split("?")[3] }}
           </div>
         </div>
         <div class="absolute tag_box flex flex_direction_row">
@@ -314,18 +314,15 @@ const personal_info = {
       <div
         class="personal_item intro flex flex_direction_column align_items_center"
       >
-        <img :src="personal_info.img" alt="" />
-        <span class="personal_name" v-text="personal_info.name"></span>
-        <span
-          class="personal_signature"
-          v-text="personal_info.signature"
-        ></span>
+        <img :src="user_store.avatar" alt="" />
+        <span class="personal_name" v-text="user_store.name"></span>
+        <span class="personal_signature" v-text="user_store.signature"></span>
         <div class="width_full flex flex_direction_row">
           <div
             class="topic_classification_total_box flex flex_direction_column align_items_center"
           >
             <h3>文章</h3>
-            <span v-text="personal_info.topic_total"></span>
+            <span v-text="topic_store.length()"></span>
           </div>
           <div
             class="topic_classification_total_box flex flex_direction_column align_items_center"
@@ -366,28 +363,28 @@ const personal_info = {
             class="flex flex_direction_row"
           >
             <span>学习笔记</span>
-            <span>{{ data.study.length }}</span>
+            <span>{{ topic_store.study.length }}</span>
           </li>
           <li
             @click="classification_handle(classification[1].name)"
             class="flex flex_direction_row"
           >
             <span>技术分享</span>
-            <span>{{ data.technique.length }}</span>
+            <span>{{ topic_store.technique.length }}</span>
           </li>
           <li
             @click="classification_handle(classification[2].name)"
             class="flex flex_direction_row"
           >
             <span>生活随想</span>
-            <span>{{ data.life.length }}</span>
+            <span>{{ topic_store.life.length }}</span>
           </li>
           <li
             @click="classification_handle(classification[3].name)"
             class="flex flex_direction_row"
           >
             <span>二次元</span>
-            <span>{{ data.acg.length }}</span>
+            <span>{{ topic_store.acg.length }}</span>
           </li>
         </ul>
       </div>

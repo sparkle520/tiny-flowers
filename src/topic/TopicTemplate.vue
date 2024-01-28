@@ -20,7 +20,10 @@ store.$subscribe((mutation,state)=>{
 })
 const router = useRouter();
 onBeforeMount(() => {});
+const img_load_handle = ()=>{
+  emitter.emit("new_titles_list", getTitles());
 
+}
 
 //change scss var 
 onMounted(()=>{
@@ -38,6 +41,7 @@ const data = {
 </script>
 <template>
   <div id="topic_main" class="flex  flex_direction_row">
+    <TopicTopInterface></TopicTopInterface>
     <div class="topic_content">
     <TopicTitle :data="data"></TopicTitle>
     <div class="topic_text flex flex_direction_column">
