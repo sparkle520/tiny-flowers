@@ -346,9 +346,9 @@ const personal_info = {
           >
             <span> {{ item.title }} </span>
             <span class="new_topic_date">
-              {{ item.date.split("?")[1] }}-{{
-                item.date.split("?")[0].split("月")[0]
-              }}-{{ item.date.split("?")[0].split("号")[0].split("月")[1] }}
+              {{ item.date.split("?")[0] }}-{{
+                item.date.split("?")[1]
+              }}-{{ item.date.split("?")[2] }}
             </span>
           </li>
         </ul>
