@@ -1,0 +1,179 @@
+<!-- @Author: LT -->
+<!-- @Date: 2024-01-29 04:33:30 -->
+<!-- @Description:  -->
+
+<script setup>
+import { reactive, toRefs, ref, onBeforeMount, onMounted, nextTick ,onUnmounted} from "vue";
+import { useRouter } from "vue-router";
+import emitter from "@/assets/config/mitt_bus.js";
+
+const router = useRouter();
+onBeforeMount(() => {});
+const data = ref();
+onUnmounted(()=>{
+    emitter.off("topic_data")
+})
+onMounted(() => {
+  emitter.on("topic_data", (_data) => {
+    data.value = _data;
+  });
+  nextTick(() => {
+    const topic_top_main = document.querySelector("#topic_top_main");
+    const topic_title = document.querySelector(".topic_title");
+    const topic_date = document.querySelector(".topic_date");
+    const topic_time = document.querySelector(".topic_time");
+    const topic_classification = document.querySelector(
+      ".topic_classification"
+    );
+    const topic_tag_box = document.querySelector(".topic_tag_box");
+
+    if (
+      data.value.topic_data.img == undefined ||
+      data.value.topic_data.img == ""
+    ) {
+        topic_top_main.style.backgroundImage = `url(https://pic.imgdb.cn/item/65a3e060871b83018a64b716.jpg)`;
+    } else {
+        topic_top_main.style.backgroundImage = `url(${data.value.topic_data.img})`;
+    }
+    if (
+      data.value.topic_data.title == undefined ||
+      data.value.topic_data.title == ""
+    ) {
+      topic_title.innerHTML = `未知错误`;
+    } else {
+      topic_title.innerHTML = data.value.topic_data.title;
+    }
+    if (
+      data.value.topic_data.date == undefined ||
+      data.value.topic_data.date == ""
+    ) {
+        topic_date.innerHTML = ''
+      topic_date.innerHTML = `未知错误`;
+    } else {
+        topic_date.innerHTML = ''
+      topic_date.innerHTML += `${data.value.topic_data.date.split("?")[0]}-${
+        data.value.topic_data.date.split("?")[1]
+      }-${data.value.topic_data.date.split("?")[2]}`;
+    }
+    if (
+      data.value.topic_data.date == undefined ||
+      data.value.topic_data.date == ""
+    ) {
+        topic_time.innerHTML = ''
+      topic_time.innerHTML = `未知错误`;
+    } else {
+        topic_time.innerHTML  = ''
+      topic_time.innerHTML += `${data.value.topic_data.date.split("?")[3]}`;
+    }
+    if (
+      data.value.topic_data.classification == undefined ||
+      data.value.topic_data.classification == ""
+    ) {
+        topic_classification.innerHTML = ''
+      topic_classification.innerHTML = `未知错误`;
+    } else {
+        topic_classification.innerHTML = ''
+      topic_classification.innerHTML += `${data.value.topic_data.classification}`;
+    }
+    if (
+      data.value.topic_data.tags == undefined ||
+      data.value.topic_data.tags == ""
+    ) {
+        topic_tag_box.innerHTML = ''
+      topic_tag_box.innerHTML = `未知错误`;
+    } else {
+        topic_tag_box.innerHTML = ''
+      data.value.topic_data.tags.split("?").forEach((element) => {
+        topic_tag_box.innerHTML += `<span style=" font-size: 1em;
+      background: rgb(  ${Math.floor(Math.random() * 256)},  ${Math.floor(
+          Math.random() * 256
+        )},  ${Math.floor(Math.random() * 256)});
+      padding: 5px 6px;
+      border-radius: 5px;
+    ">${element}</span>`;
+      });
+    }
+  });
+});
+</script>
+<template>
+  <div
+    id="topic_top_main"
+    class="relative flex align_items_center justify_content_center"
+  >
+    <div class="flex flex_direction_column topic_info_box align_items_center">
+      <span class="topic_title"></span>
+      <div class="flex flex_direction_row">
+        <div class="topic_date">发表于</div>
+        <span class="topic_time"></span>
+        <span class="topic_classification"></span>
+      </div>
+      <div
+        class="topic_tag_box flex flex_direction_row justify_content_center"
+      ></div>
+    </div>
+  </div>
+</template>
+<style lang="scss" scoped>
+#topic_top_main {
+  width: 100vw;
+  min-height: 48vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  @keyframes topic_top_bg {
+    0% {
+      transform: translateY(-50%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+  }
+  .topic_info_box {
+    width: 86vw;
+    word-wrap: break-word;
+    animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    z-index: 1;
+    color: aliceblue;
+    margin-top: 5vh;
+
+    .topic_title {
+      line-height: 1em;
+      text-align: center;
+      font-size: 3em;
+      width: 86vw;
+    }
+    .topic_date {
+      margin-top: 1vh;
+      font-size: 1em;
+      background: #7b68ee;
+      padding: 5px 6px;
+      border-radius: 5px;
+      margin-right: 0.4vw;
+    }
+    .topic_time {
+      margin-top: 1vh;
+      font-size: 1em;
+      background: #993255;
+      padding: 5px 6px;
+      margin-right: 0.4vw;
+      border-radius: 5px;
+    }
+    .topic_classification {
+      margin-top: 1vh;
+      font-size: 1em;
+      background: #ff6b00;
+      padding: 5px 6px;
+      border-radius: 5px;
+    }
+    .topic_tag_box {
+      width: 50vw;
+      margin-top: 2vh;
+      gap: 0.4vw;
+    }
+  }
+}
+</style>

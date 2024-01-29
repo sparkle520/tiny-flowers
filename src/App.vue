@@ -2,7 +2,7 @@
 import { useRoute } from "vue-router";
 import { inject, onMounted, watch, ref,onUnmounted,nextTick } from "vue";
 import { clickEffect} from "/src/assets/js/mouse.js";
-// import emitter from "@/assets/config/mitt_bus.js"
+import emitter from "@/assets/config/mitt_bus.js"
 
 const route = useRoute();
 // const change_current_index =(index) =>{

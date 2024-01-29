@@ -81,6 +81,7 @@ const routes = [
             screenFull: true,
         }
     },
+  
     {
         path: '/siteNav',
         component: () => import("/src/views/SiteNav.vue"),

@@ -140,7 +140,7 @@ const theme_change = () => {
 };
 </script>
 <template>
-  <div id="main" class="nav_main">
+  <div id="top_nav_main" class="nav_main">
     <div class="content flex flex_direction_row relative">
       <div class="absolute nav_box flex flex_direction_row justify_content_space_between">
         <div class=" flex flex_direction_row justify_content_space_around">
@@ -557,7 +557,7 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
   font-family: "orbitron-light";
   src: url("/src/assets/font/orbitron-light.ttf");
 }
-#main {
+#top_nav_main {
   position: fixed;
   background: transparent;
   width: 100vw;

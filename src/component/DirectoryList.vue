@@ -17,62 +17,31 @@ import emitter from "@/assets/config/mitt_bus.js";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const {theme}  = storeToRefs(store);
-const {layout}  = storeToRefs(store);
-store.$subscribe((mutation,state)=>{
-  change_theme(state.theme)
-  change_layout(state.layout)
-})
-const router = useRouter();
+const { theme } = storeToRefs(store);
+const { layout } = storeToRefs(store);
+store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
 onBeforeMount(() => {});
 onUnmounted(() => {
-  emitter.off("new_titles_list");
+  emitter.off("topic_data");
+  document.removeEventListener("scroll", handleScroll);
 });
-onMounted(() => {
-  change_theme(theme.value);
-  change_layout(layout.value);
-  emitter.on("new_titles_list", (v) => titles_list_handle(v));
-});
-const titles_list_handle = (v) => {
-  current_titles.value = v;
-};
-const props = defineProps({
-  titles: Array,
-});
-const current_titles = ref(props.titles);
-let currentTitle = ref({});
-// let progress = ref(0);
-
-
-const change_layout = (flag) => {
-  const directory_list_main = document.querySelector("#directory_list_main");
-
-  if (flag) {
-    directory_list_main.style.opacity = "1";
-    directory_list_main.style.transform = "translateX(0)";
-
-  } else {
-    directory_list_main.style.opacity = "0";
-    directory_list_main.style.transform = "translateX(100%)";
-  }
-};
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    //night
-    c_c("--directory_list_bg", "#242837");
-  } else {
-    c_c("--directory_list_bg", "#f7f3f5");
-  }
-};
-
-window.addEventListener("scroll", function () {
-  // progress.value =
-  //   parseInt((window.scrollY / document.documentElement.scrollHeight) * 100) +
-  //   "%";
-  if (current_titles.value == undefined || current_titles.value == null) {
+const handleScroll = () => {
+  // let directory_list_main = document.querySelector("#directory_list_main")
+  // const start =
+  // directory_list_main.getBoundingClientRect().top +
+  //   window.scrollY - document.querySelector("#top_nav_main").clientHeight;
+    // if (start < window.scrollY ) {
+    //   directory_list_main.style.position = "fixed";
+    //   directory_list_main.style.top = "70px";
+    //   directory_list_main.style.right = "6.5vw";
+    // }else{
+    //   directory_list_main.style.position = "relative";
+    //   directory_list_main.style.top = "0px";
+    //   directory_list_main.style.right = "0vw";
+    // }
+    if (current_titles.value == undefined || current_titles.value == null) {
     return;
   }
   let visibleTitles = [];
@@ -105,7 +74,122 @@ window.addEventListener("scroll", function () {
       return;
     }
   }
+};
+onMounted(() => {
+  change_theme(theme.value);
+  emitter.on("topic_data", (data) => titles_list_handle(data.dom_data));
+  document.addEventListener("scroll", handleScroll);
+
 });
+const titles_list_handle = (data) => {
+  current_titles.value = getTitles(data);
+};
+
+const current_titles = ref([]);
+watch(current_titles, (newVal) => {
+  if(newVal.length>0){
+    document.querySelector('#directory_list_main').style.display = 'block';
+  }else{
+    document.querySelector('#directory_list_main').style.display = 'none';
+  }
+});
+let currentTitle = ref({});
+// let progress = ref(0);
+// 获取目录的标题
+function getTitles(data) {
+  let titles = [];
+  let levels = ["h1", "h2", "h3"];
+
+  let articleElement = document.querySelector(".topic_text");
+  if (!articleElement) {
+    return titles;
+  }
+
+  let elements = data;
+  // 调整标签等级
+  let tagNames = new Set(elements.map((el) => el.tagName.toLowerCase()));
+  for (let i = levels.length - 1; i >= 0; i--) {
+    if (!tagNames.has(levels[i])) {
+      levels.splice(i, 1);
+    }
+  }
+
+  let serialNumbers = levels.map(() => 0);
+  let top_height = document.querySelector("#topic_top_main").clientHeight;
+  let top_nav_height = document.querySelector("#top_nav_main").clientHeight;
+  // console.log(top_height);
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    let tagName = element.tagName.toLowerCase();
+    let level = levels.indexOf(tagName);
+    if (level == -1) continue;
+
+    let id = tagName + "-" + element.innerText + "-" + i;
+    let node = {
+      id,
+      level,
+      parent: null,
+      children: [],
+      rawName: element.innerText,
+      scrollTop: element.offsetTop + top_height - top_nav_height ,
+    };
+
+    if (titles.length > 0) {
+      let lastNode = titles.at(-1);
+
+      // 遇到子标题
+      if (lastNode.level < node.level) {
+        node.parent = lastNode;
+        lastNode.children.push(node);
+      }
+      // 遇到上一级标题
+      else if (lastNode.level > node.level) {
+        serialNumbers.fill(0, level + 1);
+        let parent = lastNode.parent;
+        while (parent) {
+          if (parent.level < node.level) {
+            parent.children.push(node);
+            node.parent = parent;
+            break;
+          }
+          parent = parent.parent;
+        }
+      }
+      // 遇到平级
+      else if (lastNode.parent) {
+        node.parent = lastNode.parent;
+        lastNode.parent.children.push(node);
+      }
+    }
+
+    serialNumbers[level] += 1;
+    let serialNumber = serialNumbers.slice(0, level + 1).join(".");
+
+    node.isVisible = node.parent == null;
+    node.name = serialNumber + ". " + element.innerText;
+    titles.push(node);
+  }
+  return titles;
+}
+
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
+const change_theme = (current_theme) => {
+  if (current_theme) {
+    //night
+    c_c("--directory_list_bg", "#242837");
+  } else {
+    c_c("--directory_list_bg", "#ffff");
+  }
+};
+
+// window.addEventListener("scroll", function () {
+//   // progress.value =
+//   //   parseInt((window.scrollY / document.documentElement.scrollHeight) * 100) +
+//   //   "%";
+  
+// });
 
 // 设置子节点的可见性
 function setChildrenVisible(title, isVisible) {
@@ -120,7 +204,7 @@ function scrollToView(scrollTop) {
 }
 </script>
 <template>
-  <div id="directory_list_main" class="fixed">
+  <div id="directory_list_main">
     <div class="catalog-card" v-show="layout">
       <div class="catalog-card-header">
         <div>
@@ -129,8 +213,8 @@ function scrollToView(scrollTop) {
               :icon="['fas', 'bars-staggered']"
               class="catalog-icon"
           /></span>
-       <div class="flex flex_direction_row align_items_center">
-        <svg
+          <div class="flex flex_direction_row align_items_center">
+            <svg
               t="1705577425453"
               class="icon"
               viewBox="0 0 1024 1024"
@@ -149,12 +233,10 @@ function scrollToView(scrollTop) {
                 d="M704 480h-80a178.24 178.24 0 0 0-16 0.704V544H128a32 32 0 0 1 0-64h576z m-40 64H608z"
                 fill="#5D6D7E"
                 p-id="7635"
-              ></path></svg
-            >
-        <span
-            >目录</span
-          >
-       </div>
+              ></path>
+            </svg>
+            <span>目录</span>
+          </div>
         </div>
         <!-- <span class="progress">{{ progress }}</span> -->
       </div>
@@ -184,21 +266,20 @@ $directory_list_cover_bg: var(--directory_list_cover_bg, #e06530);
 $normal_color: var(--normal_color, #e06530);
 
 #directory_list_main {
-  width: 20vw;
+  width: 21vw;
   border-radius: 5px;
-  background: transparent;
-  right: calc(10vw - 10px);
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-  animation: move_left 4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  background: $directory_list_bg;
+  position: sticky;
+  top: 70px;
 }
 .catalog-card {
   background: transparent;
-  border-left: $directory_list_cover_bg 2px solid;
- // border-radius: 5px;
+  // border-radius: 5px;
   padding: 20px 24px;
   width: 100%;
   box-sizing: border-box;
+  // transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
 }
 
 .catalog-card-header {
@@ -238,7 +319,7 @@ $normal_color: var(--normal_color, #e06530);
   margin: 5px 0;
   transition: color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-  border-radius: 5px;
+  border-radius: 0px;
   line-height: 28px;
   cursor: pointer;
   font-size: 14px;
@@ -261,14 +342,6 @@ $normal_color: var(--normal_color, #e06530);
   &:hover {
     background-color: $directory_list_cover_bg;
     color: white;
-  }
-}
-@keyframes move_left {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0);
   }
 }
 </style>

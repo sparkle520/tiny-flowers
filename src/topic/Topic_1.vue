@@ -3,56 +3,69 @@
 <!-- @Description:  -->
 
 <script setup>
-import {
-  
-  onBeforeMount,
-  onUnmounted,
-  onMounted,
-  nextTick,
-} from "vue";
+import { reactive, toRefs, ref, onBeforeMount, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
-import { change_theme } from "/src/assets/js/topic.js";
-import { getTitles } from "/src/assets/js/topic.js";
-import { change_layout } from "/src/assets/js/topic.js";
 import TopicTitle from "/src/component/TopicTitle.vue";
+import { change_theme } from "/src/assets/js/topic.js";
 import emitter from "@/assets/config/mitt_bus.js";
+
 import { useConfigStore } from "../store/config";
+import { useTopicStore } from "../store/topic";
+import { change_layout } from "/src/assets/js/topic.js";
+
 import { storeToRefs } from "pinia";
-const store = useConfigStore();
-const { theme } = storeToRefs(store);
-const { layout } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
+const config_store = useConfigStore();
+const topic_store = useTopicStore();
+const { theme } = storeToRefs(config_store);
+const { layout } = storeToRefs(config_store);
+config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
   change_layout(state.layout);
 });
 const router = useRouter();
 onBeforeMount(() => {});
-const img_load_handle = ()=>{
-  emitter.emit("new_titles_list", getTitles());
-
-}
+const img_load_handle = () => {
+  emitter.emit("topic_data", get_topic_data());
+};
+const get_topic_data = () => {
+  return {
+    dom_data: Array.from(document.querySelectorAll(".topic_text *")),
+    topic_data: select_by_id(topic_store.acg, 1),
+  };
+};
+const select_by_id = (arr, id) => {
+  console.log(id);
+  if (arr.length == 0) return -1;
+  let l = 0;
+  let r = arr.length;
+  while (l < r) {
+    let mid = l + Math.floor((r - l) / 2);
+    if (arr[mid].id == id) return arr[mid];
+    else if (arr[mid].id > id) l = mid + 1;
+    else r = mid;
+  }
+  return -1;
+};
+//change scss var
 onMounted(() => {
   change_theme(theme.value);
   change_layout(layout.value);
-  nextTick(() => {
-    emitter.emit("new_titles_list", getTitles());
-  });
+  emitter.emit("topic_data", get_topic_data());
 });
 
-
-const data = {
-  title: "Weathering With you(经典语录)",
-  date: "2024-01-06?7:06",
-};
-
+/* <vue-latex :display-mode="true" expression="设\lim_{x \to x_{0}} f(x) =A."></vue-latex> */
+/* <div class="hljs_container" style="width: 700px;" codetype="JavaScript" >
+        <highlightjs  style="width: 700px;" language="JavaScript" :autodetect="false" :code="code"></highlightjs>
+    </div> */
 </script>
 <template>
-  <div id="topic_main" class="flex flex_direction_row">
-    <div class="topic_content">
-      <TopicTitle :data="data"></TopicTitle>
-
-      <div class="topic_text flex flex_direction_column">
-        <img @load="img_load_handle" src="/src/assets/imgs/weatheringwithyou.png" alt="" />
+  <div id="topic_main" class="flex flex_direction_column">
+    <TopicTopInterface></TopicTopInterface>
+    <div class="topic_container flex flex_direction_row">
+      <TopicLeftInterface></TopicLeftInterface>
+      <div class="topic_content flex flex_direction_column">
+        <div class="topic_text flex flex_direction_column">
+          <img @load="img_load_handle" src="/src/assets/imgs/weatheringwithyou.png" alt="" />
         <span class="normal"
           >新海诚的新作《天气之子》已经上映一周了。新海诚的作品，散发着独有的文艺气息，很多台词都具有现实意义；它不如宫崎骏那样深邃，去探讨人世哲理，但也一样阐述了很多现实的残酷。今天，我们就一起看一下《天气之子》中，最能打动人心的10句台词：</span
         >
@@ -137,13 +150,11 @@ const data = {
           「青空よりも俺は陽菜がいい」<br />
           “相比于蓝天，我更需要阳菜”
         </span>
+        </div>
+        <TopicBottomInterface></TopicBottomInterface>
       </div>
-      <div
-        class="width_full"
-        style="height: 200px; background: transparent"
-      ></div>
+      <TopicRightInterface></TopicRightInterface>
     </div>
-    <DirectoryList class="directoryList"></DirectoryList>
   </div>
   <Utils></Utils>
 </template>

@@ -1,5 +1,5 @@
 <!-- @Author: LT -->
-<!-- @Date: 2024-01-29 04:33:30 -->
+<!-- @Date: 2024-01-29 14:29:19 -->
 <!-- @Description:  -->
 
 <script setup>
@@ -13,12 +13,12 @@ onMounted(() => {
 
 </script>
 <template>
-    <div id="topic_top">
-        <img src="" alt="">
+    <div id="main">
     </div>
 </template>
 <style lang="scss" scoped>
-#topic_top {
+#main {
     width: 100%;
+    display: none;
 }
 </style>
