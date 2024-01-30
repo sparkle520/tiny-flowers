@@ -25,23 +25,24 @@ $topic_content_bg: var(--topic_content_bg, #ffff);
     }
   }
   h1{
-    font-size: 22px;
-    margin: 5px 0;
+    font-size: 1.5em;
+    font-weight: 900;
+    margin: 3vh 0;
   }
   img {
     object-fit: cover;
     width: 100%;
     box-shadow: #100f0fbe 2px 3px 10px;
-    margin-bottom: 30px;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
   }
 }
 
 .normal {
   font-size: 16px;
   color: $normal_color;
-  margin: 10px 0;
+  margin: .3vh 0;
   line-height: 25px;
-  font-weight: 700;
 }
 .center_18_title {
   margin: 20px auto;

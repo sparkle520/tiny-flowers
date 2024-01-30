@@ -23,11 +23,18 @@ export const useTopicStore = defineStore('topic', {
             },
         ], life: [
             { id: 1, title: '谈谈建站初衷', link: '/unknownWorldMap/topic/4', date: '2024?01?20?16:16',author:'', img: '', tags: '感想', classification: '生活随想', short_message: '随便谈谈' },
-        ]
+        ],
+        all:[]
     }),
     actions: {
         length() {
             return this.life.length + this.acg.length + this.study.length + this.technique.length
+        },
+        get_all(){
+            if(this.all.length==0 || this.all == undefined || this.all == null){
+                this.all = this.acg.concat(this.life,this.study,this.technique)
+            }
+            return this.all
         }
         // ...
     }

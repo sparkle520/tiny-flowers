@@ -231,7 +231,6 @@ const change_theme = (current_theme) => {
     c_c("--u_w_m_btn_color", "#f0f8ff");
     c_c("--word_box_color", "#f0f8ff");
     c_c("--f_word_box_color", "#f0f8ff");
-
   } else {
     c_c("--home_bg_color", "#f7f3f5");
     c_c("--first_page_cover_bg", "transparent");

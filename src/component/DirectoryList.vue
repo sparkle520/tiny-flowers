@@ -77,12 +77,12 @@ const handleScroll = () => {
 };
 onMounted(() => {
   change_theme(theme.value);
-  emitter.on("topic_data", (data) => titles_list_handle(data.dom_data));
+  emitter.on("topic_data", () => titles_list_handle());
   document.addEventListener("scroll", handleScroll);
 
 });
-const titles_list_handle = (data) => {
-  current_titles.value = getTitles(data);
+const titles_list_handle = () => {
+  current_titles.value = getTitles();
 };
 
 const current_titles = ref([]);
@@ -96,7 +96,7 @@ watch(current_titles, (newVal) => {
 let currentTitle = ref({});
 // let progress = ref(0);
 // 获取目录的标题
-function getTitles(data) {
+function getTitles() {
   let titles = [];
   let levels = ["h1", "h2", "h3"];
 
@@ -105,7 +105,7 @@ function getTitles(data) {
     return titles;
   }
 
-  let elements = data;
+  let elements = Array.from(document.querySelectorAll(".topic_text *"));
   // 调整标签等级
   let tagNames = new Set(elements.map((el) => el.tagName.toLowerCase()));
   for (let i = levels.length - 1; i >= 0; i--) {

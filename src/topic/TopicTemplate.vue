@@ -23,13 +23,14 @@ config_store.$subscribe((mutation, state) => {
   change_layout(state.layout);
 });
 const router = useRouter();
-onBeforeMount(() => {});
+onBeforeMount(() => {
+
+});
 const img_load_handle = () => {
   emitter.emit("topic_data", get_topic_data());
 };
 const get_topic_data = () => {
   return {
-    dom_data: Array.from(document.querySelectorAll(".topic_text *")),
     topic_data: select_by_id(topic_store.technique, 1),
   };
 };
@@ -51,6 +52,7 @@ onMounted(() => {
   change_theme(theme.value);
   change_layout(layout.value);
   emitter.emit("topic_data", get_topic_data());
+
 });
 
 /* <vue-latex :display-mode="true" expression="设\lim_{x \to x_{0}} f(x) =A."></vue-latex> */

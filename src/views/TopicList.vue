@@ -23,20 +23,27 @@ import change_theme from "@/assets/theme/TopicList.js";
 const { params } = useRoute();
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
-const store = useConfigStore();
+const config_store = useConfigStore();
 const topic_store = useTopicStore();
 const user_store = useUserStore();
-const { theme } = storeToRefs(store);
-const { layout } = storeToRefs(store);
+const { theme } = storeToRefs(config_store);
+const { layout } = storeToRefs(config_store);
 const router = useRouter();
-store.$subscribe((mutation, state) => {
+config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
   change_layout(state.layout);
 });
 onBeforeMount(() => {});
 onMounted(() => {
   init();
+  document.addEventListener("click", click_handle)
 });
+const click_handle = (e)=>{
+  let topic_search_box = document.querySelector(".topic_search_box");
+  if(!topic_search_box.contains(e.target)){
+    show_filter_search_box.value = false
+  }
+}
 const init = () => {
   window.scrollTo(0, 0);
   change_layout(layout.value);
@@ -55,11 +62,9 @@ const change_layout = (flag) => {
 
   if (flag) {
     topic_box.style.width = "60vw";
-    topic_box.style.margin = "100px 0 0 60px";
     show_personal_info.value = true;
   } else {
     topic_box.style.width = "80vw";
-    topic_box.style.margin = "100px auto 0 auto";
     show_personal_info.value = false;
   }
 };
@@ -89,6 +94,7 @@ const remove_all_animation = () => {
 onUnmounted(() => {
   document.removeEventListener("scroll", scroll_handle);
   clearInterval(interval_run_time);
+  document.removeEventListener("click", click_handle)
 });
 
 onBeforeMount(() => {
@@ -272,146 +278,225 @@ const personal_info = {
     last_update: last_update(),
   },
 };
+
+const topic_search_handle = (e) => {
+  let key_code = window.event ? e.keyCode : e.which;
+  if (key_code == 13) {
+    // search_text.value = "";
+    // router.push({ path: "/unknownWorldMap/list", query: { search_text: search_text.value } });
+  }
+};
+const current_filter_list = ref([]);
+const search_text = ref();
+watch(search_text, (new_val, old_val) => {
+  if (new_val == "") {
+    current_filter_list.value = [];
+    show_filter_search_box.value = false
+    return;
+  }
+  show_filter_search_box.value = true
+  current_filter_list.value = [];
+  loop(topic_store.get_all(), 0, new_val);
+});
+const loop = (arr, current_index, search_text) => {
+  if (current_index > arr.length - 1) return;
+  search_text.toLowerCase();
+  let per_num = Math.min(10, arr.length - current_index);
+  window.requestAnimationFrame(() => {
+    for (let i = 0; i < per_num; i++) {
+      if (arr[current_index + i].title.toLowerCase().indexOf(search_text) == -1
+        && arr[current_index + i].tags.toLowerCase().indexOf(search_text) == -1
+      )
+        continue;
+      current_filter_list.value.push(arr[current_index + i]);
+    }
+    loop(arr, current_index + per_num);
+  });
+};
+const show_filter_search_box = ref(false);
+const search_focus_handle = () => {
+  if(current_filter_list.value.length == 0) return;
+  show_filter_search_box.value = true
+}
 </script>
 <template>
-  <div id="main" class="flex flex-direction-row">
-    <div class="topic_box">
-      <div
-        @click="jump_to_topic(item.link)"
-        v-for="(item, index) in current_data"
-        class="topic_item flex flex_direction_column relative"
-      >
-        <div class="item_inner_box margin_2_percent flex flex_direction_column">
-          <div>
-            <span class="relative title">{{ item.title }}</span>
-          </div>
-          <span class="short_msg" v-html="item.short_message"></span>
-          <div class="date flex flex_direction_row justify_content_center">
-            {{ user_store.name }} / {{ item.date.split("?")[1].replace(/^0+/,'') }}月{{
-              item.date.split("?")[2].replace(/^0+/,'')
-            }}日 / {{ item.date.split("?")[0] }} /
-            {{ item.date.split("?")[3] }}
-          </div>
-        </div>
-        <div class="absolute tag_box flex flex_direction_row">
-          <span class="tag" v-for="(item, index) in item.tags.split('?')">{{
-            item
-          }}</span>
-        </div>
+  <div id="topic_list_main" class="flex flex_direction_column">
+    <div class="topic_search_box relative"
+>
+      <input
+        id="topic_search"
+        class="topic_search"
+        v-model="search_text"
+        @focus="search_focus_handle"
+        @input="filter_search_handle"
+        @keyup.enter="topic_search_handle"
+        type="text"
+        placeholder="在此键入搜索"
+      />
+      <label class="search_icon absolute" for="topic_search">
+        <img
+          src="https://pic.imgdb.cn/item/65b80090871b83018addc8dc.png"
+          alt=""
+        />
+      </label>
+      <div class="filter_search_box absolute" v-show="show_filter_search_box">
+        <ul class="flex flex_direction_column">
+          <li v-for="item in current_filter_list" @click="jump_to_topic(item.link)">{{ item.title }}</li>
+        </ul>
       </div>
-      <Pagination
-        @page_change="page_handle"
-        class="pagination"
-        :data="page_data"
-      ></Pagination>
     </div>
-
-    <!-- personal info -->
     <div
-      v-show="show_personal_info"
-      class="personal_box flex flex_direction_column"
+      class="width_full flex flex_direction_row justify_content_center gap_1vw z_index_10"
     >
-      <div
-        class="personal_item intro flex flex_direction_column align_items_center"
-      >
-        <img :src="user_store.avatar" alt="" />
-        <span class="personal_name" v-text="user_store.name"></span>
-        <span class="personal_signature" v-text="user_store.signature"></span>
-        <div class="width_full flex flex_direction_row">
+      <div class="topic_box">
+        <div
+          @click="jump_to_topic(item.link)"
+          v-for="(item, index) in current_data"
+          class="topic_item flex flex_direction_column relative"
+        >
           <div
-            class="topic_classification_total_box flex flex_direction_column align_items_center"
+            class="item_inner_box margin_2_percent flex flex_direction_column"
           >
-            <h3>文章</h3>
-            <span v-text="topic_store.length()"></span>
+            <div>
+              <span class="relative title">{{ item.title }}</span>
+            </div>
+            <span class="short_msg" v-html="item.short_message"></span>
+            <div class="date flex flex_direction_row justify_content_center">
+              {{ user_store.name }} /
+              {{ item.date.split("?")[1].replace(/^0+/, "") }}月{{
+                item.date.split("?")[2].replace(/^0+/, "")
+              }}日 / {{ item.date.split("?")[0] }} /
+              {{ item.date.split("?")[3] }}
+            </div>
           </div>
-          <div
-            class="topic_classification_total_box flex flex_direction_column align_items_center"
-          >
-            <h3>分类</h3>
-            <span v-text="personal_info.classification_total"></span>
+          <div class="absolute tag_box flex flex_direction_row">
+            <span class="tag" v-for="(item, index) in item.tags.split('?')">{{
+              item
+            }}</span>
           </div>
         </div>
+        <Pagination
+          @page_change="page_handle"
+          class="pagination"
+          :data="page_data"
+        ></Pagination>
       </div>
 
+      <!-- personal info -->
       <div
-        class="personal_item new_topic_box flex flex_direction_column align_items_center"
+        v-show="show_personal_info"
+        class="personal_box flex flex_direction_column"
       >
-        <h3>最新文章</h3>
-        <ul class="flex flex_direction_column">
-          <li
-            @click="$router.push(item.link)"
-            v-for="item in personal_info.new_topic"
-            class="flex flex_direction_column"
-            :key="item.link"
-          >
-            <span> {{ item.title }} </span>
-            <span class="new_topic_date">
-              {{ item.date.split("?")[0] }}-{{
-                item.date.split("?")[1]
-              }}-{{ item.date.split("?")[2] }}
-            </span>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="personal_item classification_box flex flex_direction_column align_items_center"
-      >
-        <h3>分类</h3>
-        <ul class="flex flex_direction_column">
-          <li
-            @click="classification_handle(classification[0].name)"
-            class="flex flex_direction_row"
-          >
-            <span>学习笔记</span>
-            <span>{{ topic_store.study.length }}</span>
-          </li>
-          <li
-            @click="classification_handle(classification[1].name)"
-            class="flex flex_direction_row"
-          >
-            <span>技术分享</span>
-            <span>{{ topic_store.technique.length }}</span>
-          </li>
-          <li
-            @click="classification_handle(classification[2].name)"
-            class="flex flex_direction_row"
-          >
-            <span>生活随想</span>
-            <span>{{ topic_store.life.length }}</span>
-          </li>
-          <li
-            @click="classification_handle(classification[3].name)"
-            class="flex flex_direction_row"
-          >
-            <span>二次元</span>
-            <span>{{ topic_store.acg.length }}</span>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="personal_item site_info_box flex flex_direction_column align_items_center"
-      >
-        <h3>网站信息</h3>
-        <ul class="flex flex_direction_column">
-          <li>
-            <span>网站名称: Tiny Flowers</span>
-          </li>
-          <li>
-            <span>存活时间: {{ personal_info.site_info.run_time.value }}</span>
-          </li>
-          <li>
-            <span>上次更新时间: {{ personal_info.site_info.last_update }}</span>
-          </li>
-        </ul>
+        <div
+          class="personal_item intro flex flex_direction_column align_items_center"
+        >
+          <img :src="user_store.avatar" alt="" />
+          <span class="personal_name" v-text="user_store.name"></span>
+          <span class="personal_signature" v-text="user_store.signature"></span>
+          <div class="width_full flex flex_direction_row">
+            <div
+              class="topic_classification_total_box flex flex_direction_column align_items_center"
+            >
+              <h3>文章</h3>
+              <span v-text="topic_store.length()"></span>
+            </div>
+            <div
+              class="topic_classification_total_box flex flex_direction_column align_items_center"
+            >
+              <h3>分类</h3>
+              <span v-text="personal_info.classification_total"></span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="personal_item new_topic_box flex flex_direction_column align_items_center"
+        >
+          <h3>最新文章</h3>
+          <ul class="flex flex_direction_column">
+            <li
+              @click="$router.push(item.link)"
+              v-for="item in personal_info.new_topic"
+              class="flex flex_direction_column"
+              :key="item.link"
+            >
+              <span> {{ item.title }} </span>
+              <span class="new_topic_date">
+                {{ item.date.split("?")[0] }}-{{ item.date.split("?")[1] }}-{{
+                  item.date.split("?")[2]
+                }}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="personal_item classification_box flex flex_direction_column align_items_center"
+        >
+          <h3>分类</h3>
+          <ul class="flex flex_direction_column">
+            <li
+              @click="classification_handle(classification[0].name)"
+              class="flex flex_direction_row"
+            >
+              <span>学习笔记</span>
+              <span>{{ topic_store.study.length }}</span>
+            </li>
+            <li
+              @click="classification_handle(classification[1].name)"
+              class="flex flex_direction_row"
+            >
+              <span>技术分享</span>
+              <span>{{ topic_store.technique.length }}</span>
+            </li>
+            <li
+              @click="classification_handle(classification[2].name)"
+              class="flex flex_direction_row"
+            >
+              <span>生活随想</span>
+              <span>{{ topic_store.life.length }}</span>
+            </li>
+            <li
+              @click="classification_handle(classification[3].name)"
+              class="flex flex_direction_row"
+            >
+              <span>二次元</span>
+              <span>{{ topic_store.acg.length }}</span>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="personal_item site_info_box flex flex_direction_column align_items_center"
+        >
+          <h3>网站信息</h3>
+          <ul class="flex flex_direction_column">
+            <li>
+              <span>网站名称: Tiny Flowers</span>
+            </li>
+            <li>
+              <span
+                >存活时间: {{ personal_info.site_info.run_time.value }}</span
+              >
+            </li>
+            <li>
+              <span
+                >上次更新时间: {{ personal_info.site_info.last_update }}</span
+              >
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+    <!-- <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" alt=""> -->
+    <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg" alt="">
+
   </div>
   <Utils></Utils>
+
 </template>
 <style lang="scss" scoped>
 $bg_color: var(--bg_color, #f7f3f5);
 $color: var(--color, #000000);
-$item_bg: var(--item_bg, #ffffff);
+$item_bg: var(--item_bg, #ffffffa2);
 $item_shadow: var(--item_shadow, #cacaca4f);
 $title_color: var(--title_color, #173e6c);
 $title_af_bg: var(--title_af_bg, #22113364);
@@ -419,13 +504,104 @@ $tag_box_bg: var(--tag_box_bg, #dae6e7);
 $tag_bg: var(--tag_bg, #41a8a8);
 $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
-#main {
+
+#topic_list_main {
   background: $bg_color;
   width: 100%;
   color: $color;
+  .topic_list_main_bg{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    left: 0;
+    top: 0;
+    opacity: .7;
+  }
+  .topic_search_box {
+    z-index: 11;
 
+    scrollbar-color: rgba(144, 147, 153, 0.3) transparent; /* 滑块颜色  滚动条背景颜色 */
+    scrollbar-width: thin;
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-track-piece {
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(144, 147, 153, 0.3);
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-corner {
+      display: none;
+    }
+    &::-webkit-resizer {
+      display: none;
+    }
+
+    width: 50vw;
+    height: 7vh;
+    margin: 3vh auto;
+    .filter_search_box {
+      width: 52vw;
+      max-height: 30vh;
+      background: $item_bg;
+      bottom: 0;
+      transform: translateY(120%);
+      box-shadow: $item_shadow 2px 3px 10px;
+      border-radius: 10px;
+      overflow-y: scroll;
+      ul {
+        margin: 2vh 2vw;
+        padding: 0;
+        gap: 1vh;
+        li {
+          word-wrap: break-word;
+          color: $title_color;
+          font-size: 1.1em;
+          &:hover {
+            color: $topic_classification_num_color;
+          }
+        }
+      }
+    }
+
+    .search_icon {
+      width: 5vw;
+      right: 0;
+      bottom: -0.6vh;
+      z-index: 11;
+      transform: translateX(3vw);
+      img {
+        width: inherit;
+      }
+    }
+    .topic_search {
+      width: inherit;
+      height: inherit;
+      border-radius: 10px;
+      background: $item_bg;
+      padding-left: 2vw;
+      border: none;
+      outline: none;
+      color: $color;
+      font-size: 1.3em;
+      caret-color: $color;
+      &:focus {
+        box-shadow: $topic_classification_num_color 0 0 1px 2px;
+      }
+    }
+  }
   .topic_box {
-    margin: 100px 0 0 60px;
     min-height: calc(100vh);
     width: 60vw;
     padding-bottom: 30px;
@@ -439,7 +615,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       min-height: 200px;
       background: $item_bg;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-      margin: 20px 0;
+      margin: 0 0 2vh 0;
       opacity: 0;
       border-radius: 5px;
       box-shadow: $item_shadow 2px 3px 10px;
@@ -509,9 +685,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 
 //personal info
 .personal_box {
-  width: calc(40vw - 160px);
-  margin-left: 40px;
-  margin-top: 120px;
+  width: 24vw;
   .personal_item {
     width: 100%;
     background-color: $item_bg;
@@ -524,10 +698,10 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
   }
   .intro {
     img {
-      width: 150px;
-      height: 150px;
+      width: 9vw;
+      height: 9vw;
       border-radius: 50%;
-      margin: 30px 0;
+      margin: 2vh 0;
       border: $item_shadow 2px solid;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -537,12 +711,13 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       }
     }
     .personal_name {
-      font-size: 25px;
+      font-size: 1.4em;
       font-weight: 900;
       color: $color;
     }
     .personal_signature {
-      margin: 20px 0;
+      margin: 2vh 0;
+      font-size: 0.9em;
       color: $color;
     }
     .topic_classification_total_box {
@@ -550,13 +725,13 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       h3 {
         color: $topic_classification_color;
         margin: 0;
-        font-size: 25px;
+        font-size: 1.4em;
       }
       span {
         color: $topic_classification_num_color;
 
-        font-size: 20px;
-        margin-top: 20px;
+        font-size: 1.4em;
+        margin-top: 2vh;
         font-weight: 900;
       }
     }
@@ -565,10 +740,10 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     ul {
       width: 90%;
       padding: 0;
-      gap: 10px;
+      gap: 1vh;
       li {
         span {
-          margin: 5px;
+          margin: 0.4vh;
           font-weight: 900;
         }
         &:hover {
@@ -577,7 +752,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       }
     }
     .new_topic_date {
-      font-size: 12px;
+      font-size: 0.5em;
       color: $title_color;
     }
   }
@@ -587,9 +762,8 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       padding: 0;
       li {
         width: 100%;
-
         span {
-          padding: 10px;
+          padding: 1vh;
           font-weight: 900;
           &:last-child {
             margin-left: auto;
@@ -601,10 +775,10 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
           background: $topic_classification_num_color;
           border-radius: 5px;
           span {
-            margin-left: 10px;
+            margin-left: 1vw;
             &:last-child {
               margin-left: auto;
-              margin-right: 10px;
+              margin-right: 1vw;
             }
           }
         }
@@ -615,10 +789,10 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     ul {
       width: 90%;
       padding: 0;
-      gap: 15px;
+      gap: 1.7vh;
       li {
         span {
-          margin: 5px;
+          margin: 1vw;
           font-weight: 900;
           letter-spacing: 0.1em;
         }
