@@ -487,7 +487,8 @@ const search_focus_handle = () => {
       </div>
     </div>
     <!-- <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" alt=""> -->
-    <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg" alt="">
+    <!-- <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg" alt=""> -->
+    <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65ba5060871b83018a46c69f.jpg" alt="">
 
   </div>
   <Utils></Utils>

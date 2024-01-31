@@ -8,6 +8,7 @@ import { useUserStore } from "/src/store/user.js";
 import { useTopicStore } from "/src/store/topic.js";
 import c_c from "@/assets/js/utils.js";
 import emitter from "@/assets/config/mitt_bus.js";
+import Gitalk from 'gitalk' 
 
 import { useConfigStore } from "../store/config";
 const config_store = useConfigStore();
@@ -25,6 +26,18 @@ const data = ref();
 const link_pre = 'https://sparkle520.github.io/TinyFlowers/#'
 onMounted(() => {
     change_theme(config_store.theme);
+    let gitalk = new Gitalk({   
+     clientID: '429076372c73a03552c6',   
+     clientSecret: 'e10cf1b42cb0daf8cda1857f8f9a4ab411c4c91e',   
+     repo: 'TinyFlowersComment',   
+     owner: 'sparkle520',   
+     admin: ['sparkle520'],   
+     id: location.pathname.substr(0, 50),      // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败   
+     language:'zh-CN',
+     distractionFreeMode: false // 专注模式 
+})  
+
+    gitalk.render('gitalk-container')
 
   emitter.on("topic_data", (_data) => {
     data.value = _data;
@@ -58,6 +71,7 @@ const change_theme = (current_theme) => {
     
   }
 };
+
 </script>
 <template>
   <div id="topic_bottom_main">
@@ -67,6 +81,7 @@ const change_theme = (current_theme) => {
         <div>文章链接:<span class="topic_link"></span></div>
        </div>
     </div>
+    <div id="gitalk-container"></div> 
   </div>
 </template>
 <style lang="scss" scoped>

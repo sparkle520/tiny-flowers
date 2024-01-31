@@ -12,6 +12,9 @@ import GlobalComponents from '/src/component/index'
 import {VueLatex} from "vatex"
 import { createPinia } from 'pinia'
 import 'highlight.js/styles/github-dark.css'
+import 'gitalk/dist/gitalk.css' 
+
+import Particles from "vue3-particles";
 import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 const pinia = createPinia()
@@ -22,6 +25,7 @@ const app = createApp(App)
 GlobalComponents(app)
 app.use(router)
 app.use(hljsVuePlugin)
+app.use(Particles)
 app.use(VueLatex)
 app.use(pinia)
 app.use(ElementPlus)

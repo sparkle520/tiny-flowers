@@ -155,7 +155,7 @@ const get_s_dom_animation = (start, end, dom) => {
   const opacity = (x) => {
     return opacity_animation(x);
   };
-  start += dom.dataset.order * 500;
+  start += dom.dataset.order * 100;
   const transform = (scroll_y) => {
     return `translate(${create_animation(
       start,
@@ -299,6 +299,12 @@ const change_theme = (current_theme) => {
           <li data-order="1" class="animation_item relative">
             <img
               src="https://pic.imgdb.cn/item/65b152e5871b83018a4c46be.webp"
+              alt=""
+            />
+          </li>
+          <li data-order="3" class="animation_item relative">
+            <img
+              src="https://pic.imgdb.cn/item/65b96999871b83018aad93e5.webp"
               alt=""
             />
           </li>
@@ -690,7 +696,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
       ul {
         margin: 0;
         padding: 0;
-        width: calc(51vw + 20px);
+        width: calc(75vw + 40px);
         height: 64vh;
         top: 50%;
         left: 50%;
@@ -698,7 +704,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
         gap: 20px;
         z-index: 11;
         .animation_item {
-          width: 25.5vw;
+          width: 25vw;
           height: 64vh;
           border-radius: 5px;
           overflow: hidden;

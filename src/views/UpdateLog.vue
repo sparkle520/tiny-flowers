@@ -9,26 +9,27 @@ import change_theme from "../assets/theme/UpdateLog";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const {theme}  = storeToRefs(store);
+const { theme } = storeToRefs(store);
 const router = useRouter();
-store.$subscribe((mutation,state)=>{
-  change_theme(state.theme)
-})
+store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
 onBeforeMount(() => {});
 onMounted(() => {
-  change_theme(theme.value)
+  change_theme(theme.value);
+
   window.scrollTo(0, 0);
 });
 //const carousel_data = ref([
-  // {link:''},
-  // { link: "https://pic.imgdb.cn/item/65a97eb8871b83018a6fc35c.jpg" },
-  // { link: "https://pic.imgdb.cn/item/65a417d5871b83018a50a4c9.jpg" },
-  // { link: "https://pic.imgdb.cn/item/65a4185f871b83018a5241a0.jpg" },
-  // { link: "https://pic.imgdb.cn/item/65a616a9871b83018acf90af.jpg" },
-  //   { link: "https://pic.imgdb.cn/item/65a3e576871b83018a7eeee4.jpg" },
-  //   { link: "https://pic.imgdb.cn/item/65a3e577871b83018a7ef617.jpg" },
-  //   { link: "https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" },
-  //   { link: "https://pic.imgdb.cn/item/65a3e57b871b83018a7f0821.jpg" },
+// {link:''},
+// { link: "https://pic.imgdb.cn/item/65a97eb8871b83018a6fc35c.jpg" },
+// { link: "https://pic.imgdb.cn/item/65a417d5871b83018a50a4c9.jpg" },
+// { link: "https://pic.imgdb.cn/item/65a4185f871b83018a5241a0.jpg" },
+// { link: "https://pic.imgdb.cn/item/65a616a9871b83018acf90af.jpg" },
+//   { link: "https://pic.imgdb.cn/item/65a3e576871b83018a7eeee4.jpg" },
+//   { link: "https://pic.imgdb.cn/item/65a3e577871b83018a7ef617.jpg" },
+//   { link: "https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" },
+//   { link: "https://pic.imgdb.cn/item/65a3e57b871b83018a7f0821.jpg" },
 //]);
 const log = [
   //   {
@@ -49,13 +50,103 @@ const log = [
   },
 ];
 
+const options = {
+        background: {
+          color: {
+            value: 'transparent',
+          },
+        },
+        fpsLimit: 120,
+        interactivity: {
+          events: {
+            onClick: {
+              enable: true,
+              mode: 'push',
+            },
+            onHover: {
+              enable: false,
+              mode: 'repulse',
+            },
+            resize: true,
+          },
+          modes: {
+            bubble: {
+              distance: 400,
+              duration: 2,
+              opacity: 0.8,
+              size: 40,
+            },
+            push: {
+              quantity: 4,
+            },
+            repulse: {
+              distance: 200,
+              duration: 0.4,
+            },
+          },
+        },
+        particles: {
+          color: {
+            value: '#ffffff',
+          },
+          links: {
+            color: '#ffffff',
+            distance: 150,
+            enable: true,
+            opacity: 0.5,
+            width: 1,
+          },
+          move: {
+            direction: 'none',
+            enable: true,
+            outMode: 'bounce',
+            random: false,
+            speed: 1,
+            straight: false,
+          },
+          number: {
+            density: {
+              enable: true,
+              area: 800,
+            },
+            value: 80,
+          },
+          opacity: {
+            value: 0.5,
+          },
+          shape: {
+            type: 'circle',
+          },
+          size: {
+            random: true,
+            value: 5,
+          },
+        },
+        detectRetina: true,
+      }
+
+
+const particlesInit = async engine => {
+    //await loadFull(engine);
+    await loadSlim(engine);
+};
 
 
 
 </script>
 <template>
   <div id="main" class="flex flex_direction_column">
-    <img src="https://pic.imgdb.cn/item/65b00809871b83018a6489f8.png" class="absolute_center fixed w_w_y" alt="">
+    <Particles
+      id="tsparticles"
+      :options="options"
+    />
+
+
+    <img
+      src="https://pic.imgdb.cn/item/65b00809871b83018a6489f8.png"
+      class="absolute_center fixed w_w_y"
+      alt=""
+    />
     <!-- <Carousel :data="carousel_data" class="carousel"></Carousel> -->
     <div class="content flex margin_0_auto flex_direction_column">
       <div class="margin_0_auto">
@@ -114,12 +205,12 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
   color: $color;
   background: $bg_color;
   min-height: 100vh;
-  .w_w_y{
+ 
+  .w_w_y {
     width: 450px;
-    opacity: .8;
+    opacity: 0.8;
     z-index: 0;
     // filter:drop-shadow(3px 3px 4px rgba(97, 85, 79, 0.731));
-
   }
   .carousel {
     width: 90vw;
@@ -144,7 +235,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
         padding: 10px;
         border-radius: 5px;
         background: $li;
-        
+
         box-shadow: 0 0 10px $li_shadow;
       }
     }
@@ -183,16 +274,18 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
   color: #ff0000;
 }
 @keyframes move_bottom {
-  0%{
+  0% {
     transform: translateY(-100vh);
-  }100%{
+  }
+  100% {
     transform: translateY(0);
   }
 }
 @keyframes move_top {
-  0%{
+  0% {
     transform: translateY(100vh);
-  }100%{
+  }
+  100% {
     transform: translateY(0);
   }
 }
