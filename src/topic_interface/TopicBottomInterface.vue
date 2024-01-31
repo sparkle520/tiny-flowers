@@ -35,7 +35,7 @@ onMounted(() => {
      id: location.pathname.substr(0, 50),      // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败   
      language:'zh-CN',
      distractionFreeMode: false, // 专注模式 
-     proxy:  'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'
+     proxy:  'https://strong-caramel-969805.netlify.app/github_access_token'
 })  
 
     gitalk.render('gitalk-container')
