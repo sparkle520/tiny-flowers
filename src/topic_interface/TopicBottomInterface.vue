@@ -29,12 +29,13 @@ onMounted(() => {
     let gitalk = new Gitalk({   
      clientID: '429076372c73a03552c6',   
      clientSecret: 'e10cf1b42cb0daf8cda1857f8f9a4ab411c4c91e',   
-     repo: 'TinyFlowersComment',   
+     repo: 'TinyFlowersComment',
      owner: 'sparkle520',   
      admin: ['sparkle520'],   
      id: location.pathname.substr(0, 50),      // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败   
      language:'zh-CN',
-     distractionFreeMode: false // 专注模式 
+     distractionFreeMode: false, // 专注模式 
+     proxy:  'https://netnr-proxy.cloudno.de/https://github.com/login/oauth/access_token'
 })  
 
     gitalk.render('gitalk-container')
