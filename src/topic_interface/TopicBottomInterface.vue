@@ -92,6 +92,9 @@ $topic_author_info_inner_box_color: var(--topic_author_info_inner_box_color, #1e
 
 #topic_bottom_main {
   width: 100%;
+  #gitalk-container{
+    width: 90%;
+  }
   .topic_author_info_box {
     width: 90%;
     background: $topic_author_info_box_bg;
