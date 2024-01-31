@@ -26,19 +26,7 @@ const data = ref();
 const link_pre = 'https://sparkle520.github.io/TinyFlowers/#'
 onMounted(() => {
     change_theme(config_store.theme);
-    let gitalk = new Gitalk({   
-     clientID: '429076372c73a03552c6',   
-     clientSecret: 'e10cf1b42cb0daf8cda1857f8f9a4ab411c4c91e',   
-     repo: 'TinyFlowersComment',
-     owner: 'sparkle520',   
-     admin: ['sparkle520'],   
-     id: location.pathname.substr(0, 50),      // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败   
-     language:'zh-CN',
-     distractionFreeMode: false, // 专注模式 
-     proxy:  'https://strong-caramel-969805.netlify.app/github_access_token'
-})  
-
-    gitalk.render('gitalk-container')
+    
 
   emitter.on("topic_data", (_data) => {
     data.value = _data;
@@ -57,6 +45,19 @@ onMounted(() => {
         // /unknownWorldMap/topic/3
         topic_link.innerHTML = `${link_pre}${data.value.topic_data.link}`;
     }
+    let gitalk = new Gitalk({   
+     clientID: '429076372c73a03552c6',   
+     clientSecret: 'e10cf1b42cb0daf8cda1857f8f9a4ab411c4c91e',   
+     repo: 'TinyFlowersComment',
+     owner: 'sparkle520',   
+     admin: ['sparkle520'],   
+     id: data.value.topic_data.link,      // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败   
+     language:'zh-CN',
+     distractionFreeMode: false, // 专注模式 
+     proxy:  'https://strong-caramel-969805.netlify.app/github_access_token'
+})  
+gitalk.render('gitalk-container')
+
   });
 });
 const change_theme = (current_theme) => {
@@ -92,12 +93,13 @@ $topic_author_info_inner_box_color: var(--topic_author_info_inner_box_color, #1e
 
 #topic_bottom_main {
   width: 100%;
+  img{
+      box-shadow: none;
+    }
   #gitalk-container{
     width: 90%;
     margin: 0 auto;
-    img{
-      box-shadow: none;
-    }
+    
   }
   .topic_author_info_box {
     width: 90%;
