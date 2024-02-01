@@ -12,16 +12,29 @@ $topic_content_bg: var(--topic_content_bg, #ffff);
   min-height: 100vh;
   font-family: "Microsoft YaHei";
   color: $normal_color;
+  display: flex;
+  flex-direction: column;
+  .topic_bg{
+    z-index: 0;
+  }
+  .topic_top_interface{
+    z-index: 1;
+  }
   .topic_content {
     width: 60vw;
     border-radius: 4px;
     min-height: 10vh;
     background: $topic_content_bg;
+    display: flex;
+    flex-direction: column;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     .topic_text {
       width: 90%;
       margin: 2vh auto;
+      display: flex;
+      flex-direction: column;
+      
     }
   }
   h1{
@@ -125,6 +138,9 @@ $topic_content_bg: var(--topic_content_bg, #ffff);
   gap: 1vw;
   margin: 3vh auto;
   align-items: stretch;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
   animation: topic_container 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 @keyframes topic_container {

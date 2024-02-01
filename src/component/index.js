@@ -10,6 +10,7 @@ import TopicBottomInterface from "/src/topic_interface/TopicBottomInterface.vue"
 import TopicRightInterface from "/src/topic_interface/TopicRightInterface.vue"
 import TopicLeftInterface from "/src/topic_interface/TopicLeftInterface.vue"
 import TopicTopInterface from "/src/topic_interface/TopicTopInterface.vue"
+import TopicBgInterface from "/src/topic_interface/TopicBgInterface.vue"
 const components = {
     LeftNavBar,
     Pagination,
@@ -23,6 +24,7 @@ const components = {
     TopicRightInterface,
     TopicLeftInterface,
     TopicTopInterface,
+    TopicBgInterface,
 }
 
 const GlobalComponents = (app) => {

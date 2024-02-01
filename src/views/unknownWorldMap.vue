@@ -72,7 +72,7 @@ router.push('/unknownWorldMap/list/'+name+'/1')
       <div class="absolute rectangle_2"></div>
       <div class="visit_count flex flex_direction_column align_items_center">
         <p>访问</p>
-        {{ topic_data.visit_count }}
+        <span id="busuanzi_value_site_pv"></span>
       </div>
     </div>
     <div class="content width_full relative flex flex_direction_column">

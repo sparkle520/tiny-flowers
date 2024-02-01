@@ -217,10 +217,10 @@ const run_time = (date) => {
 };
 const last_update = () => {
   let date_array = [
-    format_date(topic_store.life[0].date),
-    format_date(topic_store.study[0].date),
-    format_date(topic_store.technique[0].date),
-    format_date(topic_store.acg[0].date),
+    format_date(topic_store.life[0].create_date),
+    format_date(topic_store.study[0].create_date),
+    format_date(topic_store.technique[0].create_date),
+    format_date(topic_store.acg[0].create_date),
   ];
   let date_array_sort = date_array.sort((a, b) => {
     let temp_1 = b.split("-");
@@ -363,10 +363,10 @@ const search_focus_handle = () => {
             <span class="short_msg" v-html="item.short_message"></span>
             <div class="date flex flex_direction_row justify_content_center">
               {{ user_store.name }} /
-              {{ item.date.split("?")[1].replace(/^0+/, "") }}月{{
-                item.date.split("?")[2].replace(/^0+/, "")
-              }}日 / {{ item.date.split("?")[0] }} /
-              {{ item.date.split("?")[3] }}
+              {{ item.create_date.split("?")[1].replace(/^0+/, "") }}月{{
+                item.create_date.split("?")[2].replace(/^0+/, "")
+              }}日 / {{ item.create_date.split("?")[0] }} /
+              {{ item.create_date.split("?")[3] }}
             </div>
           </div>
           <div class="absolute tag_box flex flex_direction_row">
@@ -422,8 +422,8 @@ const search_focus_handle = () => {
             >
               <span> {{ item.title }} </span>
               <span class="new_topic_date">
-                {{ item.date.split("?")[0] }}-{{ item.date.split("?")[1] }}-{{
-                  item.date.split("?")[2]
+                {{ item.create_date.split("?")[0] }}-{{ item.create_date.split("?")[1] }}-{{
+                  item.create_date.split("?")[2]
                 }}
               </span>
             </li>

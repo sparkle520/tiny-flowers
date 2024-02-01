@@ -13,6 +13,7 @@
     "element-plus": "^2.3.14",
     "gitalk": "^1.8.0",
     "highlight.js": "^11.9.0",
+    "marked": "^11.2.0",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "sass": "^1.68.0",

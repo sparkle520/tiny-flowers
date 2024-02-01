@@ -3,7 +3,7 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted, watch } from "vue";
+import { reactive, toRefs, ref, onBeforeMount, onMounted, watch ,nextTick} from "vue";
 import { useRouter } from "vue-router";
 import TopicTitle from "/src/component/TopicTitle.vue";
 import { change_theme } from "/src/assets/js/topic.js";
@@ -50,8 +50,9 @@ const select_by_id = (arr, id) => {
 onMounted(() => {
   change_theme(theme.value);
   change_layout(layout.value);
+  nextTick(()=>{
   emitter.emit("topic_data", get_topic_data());
-
+})
 });
 const code = `
     fn digital_root(n: i64) -> i64 {
@@ -80,6 +81,7 @@ const code = `
 </script>
 <template>
   <div id="topic_main" class="flex flex_direction_column">
+    <TopicBgInterface></TopicBgInterface>
     <TopicTopInterface></TopicTopInterface>
     <div class="topic_container flex flex_direction_row">
       <TopicLeftInterface></TopicLeftInterface>

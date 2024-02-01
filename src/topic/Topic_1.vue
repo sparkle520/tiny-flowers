@@ -3,7 +3,7 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted, watch } from "vue";
+import { reactive, toRefs, ref, onBeforeMount, onMounted, watch,nextTick } from "vue";
 import { useRouter } from "vue-router";
 import TopicTitle from "/src/component/TopicTitle.vue";
 import { change_theme } from "/src/assets/js/topic.js";
@@ -50,8 +50,9 @@ const select_by_id = (arr, id) => {
 onMounted(() => {
   change_theme(theme.value);
   change_layout(layout.value);
+  nextTick(()=>{
   emitter.emit("topic_data", get_topic_data());
-
+})
 });
 
 /* <vue-latex :display-mode="true" expression="设\lim_{x \to x_{0}} f(x) =A."></vue-latex> */
@@ -62,6 +63,7 @@ onMounted(() => {
 <template>
   <div id="topic_main" class="flex flex_direction_column">
     <TopicTopInterface></TopicTopInterface>
+    <TopicBgInterface></TopicBgInterface>
     <div class="topic_container flex flex_direction_row">
       <TopicLeftInterface></TopicLeftInterface>
       <div class="topic_content flex flex_direction_column">

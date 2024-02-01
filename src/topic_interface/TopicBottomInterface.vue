@@ -30,8 +30,6 @@ onMounted(() => {
 
   emitter.on("topic_data", (_data) => {
     data.value = _data;
-  });
-  nextTick(() => {
     const topic_author = document.querySelector(".topic_author");
     const topic_link = document.querySelector(".topic_link");
     if(data.value.topic_data.author == undefined || data.value.topic_data.author == ''){
@@ -42,7 +40,6 @@ onMounted(() => {
     if(data.value.topic_data.link == undefined || data.value.topic_data.link == ''){
         topic_link.innerHTML = '未知错误';
     }else{
-        // /unknownWorldMap/topic/3
         topic_link.innerHTML = `${link_pre}${data.value.topic_data.link}`;
     }
     let gitalk = new Gitalk({   
@@ -57,8 +54,8 @@ onMounted(() => {
      proxy:  'https://strong-caramel-969805.netlify.app/github_access_token'
 })  
 gitalk.render('gitalk-container')
-
   });
+
 });
 const change_theme = (current_theme) => {
   if (current_theme) {

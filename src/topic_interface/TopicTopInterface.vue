@@ -16,11 +16,10 @@ onUnmounted(()=>{
 onMounted(() => {
   emitter.on("topic_data", (_data) => {
     data.value = _data;
-  });
-  nextTick(() => {
     const topic_top_main = document.querySelector("#topic_top_main");
     const topic_title = document.querySelector(".topic_title");
-    const topic_date = document.querySelector(".topic_date");
+    const topic_create_date = document.querySelector(".topic_create_date");
+    const topic_update_date = document.querySelector(".topic_update_date");
     const topic_time = document.querySelector(".topic_time");
     const topic_classification = document.querySelector(
       ".topic_classification"
@@ -44,26 +43,38 @@ onMounted(() => {
       topic_title.innerHTML = data.value.topic_data.title;
     }
     if (
-      data.value.topic_data.date == undefined ||
-      data.value.topic_data.date == ""
+      data.value.topic_data.create_date == undefined ||
+      data.value.topic_data.create_date == ""
     ) {
-        topic_date.innerHTML = ''
-      topic_date.innerHTML = `未知错误`;
+      topic_create_date.innerHTML = ''
+      topic_create_date.innerHTML = `未知错误`;
     } else {
-        topic_date.innerHTML = ''
-      topic_date.innerHTML += `${data.value.topic_data.date.split("?")[0]}-${
-        data.value.topic_data.date.split("?")[1]
-      }-${data.value.topic_data.date.split("?")[2]}`;
+      topic_create_date.innerHTML = ''
+      topic_create_date.innerHTML += `发表于${data.value.topic_data.create_date.split("?")[0]}-${
+        data.value.topic_data.create_date.split("?")[1]
+      }-${data.value.topic_data.create_date.split("?")[2]}`;
     }
     if (
-      data.value.topic_data.date == undefined ||
-      data.value.topic_data.date == ""
+      data.value.topic_data.update_date == undefined ||
+      data.value.topic_data.update_date == ""
+    ) {
+      topic_update_date.style.display = "none";
+    } else {
+      topic_update_date.style.display = "block";
+      topic_update_date.innerHTML = ''
+      topic_update_date.innerHTML += `更新于${data.value.topic_data.create_date.split("?")[0]}-${
+        data.value.topic_data.create_date.split("?")[1]
+      }-${data.value.topic_data.create_date.split("?")[2]}`;
+    }
+    if (
+      data.value.topic_data.create_date == undefined ||
+      data.value.topic_data.create_date == ""
     ) {
         topic_time.innerHTML = ''
       topic_time.innerHTML = `未知错误`;
     } else {
         topic_time.innerHTML  = ''
-      topic_time.innerHTML += `${data.value.topic_data.date.split("?")[3]}`;
+      topic_time.innerHTML += `${data.value.topic_data.create_date.split("?")[3]}`;
     }
     if (
       data.value.topic_data.classification == undefined ||
@@ -104,7 +115,9 @@ onMounted(() => {
     <div class="flex flex_direction_column topic_info_box align_items_center">
       <span class="topic_title"></span>
       <div class="flex flex_direction_row">
-        <div class="topic_date">发表于</div>
+        <div class="topic_create_date"></div>
+        <div class="topic_update_date"></div>
+        <div class="topic_visit">访问<span id="busuanzi_value_site_pv"></span></div>
         <span class="topic_time"></span>
         <span class="topic_classification"></span>
       </div>
@@ -146,10 +159,26 @@ onMounted(() => {
       font-size: 3em;
       width: 86vw;
     }
-    .topic_date {
+    .topic_create_date {
       margin-top: 1vh;
       font-size: 1em;
       background: #7b68ee;
+      padding: 5px 6px;
+      border-radius: 5px;
+      margin-right: 0.4vw;
+    }
+    .topic_update_date{
+      margin-top: 1vh;
+      font-size: 1em;
+      background: #12710d;
+      padding: 5px 6px;
+      border-radius: 5px;
+      margin-right: 0.4vw;
+    }
+    .topic_visit{
+      margin-top: 1vh;
+      font-size: 1em;
+      background: #973011;
       padding: 5px 6px;
       border-radius: 5px;
       margin-right: 0.4vw;
@@ -173,7 +202,7 @@ onMounted(() => {
       width: 50vw;
       margin-top: 2vh;
       gap: 0.4vw;
-    }
+          }
   }
 }
 </style>
