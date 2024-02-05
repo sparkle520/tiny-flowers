@@ -63,7 +63,8 @@ onMounted(() => {
 <template>
   <div id="topic_main" class="flex flex_direction_column">
     <TopicTopInterface></TopicTopInterface>
-    <TopicBgInterface></TopicBgInterface>
+    <TopicBgInterface class="topic_bg"></TopicBgInterface>
+
     <div class="topic_container flex flex_direction_row">
       <TopicLeftInterface></TopicLeftInterface>
       <div class="topic_content flex flex_direction_column">

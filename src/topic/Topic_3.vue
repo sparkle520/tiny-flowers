@@ -113,7 +113,7 @@ store.change_g_theme()
 </script>
 <template>
   <div id="topic_main" class="flex flex_direction_column">
-    <TopicBgInterface></TopicBgInterface>
+    <TopicBgInterface class="topic_bg"></TopicBgInterface>
     <TopicTopInterface></TopicTopInterface>
     <div class="topic_container flex flex_direction_row">
       <TopicLeftInterface></TopicLeftInterface>

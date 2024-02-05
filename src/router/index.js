@@ -122,11 +122,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.meta.isRouterAuth) {
-        if (getCookie('token')) {
+        // if (getCookie('token')) {
+        //     next()
+        // } else {
             next()
-        } else {
-            next()
-        }
+        // }
     } else {
         next()
     }

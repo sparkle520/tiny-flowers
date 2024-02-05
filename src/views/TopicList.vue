@@ -19,7 +19,6 @@ import { useTopicStore } from "/src/store/topic.js";
 import { useUserStore } from "/src/store/user.js";
 import emitter from "@/assets/config/mitt_bus.js";
 import change_theme from "@/assets/theme/TopicList.js";
-
 const { params } = useRoute();
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
@@ -36,14 +35,14 @@ config_store.$subscribe((mutation, state) => {
 onBeforeMount(() => {});
 onMounted(() => {
   init();
-  document.addEventListener("click", click_handle)
+  document.addEventListener("click", click_handle);
 });
-const click_handle = (e)=>{
+const click_handle = (e) => {
   let topic_search_box = document.querySelector(".topic_search_box");
-  if(!topic_search_box.contains(e.target)){
-    show_filter_search_box.value = false
+  if (!topic_search_box.contains(e.target)) {
+    show_filter_search_box.value = false;
   }
-}
+};
 const init = () => {
   window.scrollTo(0, 0);
   change_layout(layout.value);
@@ -59,7 +58,6 @@ const side_view_handle = (v) => {
 };
 const change_layout = (flag) => {
   const topic_box = document.querySelector(".topic_box");
-
   if (flag) {
     topic_box.style.width = "60vw";
     show_personal_info.value = true;
@@ -94,7 +92,7 @@ const remove_all_animation = () => {
 onUnmounted(() => {
   document.removeEventListener("scroll", scroll_handle);
   clearInterval(interval_run_time);
-  document.removeEventListener("click", click_handle)
+  document.removeEventListener("click", click_handle);
 });
 
 onBeforeMount(() => {
@@ -115,7 +113,6 @@ const init_data = () => {
       break;
     case "技术分享":
       data_handle(topic_store.technique, page_data.value.current_index);
-
       break;
     case "生活随想":
       data_handle(topic_store.life, page_data.value.current_index);
@@ -291,10 +288,10 @@ const search_text = ref();
 watch(search_text, (new_val, old_val) => {
   if (new_val == "") {
     current_filter_list.value = [];
-    show_filter_search_box.value = false
+    show_filter_search_box.value = false;
     return;
   }
-  show_filter_search_box.value = true
+  show_filter_search_box.value = true;
   current_filter_list.value = [];
   loop(topic_store.get_all(), 0, new_val);
 });
@@ -304,8 +301,9 @@ const loop = (arr, current_index, search_text) => {
   let per_num = Math.min(10, arr.length - current_index);
   window.requestAnimationFrame(() => {
     for (let i = 0; i < per_num; i++) {
-      if (arr[current_index + i].title.toLowerCase().indexOf(search_text) == -1
-        && arr[current_index + i].tags.toLowerCase().indexOf(search_text) == -1
+      if (
+        arr[current_index + i].title.toLowerCase().indexOf(search_text) == -1 &&
+        arr[current_index + i].tags.toLowerCase().indexOf(search_text) == -1
       )
         continue;
       current_filter_list.value.push(arr[current_index + i]);
@@ -315,14 +313,13 @@ const loop = (arr, current_index, search_text) => {
 };
 const show_filter_search_box = ref(false);
 const search_focus_handle = () => {
-  if(current_filter_list.value.length == 0) return;
-  show_filter_search_box.value = true
-}
+  if (current_filter_list.value.length == 0) return;
+  show_filter_search_box.value = true;
+};
 </script>
 <template>
   <div id="topic_list_main" class="flex flex_direction_column">
-    <div class="topic_search_box relative"
->
+    <div class="topic_search_box relative">
       <input
         id="topic_search"
         class="topic_search"
@@ -341,7 +338,12 @@ const search_focus_handle = () => {
       </label>
       <div class="filter_search_box absolute" v-show="show_filter_search_box">
         <ul class="flex flex_direction_column">
-          <li v-for="item in current_filter_list" @click="jump_to_topic(item.link)">{{ item.title }}</li>
+          <li
+            v-for="item in current_filter_list"
+            @click="jump_to_topic(item.link)"
+          >
+            {{ item.title }}
+          </li>
         </ul>
       </div>
     </div>
@@ -354,19 +356,23 @@ const search_focus_handle = () => {
           v-for="(item, index) in current_data"
           class="topic_item flex flex_direction_column relative"
         >
-          <div
-            class="item_inner_box margin_2_percent flex flex_direction_column"
-          >
-            <div>
-              <span class="relative title">{{ item.title }}</span>
-            </div>
-            <span class="short_msg" v-html="item.short_message"></span>
-            <div class="date flex flex_direction_row justify_content_center">
-              {{ user_store.name }} /
-              {{ item.create_date.split("?")[1].replace(/^0+/, "") }}月{{
-                item.create_date.split("?")[2].replace(/^0+/, "")
-              }}日 / {{ item.create_date.split("?")[0] }} /
-              {{ item.create_date.split("?")[3] }}
+          <div class="item_inner_box flex flex_direction_row">
+            <img
+              v-if="item.img != ''"
+              class="item_img"
+              :src="item.img"
+              alt=""
+            />
+            <div class="item_content flex flex_direction_column">
+              <span class="relative title flex flex_direction_row align_items_center"><span class="item_classification relative">{{ item.classification }}</span>{{ item.title }}</span>
+              <span class="short_msg" v-html="item.short_message"></span>
+              <div class="date flex flex_direction_row justify_content_center">
+                {{ user_store.name }} /
+                {{ item.create_date.split("?")[1].replace(/^0+/, "") }}月{{
+                  item.create_date.split("?")[2].replace(/^0+/, "")
+                }}日 / {{ item.create_date.split("?")[0] }} /
+                {{ item.create_date.split("?")[3] }}
+              </div>
             </div>
           </div>
           <div class="absolute tag_box flex flex_direction_row">
@@ -388,10 +394,18 @@ const search_focus_handle = () => {
         class="personal_box flex flex_direction_column"
       >
         <div
-          class="personal_item intro flex flex_direction_column align_items_center"
+          class="personal_item intro flex relative flex_direction_column align_items_center"
         >
-          <img :src="user_store.avatar" alt="" />
-          <span class="personal_name" v-text="user_store.name"></span>
+          <img
+            class="avatar_bg absolute"
+            src="https://pic.imgdb.cn/item/65a9840f871b83018a77d214.jpg"
+            alt=""
+          />
+          <img :src="user_store.avatar" class="z_index_10" alt="" />
+          <span
+            class="personal_name z_index_10"
+            v-text="user_store.name"
+          ></span>
           <span class="personal_signature" v-text="user_store.signature"></span>
           <div class="width_full flex flex_direction_row">
             <div
@@ -412,7 +426,7 @@ const search_focus_handle = () => {
         <div
           class="personal_item new_topic_box flex flex_direction_column align_items_center"
         >
-          <h3>最新文章</h3>
+          <h3 class="l_title relative">最新文章</h3>
           <ul class="flex flex_direction_column">
             <li
               @click="$router.push(item.link)"
@@ -422,9 +436,9 @@ const search_focus_handle = () => {
             >
               <span> {{ item.title }} </span>
               <span class="new_topic_date">
-                {{ item.create_date.split("?")[0] }}-{{ item.create_date.split("?")[1] }}-{{
-                  item.create_date.split("?")[2]
-                }}
+                {{ item.create_date.split("?")[0] }}-{{
+                  item.create_date.split("?")[1]
+                }}-{{ item.create_date.split("?")[2] }}
               </span>
             </li>
           </ul>
@@ -432,7 +446,7 @@ const search_focus_handle = () => {
         <div
           class="personal_item classification_box flex flex_direction_column align_items_center"
         >
-          <h3>分类</h3>
+          <h3 class="l_title relative">分类</h3>
           <ul class="flex flex_direction_column">
             <li
               @click="classification_handle(classification[0].name)"
@@ -467,7 +481,7 @@ const search_focus_handle = () => {
         <div
           class="personal_item site_info_box flex flex_direction_column align_items_center"
         >
-          <h3>网站信息</h3>
+          <h3 class="l_title relative">网站信息</h3>
           <ul class="flex flex_direction_column">
             <li>
               <span>网站名称: Tiny Flowers</span>
@@ -488,36 +502,55 @@ const search_focus_handle = () => {
     </div>
     <!-- <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" alt=""> -->
     <!-- <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg" alt=""> -->
-    <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65ba5060871b83018a46c69f.jpg" alt="">
-
+    <!-- <img
+      class="topic_list_main_bg"
+      src="https://pic.imgdb.cn/item/65ba5060871b83018a46c69f.jpg"
+      alt=""
+    /> -->
   </div>
   <Utils></Utils>
-
 </template>
 <style lang="scss" scoped>
 $bg_color: var(--bg_color, #f7f3f5);
 $color: var(--color, #000000);
 $item_bg: var(--item_bg, #ffffffa2);
-$item_shadow: var(--item_shadow, #cacaca4f);
+$item_shadow: var(--item_shadow, #1f2d3d26);
 $title_color: var(--title_color, #173e6c);
 $title_af_bg: var(--title_af_bg, #22113364);
 $tag_box_bg: var(--tag_box_bg, #dae6e7);
 $tag_bg: var(--tag_bg, #41a8a8);
 $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
+$item_classification_bg: var(--item_classification_bg, #00cbff);
 
 #topic_list_main {
   background: $bg_color;
   width: 100%;
   color: $color;
-  .topic_list_main_bg{
+  .l_title {
+    font-size: 1em;
+    align-self: flex-start;
+    margin-left: 1vw;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2vh;
+      background: $tag_bg;
+      left: 0;
+      bottom: 0;
+      opacity: 0.6;
+      filter: blur(13px);
+    }
+  }
+  .topic_list_main_bg {
     position: fixed;
     width: 100vw;
     height: 100vh;
     object-fit: cover;
     left: 0;
     top: 0;
-    opacity: .7;
+    opacity: 0.7;
   }
   .topic_search_box {
     z-index: 11;
@@ -619,12 +652,14 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       margin: 0 0 2vh 0;
       opacity: 0;
       border-radius: 5px;
-      box-shadow: $item_shadow 2px 3px 10px;
+      box-shadow: 0px 13px 15px $item_shadow;
       overflow-y: hidden;
       &:active {
         animation: jelly 0.5s;
       }
       &:hover {
+        transform: translateY(-.6vh);
+        box-shadow: 0 3px 5px #1f2d3d33;
         .tag_box {
           opacity: 1;
           transform: translateY(0);
@@ -633,30 +668,37 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       .item_inner_box {
         width: 96%;
         min-height: 200px;
+        .item_img {
+          max-width: 30%;
+          margin: 1vh 2vh 1vh 1vh;
+          border-radius: 5px;
+          object-fit: cover;
+        }
+        .item_content {
+          margin: 1vh 2vh 1vh 1vh;
+          .item_classification{
+            font-size: .6em;
+            padding:.4em;
+            border-radius: 2px;
+            margin-right: .5vw;
+            color: #ffff;
+            background: $item_classification_bg;
+          }
+        }
       }
       .title {
-        font-size: 1.5em;
-        font-weight: 900;
+        font-size: 1.2em;
+        font-weight: 600;
         margin-top: 10px;
         color: $title_color;
-
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          height: 15px;
-          background-color: $title_af_bg;
-        }
       }
       .short_msg {
         margin-top: 20px;
         line-height: 25px;
-        font-weight: 600;
+        font-size: .9em;
       }
       .date {
-        font-weight: 900;
+        font-size: 0.6em;
         letter-spacing: 0.1em;
         margin-top: auto;
         align-self: flex-start;
@@ -686,7 +728,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 
 //personal info
 .personal_box {
-  width: 24vw;
+  width: 20vw;
   .personal_item {
     width: 100%;
     background-color: $item_bg;
@@ -698,11 +740,24 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     margin-bottom: 20px;
   }
   .intro {
+    .avatar_bg {
+      top: 0;
+      margin: 0;
+      object-fit: cover;
+     border-radius: 5px;
+
+      z-index: 0;
+      width: 20vw;
+      height: 20vh;
+      pointer-events: none;
+      opacity: 0.9;
+      border: none;
+    }
     img {
-      width: 9vw;
-      height: 9vw;
+      width: 8vw;
+      height: 8vw;
       border-radius: 50%;
-      margin: 2vh 0;
+      margin: 10vh auto 0vh 1vw;
       border: $item_shadow 2px solid;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -715,9 +770,12 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       font-size: 1.4em;
       font-weight: 900;
       color: $color;
+      transform: translateY(-4vh);
+      margin-left: auto;
+      margin-right: 4vw;
     }
     .personal_signature {
-      margin: 2vh 0;
+      margin: 0 0 3vh 0;
       font-size: 0.9em;
       color: $color;
     }
@@ -726,12 +784,12 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       h3 {
         color: $topic_classification_color;
         margin: 0;
-        font-size: 1.4em;
+        font-size: 1.2em;
       }
       span {
         color: $topic_classification_num_color;
 
-        font-size: 1.4em;
+        font-size: 1.2em;
         margin-top: 2vh;
         font-weight: 900;
       }
@@ -745,6 +803,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       li {
         span {
           margin: 0.4vh;
+          font-size: 0.9em;
           font-weight: 900;
         }
         &:hover {
@@ -764,6 +823,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       li {
         width: 100%;
         span {
+          font-size: .9em;
           padding: 1vh;
           font-weight: 900;
           &:last-child {
@@ -794,6 +854,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       li {
         span {
           margin: 1vw;
+          font-size: .9em;
           font-weight: 900;
           letter-spacing: 0.1em;
         }

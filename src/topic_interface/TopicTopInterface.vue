@@ -128,6 +128,8 @@ onMounted(() => {
   </div>
 </template>
 <style lang="scss" scoped>
+  $normal_color: var(--normal_color, #0f1828);
+
 #topic_top_main {
   width: 100vw;
   min-height: 48vh;
@@ -137,11 +139,9 @@ onMounted(() => {
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   @keyframes topic_top_bg {
     0% {
-      transform: translateY(-50%);
       opacity: 0;
     }
     100% {
-      transform: translateY(0%);
       opacity: 1;
     }
   }
@@ -150,7 +150,7 @@ onMounted(() => {
     word-wrap: break-word;
     animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     z-index: 1;
-    color: aliceblue;
+    color: #ffff;
     margin-top: 5vh;
 
     .topic_title {

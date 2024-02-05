@@ -32,12 +32,4 @@ src/assets/video/test.mp4
 src/assets/video/test2.mp4
 src/assets/video/test3.mp4
 src/assets/music/*
-src/assets/imgs/album_1.jpg
-src/assets/imgs/album_2.jpg
-src/assets/imgs/album_3.jpg
-src/assets/imgs/album_4.jpg
-src/assets/imgs/album_5.jpg
-src/assets/imgs/album_6.jpg
-src/assets/imgs/album_7.jpg
-src/assets/imgs/album_8.jpg
-src/assets/imgs/miku_1.png
+src/assets/imgs/*

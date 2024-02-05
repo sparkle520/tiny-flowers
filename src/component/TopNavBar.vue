@@ -541,9 +541,9 @@ $nav_item_active_color: var(--nav_item_active_color, #f67d61);
 $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 
 .nav_fixed {
-  background: #ffffff40;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: $nav_bg_color;
+  // backdrop-filter: blur(6px);
+  // -webkit-backdrop-filter: blur(6px);
   box-shadow: $nav_fixed_shadow 0px 6px 15px 0px;
   -webkit-box-shadow: $nav_fixed_shadow 0px 6px 15px 0px;
   animation: fade_out 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -559,14 +559,11 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 }
 #top_nav_main {
   position: fixed;
-  background: transparent;
   width: 100vw;
   font-family: "orbitron-black";
-  background: transparent;
   .content {
     width: 100vw;
     height: 70px;
-    background: $nav_bg_color;
     z-index: 11;
 
     .nav_box {

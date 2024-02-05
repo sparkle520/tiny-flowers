@@ -1,216 +1,67 @@
 <!-- @Author: LT -->
-<!-- @Date: 2024-01-05 16:52:38 -->
+<!-- @Date: 2024-02-01 16:03:40 -->
 <!-- @Description:  -->
 
 <script setup>
 import {
-  ref,
+  reactive,
+  toRefs,
   onBeforeMount,
-  onUnmounted,
   onMounted,
-  nextTick,
-  watch,
+  ref,
+  onUnmounted,
 } from "vue";
 import { useRouter } from "vue-router";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../store/user";
-
+import { useTopicStore } from "../store/topic";
+import HomeCarousel from "@/component/HomeCarousel.vue";
 const config_store = useConfigStore();
+const topic_store = useTopicStore();
 const { theme } = storeToRefs(config_store);
 const user_store = useUserStore();
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
-onBeforeMount(() => {});
-onMounted(() => {
-  change_theme(theme.value);
-  init_s_animation_map();
-  update_s_animation_map_style();
-  window.addEventListener("scroll", scroll_handle);
-});
 const router = useRouter();
 onBeforeMount(() => {});
-
 onUnmounted(() => {
-  window.removeEventListener("scroll", scroll_handle);
+  document.removeEventListener("scroll", scroll_handle);
+  clearInterval(notice_interval);
+});
+onMounted(() => {
+  change_theme(theme.value);
+  window.scrollTo(0, 0);
+  document.addEventListener("scroll", scroll_handle);
+  document.querySelector(".notice_text").innerText = notice[notice_index];
+  init();
 });
 const scroll_handle = () => {
-  update_s_animation_map_style();
-  update_t_future_instance();
-  update_f_animation();
-  update_fif_animation();
+  page_one_handle();
+  page_two_handle();
 };
-const go_to_unknown_world_map = () => {
-  router.push("/unknownWorldMap");
-};
-const update_fif_animation = () => {
-  const latter_list = document.querySelectorAll(".latter_box span");
-  const fifth_page = document.querySelector(".fifth_page");
-  if (window.scrollY + 250 >= fifth_page.offsetTop) {
-    for (let i = 0; i < latter_list.length; i++) {
-      latter_list[i].style.transform = `rotate(${
-        (i + 1) * 12
-      }deg) translate(${i}em,${i}em)`;
-      latter_list[i].style.opacity = `${1 - i * 0.2}`;
-    }
-  } else {
-    for (let i = 0; i < latter_list.length; i++) {
-      latter_list[i].style.transform = `rotate(0)`;
-      latter_list[i].style.opacity = `0`;
-    }
-  }
-};
-const update_f_animation = () => {
-  const fourth_page = document.querySelector(".fourth_page");
-  const f_word_inner_box = document.querySelector(".f_word_inner_box");
-  const c_1 = document.querySelector(".c_1");
-  const c_2 = document.querySelector(".c_2");
-  if (window.scrollY + 250 >= fourth_page.offsetTop) {
-    c_1.style.transform = "scale(1) rotate(3deg) translateZ(0)";
-    c_2.style.transform = "scale(1) rotate(-10deg) translateZ(0)";
-    f_word_inner_box.style.transform = "scale(1)";
-  } else {
-    c_1.style.transform = "scale(.4) rotate(-10deg) translateZ(0) ";
-    c_2.style.transform = "scale(.4) rotate(10deg) translateZ(0) ";
-    f_word_inner_box.style.transform = "scale(0)";
-  }
-};
-// const carousel_data = ref([
-//   {link:''},
-//   {link:''},
-//   {link:''},
-//   {link:'https://pic.imgdb.cn/item/65b0ff67871b83018adff204.jpg'},
-//   // { link: "https://pic.imgdb.cn/item/659c09de871b83018ad377cb.png" },
-//   // { link: "https://pic.imgdb.cn/item/65b0e41d871b83018a7822bf.webp" },
-//   // { link: "https://pic.imgdb.cn/item/659c0a3a871b83018ad5736f.png" },
-//   // { link: "https://pic.imgdb.cn/item/659bfd7e871b83018a917e4b.png" },
-// ]);
-const future_instance = [
-  "あぁ　答えがある問いばかりを　教わってきたよ　だけど明日からは<br /><span>啊 一直以来 我们掌握的都是那些有解的问题</span>",
-  "僕だけの正解をいざ　探しにゆくんだ　また逢う日まで<br><span>但从明日开始 我将追寻 属于我的答案 直至再度重逢</span>",
-  "次の空欄に当てはまる言葉を書き入れなさい<br><span>请在下方空栏 填入恰当的空白词语</span>",
-  "「君のいない　明日からの日々を僕は／私は　　きっと　□□□□□□□□□□□□□□□□□□」<br><span  >“从今往后 在没有你的日子里,我一定 □□□□□□□□□□□□□□□□□□”</span>",
-  "制限時間は　あなたのこれからの人生<br><span>答题时间：你未来的人生</span>",
-  "解答用紙は　あなたのこれからの人生<br><span>答题试纸：你未来的人生</span>",
-  "答え合わせの　時に私はもういない<br><span>批改答案的时候 我或将不再存在</span>",
-  "だから　採点基準は　あなたのこれからの人生<br><span>所以 评分标准：你未来的人生</span>",
-  "「よーい、はじめ」<br><span>“准备好了吗？那就开始吧”</span>",
-];
-const update_t_future_instance = () => {
-  const t_future_instance = document.querySelector(".t_future_instance");
-  const third_page = document.querySelector(".third_page");
-  const rect = third_page.getBoundingClientRect();
-  const start = rect.top + window.scrollY;
-  const end = rect.bottom + window.scrollY - window.innerHeight;
-  const scroll_y = window.scrollY;
-  const interval = (end - start) / future_instance.length;
-
-  if (scroll_y >= start && scroll_y <= end) {
-    const index = Math.floor((scroll_y - start) / interval);
-    t_future_instance.innerHTML = future_instance[index];
-    t_future_instance.style.transform = `scale(${create_animation(
-      start + index * interval,
-      start + (index + 1) * interval,
-      0.5,
-      1
-    )(scroll_y)}) translateY(${create_animation(
-      start + index * interval,
-      start + (index + 1) * interval,
-      3,
-      0
-    )(scroll_y)}em)`;
-    t_future_instance.style.opacity = create_animation(
-      start + index * interval,
-      start + (index + 1) * interval,
-      0.5,
-      1
-    )(scroll_y);
-  } else if (scroll_y < start) {
-    t_future_instance.innerHTML = future_instance[0];
-  } else {
-    t_future_instance.innerHTML = future_instance[future_instance.length - 1];
-  }
-};
-
-const s_animation_map = new Map();
-const init_s_animation_map = () => {
-  const animation_item = document.querySelectorAll(".animation_item");
-  const start =
-    document.querySelector(".second_page").getBoundingClientRect().top +
-    window.scrollY;
-  const end =
-    document.querySelector(".second_page").getBoundingClientRect().bottom +
-    window.scrollY -
-    window.innerHeight;
-  for (const item of animation_item) {
-    s_animation_map.set(item, get_s_dom_animation(start, end, item));
-  }
-};
-const get_s_dom_animation = (start, end, dom) => {
-  const opacity_animation = create_animation(start, end, 0, 1);
-  const ul = document.querySelector(".s_animation_box ul");
-  const { clientWidth, clientHeight, offsetTop, offsetLeft } = dom;
-  const rect = ul.getBoundingClientRect();
-  const opacity = (x) => {
-    return opacity_animation(x);
-  };
-  start += dom.dataset.order * 100;
-  const transform = (scroll_y) => {
-    return `translate(${create_animation(
-      start,
-      end,
-      rect.width / 2 - clientWidth / 2 - offsetLeft,
-      0
-    )(scroll_y)}px,${create_animation(
-      start,
-      end,
-      rect.height / 2 - clientHeight / 2 - offsetTop,
-      0
-    )(scroll_y)}PX) scale(${create_animation(start, end, 0.2, 1)(scroll_y)})`;
-  };
-  return {
-    opacity,
-    transform,
-  };
-};
-const update_s_animation_map_style = () => {
-  const scroll_y = window.scrollY;
+const page_one_handle = () => {
+  let scroll_y = window.scrollY;
   const more = document.querySelector(".more");
-  const first_page = document.querySelector(".first_page");
-  // const s_animation_box_bg_2 = document.querySelector(".s_animation_box_bg_2");
-  const start =
-    document.querySelector(".second_page").getBoundingClientRect().top +
-    window.scrollY;
-  const end =
-    document.querySelector(".second_page").getBoundingClientRect().bottom +
-    window.scrollY -
-    window.innerHeight;
-  first_page.style.opacity =
-    first_page.getBoundingClientRect().bottom / first_page.clientHeight;
-  // s_animation_box_bg_2.style.webkitMaskPosition = `${create_animation(
-  //   start,
-  //   end,
-  //   0,
-  //   100
-  // )(scroll_y)}% ${create_animation(start, end, 100, 0)(scroll_y)}%`;
-
-  if (scroll_y > 0) {
+  const page_1_title = document.querySelector(".page_1_title");
+  const page_2 = document.querySelector(".page_2");
+  const start = 0;
+  const end = window.innerHeight;
+  if (scroll_y > window.innerHeight - 70) {
     more.style.opacity = 0;
   } else {
     more.style.opacity = 1;
   }
-  for (const [dom, animations] of s_animation_map) {
-    for (const prop in animations) {
-      const v = animations[prop](scroll_y);
-      dom.style[prop] = v;
-    }
+  if (scroll_y >= start && scroll_y <= end) {
+    page_1_title.style.opacity = create_animation(start, end, 1, 0)(scroll_y);
+    page_1_title.style.filter = `blur(${create_animation(
+      start,
+      end,
+      0,
+      20
+    )(scroll_y)}px)`;
   }
-};
-
-//change scss var
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
 };
 const create_animation = (start, end, s_v, e_v) => {
   return (x) => {
@@ -222,6 +73,9 @@ const create_animation = (start, end, s_v, e_v) => {
     }
     return s_v + ((e_v - s_v) * (x - start)) / (end - start);
   };
+};
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
 };
 const change_theme = (current_theme) => {
   if (current_theme) {
@@ -240,114 +94,352 @@ const change_theme = (current_theme) => {
     c_c("--f_word_box_color", "#0a0606");
   }
 };
+const go_to_next_page = () => {
+  let t = setInterval(() => {
+    if (window.scrollY + 60 < window.innerHeight * 2 - 70) {
+      window.scrollTo(0, window.scrollY + 100);
+    } else {
+      window.scrollTo(0, window.innerHeight * 2 - 70);
+      clearInterval(t);
+    }
+  }, 10);
+};
+const page_two_handle = () => {
+  // let target = item.offsetTop + window.innerHeight - 80;
+  let scroll_y = window.scrollY;
+  const page_2 = document.querySelector(".page_2");
+  if (
+    scroll_y > window.innerHeight - 80 + nav_list.value[0].offsetTop &&
+    scroll_y < window.innerHeight - 80 + page_2.getBoundingClientRect().height
+  ) {
+    for (let i = 0; i < nav_list.value.length; i++) {
+      const element = nav_list.value[i];
+      if (element.offsetTop + window.innerHeight - 80 <= scroll_y) {
+        current_nav_index.value = i;
+      }
+    }
+  } else {
+    current_nav_index.value = -1;
+  }
+};
+const notice = [
+  "欢迎来到TinyFlowers🌷",
+  "给湿润的天空绘上乾燥的色彩🏵️",
+  "烟雾化作云朵 染上朝霞的颜色🌼",
+  "如果闭上眼睛的话 能否再回到过去呢🌻",
+];
+const carousel_data = [
+  { link: "https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" },
+  { link: "https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" },
+  { link: "https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" },
+  { link: "https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" },
+  // { link: "/src/assets/imgs/temp.jpg" },
+  // { link: "/src/assets/imgs/temp.jpg" },
+  // { link: "/src/assets/imgs/temp.jpg" },
+  // { link: "/src/assets/imgs/temp.jpg" },
+];
+let notice_index = 0;
+let notice_interval = setInterval(() => {
+  const notice_text = document.querySelector(".notice_text");
+  notice_index = (notice_index + 1) % notice.length;
+  notice_text.innerText = notice[notice_index];
+}, 8000);
+const new_topic_list = ref([]);
+const recommend_topic_list = ref([]);
+const init = () => {
+  new_topic_list.value = topic_store.get_all();
+  recommend_topic_list.value = topic_store.get_all();
+  init_nav_list();
+};
+const nav_list = ref([]);
+const init_nav_list = () => {
+  const home_nav_item = document.querySelectorAll(".home_nav_item");
+  for (const item of home_nav_item) {
+    nav_list.value.push(item);
+  }
+};
+const current_nav_index = ref(-1);
+const jump_to_nav = (item, index) => {
+  let target = item.offsetTop + window.innerHeight - 70;
+  if (target > window.scrollY) {
+    let t = setInterval(() => {
+      if (window.scrollY + 60 < target) {
+        window.scrollTo(0, window.scrollY + 60);
+      } else {
+        window.scrollTo(0, target);
+        clearInterval(t);
+      }
+    }, 10);
+  } else if (target < window.scrollY) {
+    let t = setInterval(() => {
+      if (window.scrollY + 60 > target) {
+        window.scrollTo(0, window.scrollY - 60);
+      } else {
+        window.scrollTo(0, target);
+        clearInterval(t);
+      }
+    }, 10);
+  } else {
+    return;
+  }
+  current_nav_index.value = index;
+};
+const go_to_by_path = (path) => {
+  router.push(path);
+};
+const go_to = (path) => {
+  window.open(path);
+};
 </script>
 <template>
-  <div id="home_main" class="">
-    <div class="first_page relative">
-      <div class="word_box absolute flex flex_direction_column">
-        <span class="common">TINY</span>
-        <span class="common">FLOWERS</span>
-      </div>
-      <div class="word_box_2 absolute">
-        <span class="common">PRIVATE BLOG<br /></span>
-      </div>
-      <!-- <button class="u_w_m_btn absolute" @click="go_to_unknown_world_map">
-        Unknown World Map
-      </button> -->
-
-      <!-- <img
-        class="f_bg"
-        src="https://pic.imgdb.cn/item/65b0f614871b83018ab94e81.png"
-        alt=""
-      /> -->
+  <div id="home_main">
+    <div class="page_1 bg relative">
+      <span class="page_1_title"> TinyFlowers🌷 </span>
       <svg
-        t="1706081571224"
-        class="icon absolute more"
-        viewBox="0 0 1024 1024"
+        t="1706806114679"
+        @click="go_to_next_page"
+        class="icon more absolute"
+        viewBox="0 0 1664 1024"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
-        p-id="14155"
-        width="52"
-        height="52"
+        p-id="6659"
+        width="32"
+        height="32"
       >
         <path
-          d="M500.408996 544.70045c3.684558 3.684558 8.674063 5.757121 13.893853 5.757121 5.21979 0 10.209295-2.072564 13.893853-5.757121L717.567616 355.406297c7.676162-7.676162 7.676162-20.111544 0-27.787706-7.676162-7.676162-20.111544-7.676162-27.787706 0L514.302849 503.018891 333.682759 322.398801c-7.676162-7.676162-20.111544-7.676162-27.787707 0-7.676162 7.676162-7.676162 20.111544 0 27.787706l194.513944 194.513943z m189.370914-59.874063L514.302849 660.303448 333.682759 479.606597c-7.676162-7.676162-20.111544-7.676162-27.787707 0-7.676162 7.676162-7.676162 20.111544 0 27.787706l194.513944 194.513943c3.684558 3.684558 8.674063 5.757121 13.893853 5.757121 5.21979 0 10.209295-2.072564 13.893853-5.757121l189.370914-189.370915c4.989505-4.989505 6.908546-12.205097 5.066267-18.96012-1.842279-6.755022-7.138831-12.051574-13.893853-13.893853-6.755022-1.765517-13.970615 0.153523-18.96012 5.143029z m0 0"
-          fill="#cdcdcd"
-          p-id="14156"
+          d="M1560.32 103.68c-52.48-52.48-136.96-52.48-189.44 0L832 642.56 291.84 103.68C239.36 51.2 154.88 51.2 102.4 103.68c-52.48 52.48-52.48 136.96 0 189.44L730.88 921.6c26.88 26.88 64 39.68 99.84 38.4 35.84 1.28 72.96-10.24 101.12-38.4l628.48-628.48c52.48-52.48 52.48-138.24 0-189.44z"
+          fill=""
+          p-id="6660"
         ></path>
       </svg>
-      <div class="first_page_cover absolute"></div>
     </div>
-    <div class="second_page relative">
-      <div class="s_animation_box">
-        <!-- <div class="s_animation_box_bg_box absolute">
-          <img
-            src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
-            class="s_animation_box_bg_1 absolute"
-            alt=""
-          />
-          <div class="s_animation_box_bg_2 absolute"></div>
-        </div> -->
-        <span class="absolute">喜欢的作品</span>
-        <ul class="flex flex_direction_row absolute">
-          <li data-order="0" class="animation_item relative">
-            <img
-              src="https://pic.imgdb.cn/item/65b15382871b83018a4d9b0b.webp"
-              alt=""
-            />
-          </li>
-          <li data-order="1" class="animation_item relative">
-            <img
-              src="https://pic.imgdb.cn/item/65b152e5871b83018a4c46be.webp"
-              alt=""
-            />
-          </li>
-          <li data-order="3" class="animation_item relative">
-            <img
-              src="https://pic.imgdb.cn/item/65b96999871b83018aad93e5.webp"
-              alt=""
-            />
-          </li>
-        </ul>
+    <div class="page_2 bg relative">
+      <!-- src="https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg" -->
+
+      <div class="page_2_bg">
+        <img
+          src="https://pic.imgdb.cn/item/65c113f79f345e8d039e2124.png"
+          alt=""
+        />
       </div>
-    </div>
-    <div class="third_page relative">
-      <div
-        class="t_animation_box relative flex justify_content_center align_items_center"
-      >
-        <span class="t_future_instance absolute"></span>
-        <div class="t_circle_1 absolute"></div>
-        <div class="t_circle_2 absolute"></div>
-      </div>
-    </div>
-    <div class="fourth_page relative">
-      <div
-        class="f_animation_box relative flex justify_content_center align_items_center"
-      >
-        <div class="f_circle absolute"></div>
-        <div class="f_word_box absolute">
-          <div class="f_word_inner_box absolute flex flex_direction_column">
-            <span class="w_1">Searching</span>
-            <span class="w_2"> all the world </span>
-            <span class="w_3">For one thing</span>
+      <div class="page_container flex flex_direction_column">
+        <div class="page_2_header">
+          <div class="notice flex flex_direction_row align_items_center">
+            <svg
+              t="1706870364802"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="5227"
+              width="28"
+              height="28"
+            >
+              <path
+                d="M319.905185 355.934815v304.355555H145.066667a7.585185 7.585185 0 0 1-7.585186-7.585185V363.52a7.585185 7.585185 0 0 1 7.585186-7.585185h174.838518m68.266667-68.266667H145.066667a75.851852 75.851852 0 0 0-75.851852 75.851852v289.185185a75.851852 75.851852 0 0 0 75.851852 75.851852h243.105185V287.668148z"
+                fill="#000"
+                p-id="5228"
+              ></path>
+              <path
+                d="M632.414815 183.751111v638.482963l132.740741 60.112593V140.136296l-132.740741 43.614815z"
+                fill="#FFB695"
+                p-id="5229"
+              ></path>
+              <path
+                d="M735.573333 157.582222v707.887408l-347.401481-178.631111V329.955556l347.401481-172.373334m30.340741-86.85037a37.925926 37.925926 0 0 0-15.54963 3.413333l-430.459259 213.522963v440.888889l430.459259 221.297778a37.925926 37.925926 0 0 0 53.665186-34.512593V108.657778a37.925926 37.925926 0 0 0-37.925926-37.925926z"
+                fill="#000"
+                p-id="5230"
+              ></path>
+              <path
+                d="M878.933333 403.531852a7.585185 7.585185 0 0 1 7.585186 7.585185v204.8a7.585185 7.585185 0 0 1-7.585186 7.585185h-73.955555v-219.97037h73.955555m0-68.266667h-142.222222v356.503704h142.222222a75.851852 75.851852 0 0 0 75.851852-75.851852v-204.8a75.851852 75.851852 0 0 0-75.851852-75.851852zM251.638519 728.557037v135.395556a21.048889 21.048889 0 0 1-21.048889 21.048888h-14.411852a21.048889 21.048889 0 0 1-21.048889-21.048888v-135.395556h56.888889m68.266666-68.266667H126.672593v203.662223a89.315556 89.315556 0 0 0 89.315555 89.315555h14.411852a89.315556 89.315556 0 0 0 89.315556-89.315555V660.29037z"
+                fill="#000"
+                p-id="5231"
+              ></path>
+            </svg>
+            <span class="notice_text"></span>
           </div>
         </div>
-        <div class="card c_1 absolute">
-          <img
-            src="https://pic.imgdb.cn/item/65b3c514871b83018a87b510.png"
-            alt=""
-          />
+        <div
+          class="page_content flex flex_direction_row justify_content_center"
+        >
+          <div class="page_left flex flex_direction_column">
+            <div class="nav_box">
+              <ul class="flex flex_direction_column">
+                <li
+                  v-for="(item, index) in nav_list"
+                  @click="jump_to_nav(item, index)"
+                >
+                  <span v-if="index === current_nav_index" class="active_item">
+                    {{ item.innerText }}
+                  </span>
+                  <span v-else class="normal_item"> {{ item.innerText }} </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="page_mid flex flex_direction_column">
+            <div class="page_top_box flex flex_direction_row">
+              <HomeCarousel
+                class="home_carousel"
+                :data="carousel_data"
+              ></HomeCarousel>
+              <div class="flex flex_direction_column rect_box">
+                <div
+                  @click="go_to('https://leetcode.cn/problemset/')"
+                  class="rect flex align_items_center justify_content_center relative"
+                >
+                  <svg
+                    t="1707152629827"
+                    class="icon leet_code"
+                    viewBox="0 0 2491 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="5116"
+                    width="100"
+                    height="100"
+                  >
+                    <path
+                      d="M2032.708267 372.292267v388.027733c0 81.1008-68.676267 146.432-152.951467 146.432a33.621333 33.621333 0 0 1-33.9968-33.245867c0-18.363733 15.223467-33.245867 33.9968-33.245866 47.138133 0 84.992-35.976533 84.992-79.940267v-131.8912l-89.361067 34.952533c-17.408 6.826667-37.205333-1.467733-44.202666-18.5344a33.006933 33.006933 0 0 1 18.944-43.2128l114.5856-44.817066v-184.5248h-118.954667a33.621333 33.621333 0 0 1-33.9968-33.245867c0-18.363733 15.223467-33.245867 33.9968-33.245867h118.954667V206.062933c0-18.363733 15.223467-33.245867 33.9968-33.245866s33.9968 14.882133 33.9968 33.245866v99.7376h305.493333c65.877333 0 119.3984 51.882667 119.3984 116.053334v252.5184c0 64.170667-53.521067 116.053333-119.432533 116.053333h-98.235734c-65.877333 0-119.432533-51.882667-119.432533-116.053333v-215.995734a33.792 33.792 0 0 1 33.9968-33.655466 33.792 33.792 0 0 1 33.9968 33.655466v215.995734c0 27.306667 22.9376 49.5616 51.438933 49.5616H2338.133333c28.501333 0 51.438933-22.254933 51.438934-49.5616v-252.5184c0-27.306667-22.9376-49.5616-51.438934-49.5616h-305.4592z m-767.146667 195.584c-10.6496 76.4928-26.862933 141.346133-46.933333 195.345066-10.8544 29.252267-22.254933 53.589333-33.518934 73.352534-7.0656 12.424533-12.834133 20.821333-16.5888 25.531733a31.8464 31.8464 0 0 1-44.9536 4.778667 32.290133 32.290133 0 0 1-4.778666-45.226667 206.916267 206.916267 0 0 0 10.8544-17.066667c9.557333-16.725333 19.456-37.922133 29.0816-63.8976 18.432-49.5616 33.450667-109.841067 43.485866-181.725866 5.4272-38.912 11.4688-96.1536 18.1248-171.690667h-100.6592a32.085333 32.085333 0 0 1-31.9488-32.187733c0-17.749333 14.301867-32.1536 31.9488-32.1536h106.154667c3.310933-40.618667 6.7584-85.435733 10.376533-134.3488a32.0512 32.0512 0 0 1 34.235734-29.696 32.085333 32.085333 0 0 1 29.525333 34.474666c-3.447467 46.933333-6.792533 90.112-10.001067 129.570134h253.405867a64.170667 64.170667 0 0 1 63.965867 64.341333l-16.008534 418.133333a64.170667 64.170667 0 0 1-63.931733 64.3072H1439.402667a32.085333 32.085333 0 0 1-31.9488-32.187733c0-17.749333 14.301867-32.1536 31.9488-32.1536h64.853333c12.9024 0 23.483733-10.24 23.995733-23.210667l14.1312-369.8688a24.064 24.064 0 0 0-23.9616-25.019733h-233.915733c-6.929067 79.394133-13.277867 139.605333-18.978133 180.6336z"
+                      fill="#000000"
+                      p-id="5117"
+                    ></path>
+                    <path
+                      d="M610.679467 749.3632a54.0672 54.0672 0 0 1 77.0048 0.1024c21.230933 21.504 21.162667 56.32-0.1024 77.789867l-94.583467 95.197866c-87.2448 87.825067-229.546667 89.088-318.2592 2.935467l-170.325333-168.379733c-86.698667-85.674667-95.368533-222.8224-13.755734-310.920534l152.098134-164.181333c80.9984-87.4496 230.263467-97.006933 322.833066-21.504l138.171734 112.64c23.415467 19.114667 27.067733 53.691733 8.192 77.346133-18.909867 23.620267-53.179733 27.306667-76.5952 8.226134l-138.171734-112.64c-48.401067-39.492267-133.12-34.065067-174.8992 11.0592l-152.132266 164.181333c-39.697067 42.9056-35.362133 111.957333 10.410666 157.218133l169.540267 167.594667a118.5792 118.5792 0 0 0 166.024533-1.467733l94.549334-95.232z"
+                      fill="#FFA116"
+                      p-id="5118"
+                    ></path>
+                    <path
+                      d="M380.928 654.097067a54.715733 54.715733 0 0 1-54.442667-54.9888c0-30.378667 24.405333-54.9888 54.4768-54.9888h401.544534c30.071467 0 54.442667 24.576 54.442666 54.954666 0 30.378667-24.3712 55.022933-54.442666 55.022934H380.962133z"
+                      fill="#B3B3B3"
+                      p-id="5119"
+                    ></path>
+                    <path
+                      d="M456.157867 51.541333a54.0672 54.0672 0 0 1 76.970666-2.56c21.947733 20.718933 23.074133 55.534933 2.56 77.7216L170.1888 521.216c-39.7312 42.871467-35.396267 111.957333 10.376533 157.184l168.789334 166.843733c21.504 21.265067 21.845333 56.081067 0.8192 77.789867a54.0672 54.0672 0 0 1-76.970667 0.8192l-168.823467-166.877867c-86.698667-85.674667-95.3344-222.856533-13.7216-310.920533L456.157867 51.541333z"
+                      fill="#000000"
+                      p-id="5120"
+                    ></path>
+                  </svg>
+                </div>
+                <div
+                  class="rect flex align_items_center justify_content_center relative"
+                ></div>
+                <div
+                  class="rect flex align_items_center justify_content_center relative"
+                ></div>
+              </div>
+            </div>
+            <div class="new_topic_box flex flex_direction_column">
+              <h2 class="home_nav_item">最新文章</h2>
+              <ul class="flex flex_direction_row gap_1_vw topic_item_box">
+                <li
+                  v-for="(item, index) in new_topic_list"
+                  @click="go_to_by_path(item.link)"
+                  class="topic_item flex flex_direction_column relative"
+                >
+                  <div class="img_box relative">
+                    <img
+                      v-if="item.img != ''"
+                      :src="item.img"
+                      class="img relative"
+                      alt=""
+                    />
+                    <img
+                      v-else
+                      src="https://pic.imgdb.cn/item/65bb8e68871b83018ae48807.png"
+                      class="img relative"
+                      alt=""
+                    />
+                  </div>
+                  <div class="flex flex_direction_column topic_item_content">
+                    <div class="flex flex_direction_row align_items_center">
+                      <span class="classification">{{
+                        item.classification
+                      }}</span>
+                      <span class="title">{{ item.title }}</span>
+                    </div>
+                    <span class="short_meg" v-html="item.short_message"></span>
+                    <span class="date"
+                      >{{ item.create_date.split("?")[0] }}/{{
+                        item.create_date.split("?")[1]
+                      }}/{{ item.create_date.split("?")[2] }}
+                      {{ item.create_date.split("?")[3] }}
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="recommend_topic_box flex flex_direction_column">
+              <h2 class="home_nav_item">推荐文章</h2>
+              <ul class="flex flex_direction_row recommend_item_box">
+                <li
+                  @click="go_to_by_path(item.link)"
+                  v-for="(item, index) in recommend_topic_list"
+                  class="recommend_item flex flex_direction_row"
+                >
+                  <div class="img_box relative">
+                    <img v-if="item.img != ''" :src="item.img" alt="" />
+                    <img
+                      v-else
+                      src="https://pic.imgdb.cn/item/65bb8f6d871b83018ae8bcac.png"
+                      alt=""
+                    />
+                  </div>
+                  <div class="content_box flex flex_direction_column">
+                    <div class="flex flex_direction_row align_items_center">
+                      <span class="classification">{{
+                        item.classification
+                      }}</span>
+                      <span class="title">{{ item.title }}</span>
+                    </div>
+                    <span class="short_meg" v-html="item.short_message"></span>
+                    <div
+                      class="flex flex_direction_row align_items_center justify_content_space_between"
+                    >
+                      <div
+                        class="user_item flex flex_direction_row align_items_center"
+                      >
+                        <img
+                          class="user_avatar"
+                          :src="user_store.avatar"
+                          alt=""
+                        />
+                        <span class="font_07_em"> {{ user_store.name }} </span>
+                      </div>
+                      <span class="date"
+                        >{{ item.create_date.split("?")[0] }}/{{
+                          item.create_date.split("?")[1]
+                        }}/{{ item.create_date.split("?")[2] }}
+                        {{ item.create_date.split("?")[3] }}
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="page_right flex flex_direction_column">
+            <img
+              src="https://pic.imgdb.cn/item/65c06fca9f345e8d034caede.jpg"
+              alt=""
+            />
+          </div>
         </div>
-        <div class="card c_2 absolute"></div>
       </div>
     </div>
-    <div class="fifth_page relative">
-      <div class="latter_box absolute">
-        <span class="absolute" v-for="item in user_store.name.split('')">{{
-          item
-        }}</span>
+    <!-- <div class="page_3 bg relative"></div> -->
+    <!-- <div class="page_4 bg relative"></div> -->
+    <div
+      class="home_foot relative flex flex_direction_row align_items_center justify_content_center"
+    >
+      <div class="left_foot flex flex_direction_column">
+        <span class="title_foot"></span>
       </div>
-      <div></div>
+      <div class="mid_foot flex flex_direction_column">
+        <span class="title_foot"></span>
+      </div>
+      <div class="right_foot flex flex_direction_column">
+        <span class="title_foot">联系我</span>
+      </div>
     </div>
   </div>
 </template>
@@ -358,659 +450,464 @@ $first_page_cover_bg: var(--first_page_cover_bg, #1e243398);
 $u_w_m_btn_color: var(--u_w_m_btn_color, #ff80bf);
 $word_box_color: var(--word_box_color, #003153);
 $f_word_box_color: var(--f_word_box_color, #0a0606);
+$index_title_color: var(--index_title_color, #00cbff);
+@font-face {
+  font-family: "orbitron-black";
+  src: url("/src/assets/font/orbitron-black.ttf");
+}
 #home_main {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   // scroll-snap-type: y mandatory;
   background: $home_bg_color;
-  .first_page {
-    width: 100vw;
-    height: 100vh;
-    background: $home_bg_color;
-    z-index: 100;
+  .home_nav_item {
+    font-size: 1.4em;
+    position: relative;
+    margin: 0;
+    padding-left: 1vw;
+    color: $index_title_color;
+    text-shadow: #3c3e41 2px 3px 2px;
     &::after {
-      width: 40vw;
-      height: 30vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 70%;
-      content: "";
-      left: 5vw;
-      position: absolute;
-      transform: translateY(-50%);
-
-      background: #a900ff;
-    }
-    &::before {
-      right: 10vw;
       content: "";
       position: absolute;
-      z-index: 1;
-      background: #ffac86;
-      width: 20vw;
-      height: 20vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 20%;
-
-      transform: translateY(-50%);
-    }
-    // scroll-snap-align: start;
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    // animation: first_page 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-    // &::after{
-    //   width: 100vw;
-    //   height: 30vh;
-    //   background: linear-gradient(to top,rgb(182, 183, 183),transparent);
-    //   content: '';
-    //   position: absolute;
-    //   bottom: 0;
-    // }
-    .u_w_m_btn {
-      font-family: inherit;
-      width: 8em;
-      height: 2.6em;
-      z-index: 1000;
-      line-height: 2.5em;
-      background: transparent;
-      margin: 20px;
-      transform: translateY(65vh) translateX(2em);
-      position: relative;
-      border: 2px solid $u_w_m_btn_color;
-      transition: color 0.5s;
-      font-size: 17px;
-      border-radius: 6px;
-      font-weight: 500;
-      color: $u_w_m_btn_color;
-      &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        background: $u_w_m_btn_color;
-        height: 150px;
-        width: 200px;
-        border-radius: 50%;
-        top: 100%;
-        left: 100%;
-        transition: all 0.7s;
-      }
-      &:hover {
-        color: #ffff;
-        &::before {
-          top: -30px;
-          left: -30px;
-        }
-      }
-      &:active {
-        &::before {
-          background: $u_w_m_btn_color;
-          transition: background 0s;
-        }
-      }
-    }
-    // .f_bg {
-    //   position: absolute;
-    //   right: 3em;
-    //   width: 50vw;
-    //   height: 50vh;
-    //   top: 50%;
-    //   border-radius: 0.3em;
-    //   z-index: 100;
-    //   transform: translateY(-50%);
-    // }
-
-    .word_box {
-      left: 3em;
-      top: 40%;
-      z-index: 1000;
-      transform: translateY(-50%);
-
-      // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   width: 900px;
-      //   height: 300px;
-      //   background: #7bc5e33c;
-      //   left: -100px;
-      //   top: 50%;
-      //   transform: translateY(-50%);
-      // }
-      .common {
-        font-size: 7em;
-        font-weight: 900;
-        line-height: 1em;
-        color: $word_box_color;
-        z-index: 100;
-        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        // animation: word_1 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-        // background: url(https://pic.imgdb.cn/item/65aae8fe871b83018ac8d369.png)
-        // // background: url(https://pic.imgdb.cn/item/65b0d75c871b83018a4c3d9e.png)
-        //   repeat #011f42;
-        // background-size: 300px auto;
-        // -webkit-text-fill-color: transparent;
-        // text-fill-color: transparent;
-        // -webkit-background-clip: text;
-        // background-clip: text;
-        // -webkit-animation: background 12s infinite linear;
-        // animation: background 12s infinite linear;
-      }
-      // @keyframes word_1 {
-      //   0% {
-      //     line-height: 2em;
-      //   }
-      //   100% {
-      //     line-height: 1em;
-      //   }
-      // }
-    }
-    .word_box_2 {
-      left: 4em;
-      top: 54%;
-      color: $word_box_color;
-      z-index: 1;
-
-      animation: to_left 5s cubic-bezier(0.075, 0.82, 0.165, 1);
-      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-      // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   width: 420px;
-      //   height: 60px;
-      //   background: #7bc5e33c;
-      //   left: -5%;
-      //   top: 50%;
-      //   transform: translateY(-50%);
-      // }
-      .common {
-        font-size: 2em;
-        font-weight: 900;
-        z-index: 100;
-        // text-shadow: #e60000 -.1em .0em 2px;
-        // filter: drop-shadow(0 0 10px #efb0b0);
-        // text-shadow: $home_color 2px 2px 1px;
-        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-        // background: url(http://html5book.ru/wp-content/uploads/2016/08/bubbles.png)
-        //   repeat #011f42;
-        // background-size: 300px auto;
-        // -webkit-text-fill-color: transparent;
-        // text-fill-color: transparent;
-        // -webkit-background-clip: text;
-        // background-clip: text;
-        // -webkit-animation: background 12s infinite linear;
-        // animation: background 12s infinite linear;
-      }
-    }
-    .first_page_cover {
-      width: 100vw;
-      height: 100vh;
+      width: 0.5vw;
+      height: 100%;
+      background: $index_title_color;
       left: 0;
-      top: 0;
-      z-index: 19;
-      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-      background: linear-gradient(
-        to right,
-        $first_page_cover_bg 1%,
-        transparent 50%,
-        $first_page_cover_bg 100%
-      );
     }
   }
+  .bg {
+    // background-attachment: fixed;
 
-  .more {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: more 2s infinite linear both;
-    z-index: 20;
-    path {
-      fill: #a7a7eb;
-    }
+    // background-position: center center;
+    // width: 100vw;
+
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // min-height: 100vh;
   }
-  @keyframes more {
-    0% {
-      transform: translateY(0);
-    }
-    90% {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  .second_page {
-    width: 100vw;
-    height: 400vh;
-    z-index: 21;
-    background: $home_bg_color;
-
-    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-    .s_animation_box {
-      position: sticky;
-      width: 100vw;
-      height: 100vh;
-      top: 0;
-      color: $word_box_color;
-      background: transparent;
-      &::after {
-        width: 40vw;
-        height: 30vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 70%;
-        content: "";
-        left: 5vw;
-        position: absolute;
-        transform: translateY(-50%);
-
-        background: #00aaff;
-      }
-      &::before {
-        right: 10vw;
-        content: "";
-        position: absolute;
-        z-index: 1;
-        background: #22c32e;
-        width: 20vw;
-        height: 10vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 40%;
-
-        transform: translateY(-50%);
-      }
-      // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   width: 100vw;
-      //   height: 40vh;
-      //   background: linear-gradient(to top, rgb(38, 41, 44), transparent);
-      //   bottom: 0;
-      // }
-      .s_animation_box_bg_box {
-        width: 100vw;
-        height: 68vh;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -40%);
-        background: $home_bg_color;
-
-        // &::after {
-        //   content: "";
-        //   position: absolute;
-        //   background: none;
-        //   width: 130%;
-        //   background: $home_bg_color;
-        //   height: 26vh;
-        //   left: 50%;
-        //   transform: translateX(-50%);
-        //   border-radius: 50%;
-        //   bottom: -28%;
-        //   box-shadow: inset 2px 3px 20px #123;
-        // }
-        // &::before {
-        //   content: "";
-        //   position: absolute;
-        //   background: none;
-        //   width: 130%;
-        //   background: $home_bg_color;
-        //   height: 26vh;
-        //   left: 50%;
-        //   transform: translateX(-50%);
-        //   border-bottom-left-radius: 50%;
-        //   border-bottom-right-radius: 50%;
-        //   top: -30%;
-        //   z-index: 1;
-
-        // }
-      }
-
-      // .s_animation_box_bg_1 {
-      //   width: 100vw;
-      //   border-radius: 5px;
-      //   height: 10vh;
-      //   opacity: 1;
-      // }
-      // .s_animation_box_bg_2 {
-      //   width: 100vw;
-      //   height: 20vh;
-      //   opacity: 1;
-      //   border-radius: 5px;
-
-      //   background-size: cover;
-      //   background-image: url(https://pic.imgdb.cn/item/65b21d96871b83018a08d73b.png);
-      //   -webkit-mask-image: linear-gradient(
-      //     to right,
-      //     transparent 47.5%,
-      //     #fff 52.5%
-      //   );
-      //   background-repeat: no-repeat;
-      //   -webkit-mask-size: 210%;
-      //   -webkit-mask-position: left;
-      // }
-      ul {
-        margin: 0;
-        padding: 0;
-        width: calc(75vw + 40px);
-        height: 64vh;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -40%);
-        gap: 20px;
-        z-index: 11;
-        .animation_item {
-          width: 25vw;
-          height: 64vh;
-          border-radius: 5px;
-          overflow: hidden;
-          &::after {
-            position: absolute;
-            left: -140%;
-            content: "";
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0),
-              rgba(255, 255, 255, 0.5),
-              rgba(255, 255, 255, 0)
-            );
-            transform: skew(-30deg);
-          }
-          &:hover {
-            &::after {
-              left: 140%;
-              transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-          }
-          img {
-            width: inherit;
-            object-fit: cover;
-            height: inherit;
-            border-radius: inherit;
-            box-shadow: #003153 4px 5px 10px;
-          }
-        }
-      }
-      .show_text {
-        font-size: 4em;
-      }
-      span {
-        top: 4.5em;
-        font-weight: 900;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 2em;
-        color: $word_box_color;
-      }
-    }
-  }
-  .third_page {
-    width: 100vw;
-    height: 300vh;
-    background: $home_bg_color;
-    // scroll-snap-align: start;
-
-    .t_animation_box {
-      width: 100vw;
-      height: 100vh;
-      top: 0;
-      position: sticky;
-      background: $home_bg_color;
-      .t_future_instance {
-        font-size: 2em;
-        font-weight: 900;
-        text-align: center;
-        line-height: 2em;
-        color: $f_word_box_color;
-        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-      }
-      .t_circle_1 {
-        width: 20vw;
-        height: 20vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 50%;
-
-        transform: translateY(-50%);
-
-        left: 5em;
-        background: #ff5232;
-      }
-      .t_circle_2 {
-        right: 5em;
-        background: #f7ff00;
-        width: 20vw;
-        height: 20vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 50%;
-
-        transform: translateY(-50%);
-      }
-    }
-    // scroll-snap-align: start;
-  }
-  .fourth_page {
-    width: 100vw;
+  .page_1 {
+    background-image: url("https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg");
+    // background-image: url("https://pic.imgdb.cn/item/65c06fca9f345e8d034cae1c.png");
+    background-size: cover;
+    z-index: 0;
+    width: inherit;
     height: 100vh;
-    background: $home_bg_color;
-    // border-bottom:3px #11223318 solid ;
-    // border-top:3px #11223318 solid ;
-    // scroll-snap-align: start;
-    &::after {
-      width: 50vw;
-      height: 30vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 50%;
-      content: "";
-      left: 5vw;
-      position: absolute;
-      transform: translateY(-50%);
-
-      z-index: 10;
-      background: #ffd9e6;
-    }
-    &::before {
-      right: 5em;
-      content: "";
-      position: absolute;
-      z-index: 1;
-      background: #ff80bf;
-      width: 20vw;
-      height: 20vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 70%;
-
-      transform: translateY(-50%);
-    }
-    .f_animation_box {
-      background: $home_bg_color;
-      width: inherit;
-      height: inherit;
-
-      // .f_circle {
-      //   width: 30vw;
-      //   height: 30vw;
-      //   right: -15vw;
-      //   bottom: -15vw;
-      //   border-radius: 50%;
-      //   background: #f4bbbb7b;
-      //   &::after {
-      //     content: "";
-      //     position: absolute;
-      //     width: 70%;
-      //     height: 70%;
-      //     right: 40vw;
-      //     border-radius: 50%;
-      //     background: #f4bbbb7b;
-      //     top: -10vw;
-      //   }
-      // }
-      .f_word_box {
-        left: 0vw;
-        top: 0%;
-        color: $f_word_box_color;
-        font-size: 1.5em;
-
-        font-weight: 900;
-        z-index: 11;
-        height: 70vh;
-        width: 50vw;
-        span {
-        }
-        .f_word_inner_box {
-          transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-          top: 30vh;
-          left: 10vw;
-          .w_1 {
-            font-size: 4em;
-            color: transparent;
-            -webkit-text-stroke: #6640ff 2px;
-            text-shadow: #6640ff 0px 13px 10px;
-          }
-          .w_2 {
-            font-size: 3em;
-            font-weight: 600;
-            color: #ff6666;
-            margin: 1vh 0;
-            text-shadow: #ff6666 0px 13px 10px;
-          }
-          .w_3 {
-            font-size: 3.5em;
-            font-family: 900;
-            color: #ff9d00;
-            text-shadow: #ff4d00 0px 13px 10px;
-          }
-        }
-      }
-
-      .card {
-        width: 23vw;
-        height: 53vh;
-      }
-      .c_1 {
-        background: rgb(19, 20, 21);
-        box-shadow: #62676b54 0px 13px 10px;
-
-        z-index: 1;
-        right: 14vw;
-        top: 27vh;
-        transform: rotate(3deg);
-        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-
-      .c_2 {
-        background: #e72626;
-        z-index: 0;
-        right: 17vw;
-        box-shadow: #62676be8 0px 13px 10px;
-
-        top: 29vh;
-        transform: rotate(-10deg);
-        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-      }
-    }
-  }
-  .fifth_page {
-    width: 100vw;
-    height: 100vh;
-    //  scroll-snap-align: start;
-
-    background: $home_bg_color;
-    &::after {
-      width: 40vw;
-      height: 30vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 70%;
-      content: "";
-      left: 5vw;
-      position: absolute;
-      transform: translateY(-50%);
-
-      background: #ff9d00;
-    }
-    &::before {
-      right: 10vw;
-      content: "";
-      position: absolute;
-      z-index: 1;
-      background: #00ff93;
-      width: 20vw;
-      height: 20vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 20%;
-
-      transform: translateY(-50%);
-    }
-    .latter_box {
-      left: 10vw;
-      z-index: 100;
-      top: 38vh;
-      color: #ff9028;
+    .page_1_title {
       font-size: 3em;
-      font-weight: 900;
-      span {
-        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      top: 50%;
+      left: 50%;
+      color: #ff00ca;
+      transform: translate(-50%, -50%);
+      position: fixed;
+      font-family: "orbitron-black";
+    }
+    .more {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: more 2s infinite linear both;
+      z-index: 100;
+      path {
+        fill: #ffff;
+      }
+    }
+    @keyframes more {
+      0% {
+        transform: translateY(0);
+      }
+      90% {
+        transform: translateY(-20px);
         opacity: 0;
       }
+      100% {
+        transform: translateY(0);
+      }
+    }
+  }
+  .page_2 {
+    // background-image: url("https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg");
+    // background-image: url("/src/assets/imgs/114356114_p0.jpg");
+    // background-size: cover;
+    .page_2_bg {
+      width: 100vw;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      z-index: 0;
+      img {
+        height: calc(100vh - 100px);
+        transform: translateY(100px);
+      }
+    }
+
+    min-height: 200vh;
+    width: inherit;
+    .page_container {
+      .page_2_header {
+        z-index: 2;
+        .notice {
+          width: calc(90% - 2vh);
+          margin: 1vh auto;
+          background: #f8f8ff;
+          padding: 1vh;
+          border-radius: 5px;
+          box-shadow: 0 4px 10px rgba(61, 73, 87, 0.112);
+
+          .notice_text {
+            margin-left: 1vw;
+            color: #ff9900;
+          }
+        }
+      }
+      .page_content {
+        gap: 1vw;
+        z-index: 1;
+        .page_left {
+          width: 20vh;
+          .nav_box {
+            position: sticky;
+            top: 80px;
+            width: inherit;
+            min-height: 10vh;
+            background: #ffffff;
+            border-radius: 5px;
+            margin-bottom: 2vh;
+            box-shadow: 0 4px 10px rgba(61, 73, 87, 0.112);
+
+            ul {
+              padding: 0;
+              gap: 1vh;
+              margin: 1vw;
+              li {
+                font-size: 1em;
+                font-weight: 100;
+                color: #123;
+                .active_item {
+                  color: #00cbff;
+                  font-weight: bold;
+                }
+                .normal_item {
+                }
+              }
+            }
+          }
+        }
+        .page_mid {
+          width: 60vw;
+          .page_top_box {
+            gap: 1vw;
+            margin-bottom: 1vh;
+            .home_carousel {
+              box-shadow: 0 3px 6px rgba(31, 45, 61, 0.557);
+            }
+            .rect_box {
+              width: 19vw;
+              height: 30vh;
+              gap: 1vh;
+              .rect {
+                width: inherit;
+                height: 9.333vh;
+                border-radius: 5px;
+                background: #ffffff;
+                overflow: hidden;
+                box-shadow: 0 2px 5px rgba(31, 45, 61, 0.15);
+
+                // span {
+                //   z-index: 2;
+                //   font-size: 1.5em;
+                //   font-weight: bold;
+                //   font-family: "orbitron-black";
+
+                //   color: #ff6600;
+                // }
+
+                &:hover {
+                  box-shadow: 0 1px 2px rgba(31, 45, 61, 0.15);
+                  transform: translateY(-.2vh);
+                  transition: box-shadow 1s cubic-bezier(0.075, 0.82, 0.165, 1),transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+                  .leet_code {
+                  }
+                }
+                .leet_code {
+                }
+              }
+            }
+          }
+          .new_topic_box {
+            width: inherit;
+            .topic_item_box {
+              padding: 0;
+              width: inherit;
+              flex-wrap: wrap;
+              .topic_item {
+                border-radius: 5px;
+                width: 29.5vw;
+                height: 40vh;
+                background: #fff;
+                transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+                box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
+
+                &:hover {
+                  transform: translateY(-0.6vh);
+                  box-shadow: 0 3px 5px rgba(31, 45, 61, 0.2);
+                }
+                &:active {
+                  animation: jump 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                }
+                &:nth-child(even) {
+                  .img_box {
+                    clip-path: polygon(100% 0, 0% 0, 0% 100%, 88% 100%);
+                  }
+                }
+                .img_box {
+                  width: inherit;
+                  height: 25vh;
+                  overflow: hidden;
+                  border-top-left-radius: 5px;
+                  border-top-right-radius: 5px;
+                  position: relative;
+                  clip-path: polygon(0% 0, 100% 0, 100% 100%, 12% 100%);
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0px;
+                    left: 0;
+                    width: inherit;
+                    height: 10vh;
+                    pointer-events: none;
+                    background: linear-gradient(to top, #fff, transparent);
+                  }
+
+                  .img {
+                    width: inherit;
+                    height: 25vh;
+                    border-radius: inherit;
+                    object-fit: cover;
+                    border-top-right-radius: 5px;
+                    border-top-left-radius: 5px;
+                    transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+                    &:hover {
+                      transform: scale(1.1);
+                    }
+                  }
+                }
+
+                .date {
+                  align-self: flex-start;
+                  margin-top: auto;
+                  font-size: 0.7em;
+                }
+                .topic_item_content {
+                  margin: 2vw;
+                  height: 13vh;
+                  .classification {
+                    font-size: 0.6em;
+                    padding: 0.4em;
+                    background: #00cbff;
+                    border-radius: 0.4em;
+                    margin-right: 0.3em;
+                    color: #fff;
+                  }
+                  .title {
+                    font-size: 1em;
+                    font-weight: 700;
+                    color: #0a0606;
+
+                    &:hover {
+                      color: #384f89;
+                    }
+                  }
+                  .short_meg {
+                    margin: 1vh 0;
+                    height: 7vh;
+                    overflow: scroll;
+                    font-size: 0.9em;
+                  }
+                }
+              }
+            }
+          }
+          .recommend_topic_box {
+            width: inherit;
+
+            .recommend_item_box {
+              width: inherit;
+              flex-wrap: wrap;
+              gap: 2vh;
+              padding: 0;
+
+              .recommend_item {
+                width: inherit;
+                height: 20vh;
+                border-radius: 5px;
+                background: #fff;
+                transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+                  box-shadow cubic-bezier(0.075, 0.82, 0.165, 1);
+                box-shadow: 0 8px 5px #1f2d3d26;
+
+                &:hover {
+                  transform: translateY(-0.6vh);
+                  box-shadow: 0 3px 5px #1f2d3d33;
+                }
+                &:active {
+                  animation: jump 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                }
+
+                &:nth-child(even) {
+                  .content_box {
+                    order: 0;
+                  }
+
+                  .img_box {
+                    border-bottom-right-radius: 5px;
+                    border-top-right-radius: 5px;
+                    border-bottom-left-radius: 0;
+                    border-top-left-radius: 0;
+                    &::after {
+                      content: "";
+                      position: absolute;
+                      width: 10vw;
+                      left: -1vw;
+                      height: inherit;
+                      background: linear-gradient(
+                        to right,
+                        #ffff 10%,
+                        transparent
+                      );
+                    }
+                  }
+                }
+                .img_box {
+                  width: 30vw;
+                  height: inherit;
+                  order: 1;
+                  border-bottom-left-radius: 5px;
+                  border-top-left-radius: 5px;
+                  overflow: hidden;
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    width: 20vw;
+                    right: -1vw;
+                    height: inherit;
+                    z-index: 10;
+                    pointer-events: none;
+                    background: linear-gradient(
+                      to left,
+                      #ffff 10%,
+                      transparent
+                    );
+                  }
+                  img {
+                    width: inherit;
+                    height: calc(100% + 1vh);
+                    border-radius: inherit;
+                    object-fit: cover;
+                    transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+                    &:hover {
+                      transform: scale(1.07);
+                    }
+                  }
+                }
+                .content_box {
+                  width: 26vw;
+                  height: calc(20vh - 2vw);
+                  order: 2;
+                  margin: 2vw;
+
+                  .classification {
+                    font-size: 0.6em;
+                    padding: 0.4em;
+                    background: #c2ed87;
+                    border-radius: 0.4em;
+                    margin-right: 0.3em;
+                    color: #ffff;
+                  }
+                  .title {
+                    font-weight: 800;
+                    &:hover {
+                      color: #384f89;
+                    }
+                  }
+                  .short_meg {
+                    margin-top: 2vh;
+                    height: 7vh;
+                    font-size: 0.9em;
+                    overflow: scroll;
+                  }
+                  .font_07_em {
+                    font-size: 0.7em;
+                  }
+                  .user_avatar {
+                    width: 1.8vw;
+
+                    height: 1.8vw;
+                    border-radius: 50%;
+                    margin-right: 0.2vw;
+                    transform: translateY(-0.2vh);
+                  }
+                  .date {
+                    justify-self: flex-end;
+                    letter-spacing: 0.1em;
+                    font-size: 0.7em;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .page_right {
+          width: 17vw;
+          position: relative;
+          img {
+            position: sticky;
+            top: 80px;
+            width: inherit;
+            margin-bottom: 2vh;
+            border-radius: 5px;
+            box-shadow: 0 4px 5px rgba(26, 40, 53, 0.297);
+          }
+        }
+      }
+    }
+  }
+
+  .home_foot {
+    width: inherit;
+    height: 40vh;
+    gap: 2vw;
+    background: #272727;
+    .title_foot {
+      font-size: 1.2em;
+      color: #ffff;
+      opacity: 0.4;
+    }
+    .left_foot {
+      width: 30vw;
+      height: 30vh;
+      background: #003153;
+    }
+    .mid_foot {
+      width: 20vw;
+      height: 30vh;
+      background: #003153;
+    }
+    .right_foot {
+      width: 30vw;
+      height: 30vh;
     }
   }
 }
-// @keyframes to_right {
-//   0% {
-//     left: 0;
-//   }
-//   100% {
-//     left: 100px;
-//   }
-// }
-// @keyframes to_left {
-//   0% {
-//     right: -3%;
-//   }
-//   100% {
-//     right: 3%;
-//   }
-// }
-// -webkit-keyframes background {
-//   from {
-//     background-position: 0 0%;
-//   }
-//   to {
-//     background-position: 0 -300px;
-//   }
-// }
-// @keyframes background {
-//   from {
-//     background-position: 0 0%;
-//   }
-//   to {
-//     background-position: 0 -300px;
-//   }
-// }
-
-@keyframes first_page {
+@keyframes jump {
   0% {
-    transform: rotateY(-90deg);
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2vh);
   }
   100% {
-    transform: rotateY(0deg);
+    transform: translateY(0);
   }
 }
 </style>

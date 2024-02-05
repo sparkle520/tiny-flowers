@@ -29,7 +29,14 @@ onMounted(() => {
   change_theme(theme.value);
 
   window.scrollTo(0, 0);
-  document.addEventListener("scroll", () => {
+  document.addEventListener("scroll", scroll_handle);
+});
+onUnmounted(() => {
+  document.removeEventListener("scroll", scroll_handle);
+
+});
+const scroll_handle = ()=>{
+ 
     let wScrY = window.scrollY;
     if (wScrY > 700) {
       const to_top_box = document.querySelector(".to_top_box");
@@ -38,19 +45,17 @@ onMounted(() => {
       const to_top_box = document.querySelector(".to_top_box");
       to_top_box.style.transform = "translateX(100px)";
     }
-  });
-});
-onUnmounted(() => {
-  
-});
+  }
+
 const to_top = () => {
   let t = setInterval(() => {
-    let wScrY = window.scrollY - 50;
-    window.scrollTo(0, wScrY);
-    if (wScrY <= 0) {
-      clearInterval(t);
-    }
-  }, 2);
+    if (window.scrollY + 60 > 0) {
+        window.scrollTo(0, window.scrollY - 60);
+      } else {
+        window.scrollTo(0, 0);
+        clearInterval(t);
+      }
+    }, 10);
 };
 const view_change = () => {
   store.change_g_layout();
@@ -138,6 +143,7 @@ const change_theme = (current_theme) => {
   right: 40px;
   bottom: 60px;
   gap: 10px;
+  z-index:100;
 
 }
 .to_top_box {
