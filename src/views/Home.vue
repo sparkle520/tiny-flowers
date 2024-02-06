@@ -107,6 +107,14 @@ const go_to_next_page = () => {
 const page_two_handle = () => {
   // let target = item.offsetTop + window.innerHeight - 80;
   let scroll_y = window.scrollY;
+  let page_2_header = document.querySelector(".page_2_header");
+  let page_left = document.querySelector(".page_content .page_left");
+  let page_right = document.querySelector(".page_content .page_right");
+  let home_carousel = document.querySelector(".page_content .home_carousel");
+  let rect_list = document.querySelectorAll(".page_top_box .rect_box .rect_item");
+  let home_nav_item_list = document.querySelectorAll(".home_nav_item");
+  let recommend_fade_item_list = document.querySelectorAll(".recommend_item_box .fade_item");
+  let new_fade_item_list = document.querySelectorAll(".new_item_box .fade_item");
   const page_2 = document.querySelector(".page_2");
   if (
     scroll_y > window.innerHeight - 80 + nav_list.value[0].offsetTop &&
@@ -120,6 +128,101 @@ const page_two_handle = () => {
     }
   } else {
     current_nav_index.value = -1;
+  }
+  if (
+    scroll_y >=
+    window.innerHeight + page_2_header.offsetTop - window.innerHeight / 2
+  ) {
+    page_2_header.style.transform = "translateY(0)";
+    page_2_header.style.opacity = 1;
+  } else {
+    page_2_header.style.transform = "translateY(-10vh)";
+    page_2_header.style.opacity = 0;
+  }
+  if (
+    scroll_y >=
+    window.innerHeight + page_left.offsetTop - window.innerHeight / 2
+  ) {
+    page_left.style.transform = "translateX(0)";
+    page_left.style.opacity = 1;
+  } else {
+    page_left.style.transform = "translateX(-10vh)";
+    page_left.style.opacity = 0;
+  }
+  if (
+    scroll_y >=
+    window.innerHeight + page_right.offsetTop - window.innerHeight / 2
+  ) {
+    page_right.style.transform = "translateX(0)";
+    page_right.style.opacity = 1;
+  } else {
+    page_right.style.transform = "translateX(10vh)";
+    page_right.style.opacity = 0;
+  }
+  if (
+    scroll_y >=
+    window.innerHeight + home_carousel.offsetTop - window.innerHeight / 2
+  ) {
+    home_carousel.style.transform = "scaleX(1)";
+    home_carousel.style.opacity = 1;
+  } else {
+    home_carousel.style.transform = "scaleX(1.3)";
+    home_carousel.style.opacity = 0;
+  }
+  for (let i = 0; i < rect_list.length; ++i) {
+    if (
+      scroll_y >=
+      window.innerHeight + rect_list[0].offsetTop - window.innerHeight / 2
+    ) {
+      rect_list[i].style.transform = "scaleX(1)";
+      rect_list[i].style.transitionDelay = `${i*0.2}s`
+      rect_list[i].style.opacity = 1;
+    } else {
+      rect_list[i].style.transform = "scaleX(1.3)";
+      rect_list[i].style.transitionDelay = `${(1-i/3)/2}s`
+      rect_list[i].style.opacity = 0;
+    }
+  }
+  for (let i = 0; i < home_nav_item_list.length; ++i) {
+    if (
+      scroll_y >=
+      window.innerHeight + home_nav_item_list[i].offsetTop - window.innerHeight / 1.3
+    ) {
+      home_nav_item_list[i].style.transform = "scaleX(1)";
+      home_nav_item_list[i].style.opacity = 1;
+    } else {
+      home_nav_item_list[i].style.transform = "scaleX(1.3)";
+      home_nav_item_list[i].style.opacity = 0;
+    }
+  }
+  for (let i = 0; i < recommend_fade_item_list.length; ++i) {
+    if (
+      scroll_y >=
+      window.innerHeight + recommend_fade_item_list[i].offsetTop - window.innerHeight / 1.2
+    ) {
+      recommend_fade_item_list[i].style.transform = "translateX(0)";
+      recommend_fade_item_list[i].style.opacity = 1;
+    } else {
+      recommend_fade_item_list[i].style.transform = "translateX(-12vw)";
+      recommend_fade_item_list[i].style.opacity = 0;
+    }
+  }
+  for (let i = 0; i < new_fade_item_list.length; ++i) {
+    if (
+      scroll_y >=
+      window.innerHeight + new_fade_item_list[i].offsetTop - window.innerHeight / 1.3
+    ) {
+      new_fade_item_list[i].style.transform = "translateX(0)";
+      new_fade_item_list[i].style.opacity = 1;
+    } else {
+     if(i%2 === 0){
+      new_fade_item_list[i].style.transform = "translateX(-12vw)";
+      new_fade_item_list[i].style.opacity = 0;
+     }else{
+      new_fade_item_list[i].style.transform = "translateX(12vw)";
+      new_fade_item_list[i].style.opacity = 0;
+     }
+    }
   }
 };
 const notice = [
@@ -190,6 +293,22 @@ const go_to_by_path = (path) => {
 const go_to = (path) => {
   window.open(path);
 };
+const enter_new_topic = (index)=>{
+  const item = document.querySelectorAll('.topic_item')[index]
+  item.style.transform = 'translateY(-0.6vh)'
+}
+const leave_new_topic = (index)=>{
+  const item = document.querySelectorAll('.topic_item')[index]
+  item.style.transform = 'translateY(0)'
+}
+const enter_recommend_topic = (index)=>{
+  const item = document.querySelectorAll('.recommend_item')[index]
+  item.style.transform = 'translateY(-0.6vh)'
+}
+const leave_recommend_topic = (index)=>{
+  const item = document.querySelectorAll('.recommend_item')[index]
+  item.style.transform = 'translateY(0)'
+}
 </script>
 <template>
   <div id="home_main">
@@ -286,7 +405,7 @@ const go_to = (path) => {
               <div class="flex flex_direction_column rect_box">
                 <div
                   @click="go_to('https://leetcode.cn/problemset/')"
-                  class="rect flex align_items_center justify_content_center relative"
+                  class="rect_item flex align_items_center justify_content_center relative"
                 >
                   <svg
                     t="1707152629827"
@@ -321,20 +440,22 @@ const go_to = (path) => {
                   </svg>
                 </div>
                 <div
-                  class="rect flex align_items_center justify_content_center relative"
+                  class="rect_item flex align_items_center justify_content_center relative"
                 ></div>
                 <div
-                  class="rect flex align_items_center justify_content_center relative"
+                  class="rect_item flex align_items_center justify_content_center relative"
                 ></div>
               </div>
             </div>
             <div class="new_topic_box flex flex_direction_column">
               <h2 class="home_nav_item">最新文章</h2>
-              <ul class="flex flex_direction_row gap_1_vw topic_item_box">
+              <ul class="flex flex_direction_row gap_1_vw new_item_box">
                 <li
                   v-for="(item, index) in new_topic_list"
                   @click="go_to_by_path(item.link)"
-                  class="topic_item flex flex_direction_column relative"
+                  @mouseenter="enter_new_topic(index)"
+                  @mouseleave="leave_new_topic(index)"
+                  class="topic_item fade_item flex flex_direction_column relative"
                 >
                   <div class="img_box relative">
                     <img
@@ -373,8 +494,10 @@ const go_to = (path) => {
               <ul class="flex flex_direction_row recommend_item_box">
                 <li
                   @click="go_to_by_path(item.link)"
+                  @mouseenter="enter_recommend_topic(index)"
+                  @mouseleave="leave_recommend_topic(index)"
                   v-for="(item, index) in recommend_topic_list"
-                  class="recommend_item flex flex_direction_row"
+                  class="recommend_item fade_item flex flex_direction_row"
                 >
                   <div class="img_box relative">
                     <img v-if="item.img != ''" :src="item.img" alt="" />
@@ -419,7 +542,7 @@ const go_to = (path) => {
           </div>
           <div class="page_right flex flex_direction_column">
             <img
-              src="https://pic.imgdb.cn/item/65c06fca9f345e8d034caede.jpg"
+              src="https://pic.imgdb.cn/item/65c1c6299f345e8d03ffc79e.jpg"
               alt=""
             />
           </div>
@@ -458,6 +581,7 @@ $index_title_color: var(--index_title_color, #00cbff);
 #home_main {
   width: 100vw;
   min-height: 100vh;
+  overflow-x: hidden;
   // scroll-snap-type: y mandatory;
   background: $home_bg_color;
   .home_nav_item {
@@ -467,6 +591,7 @@ $index_title_color: var(--index_title_color, #00cbff);
     padding-left: 1vw;
     color: $index_title_color;
     text-shadow: #3c3e41 2px 3px 2px;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     &::after {
       content: "";
       position: absolute;
@@ -491,7 +616,7 @@ $index_title_color: var(--index_title_color, #00cbff);
     // background-image: url("https://pic.imgdb.cn/item/65c06fca9f345e8d034cae1c.png");
     background-size: cover;
     z-index: 0;
-    width: inherit;
+    width: 100vw;
     height: 100vh;
     .page_1_title {
       font-size: 3em;
@@ -529,6 +654,8 @@ $index_title_color: var(--index_title_color, #00cbff);
     // background-image: url("https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg");
     // background-image: url("/src/assets/imgs/114356114_p0.jpg");
     // background-size: cover;
+    width: 100vw;
+
     .page_2_bg {
       width: 100vw;
       height: 100vh;
@@ -546,6 +673,7 @@ $index_title_color: var(--index_title_color, #00cbff);
     .page_container {
       .page_2_header {
         z-index: 2;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         .notice {
           width: calc(90% - 2vh);
           margin: 1vh auto;
@@ -565,6 +693,7 @@ $index_title_color: var(--index_title_color, #00cbff);
         z-index: 1;
         .page_left {
           width: 20vh;
+          transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           .nav_box {
             position: sticky;
             top: 80px;
@@ -599,19 +728,21 @@ $index_title_color: var(--index_title_color, #00cbff);
             gap: 1vw;
             margin-bottom: 1vh;
             .home_carousel {
+              transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
               box-shadow: 0 3px 6px rgba(31, 45, 61, 0.557);
             }
             .rect_box {
               width: 19vw;
               height: 30vh;
               gap: 1vh;
-              .rect {
+              .rect_item {
                 width: inherit;
                 height: 9.333vh;
                 border-radius: 5px;
                 background: #ffffff;
                 overflow: hidden;
                 box-shadow: 0 2px 5px rgba(31, 45, 61, 0.15);
+                transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
                 // span {
                 //   z-index: 2;
@@ -624,8 +755,9 @@ $index_title_color: var(--index_title_color, #00cbff);
 
                 &:hover {
                   box-shadow: 0 1px 2px rgba(31, 45, 61, 0.15);
-                  transform: translateY(-.2vh);
-                  transition: box-shadow 1s cubic-bezier(0.075, 0.82, 0.165, 1),transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+                  transform: translateY(-0.2vh);
+                  transition: box-shadow 1s cubic-bezier(0.075, 0.82, 0.165, 1),
+                    transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
                   .leet_code {
                   }
                 }
@@ -636,7 +768,7 @@ $index_title_color: var(--index_title_color, #00cbff);
           }
           .new_topic_box {
             width: inherit;
-            .topic_item_box {
+            .new_item_box {
               padding: 0;
               width: inherit;
               flex-wrap: wrap;
@@ -649,7 +781,7 @@ $index_title_color: var(--index_title_color, #00cbff);
                 box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
 
                 &:hover {
-                  transform: translateY(-0.6vh);
+                  // transform: translateY(-0.6vh);
                   box-shadow: 0 3px 5px rgba(31, 45, 61, 0.2);
                 }
                 &:active {
@@ -671,12 +803,12 @@ $index_title_color: var(--index_title_color, #00cbff);
                   &::after {
                     content: "";
                     position: absolute;
-                    bottom: 0px;
+                    bottom: -1vh;
                     left: 0;
                     width: inherit;
                     height: 10vh;
                     pointer-events: none;
-                    background: linear-gradient(to top, #fff, transparent);
+                    background: linear-gradient(to top, #e0ffff, transparent);
                   }
 
                   .img {
@@ -742,12 +874,24 @@ $index_title_color: var(--index_title_color, #00cbff);
                 height: 20vh;
                 border-radius: 5px;
                 background: #fff;
-                transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
-                  box-shadow cubic-bezier(0.075, 0.82, 0.165, 1);
+                transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 box-shadow: 0 8px 5px #1f2d3d26;
-
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 30vw;
+                    right: 29vw;
+                    height: inherit;
+                    z-index: 10;
+                    pointer-events: none;
+                    background: linear-gradient(
+                      to left,
+                      #fff 10%,
+                      transparent
+                    );
+                  }
                 &:hover {
-                  transform: translateY(-0.6vh);
+                  // transform: translateY(-0.6vh);
                   box-shadow: 0 3px 5px #1f2d3d33;
                 }
                 &:active {
@@ -758,17 +902,11 @@ $index_title_color: var(--index_title_color, #00cbff);
                   .content_box {
                     order: 0;
                   }
-
-                  .img_box {
-                    border-bottom-right-radius: 5px;
-                    border-top-right-radius: 5px;
-                    border-bottom-left-radius: 0;
-                    border-top-left-radius: 0;
-                    &::after {
+                  &::after {
                       content: "";
                       position: absolute;
-                      width: 10vw;
-                      left: -1vw;
+                      width: 30vw;
+                      right: 0vw;
                       height: inherit;
                       background: linear-gradient(
                         to right,
@@ -776,6 +914,12 @@ $index_title_color: var(--index_title_color, #00cbff);
                         transparent
                       );
                     }
+                  .img_box {
+                    border-bottom-right-radius: 5px;
+                    border-top-right-radius: 5px;
+                    border-bottom-left-radius: 0;
+                    border-top-left-radius: 0;
+                   
                   }
                 }
                 .img_box {
@@ -785,20 +929,7 @@ $index_title_color: var(--index_title_color, #00cbff);
                   border-bottom-left-radius: 5px;
                   border-top-left-radius: 5px;
                   overflow: hidden;
-                  &::after {
-                    content: "";
-                    position: absolute;
-                    width: 20vw;
-                    right: -1vw;
-                    height: inherit;
-                    z-index: 10;
-                    pointer-events: none;
-                    background: linear-gradient(
-                      to left,
-                      #ffff 10%,
-                      transparent
-                    );
-                  }
+                  
                   img {
                     width: inherit;
                     height: calc(100% + 1vh);
@@ -860,6 +991,7 @@ $index_title_color: var(--index_title_color, #00cbff);
         .page_right {
           width: 17vw;
           position: relative;
+          transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           img {
             position: sticky;
             top: 80px;
