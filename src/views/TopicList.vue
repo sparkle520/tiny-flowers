@@ -76,7 +76,7 @@ const scroll_handle = () => {
   for (let i = 0; i < item_list.length; i++) {
     let elem = item_list[i];
     // console.log(elem.offsetTop,window.scrollY);
-    if (elem.offsetTop <= window.scrollY + 900) {
+    if (elem.offsetTop - window.innerHeight <= window.scrollY ) {
       elem.style.opacity = "1";
       elem.classList.add("item_animation");
     }
@@ -557,6 +557,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
 
     scrollbar-color: rgba(144, 147, 153, 0.3) transparent; /* 滑块颜色  滚动条背景颜色 */
     scrollbar-width: thin;
+    animation: search_item 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     &::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -865,10 +866,10 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
 
 @keyframes move_left {
   0% {
-    transform: translateX(100px);
+    transform: translateX(100px) scale(1);
   }
   100% {
-    transform: translateX(0px);
+    transform: translateX(0px) scale(1);
   }
 }
 @keyframes jelly {
@@ -891,6 +892,14 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
   }
   100% {
     transform: translateY(0px);
+  }
+}
+@keyframes search_item {
+  0%{
+    transform: scale(1.5);
+    opacity: 0;
+  }100%{
+    transform: scale(1);
   }
 }
 </style>

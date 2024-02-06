@@ -45,7 +45,8 @@ const page_one_handle = () => {
   let scroll_y = window.scrollY;
   const more = document.querySelector(".more");
   const page_1_title = document.querySelector(".page_1_title");
-  const page_2 = document.querySelector(".page_2");
+  // let page_1_bg = document.querySelector(".page_1_bg");
+
   const start = 0;
   const end = window.innerHeight;
   if (scroll_y > window.innerHeight - 70) {
@@ -59,9 +60,20 @@ const page_one_handle = () => {
       start,
       end,
       0,
-      20
+      10
     )(scroll_y)}px)`;
+    // page_1_title.style.transform = `scale(${create_animation(
+    //   start,
+    //   end,
+    //   1,
+    //   2
+    // )(scroll_y)}) translate(-50%,-50%)`;
   }
+  // if (scroll_y >= window.innerHeight) {
+  //   page_1_bg.style.transform = `scale(.6)`;
+  // }else{
+  //   page_1_bg.style.transform = `scale(1)`;
+  // }
 };
 const create_animation = (start, end, s_v, e_v) => {
   return (x) => {
@@ -111,10 +123,16 @@ const page_two_handle = () => {
   let page_left = document.querySelector(".page_content .page_left");
   let page_right = document.querySelector(".page_content .page_right");
   let home_carousel = document.querySelector(".page_content .home_carousel");
-  let rect_list = document.querySelectorAll(".page_top_box .rect_box .rect_item");
+  let rect_list = document.querySelectorAll(
+    ".page_top_box .rect_box .rect_item"
+  );
   let home_nav_item_list = document.querySelectorAll(".home_nav_item");
-  let recommend_fade_item_list = document.querySelectorAll(".recommend_item_box .fade_item");
-  let new_fade_item_list = document.querySelectorAll(".new_item_box .fade_item");
+  let recommend_fade_item_list = document.querySelectorAll(
+    ".recommend_item_box .fade_item"
+  );
+  let new_fade_item_list = document.querySelectorAll(
+    ".new_item_box .fade_item"
+  );
   const page_2 = document.querySelector(".page_2");
   if (
     scroll_y > window.innerHeight - 80 + nav_list.value[0].offsetTop &&
@@ -175,18 +193,20 @@ const page_two_handle = () => {
       window.innerHeight + rect_list[0].offsetTop - window.innerHeight / 2
     ) {
       rect_list[i].style.transform = "scaleX(1)";
-      rect_list[i].style.transitionDelay = `${i*0.2}s`
+      rect_list[i].style.transitionDelay = `${i * .2}s`;
       rect_list[i].style.opacity = 1;
     } else {
       rect_list[i].style.transform = "scaleX(1.3)";
-      rect_list[i].style.transitionDelay = `${(1-i/3)/2}s`
+      rect_list[i].style.transitionDelay = `${0.4 - i * 0.2}s`;
       rect_list[i].style.opacity = 0;
     }
   }
   for (let i = 0; i < home_nav_item_list.length; ++i) {
     if (
       scroll_y >=
-      window.innerHeight + home_nav_item_list[i].offsetTop - window.innerHeight / 1.3
+      window.innerHeight +
+        home_nav_item_list[i].offsetTop -
+        window.innerHeight / 1.3
     ) {
       home_nav_item_list[i].style.transform = "scaleX(1)";
       home_nav_item_list[i].style.opacity = 1;
@@ -198,7 +218,9 @@ const page_two_handle = () => {
   for (let i = 0; i < recommend_fade_item_list.length; ++i) {
     if (
       scroll_y >=
-      window.innerHeight + recommend_fade_item_list[i].offsetTop - window.innerHeight / 1.2
+      window.innerHeight +
+        recommend_fade_item_list[i].offsetTop -
+        window.innerHeight / 1.2
     ) {
       recommend_fade_item_list[i].style.transform = "translateX(0)";
       recommend_fade_item_list[i].style.opacity = 1;
@@ -210,18 +232,20 @@ const page_two_handle = () => {
   for (let i = 0; i < new_fade_item_list.length; ++i) {
     if (
       scroll_y >=
-      window.innerHeight + new_fade_item_list[i].offsetTop - window.innerHeight / 1.3
+      window.innerHeight +
+        new_fade_item_list[i].offsetTop -
+        window.innerHeight / 1.3
     ) {
       new_fade_item_list[i].style.transform = "translateX(0)";
       new_fade_item_list[i].style.opacity = 1;
     } else {
-     if(i%2 === 0){
-      new_fade_item_list[i].style.transform = "translateX(-12vw)";
-      new_fade_item_list[i].style.opacity = 0;
-     }else{
-      new_fade_item_list[i].style.transform = "translateX(12vw)";
-      new_fade_item_list[i].style.opacity = 0;
-     }
+      if (i % 2 === 0) {
+        new_fade_item_list[i].style.transform = "translateX(-12vw)";
+        new_fade_item_list[i].style.opacity = 0;
+      } else {
+        new_fade_item_list[i].style.transform = "translateX(12vw)";
+        new_fade_item_list[i].style.opacity = 0;
+      }
     }
   }
 };
@@ -293,26 +317,31 @@ const go_to_by_path = (path) => {
 const go_to = (path) => {
   window.open(path);
 };
-const enter_new_topic = (index)=>{
-  const item = document.querySelectorAll('.topic_item')[index]
-  item.style.transform = 'translateY(-0.6vh)'
-}
-const leave_new_topic = (index)=>{
-  const item = document.querySelectorAll('.topic_item')[index]
-  item.style.transform = 'translateY(0)'
-}
-const enter_recommend_topic = (index)=>{
-  const item = document.querySelectorAll('.recommend_item')[index]
-  item.style.transform = 'translateY(-0.6vh)'
-}
-const leave_recommend_topic = (index)=>{
-  const item = document.querySelectorAll('.recommend_item')[index]
-  item.style.transform = 'translateY(0)'
-}
+const enter_new_topic = (index) => {
+  const item = document.querySelectorAll(".topic_item")[index];
+  item.style.transform = "translateY(-0.6vh)";
+};
+const leave_new_topic = (index) => {
+  const item = document.querySelectorAll(".topic_item")[index];
+  item.style.transform = "translateY(0)";
+};
+const enter_recommend_topic = (index) => {
+  const item = document.querySelectorAll(".recommend_item")[index];
+  item.style.transform = "translateY(-0.6vh)";
+};
+const leave_recommend_topic = (index) => {
+  const item = document.querySelectorAll(".recommend_item")[index];
+  item.style.transform = "translateY(0)";
+};
 </script>
 <template>
   <div id="home_main">
-    <div class="page_1 bg relative">
+    <div class="page_1 relative">
+      <img
+        class="page_1_bg"
+        src="https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg"
+        alt=""
+      />
       <span class="page_1_title"> TinyFlowers🌷 </span>
       <svg
         t="1706806114679"
@@ -332,11 +361,12 @@ const leave_recommend_topic = (index)=>{
         ></path>
       </svg>
     </div>
-    <div class="page_2 bg relative">
+    <div class="page_2 relative">
       <!-- src="https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg" -->
 
-      <div class="page_2_bg">
+      <div class="page_2_bg relative">
         <img
+          class="absolute page_2_bg_img"
           src="https://pic.imgdb.cn/item/65c113f79f345e8d039e2124.png"
           alt=""
         />
@@ -581,9 +611,9 @@ $index_title_color: var(--index_title_color, #00cbff);
 #home_main {
   width: 100vw;
   min-height: 100vh;
-  overflow-x: hidden;
   // scroll-snap-type: y mandatory;
   background: $home_bg_color;
+
   .home_nav_item {
     font-size: 1.4em;
     position: relative;
@@ -601,7 +631,10 @@ $index_title_color: var(--index_title_color, #00cbff);
       left: 0;
     }
   }
-  .bg {
+  .page_1_bg {
+    width: 100vw;
+    height: 100vh;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     // background-attachment: fixed;
 
     // background-position: center center;
@@ -612,9 +645,7 @@ $index_title_color: var(--index_title_color, #00cbff);
     // min-height: 100vh;
   }
   .page_1 {
-    background-image: url("https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg");
     // background-image: url("https://pic.imgdb.cn/item/65c06fca9f345e8d034cae1c.png");
-    background-size: cover;
     z-index: 0;
     width: 100vw;
     height: 100vh;
@@ -655,14 +686,14 @@ $index_title_color: var(--index_title_color, #00cbff);
     // background-image: url("/src/assets/imgs/114356114_p0.jpg");
     // background-size: cover;
     width: 100vw;
-
+    // background: #00cbff;
     .page_2_bg {
       width: 100vw;
       height: 100vh;
       position: sticky;
       top: 0;
       z-index: 0;
-      img {
+      .page_2_bg_img {
         height: calc(100vh - 100px);
         transform: translateY(100px);
       }
@@ -671,11 +702,12 @@ $index_title_color: var(--index_title_color, #00cbff);
     min-height: 200vh;
     width: inherit;
     .page_container {
+      width: 100vw;
       .page_2_header {
         z-index: 2;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         .notice {
-          width: calc(90% - 2vh);
+          width: 87vw;
           margin: 1vh auto;
           background: #f8f8ff;
           padding: 1vh;
@@ -690,9 +722,10 @@ $index_title_color: var(--index_title_color, #00cbff);
       }
       .page_content {
         gap: 1vw;
+        width: 100vw;
         z-index: 1;
         .page_left {
-          width: 20vh;
+          width: 11vw;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           .nav_box {
             position: sticky;
@@ -877,19 +910,15 @@ $index_title_color: var(--index_title_color, #00cbff);
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 box-shadow: 0 8px 5px #1f2d3d26;
                 &::after {
-                    content: "";
-                    position: absolute;
-                    width: 30vw;
-                    right: 29vw;
-                    height: inherit;
-                    z-index: 10;
-                    pointer-events: none;
-                    background: linear-gradient(
-                      to left,
-                      #fff 10%,
-                      transparent
-                    );
-                  }
+                  content: "";
+                  position: absolute;
+                  width: 30vw;
+                  right: 29vw;
+                  height: inherit;
+                  z-index: 10;
+                  pointer-events: none;
+                  background: linear-gradient(to left, #fff 10%, transparent);
+                }
                 &:hover {
                   // transform: translateY(-0.6vh);
                   box-shadow: 0 3px 5px #1f2d3d33;
@@ -903,23 +932,22 @@ $index_title_color: var(--index_title_color, #00cbff);
                     order: 0;
                   }
                   &::after {
-                      content: "";
-                      position: absolute;
-                      width: 30vw;
-                      right: 0vw;
-                      height: inherit;
-                      background: linear-gradient(
-                        to right,
-                        #ffff 10%,
-                        transparent
-                      );
-                    }
+                    content: "";
+                    position: absolute;
+                    width: 30vw;
+                    right: 0vw;
+                    height: inherit;
+                    background: linear-gradient(
+                      to right,
+                      #ffff 10%,
+                      transparent
+                    );
+                  }
                   .img_box {
                     border-bottom-right-radius: 5px;
                     border-top-right-radius: 5px;
                     border-bottom-left-radius: 0;
                     border-top-left-radius: 0;
-                   
                   }
                 }
                 .img_box {
@@ -929,7 +957,7 @@ $index_title_color: var(--index_title_color, #00cbff);
                   border-bottom-left-radius: 5px;
                   border-top-left-radius: 5px;
                   overflow: hidden;
-                  
+
                   img {
                     width: inherit;
                     height: calc(100% + 1vh);
@@ -989,7 +1017,7 @@ $index_title_color: var(--index_title_color, #00cbff);
           }
         }
         .page_right {
-          width: 17vw;
+          width: 15vw;
           position: relative;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           img {

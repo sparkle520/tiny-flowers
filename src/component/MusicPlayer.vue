@@ -241,11 +241,13 @@ const change_theme = (current_theme) => {
     c_c("--list_item_color", "#f7f3f5");
     c_c("--list_item_hover_color", "#343d53");
     c_c("--list_item_active_color", "#f67d61");
-    // c_c("--player_bg", "#8e8e8e0f");
+    c_c("--player_bg", "#140d28");
     c_c("--play_btn_fill", "#b5b9d6");
     c_c("--left_right_btn_path_1", "#e8eeee");
     c_c("--left_right_btn_path_2", "#e8eeee");
     c_c("--music_list_fill", "#b5b9d6");
+    c_c("--music_player_main_box_shadow_color", "#140d28");
+
 
     
   } else {
@@ -258,11 +260,12 @@ const change_theme = (current_theme) => {
     c_c("--list_item_color", "#4d6782");
     c_c("--list_item_hover_color", "#ffb8b8");
     c_c("--list_item_active_color", "#fd1212");
-    // c_c("--player_bg", "#8e8e8e0f");
+    c_c("--player_bg", "#f5f5f5");
     c_c("--play_btn_fill", "#f9785f");
     c_c("--left_right_btn_path_1", "#fcb071");
     c_c("--left_right_btn_path_2", "#fc9f88");
     c_c("--music_list_fill", "#FF2C2C");
+    c_c("--music_player_main_box_shadow_color", "#8e8e8e30");
   }
 }
 </script>
@@ -624,18 +627,19 @@ const change_theme = (current_theme) => {
  $left_right_btn_path_1: var(--left_right_btn_path_1, #fcb071);
  $left_right_btn_path_2: var(--left_right_btn_path_2, #fc9f88);
  $music_list_fill: var(--music_list_fill, #FF2C2C);
+ $music_player_main_box_shadow_color: var(--music_player_main_box_shadow_color, #8e8e8e30);
 
 #music_player_main {
   width: 100%;
   height: 100%;
   background-color: $player_bg;
-    backdrop-filter: blur(6px);
+    // backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    border: 0.727273px solid rgba(255, 255, 255, 0.18);
-    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
+    // border: 0.727273px solid rgba(255, 255, 255, 0.18);
+    box-shadow: $music_player_main_box_shadow_color 0px 6px 15px 0px;
+    // -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
     
   
   
@@ -672,20 +676,20 @@ const change_theme = (current_theme) => {
     .record {
       width: 7em;
       height: 7em;
-      border-radius: 50%;
+      border-radius: 25px;
       background-color: $record_bg;
 
       box-shadow: $record_bg 2px 3px 10px;
 
       .record_img_active {
-        width: 4em;
-        height: 4em;
+        width: 6em;
+        height: 6em;
         border-radius: inherit;
         animation: cycle_rotate 10s linear infinite;
       }
       .record_img {
-        width: 4em;
-        height: 4em;
+        width: 7em;
+        height: 7em;
         border-radius: inherit;
       }
       .record_div {
@@ -706,7 +710,7 @@ const change_theme = (current_theme) => {
         width: 6em;
         height: 6em;
 
-        border-radius: 50%;
+        border-radius: 25px;
         border: $circle_border 1px solid;
         &:nth-child(1) {
           width: 6em;
@@ -793,39 +797,41 @@ const change_theme = (current_theme) => {
     width: inherit;
     height: 300px;
     background-color: $player_bg;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 0.727273px solid rgba(255, 255, 255, 0.18);
-    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
+    // backdrop-filter: blur(6px);
+    // -webkit-backdrop-filter: blur(6px);
+    // border: 0.727273px solid rgba(255, 255, 255, 0.18);
+    box-shadow: $music_player_main_box_shadow_color 0px 6px 15px 0px;
+    // -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
 
     margin-top: 10px;
     color: $file_label_color;
     animation: fade_in_out 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     .list_box {
       overflow-y: scroll;
+      overflow-x: hidden;
       height: calc(300px - 50px);
-      background: #f3ded812;
-      border-radius: 5px;
+      background: transparent;
+      border-radius: 25px;
       .list_inner_box {
         margin-left: 30px;
         margin-top: 10px;
       }
       .list_item {
-        padding-left: 12px;
+        padding-left: 1vw;
         min-height: 25px;
-        border-radius: 3px;
         color: $list_item_color;
         padding-top: 3px;
         padding-bottom: 3px;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        user-select:none;
         svg {
           opacity: 0;
           right: 3em;
         }
         &:hover {
-          background: linear-gradient(45deg, $list_item_hover_color, transparent);
+          transform: translateX(.5vw);
           svg {
             opacity: 1;
           }
@@ -833,6 +839,16 @@ const change_theme = (current_theme) => {
       }
       .item_active {
         color: $list_item_active_color;
+        &::after{
+          width: .4vw;
+          height: 60%;
+          top: 50%;
+          transform: translateY(-50%);
+          background: $list_item_active_color;
+          content: '';
+          position: absolute;
+          left: -.4vw;
+        }
         font-weight: bold;
       }
     }
