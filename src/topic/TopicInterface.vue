@@ -3,7 +3,7 @@
 <!-- @Description:  -->
 
 <script setup>
-import { ref, onBeforeMount, onMounted, nextTick ,watch} from "vue";
+import { ref, onBeforeMount, onMounted, nextTick, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 
@@ -28,12 +28,12 @@ marked.setOptions({
 });
 
 const initContent = () => {
-  getAssetsFile(params.index)
+  getAssetsFile(params.index);
 };
 const content = ref("");
-watch(content,newValue=>{
+watch(content, (newValue) => {
   content.value = marked(content.value);
-})
+});
 const config_store = useConfigStore();
 const topic_store = useTopicStore();
 const { theme } = storeToRefs(config_store);
@@ -63,20 +63,29 @@ onMounted(() => {
   nextTick(() => {
     emitter.emit("topic_data", get_topic_data());
   });
-  
-
 });
-const getAssetsFile =  async (index) => {
-   await import('/src/assets/topic_md/topic'+index+'.md?raw').then((module)=>{
-    content.value = module.default;
-   })
+const getAssetsFile = (index) => {
+  const _path = `/src/assets/topic_md/topic${index}.md`;
+  const modules = import.meta.glob("/src/assets/topic_md/*.md", { as: "raw" });
+
+  for (const path in modules) {
+    modules[path]().then((mod) => {
+      if (path == _path) {
+        content.value = mod;
+      }
+    });
+  }
+
+  //  await import('/src/assets/topic_md/topic'+index+'.md?raw').then((module)=>{
+  //   content.value = module.default;
+  //  })
 };
 /* <vue-latex :display-mode="true" expression="设\lim_{x \to x_{0}} f(x) =A."></vue-latex> */
 /* <div class="hljs_container" style="width: 700px;" codetype="JavaScript" >
         <highlightjs  style="width: 700px;" language="JavaScript" :autodetect="false" :code="code"></highlightjs>
     </div> */
 </script>
-<template> 
+<template>
   <div id="topic_main">
     <TopicBgInterface class="topic_bg"></TopicBgInterface>
     <TopicTopInterface class="topic_top_interface"></TopicTopInterface>
@@ -84,7 +93,7 @@ const getAssetsFile =  async (index) => {
       <TopicLeftInterface></TopicLeftInterface>
       <div class="topic_content">
         <div class="topic_text">
-          <div v-html="content" class="markdown-body"  v-highlight></div>
+          <div v-html="content" class="markdown-body" v-highlight></div>
         </div>
         <TopicBottomInterface></TopicBottomInterface>
       </div>
@@ -93,6 +102,4 @@ const getAssetsFile =  async (index) => {
   </div>
   <Utils></Utils>
 </template>
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
