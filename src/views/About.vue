@@ -1,614 +1,1016 @@
 <!-- @Author: LT -->
-<!-- @Date: 2024-01-05 21:37:09 -->
+<!-- @Date: 2024-01-05 16:52:38 -->
 <!-- @Description:  -->
 
 <script setup>
 import {
-  reactive,
-  toRefs,
+  ref,
   onBeforeMount,
   onUnmounted,
   onMounted,
+  nextTick,
   watch,
 } from "vue";
 import { useRouter } from "vue-router";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
-const store = useConfigStore();
-const { theme } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
+import { useUserStore } from "../store/user";
+
+const config_store = useConfigStore();
+const { theme } = storeToRefs(config_store);
+const user_store = useUserStore();
+config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
+});
+onBeforeMount(() => {});
+onMounted(() => {
+  change_theme(theme.value);
+  init_s_animation_map();
+  update_s_animation_map_style();
+  window.addEventListener("scroll", scroll_handle);
 });
 const router = useRouter();
 onBeforeMount(() => {});
+
 onUnmounted(() => {
-  window.removeEventListener("resize", func);
-  // window.removeEventListener("touchstart", touch_start.bind(this));
-  // window.removeEventListener("mousedown", mouse_down);
-  // window.removeEventListener("touchmove", touch_move);
-  // window.removeEventListener("mousemove", mouse_move);
+  window.removeEventListener("scroll", scroll_handle);
 });
-onMounted(() => {
-  change_theme(theme.value);
-  let num = 200;
-  let w = window.innerWidth;
-  let h = window.innerHeight;
-  let max = 100;
-  let _x = 0;
-  let _y = 0;
-  let _z = 150;
-  let dtr = function (d) {
-    return (d * Math.PI) / 180;
-  };
+const scroll_handle = () => {
+  update_s_animation_map_style();
+  update_t_future_instance();
+  update_f_animation();
+  update_fif_animation();
+};
+const go_to_unknown_world_map = () => {
+  router.push("/unknownWorldMap");
+};
+const update_fif_animation = () => {
+  const latter_list = document.querySelectorAll(".latter_box span");
+  const fifth_page = document.querySelector(".fifth_page");
+  if (window.scrollY + 250 >= fifth_page.offsetTop) {
+    for (let i = 0; i < latter_list.length; i++) {
+      latter_list[i].style.transform = `rotate(${
+        (i + 1) * 12
+      }deg) translate(${i}em,${i}em)`;
+      latter_list[i].style.opacity = `${1 - i * 0.2}`;
+    }
+  } else {
+    for (let i = 0; i < latter_list.length; i++) {
+      latter_list[i].style.transform = `rotate(0)`;
+      latter_list[i].style.opacity = `0`;
+    }
+  }
+};
+const update_f_animation = () => {
+  const fourth_page = document.querySelector(".fourth_page");
+  const f_word_inner_box = document.querySelector(".f_word_inner_box");
+  const c_1 = document.querySelector(".c_1");
+  const c_2 = document.querySelector(".c_2");
+  if (window.scrollY + 250 >= fourth_page.offsetTop) {
+    c_1.style.transform = "scale(1) rotate(3deg) translateZ(0)";
+    c_2.style.transform = "scale(1) rotate(-10deg) translateZ(0)";
+    f_word_inner_box.style.transform = "scale(1)";
+  } else {
+    c_1.style.transform = "scale(.4) rotate(-10deg) translateZ(0) ";
+    c_2.style.transform = "scale(.4) rotate(10deg) translateZ(0) ";
+    f_word_inner_box.style.transform = "scale(0)";
+  }
+};
+// const carousel_data = ref([
+//   {link:''},
+//   {link:''},
+//   {link:''},
+//   {link:'https://pic.imgdb.cn/item/65b0ff67871b83018adff204.jpg'},
+//   // { link: "https://pic.imgdb.cn/item/659c09de871b83018ad377cb.png" },
+//   // { link: "https://pic.imgdb.cn/item/65b0e41d871b83018a7822bf.webp" },
+//   // { link: "https://pic.imgdb.cn/item/659c0a3a871b83018ad5736f.png" },
+//   // { link: "https://pic.imgdb.cn/item/659bfd7e871b83018a917e4b.png" },
+// ]);
+const future_instance = [
+  "あぁ　答えがある問いばかりを　教わってきたよ　だけど明日からは<br /><span>啊 一直以来 我们掌握的都是那些有解的问题</span>",
+  "僕だけの正解をいざ　探しにゆくんだ　また逢う日まで<br><span>但从明日开始 我将追寻 属于我的答案 直至再度重逢</span>",
+  "次の空欄に当てはまる言葉を書き入れなさい<br><span>请在下方空栏 填入恰当的空白词语</span>",
+  "「君のいない　明日からの日々を僕は／私は　　きっと　□□□□□□□□□□□□□□□□□□」<br><span  >“从今往后 在没有你的日子里,我一定 □□□□□□□□□□□□□□□□□□”</span>",
+  "制限時間は　あなたのこれからの人生<br><span>答题时间：你未来的人生</span>",
+  "解答用紙は　あなたのこれからの人生<br><span>答题试纸：你未来的人生</span>",
+  "答え合わせの　時に私はもういない<br><span>批改答案的时候 我或将不再存在</span>",
+  "だから　採点基準は　あなたのこれからの人生<br><span>所以 评分标准：你未来的人生</span>",
+  "「よーい、はじめ」<br><span>“准备好了吗？那就开始吧”</span>",
+];
+const update_t_future_instance = () => {
+  const t_future_instance = document.querySelector(".t_future_instance");
+  const third_page = document.querySelector(".third_page");
+  const rect = third_page.getBoundingClientRect();
+  const start = rect.top + window.scrollY;
+  const end = rect.bottom + window.scrollY - window.innerHeight;
+  const scroll_y = window.scrollY;
+  const interval = (end - start) / future_instance.length;
 
-  let rnd = function () {
-    return Math.sin((Math.floor(Math.random() * 360) * Math.PI) / 180);
-  };
-  let dist = function (p1, p2, p3) {
-    return Math.sqrt(
-      Math.pow(p2.x - p1.x, 2) +
-        Math.pow(p2.y - p1.y, 2) +
-        Math.pow(p2.z - p1.z, 2)
-    );
-  };
-
-  let cam = {
-    obj: {
-      x: _x,
-      y: _y,
-      z: _z,
-    },
-    dest: {
-      x: 0,
-      y: 0,
-      z: 1,
-    },
-    dist: {
-      x: 0,
-      y: 0,
-      z: 200,
-    },
-    ang: {
-      cplane: 0,
-      splane: 0,
-      ctheta: 0,
-      stheta: 0,
-    },
-    zoom: 1,
-    disp: {
-      x: w / 2,
-      y: h / 2,
-      z: 0,
-    },
-    upd: function () {
-      cam.dist.x = cam.dest.x - cam.obj.x;
-      cam.dist.y = cam.dest.y - cam.obj.y;
-      cam.dist.z = cam.dest.z - cam.obj.z;
-      cam.ang.cplane =
-        -cam.dist.z /
-        Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z);
-      cam.ang.splane =
-        cam.dist.x /
-        Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z);
-      cam.ang.ctheta =
-        Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z) /
-        Math.sqrt(
-          cam.dist.x * cam.dist.x +
-            cam.dist.y * cam.dist.y +
-            cam.dist.z * cam.dist.z
-        );
-      cam.ang.stheta =
-        -cam.dist.y /
-        Math.sqrt(
-          cam.dist.x * cam.dist.x +
-            cam.dist.y * cam.dist.y +
-            cam.dist.z * cam.dist.z
-        );
-    },
-  };
-
-  let trans = {
-    parts: {
-      sz: function (p, sz) {
-        return {
-          x: p.x * sz.x,
-          y: p.y * sz.y,
-          z: p.z * sz.z,
-        };
-      },
-      rot: {
-        x: function (p, rot) {
-          return {
-            x: p.x,
-            y: p.y * Math.cos(dtr(rot.x)) - p.z * Math.sin(dtr(rot.x)),
-            z: p.y * Math.sin(dtr(rot.x)) + p.z * Math.cos(dtr(rot.x)),
-          };
-        },
-        y: function (p, rot) {
-          return {
-            x: p.x * Math.cos(dtr(rot.y)) + p.z * Math.sin(dtr(rot.y)),
-            y: p.y,
-            z: -p.x * Math.sin(dtr(rot.y)) + p.z * Math.cos(dtr(rot.y)),
-          };
-        },
-        z: function (p, rot) {
-          return {
-            x: p.x * Math.cos(dtr(rot.z)) - p.y * Math.sin(dtr(rot.z)),
-            y: p.x * Math.sin(dtr(rot.z)) + p.y * Math.cos(dtr(rot.z)),
-            z: p.z,
-          };
-        },
-      },
-      pos: function (p, pos) {
-        return {
-          x: p.x + pos.x,
-          y: p.y + pos.y,
-          z: p.z + pos.z,
-        };
-      },
-    },
-    pov: {
-      plane: function (p) {
-        return {
-          x: p.x * cam.ang.cplane + p.z * cam.ang.splane,
-          y: p.y,
-          z: p.x * -cam.ang.splane + p.z * cam.ang.cplane,
-        };
-      },
-      theta: function (p) {
-        return {
-          x: p.x,
-          y: p.y * cam.ang.ctheta - p.z * cam.ang.stheta,
-          z: p.y * cam.ang.stheta + p.z * cam.ang.ctheta,
-        };
-      },
-      set: function (p) {
-        return {
-          x: p.x - cam.obj.x,
-          y: p.y - cam.obj.y,
-          z: p.z - cam.obj.z,
-        };
-      },
-    },
-    persp: function (p) {
-      return {
-        x: ((p.x * cam.dist.z) / p.z) * cam.zoom,
-        y: ((p.y * cam.dist.z) / p.z) * cam.zoom,
-        z: p.z * cam.zoom,
-        p: cam.dist.z / p.z,
-      };
-    },
-    disp: function (p, disp) {
-      return {
-        x: p.x + disp.x,
-        y: -p.y + disp.y,
-        z: p.z + disp.z,
-        p: p.p,
-      };
-    },
-    steps: function (_obj_, sz, rot, pos, disp) {
-      let _args = trans.parts.sz(_obj_, sz);
-      _args = trans.parts.rot.x(_args, rot);
-      _args = trans.parts.rot.y(_args, rot);
-      _args = trans.parts.rot.z(_args, rot);
-      _args = trans.parts.pos(_args, pos);
-      _args = trans.pov.plane(_args);
-      _args = trans.pov.theta(_args);
-      _args = trans.pov.set(_args);
-      _args = trans.persp(_args);
-      _args = trans.disp(_args, disp);
-      return _args;
-    },
-  };
-
-  (function () {
-    "use strict";
-    let threeD = function (param) {
-      this.transIn = {};
-      this.transOut = {};
-      this.transIn.vtx = param.vtx;
-      this.transIn.sz = param.sz;
-      this.transIn.rot = param.rot;
-      this.transIn.pos = param.pos;
-    };
-
-    threeD.prototype.vupd = function () {
-      this.transOut = trans.steps(
-        this.transIn.vtx,
-        this.transIn.sz,
-        this.transIn.rot,
-        this.transIn.pos,
-        cam.disp
-      );
-    };
-
-    let Build = function () {
-      this.vel = 0.04;
-      this.lim = 360;
-      this.diff = 200;
-      this.initPos = 100;
-      this.toX = _x;
-      this.toY = _y;
-      this.go();
-    };
-
-    Build.prototype.go = function () {
-      this.canvas = document.getElementById("canv");
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight;
-      this.$ = canv.getContext("2d");
-      this.$.globalCompositeOperation = "source-over";
-      this.varr = [];
-      this.dist = [];
-      this.calc = [];
-
-      for (let i = 0, len = num; i < len; i++) {
-        this.add();
-      }
-
-      this.rotObj = {
-        x: 0,
-        y: 0,
-        z: 0,
-      };
-      this.objSz = {
-        x: w / 5,
-        y: h / 5,
-        z: w / 5,
-      };
-    };
-
-    Build.prototype.add = function () {
-      this.varr.push(
-        new threeD({
-          vtx: {
-            x: rnd(),
-            y: rnd(),
-            z: rnd(),
-          },
-          sz: {
-            x: 0,
-            y: 0,
-            z: 0,
-          },
-          rot: {
-            x: 20,
-            y: -20,
-            z: 0,
-          },
-          pos: {
-            x: this.diff * Math.sin((360 * Math.random() * Math.PI) / 180),
-            y: this.diff * Math.sin((360 * Math.random() * Math.PI) / 180),
-            z: this.diff * Math.sin((360 * Math.random() * Math.PI) / 180),
-          },
-        })
-      );
-      this.calc.push({
-        x: 360 * Math.random(),
-        y: 360 * Math.random(),
-        z: 360 * Math.random(),
-      });
-    };
-
-    Build.prototype.upd = function () {
-      cam.obj.x += (this.toX - cam.obj.x) * 0.05;
-      cam.obj.y += (this.toY - cam.obj.y) * 0.05;
-    };
-
-    Build.prototype.draw = function () {
-      this.$.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      cam.upd();
-      this.rotObj.x += 0.1;
-      this.rotObj.y += 0.1;
-      this.rotObj.z += 0.1;
-
-      for (let i = 0; i < this.varr.length; i++) {
-        for (let val in this.calc[i]) {
-          if (this.calc[i].hasOwnProperty(val)) {
-            this.calc[i][val] += this.vel;
-            if (this.calc[i][val] > this.lim) this.calc[i][val] = 0;
-          }
-        }
-
-        this.varr[i].transIn.pos = {
-          x: this.diff * Math.cos((this.calc[i].x * Math.PI) / 180),
-          y: this.diff * Math.sin((this.calc[i].y * Math.PI) / 180),
-          z: this.diff * Math.sin((this.calc[i].z * Math.PI) / 180),
-        };
-        this.varr[i].transIn.rot = this.rotObj;
-        this.varr[i].transIn.sz = this.objSz;
-        this.varr[i].vupd();
-        if (this.varr[i].transOut.p < 0) continue;
-        let g = this.$.createRadialGradient(
-          this.varr[i].transOut.x,
-          this.varr[i].transOut.y,
-          this.varr[i].transOut.p,
-          this.varr[i].transOut.x,
-          this.varr[i].transOut.y,
-          this.varr[i].transOut.p * 2
-        );
-        this.$.globalCompositeOperation = "lighter";
-        g.addColorStop(0, "hsla(255, 255%, 255%, 1)");
-        g.addColorStop(0.5, "hsla(" + (i + 2) + ",85%, 40%,1)");
-        g.addColorStop(1, "hsla(" + i + ",85%, 40%,.5)");
-        this.$.fillStyle = g;
-        this.$.beginPath();
-        this.$.arc(
-          this.varr[i].transOut.x,
-          this.varr[i].transOut.y,
-          this.varr[i].transOut.p * 2,
-          0,
-          Math.PI * 2,
-          false
-        );
-        this.$.fill();
-        this.$.closePath();
-      }
-    };
-    Build.prototype.anim = function () {
-      window.requestAnimationFrame = (function () {
-        return (
-          window.requestAnimationFrame ||
-          function (callback, element) {
-            window.setTimeout(callback, 1000 / 60);
-          }
-        );
-      })();
-      let anim = function () {
-        this.upd();
-        this.draw();
-        window.requestAnimationFrame(anim);
-      }.bind(this);
-      window.requestAnimationFrame(anim);
-    };
-
-    Build.prototype.run = function () {
-      this.anim();
-      const mouse_move = (e) => {
-        this.toX = (e.clientX - this.canvas.width / 2) * -0.8;
-        this.toY = (e.clientY - this.canvas.height / 2) * 0.8;
-      };
-      window.addEventListener("mousemove", mouse_move.bind(this));
-
-      const touch_move = (e) => {
-        e.preventDefault();
-        this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8;
-        this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8;
-      };
-      window.addEventListener("touchmove", touch_move.bind(this));
-
-      const mouse_down = (e) => {
-        for (let i = 0; i < 100; i++) {
-          this.add();
-        }
-      };
-      window.addEventListener("mousedown", mouse_down.bind(this));
-
-      const touch_start = (e) => {
-        e.preventDefault();
-        for (let i = 0; i < 100; i++) {
-          this.add();
-        }
-      };
-      window.addEventListener("touchstart", touch_start.bind(this));
-    };
-    let app = new Build();
-    app.run();
-  })();
-  window.addEventListener("resize", func, false);
-});
-const func = () => {
-  canvas.width = w = window.innerWidth;
-  canvas.height = h = window.innerHeight;
+  if (scroll_y >= start && scroll_y <= end) {
+    const index = Math.floor((scroll_y - start) / interval);
+    t_future_instance.innerHTML = future_instance[index];
+    t_future_instance.style.transform = `scale(${create_animation(
+      start + index * interval,
+      start + (index + 1) * interval,
+      0.5,
+      1
+    )(scroll_y)}) translateY(${create_animation(
+      start + index * interval,
+      start + (index + 1) * interval,
+      3,
+      0
+    )(scroll_y)}em)`;
+    t_future_instance.style.opacity = create_animation(
+      start + index * interval,
+      start + (index + 1) * interval,
+      0.5,
+      1
+    )(scroll_y);
+  } else if (scroll_y < start) {
+    t_future_instance.innerHTML = future_instance[0];
+  } else {
+    t_future_instance.innerHTML = future_instance[future_instance.length - 1];
+  }
 };
 
-const go_github = () => {
-  window.location.href = "https://github.com/sparkle520";
+const s_animation_map = new Map();
+const init_s_animation_map = () => {
+  const animation_item = document.querySelectorAll(".animation_item");
+  const start =
+    document.querySelector(".second_page").getBoundingClientRect().top +
+    window.scrollY;
+  const end =
+    document.querySelector(".second_page").getBoundingClientRect().bottom +
+    window.scrollY -
+    window.innerHeight;
+  for (const item of animation_item) {
+    s_animation_map.set(item, get_s_dom_animation(start, end, item));
+  }
 };
-const go_netEase_cloud_music = () => {
-  window.location.href =
-    "https://music.163.com/song?id=1401025134&userid=499623339";
+const get_s_dom_animation = (start, end, dom) => {
+  const opacity_animation = create_animation(start, end, 0, 1);
+  const ul = document.querySelector(".s_animation_box ul");
+  const { clientWidth, clientHeight, offsetTop, offsetLeft } = dom;
+  const rect = ul.getBoundingClientRect();
+  const opacity = (x) => {
+    return opacity_animation(x);
+  };
+  start += dom.dataset.order * 100;
+  const transform = (scroll_y) => {
+    return `translate(${create_animation(
+      start,
+      end,
+      rect.width / 2 - clientWidth / 2 - offsetLeft,
+      0
+    )(scroll_y)}px,${create_animation(
+      start,
+      end,
+      rect.height / 2 - clientHeight / 2 - offsetTop,
+      0
+    )(scroll_y)}PX) scale(${create_animation(start, end, 0.2, 1)(scroll_y)})`;
+  };
+  return {
+    opacity,
+    transform,
+  };
 };
-//change scss let
+const update_s_animation_map_style = () => {
+  const scroll_y = window.scrollY;
+  const more = document.querySelector(".more");
+  const first_page = document.querySelector(".first_page");
+  // const s_animation_box_bg_2 = document.querySelector(".s_animation_box_bg_2");
+  const start =
+    document.querySelector(".second_page").getBoundingClientRect().top +
+    window.scrollY;
+  const end =
+    document.querySelector(".second_page").getBoundingClientRect().bottom +
+    window.scrollY -
+    window.innerHeight;
+  first_page.style.opacity =
+    first_page.getBoundingClientRect().bottom / first_page.clientHeight;
+  // s_animation_box_bg_2.style.webkitMaskPosition = `${create_animation(
+  //   start,
+  //   end,
+  //   0,
+  //   100
+  // )(scroll_y)}% ${create_animation(start, end, 100, 0)(scroll_y)}%`;
+
+  if (scroll_y > 0) {
+    more.style.opacity = 0;
+  } else {
+    more.style.opacity = 1;
+  }
+  for (const [dom, animations] of s_animation_map) {
+    for (const prop in animations) {
+      const v = animations[prop](scroll_y);
+      dom.style[prop] = v;
+    }
+  }
+};
+
+//change scss var
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
 };
+const create_animation = (start, end, s_v, e_v) => {
+  return (x) => {
+    if (x < start) {
+      return s_v;
+    }
+    if (x > end) {
+      return e_v;
+    }
+    return s_v + ((e_v - s_v) * (x - start)) / (end - start);
+  };
+};
 const change_theme = (current_theme) => {
   if (current_theme) {
-    c_c("--about_bg_color", "#0b0e14");
+    c_c("--home_bg_color", "#123");
+    c_c("--first_page_cover_bg", "#1e243398");
+    c_c("--home_color", "#f0f8ff");
+    c_c("--u_w_m_btn_color", "#f0f8ff");
+    c_c("--word_box_color", "#f0f8ff");
+    c_c("--f_word_box_color", "#f0f8ff");
   } else {
-    c_c("--about_bg_color", "#0b0e14");
+    c_c("--home_bg_color", "#f7f3f5");
+    c_c("--first_page_cover_bg", "transparent");
+    c_c("--home_color", "#e60000");
+    c_c("--u_w_m_btn_color", "#ff80bf");
+    c_c("--word_box_color", "#003153");
+    c_c("--f_word_box_color", "#0a0606");
   }
 };
 </script>
 <template>
-  <div id="about_main" class="relative">
-    <canvas id="canv"></canvas>
-    <!-- <div class="space flex justify_content_center"> -->
+  <div id="about_main" class="">
+    <div class="first_page relative">
+      <div class="word_box absolute flex flex_direction_column">
+        <span class="common">TINY</span>
+        <span class="common">FLOWERS</span>
+      </div>
+      <div class="word_box_2 absolute">
+        <span class="common">PRIVATE BLOG<br /></span>
+      </div>
+      <!-- <button class="u_w_m_btn absolute" @click="go_to_unknown_world_map">
+        Unknown World Map
+      </button> -->
 
-    <!-- <div class="stars">
-        <div class="star"></div>
-        <div class="star pink"></div>
-        <div class="star blue"></div>
-        <div class="star yellow"></div>
-    </div> -->
-    <!-- </div> -->
-
-    <!-- <div class="bg absolute">
-      <img
-        class="absolute"
-        src="https://pic.imgdb.cn/item/659e6246871b83018a27b7cc.jpg"
+      <!-- <img
+        class="f_bg"
+        src="https://pic.imgdb.cn/item/65b0f614871b83018ab94e81.png"
         alt=""
-      />
+      /> -->
+      <svg
+        t="1706081571224"
+        class="icon absolute more"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="14155"
+        width="52"
+        height="52"
+      >
+        <path
+          d="M500.408996 544.70045c3.684558 3.684558 8.674063 5.757121 13.893853 5.757121 5.21979 0 10.209295-2.072564 13.893853-5.757121L717.567616 355.406297c7.676162-7.676162 7.676162-20.111544 0-27.787706-7.676162-7.676162-20.111544-7.676162-27.787706 0L514.302849 503.018891 333.682759 322.398801c-7.676162-7.676162-20.111544-7.676162-27.787707 0-7.676162 7.676162-7.676162 20.111544 0 27.787706l194.513944 194.513943z m189.370914-59.874063L514.302849 660.303448 333.682759 479.606597c-7.676162-7.676162-20.111544-7.676162-27.787707 0-7.676162 7.676162-7.676162 20.111544 0 27.787706l194.513944 194.513943c3.684558 3.684558 8.674063 5.757121 13.893853 5.757121 5.21979 0 10.209295-2.072564 13.893853-5.757121l189.370914-189.370915c4.989505-4.989505 6.908546-12.205097 5.066267-18.96012-1.842279-6.755022-7.138831-12.051574-13.893853-13.893853-6.755022-1.765517-13.970615 0.153523-18.96012 5.143029z m0 0"
+          fill="#cdcdcd"
+          p-id="14156"
+        ></path>
+      </svg>
+      <div class="first_page_cover absolute"></div>
     </div>
-    <div class="card absolute">
-      <div class="img flex align_items_center justify_content_center">
-        <img
-          src="https://pic.imgdb.cn/item/659e63dc871b83018a2d7de3.jpg"
-          alt=""
-        />
+    <div class="second_page relative">
+      <div class="s_animation_box">
+        <!-- <div class="s_animation_box_bg_box absolute">
+          <img
+            src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
+            class="s_animation_box_bg_1 absolute"
+            alt=""
+          />
+          <div class="s_animation_box_bg_2 absolute"></div>
+        </div> -->
+        <span class="absolute">喜欢的作品</span>
+        <ul class="flex flex_direction_row absolute">
+          <li data-order="0" class="animation_item relative">
+            <img
+              src="https://pic.imgdb.cn/item/65b15382871b83018a4d9b0b.webp"
+              alt=""
+            />
+          </li>
+          <li data-order="1" class="animation_item relative">
+            <img
+              src="https://pic.imgdb.cn/item/65b152e5871b83018a4c46be.webp"
+              alt=""
+            />
+          </li>
+          <li data-order="3" class="animation_item relative">
+            <img
+              src="https://pic.imgdb.cn/item/65b96999871b83018aad93e5.webp"
+              alt=""
+            />
+          </li>
+        </ul>
       </div>
-      <h1>SPARKLE</h1>
-      <div class="info_box">
-        <span>
-          个性签名:
-          <span>雨停了,</span>
-        </span>
+    </div>
+    <div class="third_page relative">
+      <div
+        class="t_animation_box relative flex justify_content_center align_items_center"
+      >
+        <span class="t_future_instance absolute"></span>
+        <div class="t_circle_1 absolute"></div>
+        <div class="t_circle_2 absolute"></div>
       </div>
-      <p class="absolute flex flex_direction_row align_items_center">
-        <svg
-          @click="go_github"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          width="45"
-          height="45"
-        >
-          <path
-            d="M950.930286 512q0 143.433143-83.748571 257.974857t-216.283429 158.573714q-15.433143 2.852571-22.601143-4.022857t-7.168-17.115429l0-120.539429q0-55.442286-29.696-81.115429 32.548571-3.437714 58.587429-10.313143t53.686857-22.308571 46.299429-38.034286 30.281143-59.977143 11.702857-86.016q0-69.12-45.129143-117.686857 21.138286-52.004571-4.534857-116.589714-16.018286-5.12-46.299429 6.290286t-52.589714 25.161143l-21.723429 13.677714q-53.174857-14.848-109.714286-14.848t-109.714286 14.848q-9.142857-6.290286-24.283429-15.433143t-47.689143-22.016-49.152-7.68q-25.161143 64.585143-4.022857 116.589714-45.129143 48.566857-45.129143 117.686857 0 48.566857 11.702857 85.723429t29.988571 59.977143 46.006857 38.253714 53.686857 22.308571 58.587429 10.313143q-22.820571 20.553143-28.013714 58.88-11.995429 5.705143-25.746286 8.557714t-32.548571 2.852571-37.449143-12.288-31.744-35.693714q-10.825143-18.285714-27.721143-29.696t-28.306286-13.677714l-11.410286-1.682286q-11.995429 0-16.603429 2.56t-2.852571 6.582857 5.12 7.972571 7.460571 6.875429l4.022857 2.852571q12.580571 5.705143 24.868571 21.723429t17.993143 29.110857l5.705143 13.165714q7.460571 21.723429 25.161143 35.108571t38.253714 17.115429 39.716571 4.022857 31.744-1.974857l13.165714-2.267429q0 21.723429 0.292571 50.834286t0.292571 30.866286q0 10.313143-7.460571 17.115429t-22.820571 4.022857q-132.534857-44.032-216.283429-158.573714t-83.748571-257.974857q0-119.442286 58.88-220.306286t159.744-159.744 220.306286-58.88 220.306286 58.88 159.744 159.744 58.88 220.306286z"
-            fill="#364a62"
-          ></path>
-        </svg>
-        <svg
-        @click="go_netEase_cloud_music"
-          t="1704891046783"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="4231"
-          width="40"
-          height="40"
-        >
-          <path
-            d="M679.74985728 16.02916228c10.23612444 1.63311391 20.58889897 2.79962356 30.73753463 4.9868305a227.49858884 227.49858884 0 0 1 95.59548468 45.69802419c18.46001853 14.81467525 25.98400722 34.14957675 20.6472245 57.04233275-4.81185294 20.58889897-18.25587966 34.47036669-39.01975521 40.39040472-19.65569144 5.59924712-37.38664131 1.34148625-53.51364054-11.28598303-20.44308563-16.03951044-43.13170275-27.12135459-70.31138287-24.75917203-23.03857031 2.01222937-45.05644431 25.72154281-43.07337722 46.89369709 0.874882 9.47789253 4.34524966 18.72248391 6.79492003 28.05456212 4.34524966 16.44778916 8.83631266 32.86641603 13.23988688 49.31420519 0.75823094 2.82878681 1.48730056 5.07431831 5.54092256 5.30762044 61.91251219 3.29539009 117.7008465 23.00940706 167.42332944 59.55032866 48.87676419 35.928504 88.88805247 79.06020675 115.71778037 133.24459137a330.00564463 330.00564463 0 0 1 33.62464697 125.83725278c3.87864541 58.58795884-3.14957675 115.892756-26.45061147 169.98965185-54.18438366 125.74976497-149.45907841 206.85136434-283.43273747 244.12135459a479.37723425 479.37723425 0 0 1-156.07902184 16.79774234c-109.91439341-6.12417691-205.13076166-46.74788375-285.32831578-120.2088424C132.71504941 814.56349913 83.37168194 725.47130778 66.22398641 620.89369709c-23.35936025-142.25587966 12.45249269-269.78457187 107.20225765-380.39887068 52.02634094-60.77516481 116.97177784-104.54844744 192.70743222-132.80715038 26.10065828-9.76952019 54.65098791-0.67074312 68.96989663 21.60959625 14.63969866 22.77610494 11.19849522 52.08466647-9.06961479 70.19473181a68.64910669 68.64910669 0 0 1-20.18062025 12.07337722c-115.455315 46.10630291-191.71589819 127.32455334-222.01599278 245.78363078-29.39604934 114.90122294-3.41204116 220.09125122 71.62370685 312.77046129 47.03951044 58.09219231 107.81467525 97.11194753 181.36312269 116.27187146 47.53527794 12.39416716 95.56632144 13.18156134 143.97648234 5.8617125 49.95578506-7.55315194 96.616181-23.62182466 138.46472206-51.6472245 57.56726253-38.58231422 98.59924712-89.99623659 119.10065828-155.43744197 17.70178759-56.48824069 18.31420519-113.53057344-3.5578545-169.58137312-17.61429881-45.11476984-48.76011312-79.81843866-87.80903159-108.45625609-20.85136434-15.31044178-43.24835381-27.23800566-68.79492003-33.09971719-1.16650966-0.26246441-2.36218256-0.40827872-4.46189975-0.72906866 3.49952994 13.06491028 6.7365945 25.48824069 10.09031012 37.88240785 8.107244 29.86265262 16.38946363 59.69614297 24.35089331 89.61712112 17.29350888 65.03292569 0.55409206 121.98777062-45.20225765 170.51458163-42.34430856 44.91063-96.23706456 64.44967038-158.03292569 58.58795884-68.82408231-6.53245562-117.96331091-43.07337722-150.01317047-102.24459041-16.79774234-30.97083772-24.03010338-64.36218256-25.37158962-99.2991535-2.12888044-55.64252097 11.14016969-106.99811878 43.71495806-152.92944509 34.99529647-49.31420519 83.43461869-80.95578506 140.71025356-100.61147747 4.491063-1.54562512 9.06961478-2.94543788 14.34807197-4.66603959-3.09125122-11.46095962-6.2991535-22.63029159-9.06961478-33.88711138-3.82031988-15.51458162-8.71966159-30.94167447-10.64440219-46.68955822-5.65757266-46.60206944 8.95296372-87.10912522 41.84854203-121.05456212C577.41777809 40.75917203 610.08005428 23.14487322 649.21646056 17.86641603c4.31608641-0.58325531 8.60301053-1.22483519 12.91909694-1.83725375h17.61429978z m-122.22107275 361.67638775c-33.91627462 10.55691437-63.19567291 26.65475034-85.15522137 53.42615272-29.36688609 35.87017847-35.22859859 77.07714062-25.86735616 120.85042325 4.87017847 22.74694266 16.24365028 42.19849522 36.19096841 55.78833528 24.93414862 16.97271894 58.90874878 16.24365028 84.98024478-1.39981178 26.65475034-18.08090306 38.52398869-47.21448703 30.73753559-77.07714062-8.51552175-32.72060172-17.58513653-65.32455334-26.42144919-97.98682954l-14.46472206-53.60112931z"
-            p-id="4232"
-            fill="#d81e06"
-          ></path>
-        </svg>
-      </p>
-    </div> -->
-    <div class="absolute absolute_center intro">
-      <span> 祝你有一天能和你重要的人重逢</span>
+    </div>
+    <div class="fourth_page relative">
+      <div
+        class="f_animation_box relative flex justify_content_center align_items_center"
+      >
+        <div class="f_circle absolute"></div>
+        <div class="f_word_box absolute">
+          <div class="f_word_inner_box absolute flex flex_direction_column">
+            <span class="w_1">Searching</span>
+            <span class="w_2"> all the world </span>
+            <span class="w_3">For one thing</span>
+          </div>
+        </div>
+        <div class="card c_1 absolute">
+          <img
+            src="https://pic.imgdb.cn/item/65b3c514871b83018a87b510.png"
+            alt=""
+          />
+        </div>
+        <div class="card c_2 absolute"></div>
+      </div>
+    </div>
+    <div class="fifth_page relative">
+      <div class="latter_box absolute">
+        <span class="absolute" v-for="item in user_store.name.split('')">{{
+          item
+        }}</span>
+      </div>
+      <div></div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
-$about_bg_color: var(--about_bg_color, #0b0e14);
-
+$home_bg_color: var(--home_bg_color, #384f89);
+$home_color: var(--home_color, #1a1814);
+$first_page_cover_bg: var(--first_page_cover_bg, #1e243398);
+$u_w_m_btn_color: var(--u_w_m_btn_color, #ff80bf);
+$word_box_color: var(--word_box_color, #003153);
+$f_word_box_color: var(--f_word_box_color, #0a0606);
 #about_main {
   width: 100vw;
-  height: 101vh;
-  background-color: $about_bg_color;
-  color: #fff;
-  .intro {
-    font-size: 20px;
-    font-weight: 600;
-    span {
+  height: 100vh;
+  // scroll-snap-type: y mandatory;
+  background: $home_bg_color;
+  .first_page {
+    width: 100vw;
+    height: 100vh;
+    background: $home_bg_color;
+    z-index: 100;
+    &::after {
+      width: 40vw;
+      height: 30vw;
+      border-radius: 50%;
+      filter: blur(110px);
+      top: 70%;
+      content: "";
+      left: 5vw;
+      position: absolute;
+      transform: translateY(-50%);
+
+      background: #a900ff;
+    }
+    &::before {
+      right: 10vw;
+      content: "";
+      position: absolute;
+      z-index: 1;
+      background: #ffac86;
+      width: 20vw;
+      height: 20vw;
+      border-radius: 50%;
+      filter: blur(110px);
+      top: 20%;
+
+      transform: translateY(-50%);
+    }
+    // scroll-snap-align: start;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    // animation: first_page 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    // &::after{
+    //   width: 100vw;
+    //   height: 30vh;
+    //   background: linear-gradient(to top,rgb(182, 183, 183),transparent);
+    //   content: '';
+    //   position: absolute;
+    //   bottom: 0;
+    // }
+    .u_w_m_btn {
+      font-family: inherit;
+      width: 8em;
+      height: 2.6em;
+      z-index: 1000;
+      line-height: 2.5em;
+      background: transparent;
+      margin: 20px;
+      transform: translateY(65vh) translateX(2em);
+      position: relative;
+      border: 2px solid $u_w_m_btn_color;
+      transition: color 0.5s;
+      font-size: 17px;
+      border-radius: 6px;
+      font-weight: 500;
+      color: $u_w_m_btn_color;
+      &::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        background: $u_w_m_btn_color;
+        height: 150px;
+        width: 200px;
+        border-radius: 50%;
+        top: 100%;
+        left: 100%;
+        transition: all 0.7s;
+      }
+      &:hover {
+        color: #ffff;
+        &::before {
+          top: -30px;
+          left: -30px;
+        }
+      }
+      &:active {
+        &::before {
+          background: $u_w_m_btn_color;
+          transition: background 0s;
+        }
+      }
+    }
+    // .f_bg {
+    //   position: absolute;
+    //   right: 3em;
+    //   width: 50vw;
+    //   height: 50vh;
+    //   top: 50%;
+    //   border-radius: 0.3em;
+    //   z-index: 100;
+    //   transform: translateY(-50%);
+    // }
+
+    .word_box {
+      left: 3em;
+      top: 40%;
+      z-index: 1000;
+      transform: translateY(-50%);
+
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   width: 900px;
+      //   height: 300px;
+      //   background: #7bc5e33c;
+      //   left: -100px;
+      //   top: 50%;
+      //   transform: translateY(-50%);
+      // }
+      .common {
+        font-size: 7em;
+        font-weight: 900;
+        line-height: 1em;
+        color: $word_box_color;
+        z-index: 100;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        // animation: word_1 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        // background: url(https://pic.imgdb.cn/item/65aae8fe871b83018ac8d369.png)
+        // // background: url(https://pic.imgdb.cn/item/65b0d75c871b83018a4c3d9e.png)
+        //   repeat #011f42;
+        // background-size: 300px auto;
+        // -webkit-text-fill-color: transparent;
+        // text-fill-color: transparent;
+        // -webkit-background-clip: text;
+        // background-clip: text;
+        // -webkit-animation: background 12s infinite linear;
+        // animation: background 12s infinite linear;
+      }
+      // @keyframes word_1 {
+      //   0% {
+      //     line-height: 2em;
+      //   }
+      //   100% {
+      //     line-height: 1em;
+      //   }
+      // }
+    }
+    .word_box_2 {
+      left: 4em;
+      top: 54%;
+      color: $word_box_color;
+      z-index: 1;
+
+      animation: to_left 5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   width: 420px;
+      //   height: 60px;
+      //   background: #7bc5e33c;
+      //   left: -5%;
+      //   top: 50%;
+      //   transform: translateY(-50%);
+      // }
+      .common {
+        font-size: 2em;
+        font-weight: 900;
+        z-index: 100;
+        // text-shadow: #e60000 -.1em .0em 2px;
+        // filter: drop-shadow(0 0 10px #efb0b0);
+        // text-shadow: $home_color 2px 2px 1px;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        // background: url(http://html5book.ru/wp-content/uploads/2016/08/bubbles.png)
+        //   repeat #011f42;
+        // background-size: 300px auto;
+        // -webkit-text-fill-color: transparent;
+        // text-fill-color: transparent;
+        // -webkit-background-clip: text;
+        // background-clip: text;
+        // -webkit-animation: background 12s infinite linear;
+        // animation: background 12s infinite linear;
+      }
+    }
+    .first_page_cover {
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      z-index: 19;
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+      background: linear-gradient(
+        to right,
+        $first_page_cover_bg 1%,
+        transparent 50%,
+        $first_page_cover_bg 100%
+      );
+    }
+  }
+
+  .more {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: more 2s infinite linear both;
+    z-index: 20;
+    path {
+      fill: #a7a7eb;
+    }
+  }
+  @keyframes more {
+    0% {
+      transform: translateY(0);
+    }
+    90% {
+      transform: translateY(-20px);
       opacity: 0;
-      animation: text_type 10s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  .second_page {
+    width: 100vw;
+    height: 400vh;
+    z-index: 21;
+    background: $home_bg_color;
+
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    .s_animation_box {
+      position: sticky;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      color: $word_box_color;
+      background: transparent;
+      &::after {
+        width: 40vw;
+        height: 30vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 70%;
+        content: "";
+        left: 5vw;
+        position: absolute;
+        transform: translateY(-50%);
+
+        background: #00aaff;
+      }
+      &::before {
+        right: 10vw;
+        content: "";
+        position: absolute;
+        z-index: 1;
+        background: #22c32e;
+        width: 20vw;
+        height: 10vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 40%;
+
+        transform: translateY(-50%);
+      }
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   width: 100vw;
+      //   height: 40vh;
+      //   background: linear-gradient(to top, rgb(38, 41, 44), transparent);
+      //   bottom: 0;
+      // }
+      .s_animation_box_bg_box {
+        width: 100vw;
+        height: 68vh;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -40%);
+        background: $home_bg_color;
+
+        // &::after {
+        //   content: "";
+        //   position: absolute;
+        //   background: none;
+        //   width: 130%;
+        //   background: $home_bg_color;
+        //   height: 26vh;
+        //   left: 50%;
+        //   transform: translateX(-50%);
+        //   border-radius: 50%;
+        //   bottom: -28%;
+        //   box-shadow: inset 2px 3px 20px #123;
+        // }
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   background: none;
+        //   width: 130%;
+        //   background: $home_bg_color;
+        //   height: 26vh;
+        //   left: 50%;
+        //   transform: translateX(-50%);
+        //   border-bottom-left-radius: 50%;
+        //   border-bottom-right-radius: 50%;
+        //   top: -30%;
+        //   z-index: 1;
+
+        // }
+      }
+
+      // .s_animation_box_bg_1 {
+      //   width: 100vw;
+      //   border-radius: 5px;
+      //   height: 10vh;
+      //   opacity: 1;
+      // }
+      // .s_animation_box_bg_2 {
+      //   width: 100vw;
+      //   height: 20vh;
+      //   opacity: 1;
+      //   border-radius: 5px;
+
+      //   background-size: cover;
+      //   background-image: url(https://pic.imgdb.cn/item/65b21d96871b83018a08d73b.png);
+      //   -webkit-mask-image: linear-gradient(
+      //     to right,
+      //     transparent 47.5%,
+      //     #fff 52.5%
+      //   );
+      //   background-repeat: no-repeat;
+      //   -webkit-mask-size: 210%;
+      //   -webkit-mask-position: left;
+      // }
+      ul {
+        margin: 0;
+        padding: 0;
+        width: calc(75vw + 40px);
+        height: 64vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -40%);
+        gap: 20px;
+        z-index: 11;
+        .animation_item {
+          width: 25vw;
+          height: 64vh;
+          border-radius: 5px;
+          overflow: hidden;
+          &::after {
+            position: absolute;
+            left: -140%;
+            content: "";
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0),
+              rgba(255, 255, 255, 0.5),
+              rgba(255, 255, 255, 0)
+            );
+            transform: skew(-30deg);
+          }
+          &:hover {
+            &::after {
+              left: 140%;
+              transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+          }
+          img {
+            width: inherit;
+            object-fit: cover;
+            height: inherit;
+            border-radius: inherit;
+            box-shadow: #003153 4px 5px 10px;
+          }
+        }
+      }
+      .show_text {
+        font-size: 4em;
+      }
+      span {
+        top: 4.5em;
+        font-weight: 900;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2em;
+        color: $word_box_color;
+      }
+    }
+  }
+  .third_page {
+    width: 100vw;
+    height: 300vh;
+    background: $home_bg_color;
+    // scroll-snap-align: start;
+
+    .t_animation_box {
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      position: sticky;
+      background: $home_bg_color;
+      .t_future_instance {
+        font-size: 2em;
+        font-weight: 900;
+        text-align: center;
+        line-height: 2em;
+        color: $f_word_box_color;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+      .t_circle_1 {
+        width: 20vw;
+        height: 20vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        left: 5em;
+        background: #ff5232;
+      }
+      .t_circle_2 {
+        right: 5em;
+        background: #f7ff00;
+        width: 20vw;
+        height: 20vw;
+        border-radius: 50%;
+        filter: blur(110px);
+        top: 50%;
+
+        transform: translateY(-50%);
+      }
+    }
+    // scroll-snap-align: start;
+  }
+  .fourth_page {
+    width: 100vw;
+    height: 100vh;
+    background: $home_bg_color;
+    // border-bottom:3px #11223318 solid ;
+    // border-top:3px #11223318 solid ;
+    // scroll-snap-align: start;
+    &::after {
+      width: 50vw;
+      height: 30vw;
+      border-radius: 50%;
+      filter: blur(110px);
+      top: 50%;
+      content: "";
+      left: 5vw;
+      position: absolute;
+      transform: translateY(-50%);
+
+      z-index: 10;
+      background: #ffd9e6;
+    }
+    &::before {
+      right: 5em;
+      content: "";
+      position: absolute;
+      z-index: 1;
+      background: #ff80bf;
+      width: 20vw;
+      height: 20vw;
+      border-radius: 50%;
+      filter: blur(110px);
+      top: 70%;
+
+      transform: translateY(-50%);
+    }
+    .f_animation_box {
+      background: $home_bg_color;
+      width: inherit;
+      height: inherit;
+
+      // .f_circle {
+      //   width: 30vw;
+      //   height: 30vw;
+      //   right: -15vw;
+      //   bottom: -15vw;
+      //   border-radius: 50%;
+      //   background: #f4bbbb7b;
+      //   &::after {
+      //     content: "";
+      //     position: absolute;
+      //     width: 70%;
+      //     height: 70%;
+      //     right: 40vw;
+      //     border-radius: 50%;
+      //     background: #f4bbbb7b;
+      //     top: -10vw;
+      //   }
+      // }
+      .f_word_box {
+        left: 0vw;
+        top: 0%;
+        color: $f_word_box_color;
+        font-size: 1.5em;
+
+        font-weight: 900;
+        z-index: 11;
+        height: 70vh;
+        width: 50vw;
+        span {
+        }
+        .f_word_inner_box {
+          transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+          top: 30vh;
+          left: 10vw;
+          .w_1 {
+            font-size: 4em;
+            color: transparent;
+            -webkit-text-stroke: #6640ff 2px;
+            text-shadow: #6640ff 0px 13px 10px;
+          }
+          .w_2 {
+            font-size: 3em;
+            font-weight: 600;
+            color: #ff6666;
+            margin: 1vh 0;
+            text-shadow: #ff6666 0px 13px 10px;
+          }
+          .w_3 {
+            font-size: 3.5em;
+            font-family: 900;
+            color: #ff9d00;
+            text-shadow: #ff4d00 0px 13px 10px;
+          }
+        }
+      }
+
+      .card {
+        width: 23vw;
+        height: 53vh;
+      }
+      .c_1 {
+        background: rgb(19, 20, 21);
+        box-shadow: #62676b54 0px 13px 10px;
+
+        z-index: 1;
+        right: 14vw;
+        top: 27vh;
+        transform: rotate(3deg);
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .c_2 {
+        background: #e72626;
+        z-index: 0;
+        right: 17vw;
+        box-shadow: #62676be8 0px 13px 10px;
+
+        top: 29vh;
+        transform: rotate(-10deg);
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+    }
+  }
+  .fifth_page {
+    width: 100vw;
+    height: 100vh;
+    //  scroll-snap-align: start;
+
+    background: $home_bg_color;
+    &::after {
+      width: 40vw;
+      height: 30vw;
+      border-radius: 50%;
+      filter: blur(110px);
+      top: 70%;
+      content: "";
+      left: 5vw;
+      position: absolute;
+      transform: translateY(-50%);
+
+      background: #ff9d00;
+    }
+    &::before {
+      right: 10vw;
+      content: "";
+      position: absolute;
+      z-index: 1;
+      background: #00ff93;
+      width: 20vw;
+      height: 20vw;
+      border-radius: 50%;
+      filter: blur(110px);
+      top: 20%;
+
+      transform: translateY(-50%);
+    }
+    .latter_box {
+      left: 10vw;
+      z-index: 100;
+      top: 38vh;
+      color: #ff9028;
+      font-size: 3em;
+      font-weight: 900;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
     }
   }
 }
-@keyframes text_type {
+// @keyframes to_right {
+//   0% {
+//     left: 0;
+//   }
+//   100% {
+//     left: 100px;
+//   }
+// }
+// @keyframes to_left {
+//   0% {
+//     right: -3%;
+//   }
+//   100% {
+//     right: 3%;
+//   }
+// }
+// -webkit-keyframes background {
+//   from {
+//     background-position: 0 0%;
+//   }
+//   to {
+//     background-position: 0 -300px;
+//   }
+// }
+// @keyframes background {
+//   from {
+//     background-position: 0 0%;
+//   }
+//   to {
+//     background-position: 0 -300px;
+//   }
+// }
+
+@keyframes first_page {
   0% {
-    opacity: 1;
-    transform: translateY(100px);
+    transform: rotateY(-90deg);
   }
   100% {
-    opacity: 0;
-    transform: translateY(0);
+    transform: rotateY(0deg);
   }
 }
-
-// .space {
-//     width: 100%;
-//     height: 100%;
-//     background: #0b0e14;
-// }
-// .star {
-//     width: 5px;
-//     height: 5px;
-//     border-radius: 50%;
-//     background: #FFF;
-
-//     position: relative;
-//     transform-origin: 100% 0;
-//     animation: star-ani 6s infinite ease-out;
-//     box-shadow: 0 0 5px 5px rgba(255, 255, 255, .3);
-//     opacity: 0;
-//     z-index: 10000;
-// }
-// .star:after {
-//     content: '';
-//     display: block;
-//     top: 0px;
-//     left: 4px;
-//     border: 0px solid #fff;
-//     border-width: 0px 90px 2px 90px;
-//     border-color: transparent transparent transparent rgba(255, 255, 255, .3);
-//     transform: rotate(-45deg) translate3d(1px, 3px, 0);
-//     box-shadow: 0 0 1px 0 rgba(255, 255, 255, .1);
-//     transform-origin: 0% 100%;
-//     animation: shooting-ani 3s infinite ease-out;
-// }
-// .pink {
-//     top: 30px;
-//     left: 395px;
-//     background: #ff5a99;
-//     animation-delay: 5s;
-//     -webkit-animation-delay: 5s;
-//     -moz-animation-delay: 5s;
-// }
-// .pink:after {
-//     border-color: transparent transparent transparent #ff5a99;
-//     animation-delay: 5s;
-//     -webkit-animation-delay: 5s;
-//     -moz-animation-delay: 5s;
-// }
-// .blue {
-//     top: 35px;
-//     left: 432px;
-//     background: cyan;
-//     animation-delay: 7s;
-//     -webkit-animation-delay: 7s;
-//     -moz-animation-delay: 7s;
-// }
-// .blue:after {
-//     border-color: #213;
-//     -webkit-animation-delay: 7s;
-//     -moz-animation-delay: 7s;
-//     animation-delay: 7s;
-// }
-// .yellow {
-//     top: 50px;
-//     left: 600px;
-//     background: #ffcd5c;
-//     animation-delay: 5.8s;
-// }
-// .yellow:after {
-//     border-color: transparent transparent transparent #ffcd5c;
-//     animation-delay: 5.8s;
-// }
-// @keyframes star-ani {
-//     0% {
-//         opacity: 0;
-//         transform: scale(0) rotate(0) translate3d(0, 0, 0);
-//         -webkit-transform: scale(0) rotate(0) translate3d(0, 0, 0);
-//         -moz-transform: scale(0) rotate(0) translate3d(0, 0, 0);
-//     }
-//     50% {
-//         opacity: 1;
-//         transform: scale(1) rotate(0) translate3d(-200px, 200px, 0);
-//         -webkit-transform: scale(1) rotate(0) translate3d(-200px, 200px, 0);
-//         -moz-transform: scale(1) rotate(0) translate3d(-200px, 200px, 0);
-//     }
-//     100% {
-//         opacity: 0;
-//         transform: scale(1) rotate(0) translate3d(-300px, 300px, 0);
-//         -webkit-transform: scale(1) rotate(0) translate3d(-300px, 300px, 0);
-//         -moz-transform: scale(1) rotate(0) translate3d(-300px, 300px, 0);
-//     }
-// }
 </style>
