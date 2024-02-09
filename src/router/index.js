@@ -50,38 +50,14 @@ const routes = [
         }
     },
     {
-        path: '/unknownWorldMap/topic/1',
-        component: () => import("/src/topic/Topic_1.vue"),
+        path: '/unknownWorldMap/topic/:index',
+        component: () => import("/src/topic/TopicInterface.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: true,
         }
     },
-    {
-        path: '/unknownWorldMap/topic/2',
-        component: () => import("/src/topic/Topic_2.vue"),
-        meta: {
-            isRouterAuth: false,
-            screenFull: true,
-        }
-    },
-    {
-        path: '/unknownWorldMap/topic/3',
-        component: () => import("/src/topic/Topic_3.vue"),
-        meta: {
-            isRouterAuth: false,
-            screenFull: true,
-        }
-    },
-    {
-        path: '/unknownWorldMap/topic/4',
-        component: () => import("/src/topic/Topic_4.vue"),
-        meta: {
-            isRouterAuth: false,
-            screenFull: true,
-        }
-    },
-  
+    
    
   
     {

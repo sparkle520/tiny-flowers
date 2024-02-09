@@ -142,6 +142,9 @@ const start_time_play = () => {
   audio.currentTime = 0;
 };
 const pre_play = () => {
+  if (music_list.value.length === 0) {
+    return;
+  }
   if (current_play.value === -1 || music_list.value.length === 1) {
     start_time_play();
     return;
@@ -155,9 +158,14 @@ const pre_play = () => {
   change_current_play_by_index();
   nextTick(() => {
     play();
+    is_play.value = true;
+
   });
 };
 const next_play = () => {
+  if (music_list.value.length === 0) {
+    return;
+  }
   if (current_play.value === -1 || music_list.value.length === 1) {
     start_time_play();
     return;
@@ -176,6 +184,7 @@ const next_play = () => {
     default:
       break;
   }
+  is_play.value = true;
 };
 const list_single_strategy = () => {
   if (current_play.value.index === music_list.value.length - 1) {
@@ -700,8 +709,6 @@ const change_theme = (current_theme) => {
           width: 4em;
           z-index: 10000;
           height: 4em;
-          border-radius: 50%;
-          background: $file_label_bg;
           color: $file_label_color;
         }
       }

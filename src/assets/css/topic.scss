@@ -1,10 +1,11 @@
 $topic_content_bg: var(--topic_content_bg, #ffff);
-  $topic_bg: var(--topic_bg, #e1e4ea);
-  $normal_color: var(--normal_color, #0f1828);
-  $topic_title_color: var(--topic_title_color, #173e6c);
-  $topic_title_af_bg: var(--topic_title_af_bg, #22113364);
-  $topic_time_bar_color: var(--topic_time_bar_color, #989e6a);
-  $topic_time_color: var(--topic_time_color, #5d6e4a);
+$topic_bg: var(--topic_bg, #e1e4ea);
+$normal_color: var(--normal_color, #0f1828);
+$topic_title_color: var(--topic_title_color, #173e6c);
+$topic_title_af_bg: var(--topic_title_af_bg, #22113364);
+$topic_time_bar_color: var(--topic_time_bar_color, #989e6a);
+$topic_time_color: var(--topic_time_color, #5d6e4a);
+$code_bg: var(--code_bg, #f6f8fa);
 
 #topic_main {
   width: 100vw;
@@ -14,10 +15,33 @@ $topic_content_bg: var(--topic_content_bg, #ffff);
   color: $normal_color;
   display: flex;
   flex-direction: column;
-  .topic_bg{
+  .markdown-body {
+    background: $topic_content_bg;
+    color: $normal_color;
+    pre {
+      font-family: "monaco";
+
+      background: $code_bg;
+    }
+  }
+  .gt-header-textarea {
+    background: $topic_bg;
+  }
+  .gt-comment-content{
+    background: $topic_bg;
+    &:hover{
+      box-shadow: none;
+    }
+  }
+  .gt-comment{
+    p{
+      color: $normal_color;
+    }
+  }
+  .topic_bg {
     z-index: 0;
   }
-  .topic_top_interface{
+  .topic_top_interface {
     z-index: 1;
   }
   .topic_content {
@@ -34,24 +58,23 @@ $topic_content_bg: var(--topic_content_bg, #ffff);
       margin: 2vh auto;
       display: flex;
       flex-direction: column;
-      
     }
   }
-  h1{
-    font-size: 1.5em;
-    font-weight: 900;
-    margin: 3vh 0;
-  }
-  img {
-    object-fit: cover;
-    width: 100%;
-  }
+  // h1{
+  //   font-size: 1.5em;
+  //   font-weight: 900;
+  //   margin: 3vh 0;
+  // }
+  // img {
+  //   object-fit: cover;
+  //   width: 100%;
+  // }
 }
 
 .normal {
   font-size: 16px;
   color: $normal_color;
-  margin: .3vh 0;
+  margin: 0.3vh 0;
   line-height: 25px;
 }
 .center_18_title {
@@ -125,13 +148,11 @@ $topic_content_bg: var(--topic_content_bg, #ffff);
 //         color: $topic_time_color;
 //       }
 //     }
-    
+
 //   }
 //   .directoryList{
 //     margin-top: 20px;
 //   }
-
-
 
 .topic_container {
   margin-top: 3vh;
@@ -144,11 +165,10 @@ $topic_content_bg: var(--topic_content_bg, #ffff);
   animation: topic_container 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 @keyframes topic_container {
-  0%{
-    transform: translateY(40%);
+  0% {
     opacity: 0;
-  }100%{
-    transform: translateY(0%);
+  }
+  100% {
     opacity: 1;
   }
 }

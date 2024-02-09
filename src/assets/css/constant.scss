@@ -75,14 +75,10 @@
 .gap_0_5_em{
   gap: .5em;
 }
-li{
-  list-style: none;
-  padding: 0 0;
-}
+
 .width_full{
   width: 100%;
 }
-
 .gap_1vw{
   gap: 1vw;
 
@@ -92,4 +88,7 @@ li{
 }
 .gap_1_vw{
   gap: 1vw;
+}
+.warp{
+  flex-wrap: wrap;
 }

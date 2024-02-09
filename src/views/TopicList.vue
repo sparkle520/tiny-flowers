@@ -27,16 +27,34 @@ const topic_store = useTopicStore();
 const user_store = useUserStore();
 const { theme } = storeToRefs(config_store);
 const { layout } = storeToRefs(config_store);
+const { list_layout } = storeToRefs(config_store);
 const router = useRouter();
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
   change_layout(state.layout);
+  change_list_layout(state.list_layout);
 });
 onBeforeMount(() => {});
 onMounted(() => {
   init();
   document.addEventListener("click", click_handle);
 });
+const change_list_layout = (v) => {
+  const layout_list = document.querySelectorAll(".layout");
+  const topic_grid_box = document.querySelector(".topic_grid_box");
+  if (v) {
+    layout_list[0].classList.add("layout_active");
+    layout_list[1].classList.remove("layout_active");
+    topic_grid_box.style.transform = "scale(2) translateX(-20vw)";
+    topic_grid_box.style.opacity = .5;
+
+  } else {
+    layout_list[1].classList.add("layout_active");
+    layout_list[0].classList.remove("layout_active");
+      topic_grid_box.style.transform = "scale(1) translateX(0)";
+      topic_grid_box.style.opacity = 1;
+  }
+};
 const click_handle = (e) => {
   let topic_search_box = document.querySelector(".topic_search_box");
   if (!topic_search_box.contains(e.target)) {
@@ -47,6 +65,7 @@ const init = () => {
   window.scrollTo(0, 0);
   change_layout(layout.value);
   change_theme(theme.value);
+  change_list_layout(list_layout.value);
   item_list = Array.from(document.querySelectorAll(".topic_item"));
   document.addEventListener("scroll", scroll_handle);
   scroll_handle();
@@ -58,12 +77,18 @@ const side_view_handle = (v) => {
 };
 const change_layout = (flag) => {
   const topic_box = document.querySelector(".topic_box");
+  const topic_grid_inner_box = document.querySelector(".topic_grid_inner_box");
+
   if (flag) {
     topic_box.style.width = "60vw";
     show_personal_info.value = true;
+    topic_grid_inner_box.style.width = "100%";
+
   } else {
     topic_box.style.width = "80vw";
     show_personal_info.value = false;
+    topic_grid_inner_box.style.width = "92%";
+
   }
 };
 const classification = [
@@ -76,7 +101,7 @@ const scroll_handle = () => {
   for (let i = 0; i < item_list.length; i++) {
     let elem = item_list[i];
     // console.log(elem.offsetTop,window.scrollY);
-    if (elem.offsetTop - window.innerHeight <= window.scrollY ) {
+    if (elem.offsetTop - window.innerHeight <= window.scrollY) {
       elem.style.opacity = "1";
       elem.classList.add("item_animation");
     }
@@ -352,6 +377,55 @@ const search_focus_handle = () => {
     >
       <div class="topic_box">
         <div
+          class="layout_box flex flex_direction_row align_items_center relative"
+        >
+          <div class="layout" @click="config_store.change_g_list_layout(true)">
+            <svg
+              t="1707409279938"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="13268"
+              width="22"
+              height="22"
+            >
+              <path
+                d="M192 304a48 48 0 0 1 48-48h544a48 48 0 0 1 0 96H240a48 48 0 0 1-48-48z"
+                fill="#404040"
+                p-id="13269"
+              ></path>
+              <path
+                d="M192 528a48 48 0 0 1 48-48h192a48 48 0 0 1 0 96H240a48 48 0 0 1-48-48z m352 0a48 48 0 0 1 48-48h192a48 48 0 0 1 0 96H592a48 48 0 0 1-48-48z"
+                fill="#F2B71E"
+                p-id="13270"
+              ></path>
+              <path
+                d="M192 752a48 48 0 0 1 48-48h544a48 48 0 0 1 0 96H240a48 48 0 0 1-48-48z"
+                fill="#404040"
+                p-id="13271"
+              ></path>
+            </svg>
+          </div>
+          <div class="layout" @click="config_store.change_g_list_layout(false)">
+            <svg
+              t="1707408621772"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="5142"
+              width="22"
+              height="22"
+            >
+              <path
+                d="M450.56 563.2a10.24 10.24 0 0 1 10.16832 9.04192L460.8 573.44v245.76a10.24 10.24 0 0 1-9.04192 10.16832L450.56 829.44H204.8a10.24 10.24 0 0 1-10.16832-9.04192L194.56 819.2V573.44a10.24 10.24 0 0 1 9.04192-10.16832L204.8 563.2h245.76z m368.64 0a10.24 10.24 0 0 1 10.24 10.24v245.76a10.24 10.24 0 0 1-10.24 10.24H573.44a10.24 10.24 0 0 1-10.24-10.24V573.44a10.24 10.24 0 0 1 10.24-10.24z m-378.89024 20.48h-225.28v225.28h225.28V583.68z m368.64 0h-225.28v225.28h225.28V583.68zM450.56 194.56a10.24 10.24 0 0 1 10.24 10.24v245.76a10.24 10.24 0 0 1-10.24 10.24H204.8a10.24 10.24 0 0 1-10.24-10.24V204.8a10.24 10.24 0 0 1 10.24-10.24z m368.64 0a10.24 10.24 0 0 1 10.16832 9.04192L829.44 204.8v245.76a10.24 10.24 0 0 1-9.04192 10.16832L819.2 460.8H573.44a10.24 10.24 0 0 1-10.16832-9.04192L563.2 450.56V204.8a10.24 10.24 0 0 1 9.04192-10.16832L573.44 194.56h245.76z m-378.89024 20.48h-225.28v225.28h225.28V215.04z m368.64 0h-225.28v225.28h225.28V215.04z"
+                fill="#202020"
+                p-id="5143"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div
+          v-show="list_layout"
           @click="jump_to_topic(item.link)"
           v-for="(item, index) in current_data"
           class="topic_item flex flex_direction_column relative"
@@ -363,8 +437,20 @@ const search_focus_handle = () => {
               :src="item.img"
               alt=""
             />
+            <img
+              v-else
+              class="item_img"
+              src="https://pic.imgdb.cn/item/65c5a15f9f345e8d03c1f6a4.jpg"
+              alt=""
+            />
             <div class="item_content flex flex_direction_column">
-              <span class="relative title flex flex_direction_row align_items_center"><span class="item_classification relative">{{ item.classification }}</span>{{ item.title }}</span>
+              <span
+                class="relative title flex flex_direction_row align_items_center"
+                ><span class="item_classification relative">{{
+                  item.classification
+                }}</span
+                >{{ item.title }}</span
+              >
               <span class="short_msg" v-html="item.short_message"></span>
               <div class="date flex flex_direction_row justify_content_center">
                 {{ user_store.name }} /
@@ -379,6 +465,47 @@ const search_focus_handle = () => {
             <span class="tag" v-for="(item, index) in item.tags.split('?')">{{
               item
             }}</span>
+          </div>
+        </div>
+        <div class="topic_grid_box flex flex_direction_row">
+          <div
+            class="topic_grid_inner_box margin_0_auto flex flex_direction_row warp"
+          >
+            <div
+              v-show="!list_layout"
+              @click="jump_to_topic(item.link)"
+              v-for="(item, index) in current_data"
+              class="topic_item_grid relative"
+            >
+              <div class="img_box relative">
+                <img v-if="item.img != ''" :src="item.img" alt="" />
+                <img
+                  v-else
+                  src="https://pic.imgdb.cn/item/65c5a15f9f345e8d03c1f6a4.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="topic_item_inner_grid flex flex_direction_column">
+                <div class="flex flex_direction_row align_items_center">
+                  <span class="classification_box">{{
+                    item.classification
+                  }}</span>
+                  <span class="date relative"
+                    >{{ item.create_date.split("?")[0] }}-{{
+                      item.create_date.split("?")[1]
+                    }}-{{ item.create_date.split("?")[2] }}</span
+                  >
+                </div>
+                <span class="topic_title">{{ item.title }}</span>
+                <span
+                  class="topic_short_msg"
+                  v-html="item.short_message"
+                ></span>
+                <div class="tags_box flex flex_direction_row">
+                  <span v-for="tag in item.tags.split('?')" class="tag_item" >{{ tag }}</span>
+                </div    >
+              </div>
+            </div>
           </div>
         </div>
         <Pagination
@@ -512,6 +639,7 @@ const search_focus_handle = () => {
 </template>
 <style lang="scss" scoped>
 $bg_color: var(--bg_color, #f7f3f5);
+$topic_list_bg: var(--topic_list_bg, #f7f3f5);
 $color: var(--color, #000000);
 $item_bg: var(--item_bg, #ffffffa2);
 $item_shadow: var(--item_shadow, #1f2d3d26);
@@ -524,9 +652,13 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 $item_classification_bg: var(--item_classification_bg, #00cbff);
 
 #topic_list_main {
-  background: $bg_color;
+  background: linear-gradient(90deg, $topic_list_bg, transparent);
   width: 100%;
   color: $color;
+  li {
+    list-style: none;
+    padding: 0 0;
+  }
   .l_title {
     font-size: 1em;
     align-self: flex-start;
@@ -641,15 +773,31 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
     width: 60vw;
     padding-bottom: 30px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+    .layout_box {
+      transform: translateY(-1vh);
+      gap: 0.2vw;
+      .layout {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        &:hover {
+          background: #ffcc00;
+        }
+      }
+    }
+    .layout_active {
+      background: #9cd8e5;
+    }
     .item_animation {
       animation: fade_in 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
     .topic_item {
       width: 100%;
       min-height: 200px;
+      max-height: 200px;
       background: $item_bg;
-      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
       margin: 0 0 2vh 0;
       opacity: 0;
       border-radius: 5px;
@@ -659,7 +807,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
         animation: jelly 0.5s;
       }
       &:hover {
-        transform: translateY(-.6vh);
+        transform: translateY(-1vh);
         box-shadow: 0 3px 5px #1f2d3d33;
         .tag_box {
           opacity: 1;
@@ -677,11 +825,11 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
         }
         .item_content {
           margin: 1vh 2vh 1vh 1vh;
-          .item_classification{
-            font-size: .6em;
-            padding:.4em;
+          .item_classification {
+            font-size: 0.6em;
+            padding: 0.4em;
             border-radius: 2px;
-            margin-right: .5vw;
+            margin-right: 0.5vw;
             color: #ffff;
             background: $item_classification_bg;
           }
@@ -696,7 +844,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
       .short_msg {
         margin-top: 20px;
         line-height: 25px;
-        font-size: .9em;
+        font-size: 0.9em;
       }
       .date {
         font-size: 0.6em;
@@ -721,6 +869,100 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
         }
       }
     }
+   
+    .topic_grid_box {
+      width: 100%;
+      flex-wrap: wrap;
+      margin-bottom: 10vh;
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      .topic_grid_inner_box{
+        width: 92%;
+        gap: 2%;
+        
+      }
+      .topic_item_grid {
+        width: 32%;
+        border-radius: 5px;
+        height: 50vh;
+        background: #ffff;
+        box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
+        transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        &:hover {
+          // transform: translateY(-0.6vh);
+          transform: translateY(-1vh);
+          box-shadow: 0 3px 5px rgba(31, 45, 61, 0.2);
+        }
+        .img_box {
+          width: 100%;
+          height: 30vh;
+
+          img {
+            width: inherit;
+            height: inherit;
+            object-fit: cover;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+        }
+        .topic_item_inner_grid {
+          width: 94%;
+          height:calc(94% - 30vh);
+          margin: 3%;
+          .classification_box {
+            background: #00cbff;
+            font-size: 0.6em;
+            color: #fff;
+            padding: 5px 7px;
+            font-weight: bold;
+            border-radius: 10px;
+          }
+          .date {
+            font-size: 0.7em;
+            font-weight: 500;
+            margin-left: 1vw;
+            &::after {
+              content: "";
+              position: absolute;
+              width: 0.2vw;
+              height: 100%;
+              background: #00cbff;
+              top: 0;
+              left: -0.4vw;
+            }
+          }
+          .topic_title {
+            margin: 1vh 0;
+            &:hover {
+              color: #00cbff;
+            }
+          }
+          .topic_short_msg {
+            font-size: 0.8em;
+            height: 2.4em;
+            overflow: scroll;
+          }
+          .tags_box{
+            margin-top: auto;
+            gap: .4vw;
+            flex-wrap: wrap;
+            .tag_item{
+              font-size: .3em;
+              transform: scale(.9);
+              background: #f5f5f5;
+              padding: .8vh .9vw;
+
+              border-radius: 100px;
+              &:hover{
+                color: #fff;
+                background: #00cbff;
+              }
+            }
+          }
+        }
+      }
+    }
+
     .pagination {
       align-self: center;
     }
@@ -745,7 +987,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
       top: 0;
       margin: 0;
       object-fit: cover;
-     border-radius: 5px;
+      border-radius: 5px;
 
       z-index: 0;
       width: 20vw;
@@ -824,7 +1066,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
       li {
         width: 100%;
         span {
-          font-size: .9em;
+          font-size: 0.9em;
           padding: 1vh;
           font-weight: 900;
           &:last-child {
@@ -855,7 +1097,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
       li {
         span {
           margin: 1vw;
-          font-size: .9em;
+          font-size: 0.9em;
           font-weight: 900;
           letter-spacing: 0.1em;
         }
@@ -895,11 +1137,20 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
   }
 }
 @keyframes search_item {
-  0%{
+  0% {
     transform: scale(1.5);
     opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes topic_grid_box_animation {
+  0%{
+    transform: scale(2);
   }100%{
     transform: scale(1);
+
   }
 }
 </style>

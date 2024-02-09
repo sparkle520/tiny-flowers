@@ -319,7 +319,7 @@ const go_to = (path) => {
 };
 const enter_new_topic = (index) => {
   const item = document.querySelectorAll(".topic_item")[index];
-  item.style.transform = "translateY(-0.6vh)";
+  item.style.transform = "translateY(-.8vh)";
 };
 const leave_new_topic = (index) => {
   const item = document.querySelectorAll(".topic_item")[index];
@@ -327,7 +327,7 @@ const leave_new_topic = (index) => {
 };
 const enter_recommend_topic = (index) => {
   const item = document.querySelectorAll(".recommend_item")[index];
-  item.style.transform = "translateY(-0.6vh)";
+  item.style.transform = "translateY(-.8vh)";
 };
 const leave_recommend_topic = (index) => {
   const item = document.querySelectorAll(".recommend_item")[index];
@@ -613,7 +613,10 @@ $index_title_color: var(--index_title_color, #00cbff);
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
   background: $home_bg_color;
-
+  li{
+  list-style: none;
+  padding: 0 0;
+}
   .home_nav_item {
     font-size: 1.4em;
     position: relative;

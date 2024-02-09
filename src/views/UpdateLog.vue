@@ -61,7 +61,7 @@ const log = [
 
 </script>
 <template>
-  <div id="main" class="flex flex_direction_column">
+  <div id="update_log_main" class="flex flex_direction_column">
  
 
 
@@ -123,12 +123,15 @@ $li: var(--li, #242b3d12);
 $li_shadow: var(--li_shadow, #f4f2f2);
 $striking_title_orange_color: var(--striking_title_orange_color, #f0681e);
 $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
-#main {
+#update_log_main {
   width: 100%;
   color: $color;
   background: $bg_color;
   min-height: 100vh;
- 
+  li{
+  list-style: none;
+  padding: 0 0;
+}
   .w_w_y {
     width: 450px;
     opacity: 0.8;

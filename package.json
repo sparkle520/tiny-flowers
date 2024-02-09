@@ -12,6 +12,8 @@
     "axios": "^1.5.0",
     "element-plus": "^2.3.14",
     "gitalk": "^1.8.0",
+    "github-markdown-css": "^5.5.1",
+    "highlight": "^0.2.4",
     "highlight.js": "^11.9.0",
     "marked": "^11.2.0",
     "mitt": "^3.0.1",

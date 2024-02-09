@@ -1,0 +1,78 @@
+# 安装pinia
+```
+npm install pinia
+```
+# 配置pinia
+在main.js中引入pinia
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+const app = createApp(App)
+
+app.use(pinia)
+app.mount('#app')
+```
+# 创造store
+在src目录下新建一个store文件夹  
+并在store下新建一个config.js用于配置我们主题的全局状态  
+![](https://pic.imgdb.cn/item/65aab24b871b83018a614f60.jpg)
+# 定义store
+通过***defineStore***来定义store.
+第一个参数是你的应用中store的唯一ID,要求它是独一无二的,必须传入的.
+defineStore() 的第二个参数可接受两类值：Setup函数或Option对象.
+这里采用的是option对象.
+你可以认为 state 是 store 的数据 (data)，而 actions 则是方法 (methods).
+```javascript
+import { defineStore } from 'pinia'
+//为了养成习惯性的用法，将返回的函数命名为 use...是一个符合组合式函数风格的约定.
+export const useConfigStore = defineStore('config', {
+    state: () => ({
+        theme: false,
+    }),
+    actions: {
+        change_g_theme() {
+            this.theme = !this.theme;
+        },
+    }
+})
+```
+# 访问state
+在组件中访问state,通过use...Store()返回的对象访问,并能直接对其读写. 
+subscribe中的mutation主要包含三个属性值：  
+events：当前state改变的具体数据,包括改变前的值和改变后的值等等数据  
+storeId：是当前store的id  
+type：用于记录这次数据变化是通过什么途径,主要有三个分别是  
+* "direct" ：通过 action 变化的  
+* "patch object"：通过 $patch 传递对象的方式改变的  
+* "patch function" ：通过 $patch 传递函数的方式改变的
+* detached:布尔值，默认是***false***,正常情况下,当订阅所在的组件被卸载时,订阅将被停止删除,
+如果设置detached值为 true 时,即使所在组件被卸载,订阅依然在生效
+```javascript
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
+//store为获取到的实例
+const store = useConfigStore();
+//由于解构会让其失去响应式
+//这里需要通过storeToRefs()函数使其变为响应式.
+const {theme}  = storeToRefs(store);
+//通过 store 的 $subscribe() 方法侦听 state 及其变化
+//当然你也可以通过watch()来监听state的变化
+store.$subscribe((mutation,state)=>{
+  //每一次变化切换主题
+  change_theme(state.theme)
+})
+onBeforeMount(() => {});
+//在onMounted对主题进行初始化
+//这里注意必须用 .value 因为是响应式数据
+onMounted(() => {
+  change_theme(theme.value)
+});
+```
+# 改变state
+在切换主题的按钮的点击事件中将我们写好的action作为store的方法调用
+```javascript
+//store为获取到的实例 也就是 useConfigStore()返回的对象
+store.change_g_theme()
+```

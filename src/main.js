@@ -11,17 +11,29 @@ import 'element-plus/theme-chalk/index.css'
 import GlobalComponents from '/src/component/index'
 import {VueLatex} from "vatex"
 import { createPinia } from 'pinia'
-import 'highlight.js/styles/github-dark.css'
+// import 'highlight.js/styles/github-dark.css'
 import 'gitalk/dist/gitalk.css' 
-
+import hljs from 'highlight.js';
+import "github-markdown-css";
+// import "highlight.js/styles/github.css";
 import Particles from "vue3-particles";
-import 'highlight.js/lib/common'
+// import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 const pinia = createPinia()
 // let g_current_index = 0
 const app = createApp(App)
 // app.provide('g_current_index', g_current_index)
 // app.config.globalProperties.$g_current_index = g_current_index
+app.directive('highlight',function (el) {
+   
+   
+    let blocks = el.querySelectorAll('pre code');
+    blocks.forEach((block)=>{
+     
+     
+      hljs.highlightElement(block)
+    })
+  })
 GlobalComponents(app)
 app.use(router)
 app.use(hljsVuePlugin)

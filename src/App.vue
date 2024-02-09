@@ -1,8 +1,8 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { inject, onMounted, watch, ref,onUnmounted,nextTick } from "vue";
-import { clickEffect} from "/src/assets/js/mouse.js";
-import emitter from "@/assets/config/mitt_bus.js"
+import { inject, onMounted, watch, ref, onUnmounted, nextTick } from "vue";
+import { clickEffect } from "/src/assets/js/mouse.js";
+import emitter from "@/assets/config/mitt_bus.js";
 
 const route = useRoute();
 // const change_current_index =(index) =>{
@@ -11,22 +11,35 @@ const route = useRoute();
 // let g_side_bar = inject('g_side_bar')
 let current_side_view = true;
 onMounted(() => {
-    // emitter.emit('new_side_view', {current_side_view:current_side_view})
-});
-//鼠标特效
-onUnmounted(()=>{
-  // emitter.all.clear()
-})
-const side_view_handle = () => {
-  current_side_view = !current_side_view
   // emitter.emit('new_side_view', {current_side_view:current_side_view})
+  document.addEventListener("click", click_handle)
+});
+const click_handle = (e) => {
+
+    
 }
+//鼠标特效
+onUnmounted(() => {
+  // emitter.all.clear()
+});
+const side_view_handle = () => {
+  current_side_view = !current_side_view;
+  // emitter.emit('new_side_view', {current_side_view:current_side_view})
+};
 // emitter.on('side_view_change', () => side_view_handle())
 
 clickEffect();
-const music = ref(false);
 const music_handle = (status) => {
-  music.value = status;
+  let music_player = document.querySelector(".music_player");
+  if(status){
+    music_player.style.transform = `translateX(0%)`
+    music_player.style.opacity = 1
+
+  }else{
+    music_player.style.transform = `translateX(100%)`
+    music_player.style.opacity = 0
+
+  }
 };
 // var maxParticles = 2000,
 //     particleSize = 3,
@@ -190,26 +203,16 @@ const music_handle = (status) => {
 //         loop();
 //     }, 100);
 // }
-
 </script>
 
 <template>
   <div id="main" class="flex flex_direction_column">
     <!-- <canvas  id="canvas" width="800" height="500" class="absolute"></canvas> -->
     <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->
-    <TopNavBar
-      @music_change="music_handle"
-      class="nav"
-    ></TopNavBar>
+    <TopNavBar @music_change="music_handle" class="nav"></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
-    <router-view
-      :key="$route.path"
-      class="router_view"
-    ></router-view>
-    <MusicPlayer
-      v-show="music"
-      class="music_player absolute"
-    ></MusicPlayer>
+    <router-view :key="$route.path" class="router_view"></router-view>
+    <MusicPlayer class="music_player absolute"></MusicPlayer>
   </div>
 </template>
 
@@ -239,15 +242,9 @@ $bg_color: var(--bg_color, #f7f3f5);
     height: 150px;
     z-index: 1000;
     position: fixed;
-    animation: move 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transform: translateX(100%);
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 }
-@keyframes move {
-  0% {
-    right: -100%;
-  }
-  100% {
-    right: 0;
-  }
-}
+
 </style>
