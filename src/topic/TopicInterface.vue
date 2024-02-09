@@ -67,7 +67,7 @@ onMounted(() => {
 
 });
 const getAssetsFile =  async (index) => {
-   await import(`/src/assets/topic_md/topic${index}.md?raw`).then((module)=>{
+   await import('/src/assets/topic_md/topic'+index+'.md?raw').then((module)=>{
     content.value = module.default;
    })
 };
