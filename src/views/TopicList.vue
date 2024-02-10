@@ -46,13 +46,12 @@ const change_list_layout = (v) => {
     layout_list[0].classList.add("layout_active");
     layout_list[1].classList.remove("layout_active");
     topic_grid_box.style.transform = "scale(2) translateX(-20vw)";
-    topic_grid_box.style.opacity = .5;
-
+    topic_grid_box.style.opacity = 0.5;
   } else {
     layout_list[1].classList.add("layout_active");
     layout_list[0].classList.remove("layout_active");
-      topic_grid_box.style.transform = "scale(1) translateX(0)";
-      topic_grid_box.style.opacity = 1;
+    topic_grid_box.style.transform = "scale(1) translateX(0)";
+    topic_grid_box.style.opacity = 1;
   }
 };
 const click_handle = (e) => {
@@ -83,12 +82,10 @@ const change_layout = (flag) => {
     topic_box.style.width = "60vw";
     show_personal_info.value = true;
     topic_grid_inner_box.style.width = "100%";
-
   } else {
     topic_box.style.width = "80vw";
     show_personal_info.value = false;
     topic_grid_inner_box.style.width = "92%";
-
   }
 };
 const classification = [
@@ -125,38 +122,24 @@ onBeforeMount(() => {
 });
 const show_personal_info = ref(true);
 const per_page_count = 10;
-const current_data = ref([]);
+const current_data = ref();
 const page_data = ref({
   total: 0,
   page_size: per_page_count,
   current_index: params.page,
 });
 const init_data = () => {
-  switch (params.classification) {
-    case "学习笔记":
-      data_handle(topic_store.study, page_data.value.current_index);
-      break;
-    case "技术分享":
-      data_handle(topic_store.technique, page_data.value.current_index);
-      break;
-    case "生活随想":
-      data_handle(topic_store.life, page_data.value.current_index);
-
-      break;
-    case "二次元":
-      data_handle(topic_store.acg, page_data.value.current_index);
-      break;
-    default:
-      break;
-  }
+  topic_store.select_all_from_classification(params.classification);
   remove_all_animation();
-
+  current_data.value = topic_store.current_data;
+  data_handle(current_data.value, params.page);
   nextTick(() => {
     item_list = Array.from(document.querySelectorAll(".topic_item"));
     document.addEventListener("scroll", scroll_handle);
     scroll_handle();
   });
 };
+
 const data_handle = (array, page_num) => {
   // console.log(page_num);
   if (page_num * per_page_count >= array.length) {
@@ -204,14 +187,6 @@ const page_handle = (index) => {
   });
 };
 
-let new_topic_data = [];
-const new_topic = () => {
-  new_topic_data.push(topic_store.life[0]);
-  new_topic_data.push(topic_store.study[0]);
-  new_topic_data.push(topic_store.technique[0]);
-  new_topic_data.push(topic_store.acg[0]);
-};
-new_topic();
 const classification_handle = (classification) => {
   router.push(`/unknownWorldMap/list/${classification}/1`);
 
@@ -239,10 +214,10 @@ const run_time = (date) => {
 };
 const last_update = () => {
   let date_array = [
-    format_date(topic_store.life[0].create_date),
-    format_date(topic_store.study[0].create_date),
-    format_date(topic_store.technique[0].create_date),
-    format_date(topic_store.acg[0].create_date),
+    format_date(topic_store.data[0].create_date),
+    format_date(topic_store.data[1].create_date),
+    format_date(topic_store.data[2].create_date),
+    format_date(topic_store.data[3].create_date),
   ];
   let date_array_sort = date_array.sort((a, b) => {
     let temp_1 = b.split("-");
@@ -293,7 +268,7 @@ let interval_run_time = setInterval(() => {
 }, 60000);
 const personal_info = {
   classification_total: 4,
-  new_topic: new_topic_data,
+  new_topic: topic_store.data.slice(0, 4),
   site_info: {
     name: "Tiny Flowers",
     run_time: current_run_time,
@@ -318,7 +293,12 @@ watch(search_text, (new_val, old_val) => {
   }
   show_filter_search_box.value = true;
   current_filter_list.value = [];
+  const query_start = performance.now();
   loop(topic_store.get_all(), 0, new_val);
+  const query_end = performance.now();
+  const query_diff = query_end - query_start;
+  const query_text = document.querySelector(".query_text")
+  query_text.innerHTML = "查询耗时: " + query_diff + "ms";
 });
 const loop = (arr, current_index, search_text) => {
   if (current_index > arr.length - 1) return;
@@ -370,6 +350,7 @@ const search_focus_handle = () => {
             {{ item.title }}
           </li>
         </ul>
+        <div class="query_time"><span class="query_text"></span></div>
       </div>
     </div>
     <div
@@ -502,8 +483,10 @@ const search_focus_handle = () => {
                   v-html="item.short_message"
                 ></span>
                 <div class="tags_box flex flex_direction_row">
-                  <span v-for="tag in item.tags.split('?')" class="tag_item" >{{ tag }}</span>
-                </div    >
+                  <span v-for="tag in item.tags.split('?')" class="tag_item">{{
+                    tag
+                  }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -576,33 +559,14 @@ const search_focus_handle = () => {
           <h3 class="l_title relative">分类</h3>
           <ul class="flex flex_direction_column">
             <li
-              @click="classification_handle(classification[0].name)"
+            v-for="classification in topic_store.classification"
+              @click="classification_handle()"
               class="flex flex_direction_row"
             >
-              <span>学习笔记</span>
-              <span>{{ topic_store.study.length }}</span>
+              <span>{{classification}}</span>
             </li>
-            <li
-              @click="classification_handle(classification[1].name)"
-              class="flex flex_direction_row"
-            >
-              <span>技术分享</span>
-              <span>{{ topic_store.technique.length }}</span>
-            </li>
-            <li
-              @click="classification_handle(classification[2].name)"
-              class="flex flex_direction_row"
-            >
-              <span>生活随想</span>
-              <span>{{ topic_store.life.length }}</span>
-            </li>
-            <li
-              @click="classification_handle(classification[3].name)"
-              class="flex flex_direction_row"
-            >
-              <span>二次元</span>
-              <span>{{ topic_store.acg.length }}</span>
-            </li>
+           
+            
           </ul>
         </div>
         <div
@@ -650,6 +614,8 @@ $tag_bg: var(--tag_bg, #41a8a8);
 $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 $item_classification_bg: var(--item_classification_bg, #00cbff);
+$filter_search_box_bg: var(--filter_search_box_bg, #ffffff);
+$tag_item_bg: var(--tag_item_bg, #ffffff);
 
 #topic_list_main {
   background: linear-gradient(90deg, $topic_list_bg, transparent);
@@ -721,12 +687,18 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
     .filter_search_box {
       width: 52vw;
       max-height: 30vh;
-      background: $item_bg;
+      background: $filter_search_box_bg;
       bottom: 0;
       transform: translateY(120%);
       box-shadow: $item_shadow 2px 3px 10px;
       border-radius: 10px;
       overflow-y: scroll;
+      .query_time{
+        margin-left: 2vw;
+        margin-bottom: 1vh;
+        color: $color;
+        font-size: .7em;
+      }
       ul {
         margin: 2vh 2vw;
         padding: 0;
@@ -797,7 +769,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
       min-height: 200px;
       max-height: 200px;
       background: $item_bg;
-      transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
       margin: 0 0 2vh 0;
       opacity: 0;
       border-radius: 5px;
@@ -869,24 +841,23 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
         }
       }
     }
-   
+
     .topic_grid_box {
       width: 100%;
       flex-wrap: wrap;
       margin-bottom: 10vh;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-      .topic_grid_inner_box{
+      .topic_grid_inner_box {
         width: 92%;
         gap: 2%;
-        
       }
       .topic_item_grid {
         width: 32%;
         border-radius: 5px;
         height: 50vh;
-        background: #ffff;
+        background: $filter_search_box_bg;
         box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
-        transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
         &:hover {
           // transform: translateY(-0.6vh);
@@ -907,7 +878,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
         }
         .topic_item_inner_grid {
           width: 94%;
-          height:calc(94% - 30vh);
+          height: calc(94% - 30vh);
           margin: 3%;
           .classification_box {
             background: #00cbff;
@@ -942,18 +913,19 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
             height: 2.4em;
             overflow: scroll;
           }
-          .tags_box{
+          .tags_box {
             margin-top: auto;
-            gap: .4vw;
+            gap: 0.4vw;
             flex-wrap: wrap;
-            .tag_item{
-              font-size: .3em;
-              transform: scale(.9);
-              background: #f5f5f5;
-              padding: .8vh .9vw;
+            .tag_item {
+              font-size: 0.3em;
+              transform: scale(0.9);
+              background: $tag_item_bg;
+              color: $color;
+              padding: 0.8vh 0.9vw;
 
               border-radius: 100px;
-              &:hover{
+              &:hover {
                 color: #fff;
                 background: #00cbff;
               }
@@ -1069,9 +1041,9 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
           font-size: 0.9em;
           padding: 1vh;
           font-weight: 900;
-          &:last-child {
-            margin-left: auto;
-          }
+          // &:last-child {
+          //   margin-left: auto;
+          // }
           transition: margin 2s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         &:hover {
@@ -1080,10 +1052,10 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
           border-radius: 5px;
           span {
             margin-left: 1vw;
-            &:last-child {
-              margin-left: auto;
-              margin-right: 1vw;
-            }
+            // &:last-child {
+            //   margin-left: auto;
+            //   margin-right: 1vw;
+            // }
           }
         }
       }
@@ -1146,11 +1118,11 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
   }
 }
 @keyframes topic_grid_box_animation {
-  0%{
+  0% {
     transform: scale(2);
-  }100%{
+  }
+  100% {
     transform: scale(1);
-
   }
 }
 </style>

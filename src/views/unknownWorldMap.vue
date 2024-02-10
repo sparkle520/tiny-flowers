@@ -21,24 +21,16 @@ onMounted(() => {
   change_theme(theme.value);
 });
 
-const topic_data = {
-  topic_count: data.length(),
-  visit_count: 100,
-};
-const classification = [
-  { name: "学习笔记" },
-  { name: "技术分享" },
-  { name: "生活随想" },
-  { name: "二次元" },
-];
-const to_topic_list = (name) => {
-  router.push("/unknownWorldMap/list/" + name + "/1");
+
+
+const to_topic_list = () => {
+  router.push("/unknownWorldMap/list/all/1");
 };
 </script>
 <template>
   <div id="article_main" class="relative">
     <div class="container absolute"
-    @click="to_topic_list(classification[0].name)"
+    @click="to_topic_list()"
 >
       <div class="img1">
       <img

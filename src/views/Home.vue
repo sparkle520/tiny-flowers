@@ -1049,12 +1049,10 @@ $index_title_color: var(--index_title_color, #00cbff);
     .left_foot {
       width: 30vw;
       height: 30vh;
-      background: #003153;
     }
     .mid_foot {
       width: 20vw;
       height: 30vh;
-      background: #003153;
     }
     .right_foot {
       width: 30vw;
