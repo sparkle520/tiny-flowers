@@ -23,17 +23,8 @@ const routes = [
         }
     },
     {
-        path: '/test',
-        component: () => import("/src/views/Test.vue"),
-        meta: {
-            isRouterAuth: false,
-            screenFull: false,
-
-        }
-    },
-    {
-        path: '/unknownWorldMap',
-        component: () => import("/src/views/UnknownWorldMap.vue"),
+        path: '/math/:page',
+        component: () => import("/src/views/Math.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: true,
@@ -41,7 +32,34 @@ const routes = [
         }
     },
     {
-        path: '/unknownWorldMap/list/:classification/:page',
+        path: '/math/details/:id',
+        component: () => import("/src/views/MathDetails.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
+
+        }
+    },
+    {
+        path: '/note',
+        component: () => import("/src/views/Note.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: false,
+
+        }
+    },
+    {
+        path: '/note/noteInfo/:id',
+        component: () => import("/src/views/NoteInfo.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
+
+        }
+    },
+    {
+        path: '/article/list/:classification/:page',
         component: () => import("/src/views/TopicList.vue"),
         meta: {
             isRouterAuth: false,
@@ -50,8 +68,16 @@ const routes = [
         }
     },
     {
-        path: '/unknownWorldMap/topic/:index',
+        path: '/article/topic/:index',
         component: () => import("/src/topic/TopicInterface.vue"),
+        meta: {
+            isRouterAuth: false,
+            screenFull: true,
+        }
+    },
+    {
+        path: '/note/book/:id/:index',
+        component: () => import("/src/note/NoteInterface.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: true,

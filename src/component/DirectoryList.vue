@@ -94,18 +94,18 @@ watch(current_titles, (newVal) => {
   }
 });
 let currentTitle = ref({});
-// let progress = ref(0);
 // 获取目录的标题
 function getTitles() {
   let titles = [];
   let levels = ["h1", "h2", "h3"];
 
-  let articleElement = document.querySelector(".topic_text");
+  let articleElement = document.querySelector(".markdown-body");
+  
   if (!articleElement) {
     return titles;
   }
 
-  let elements = Array.from(document.querySelectorAll(".topic_text *"));
+  let elements = Array.from(document.querySelectorAll(".markdown-body *"));
   // 调整标签等级
   let tagNames = new Set(elements.map((el) => el.tagName.toLowerCase()));
   for (let i = levels.length - 1; i >= 0; i--) {
@@ -116,14 +116,14 @@ function getTitles() {
 
   let serialNumbers = levels.map(() => 0);
   let top_height = document.querySelector("#topic_top_main").clientHeight;
-  let top_nav_height = document.querySelector("#top_nav_main").clientHeight;
-  // console.log(top_height);
+  
+  let top_nav_height = document.querySelector("#top_nav_main").clientHeight - 20;
+
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let tagName = element.tagName.toLowerCase();
     let level = levels.indexOf(tagName);
     if (level == -1) continue;
-
     let id = tagName + "-" + element.innerText + "-" + i;
     let node = {
       id,
@@ -178,9 +178,9 @@ const c_c = (mut_val, color) => {
 const change_theme = (current_theme) => {
   if (current_theme) {
     //night
-    c_c("--directory_list_bg", "#242837");
+    c_c("--directory_list_bg", "#2428376c");
   } else {
-    c_c("--directory_list_bg", "#ffff");
+    c_c("--directory_list_bg", "#ffffff6c");
   }
 };
 
@@ -261,7 +261,7 @@ function scrollToView(scrollTop) {
   </div>
 </template>
 <style lang="scss" scoped>
-$directory_list_bg: var(--directory_list_bg, #f7f3f5);
+$directory_list_bg: var(--directory_list_bg, #ffffff6c);
 $directory_list_cover_bg: var(--directory_list_cover_bg, #e06530);
 $normal_color: var(--normal_color, #e06530);
 
@@ -323,12 +323,13 @@ $normal_color: var(--normal_color, #e06530);
   line-height: 28px;
   cursor: pointer;
   font-size: 14px;
-  padding: 2px 6px;
+  padding: 2px 26px;
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  
 
   &:hover {
     color: $directory_list_cover_bg;
@@ -336,12 +337,20 @@ $normal_color: var(--normal_color, #e06530);
 }
 
 .active {
-  background-color: $directory_list_cover_bg;
-  color: white;
-
+  position: relative;
+  color: #f4a460;
+  font-weight: 900;
+  &::after{
+    content: url('/src/assets/imgs/svg/flower.svg');
+    position: absolute;
+   
+    left: -3px;
+    top: 57%;
+    transform: translateY(-50%) scale(.6);
+    // background: $directory_list_cover_bg;
+  }
   &:hover {
-    background-color: $directory_list_cover_bg;
-    color: white;
+    color:$directory_list_cover_bg;
   }
 }
 </style>

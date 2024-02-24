@@ -35,14 +35,14 @@ const change_theme = (current_theme) => {
   if (current_theme) {
     c_c("--bg_color", "#0b0e14");
     c_c("--color", "#f7f7f7");
-    c_c("--item_bg", "#242b3d");
+    c_c("--item_bg", "#242b3d6c");
     c_c("--item_shadow", "#242b34");
     c_c("--topic_classification_color", "#5e6d78");
     c_c("--topic_classification_num_color", "#b5b9d6");
   } else {
     c_c("--bg_color", "#f7f3f5");
     c_c("--color", "#000000");
-    c_c("--item_bg", "#ffffff");
+    c_c("--item_bg", "#ffffff6c");
     c_c("--item_shadow", "#cacaca4f");
     c_c("--topic_classification_color", "#173e6c");
     c_c("--topic_classification_num_color", "#e06530");
@@ -57,7 +57,7 @@ const change_theme = (current_theme) => {
       <img :src="user_store.avatar" alt="" />
       <span class="personal_name" v-text="user_store.name"></span>
       <span class="personal_signature" v-text="user_store.signature"></span>
-      <div class="width_full flex flex_direction_row">
+      <div class="topic_class_box flex flex_direction_row">
         <div
           class="topic_classification_total_box flex flex_direction_column align_items_center"
         >
@@ -68,7 +68,13 @@ const change_theme = (current_theme) => {
           class="topic_classification_total_box flex flex_direction_column align_items_center"
         >
           <h3>分类</h3>
-          <span>4</span>
+          <span>3</span>
+        </div>
+        <div
+          class="topic_classification_total_box flex flex_direction_column align_items_center"
+        >
+          <h3>笔记</h3>
+          <span>1</span>
         </div>
       </div>
     </div>
@@ -78,7 +84,7 @@ const change_theme = (current_theme) => {
 <style lang="scss" scoped>
 $bg_color: var(--bg_color, #f7f3f5);
 $color: var(--color, #000000);
-$item_bg: var(--item_bg, #ffffff);
+$item_bg: var(--item_bg, #ffffff6c);
 $item_shadow: var(--item_shadow, #cacaca4f);
 $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
@@ -119,17 +125,20 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       color: $color;
       font-size: .9em;
     }
+    .topic_class_box{
+      width: 70%;
+    }
     .topic_classification_total_box {
-      width: 50%;
+      width: 33.333%;
       h3 {
         color: $topic_classification_color;
         margin: 0;
-        font-size: 20px;
+        font-size: 17px;
       }
       span {
         color: $topic_classification_num_color;
 
-        font-size: 20px;
+        font-size: 14px;
         margin-top: 20px;
         font-weight: 900;
       }

@@ -69,6 +69,7 @@ const change_code_theme = (current_theme) => {
     c_c("--hljs_addition_bg", "#f0fff4");
     c_c("--hljs_deletion_color", "#b31d28");
     c_c("--hljs_deletion_bg", "#ffeef0");
+    c_c("--color-fg-default", "#ffeef0");
   }
 }
 export const options = {

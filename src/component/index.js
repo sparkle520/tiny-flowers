@@ -6,6 +6,7 @@ import MusicPlayer from "/src/component/MusicPlayer.vue"
 import TopNavBar from "/src/component/TopNavBar.vue"
 import Utils from "/src/component/Utils.vue"
 import DirectoryList from "/src/component/DirectoryList.vue"
+import NoteDirectoryList from "/src/component/NoteDirectoryList.vue"
 import TopicBottomInterface from "/src/topic_interface/TopicBottomInterface.vue"
 import TopicRightInterface from "/src/topic_interface/TopicRightInterface.vue"
 import TopicLeftInterface from "/src/topic_interface/TopicLeftInterface.vue"
@@ -20,6 +21,7 @@ const components = {
     MusicPlayer,
     Utils,
     DirectoryList,
+    NoteDirectoryList,
     TopicBottomInterface,
     TopicRightInterface,
     TopicLeftInterface,

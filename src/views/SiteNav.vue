@@ -71,7 +71,7 @@ const site_data = [
 ]
 </script>
 <template>
-  <div id="main" class="flex  ">
+  <div id="site_nav_main" class="flex  ">
     <!-- <div id="sky" class="absolute absolute_center">
     <div class="bird">
         <div class="wind"></div>
@@ -120,31 +120,31 @@ $color: var(--color, #000000);
 $site_content_color: var(--site_content_color, #8d8d93);
 $site_item_color: var(--site_item_color, #4d1225);
 $site_item_hover_color: var(--site_item_hover_color, #917979);
-#main {
+#site_nav_main {
   width: 100%;
   min-height: 100vh;
   background: $bg_color;
   overflow: hidden;
   color: $color;
-  -webkit-mask-image: url(https://pic.imgdb.cn/item/65af9400871b83018abafc39.png);
-  -webkit-mask-size: 10%;
-  -webkit-mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  animation: scene-transition 4s cubic-bezier(1, 0, 1, 1) forwards;
-
+  // -webkit-mask-image: url("/src/assets/imgs/svg/flower.svg");
+  // -webkit-mask-size: 10%;
+  // -webkit-mask-position: center;
+  // -webkit-mask-repeat: no-repeat;
+  // animation: scene-transition 4s linear forwards;
+  background-image: url();
  
 
-@keyframes scene-transition {
-  100% {
-    -webkit-mask-size: 1800%;
-  }
-}
+// @keyframes scene-transition {
+//   100% {
+//     -webkit-mask-size: 2000%;
+//   }
+// }
   .miku{
     opacity: .4;
 z-index: 1;    
 width: 600px;
 // filter:drop-shadow(10px 10px 4px rgb(52, 50, 50));
-animation: miku 4s cubic-bezier(0.165, 0.84, 0.44, 1);
+animation: miku 1s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   }
   .flower{

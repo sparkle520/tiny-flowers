@@ -68,7 +68,7 @@ watch(position, (newVal, oldVal) => {
     remove_rect_active(rect_list, 3);
   }
 });
-const width = -40
+const width = -50
 
 
 </script>
@@ -94,21 +94,21 @@ const width = -40
 </template>
 <style lang="scss" scoped>
 #home_carousel_main {
-  width: 40vw;
+  width: 50vw;
   height: 30vh;
   overflow: hidden;
   // box-shadow: #e4b198 15px 16px 5px, #98cde4 -15px -16px 5px;
-  border-radius: 5px;
+  border-radius: 10px;
 
   &::after {
     content: "";
     position: absolute;
-    width: 40vw;
+    width: 50vw;
     height: inherit;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to top, #0000003c 5%, transparent 95%);
-    border-radius: 5px;
+    background: linear-gradient(to top, #c0c0c03c 5%, transparent 95%);
+    border-radius: 10px;
   }
   
   .rect_box {
@@ -123,30 +123,30 @@ const width = -40
       transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
       // border: #ffffff70 1px solid;
       background: #ffffff55;
-      border-radius: 5px;
+      border-radius: 10px;
       margin: 10px 0;
     }
     .rect_active {
       width: 3vw;
       height: 1vh;
       // border: #0064fb51 1px solid;
-      background: #e1e0e0;
-      border-radius: 5px;
+      background: #fff4f4;
+      border-radius: 10px;
       margin: 10px 0;
     }
   }
 
   .content {
-    width: 40vw;
+    width: 50vw;
     height: inherit;
     .item {
       height: inherit;
       width: 160vw;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       .img_box {
-        width: 40vw;
+        width: 50vw;
         height: inherit;
-        border-radius: 5px;
+        border-radius: 10px;
 
         &::before {
           content: "";
@@ -156,13 +156,13 @@ const width = -40
           left: 0;
           top: 0;
           background: linear-gradient(to bottom, #0d9ce943 5%, transparent 95%);
-          border-radius: 5px;
+          border-radius: 10px;
         }
         img {
           width: inherit;
           height: inherit;
           object-fit: cover;
-          border-radius: inherit;
+          border-radius: 10px;
         }
       }
     }

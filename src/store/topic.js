@@ -6,12 +6,11 @@ export const useTopicStore = defineStore('topic', {
         data: [
 
 
-            { id: 4, title: '谈谈建站初衷', link: '/unknownWorldMap/topic/4', create_date: '2024?01?20?16:16', author: '', img: '', tags: '感想', classification: '生活随想', short_message: '随便谈谈', update_date: '', is_visible: true },
-            { id: 3, title: '谈谈建站初衷', link: '/unknownWorldMap/topic/4', create_date: '2024?01?20?16:16', author: '', img: '', tags: '感想', classification: '生活随想', short_message: '随便谈谈', update_date: '', is_visible: true },
+           
             {
                 id: 2,
                 title: '最长回文子序列',
-                link: '/unknownWorldMap/topic/2',
+                link: '/article/topic/2',
                 create_date: '2024?01?14?11:06',
                 img: '',
                 author: '',
@@ -21,7 +20,7 @@ export const useTopicStore = defineStore('topic', {
                 update_date: '',
                 is_visible: true
             },
-            { id: 1, title: '用pinia实现全局换肤功能', link: '/unknownWorldMap/topic/1', author: '', create_date: '2024?01?19?21:00', img: '', tags: 'pinia?vue3', classification: '技术分享', short_message: '简易实现一下全局换肤功能', update_date: '', is_visible: true },
+            { id: 1, title: '用pinia实现全局换肤功能', link: '/article/topic/1', author: '', create_date: '2024?01?19?21:00', img: '', tags: 'pinia?vue3', classification: '技术分享', short_message: '简易实现一下全局换肤功能', update_date: '', is_visible: true },
 
 
 

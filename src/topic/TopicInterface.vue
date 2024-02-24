@@ -28,7 +28,7 @@ marked.setOptions({
   sanitize: true,
 });
 
-const initContent = () => {
+const init_content = () => {
   get_md_file(params.index);
 };
 const content = ref("");
@@ -42,6 +42,7 @@ watch(content, (newValue) => {
 // initMathJax({}, onMathJaxReady)
 nextTick(()=>{
   renderByMathjax(document.getElementById('mathjax'))
+  emitter.emit("topic_data", get_topic_data());
 
 })
 });
@@ -71,13 +72,13 @@ const config = {
 onMounted(() => {
   change_theme(theme.value);
   change_layout(layout.value);
-  initContent();
+  init_content();
   nextTick(() => {
     emitter.emit("topic_data", get_topic_data());
   });
 });
 const get_md_file = (index) => {
-  const _path = `/src/assets/topic_md/topic${index}.md`;
+  const _path = `/src/assets/topic_md/${index}.md`;
   const modules = import.meta.glob("/src/assets/topic_md/*.md", { as: "raw" });
   for (const path in modules) {
     if (path == _path) {
@@ -114,4 +115,5 @@ const get_md_file = (index) => {
   </div>
   <Utils></Utils>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

@@ -45,12 +45,12 @@ const change_list_layout = (v) => {
   if (v) {
     layout_list[0].classList.add("layout_active");
     layout_list[1].classList.remove("layout_active");
-    topic_grid_box.style.transform = "scale(2) translateX(-20vw)";
+    topic_grid_box.style.transform = "translateY(-20vw)";
     topic_grid_box.style.opacity = 0.5;
   } else {
     layout_list[1].classList.add("layout_active");
     layout_list[0].classList.remove("layout_active");
-    topic_grid_box.style.transform = "scale(1) translateX(0)";
+    topic_grid_box.style.transform = " translateY(0)";
     topic_grid_box.style.opacity = 1;
   }
 };
@@ -88,12 +88,7 @@ const change_layout = (flag) => {
     topic_grid_inner_box.style.width = "92%";
   }
 };
-const classification = [
-  { name: "学习笔记" },
-  { name: "技术分享" },
-  { name: "生活随想" },
-  { name: "二次元" },
-];
+
 const scroll_handle = () => {
   for (let i = 0; i < item_list.length; i++) {
     let elem = item_list[i];
@@ -121,7 +116,7 @@ onBeforeMount(() => {
   init_data();
 });
 const show_personal_info = ref(true);
-const per_page_count = 10;
+const per_page_count = 12;
 const current_data = ref();
 const page_data = ref({
   total: 0,
@@ -162,33 +157,15 @@ const jump_to_topic = (path) => {
 };
 
 const page_handle = (index) => {
-  switch (params.classification) {
-    case "学习笔记":
-      router.push("/unknownWorldMap/list/学习笔记/" + index);
-      break;
-    case "技术分享":
-      router.push("/unknownWorldMap/list/技术分享/" + index);
-
-      break;
-    case "生活随想":
-      router.push("/unknownWorldMap/list/生活随想/" + index);
-
-      break;
-    case "二次元":
-      router.push("/unknownWorldMap/list/二次元/" + index);
-      break;
-    default:
-      break;
-  }
+  router.push(`/article/list/${params.classification}/` + index);
   nextTick(() => {
     window.scrollTo(0, 0);
     page_data.value.current_index = index;
-    init_data();
   });
 };
 
 const classification_handle = (classification) => {
-  router.push(`/unknownWorldMap/list/${classification}/1`);
+  router.push(`/article/list/${classification}/1`);
 
   // params.classification = classification;
   // nextTick(()=>{
@@ -213,12 +190,10 @@ const run_time = (date) => {
   current_run_time.value = `${day_diff}天${hours}小时${minutes}分钟`;
 };
 const last_update = () => {
-  let date_array = [
-    format_date(topic_store.data[0].create_date),
-    format_date(topic_store.data[1].create_date),
-    format_date(topic_store.data[2].create_date),
-    format_date(topic_store.data[3].create_date),
-  ];
+  let date_array = [];
+  date_array = topic_store.data
+    .slice(0,4)
+    .map((item) => format_date(item.create_date));
   let date_array_sort = date_array.sort((a, b) => {
     let temp_1 = b.split("-");
     let temp_2 = a.split("-");
@@ -227,6 +202,7 @@ const last_update = () => {
       new Date(temp_2[0], temp_2[1] - 1, temp_2[2], temp_2[3], temp_2[4])
     );
   });
+  console.log(date_array);
   let temp = date_array_sort[0].split("-");
 
   let date_start = new Date(temp[0], temp[1] - 1, temp[2], temp[3], temp[4]);
@@ -284,6 +260,7 @@ const topic_search_handle = (e) => {
   }
 };
 const current_filter_list = ref([]);
+
 const search_text = ref();
 watch(search_text, (new_val, old_val) => {
   if (new_val == "") {
@@ -296,8 +273,9 @@ watch(search_text, (new_val, old_val) => {
   const query_start = performance.now();
   loop(topic_store.get_all(), 0, new_val);
   const query_end = performance.now();
+  const query_text = document.querySelector(".query_text");
+
   const query_diff = query_end - query_start;
-  const query_text = document.querySelector(".query_text")
   query_text.innerHTML = "查询耗时: " + query_diff + "ms";
 });
 const loop = (arr, current_index, search_text) => {
@@ -313,7 +291,7 @@ const loop = (arr, current_index, search_text) => {
         continue;
       current_filter_list.value.push(arr[current_index + i]);
     }
-    loop(arr, current_index + per_num);
+    loop(arr, current_index + per_num, search_text);
   });
 };
 const show_filter_search_box = ref(false);
@@ -323,7 +301,7 @@ const search_focus_handle = () => {
 };
 </script>
 <template>
-  <div id="topic_list_main" class="flex flex_direction_column">
+  <div id="topic_list_main" class="flex flex_direction_column relative">
     <div class="topic_search_box relative">
       <input
         id="topic_search"
@@ -559,14 +537,12 @@ const search_focus_handle = () => {
           <h3 class="l_title relative">分类</h3>
           <ul class="flex flex_direction_column">
             <li
-            v-for="classification in topic_store.classification"
-              @click="classification_handle()"
+              v-for="classification in topic_store.classification"
+              @click="classification_handle(classification)"
               class="flex flex_direction_row"
             >
-              <span>{{classification}}</span>
+              <span>{{ classification }}</span>
             </li>
-           
-            
           </ul>
         </div>
         <div
@@ -616,10 +592,24 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 $item_classification_bg: var(--item_classification_bg, #00cbff);
 $filter_search_box_bg: var(--filter_search_box_bg, #ffffff);
 $tag_item_bg: var(--tag_item_bg, #ffffff);
+$tag_item_color: var(--tag_item_color, #b21919);
 
 #topic_list_main {
-  background: linear-gradient(90deg, $topic_list_bg, transparent);
-  width: 100%;
+  // background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png") repeat-y;
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    opacity: 0.08;
+    top: 0;
+    height: 100%;
+    background: url("https://pic.imgdb.cn/item/65d0a7e89f345e8d0368e174.png")
+      repeat;
+    background-size: contain;
+  }
+  width: 100vw;
+  height: auto;
   color: $color;
   li {
     list-style: none;
@@ -693,11 +683,11 @@ $tag_item_bg: var(--tag_item_bg, #ffffff);
       box-shadow: $item_shadow 2px 3px 10px;
       border-radius: 10px;
       overflow-y: scroll;
-      .query_time{
+      .query_time {
         margin-left: 2vw;
         margin-bottom: 1vh;
         color: $color;
-        font-size: .7em;
+        font-size: 0.7em;
       }
       ul {
         margin: 2vh 2vw;
@@ -735,8 +725,12 @@ $tag_item_bg: var(--tag_item_bg, #ffffff);
       color: $color;
       font-size: 1.3em;
       caret-color: $color;
+      transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      &:hover {
+        box-shadow: $topic_classification_num_color 0 0 0px 3px;
+      }
       &:focus {
-        box-shadow: $topic_classification_num_color 0 0 1px 2px;
+        box-shadow: $topic_classification_num_color 0 0 5px 5px;
       }
     }
   }
@@ -903,7 +897,9 @@ $tag_item_bg: var(--tag_item_bg, #ffffff);
             }
           }
           .topic_title {
-            margin: 1vh 0;
+            margin: 8px 0;
+            overflow: scroll;
+
             &:hover {
               color: #00cbff;
             }
@@ -916,12 +912,16 @@ $tag_item_bg: var(--tag_item_bg, #ffffff);
           .tags_box {
             margin-top: auto;
             gap: 0.4vw;
-            flex-wrap: wrap;
+            height: 30px;
+            overflow: scroll;
+
             .tag_item {
-              font-size: 0.3em;
-              transform: scale(0.9);
+              font-size: 1em;
+              transform: scale(0.8);
+              flex-shrink: 0;
+
               background: $tag_item_bg;
-              color: $color;
+              color: $tag_item_color;
               padding: 0.8vh 0.9vw;
 
               border-radius: 100px;
@@ -937,6 +937,7 @@ $tag_item_bg: var(--tag_item_bg, #ffffff);
 
     .pagination {
       align-self: center;
+      margin-top: 16vh;
     }
   }
 }

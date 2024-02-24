@@ -101,7 +101,7 @@ onMounted(() => {
         )},  ${Math.floor(Math.random() * 256)});
       padding: 5px 6px;
       border-radius: 5px;
-    ">${element}</span>`;
+    ">#${element}</span>`;
       });
     }
   });
@@ -112,7 +112,7 @@ onMounted(() => {
     id="topic_top_main"
     class="relative flex align_items_center justify_content_center"
   >
-    <div class="flex flex_direction_column topic_info_box align_items_center">
+    <div class="flex flex_direction_column topic_info_box align_items_center justify_content_center">
       <span class="topic_title"></span>
       <div class="flex flex_direction_row">
         <div class="topic_create_date"></div>
@@ -131,11 +131,14 @@ onMounted(() => {
   $normal_color: var(--normal_color, #0f1828);
 
 #topic_top_main {
-  width: 100vw;
-  min-height: 48vh;
+  width: 80vw;
+  margin: 0 auto;
+   min-height: 40vh;
+  border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   @keyframes topic_top_bg {
     0% {
@@ -147,20 +150,24 @@ onMounted(() => {
   }
   .topic_info_box {
     width: 86vw;
+    min-height: 40vh;
     word-wrap: break-word;
     animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     z-index: 1;
     color: #ffff;
-    margin-top: 5vh;
 
     .topic_title {
+      max-width: 80vw;
       line-height: 1em;
       text-align: center;
+      margin-top: 15vh;
       font-size: 3em;
+      color: #ffffff;
+      text-shadow: #0f1828 2px 10px 10px;
       width: 86vw;
     }
     .topic_create_date {
-      margin-top: 1vh;
+      margin: 16px 0;
       font-size: 1em;
       background: #7b68ee;
       padding: 5px 6px;
@@ -168,15 +175,16 @@ onMounted(() => {
       margin-right: 0.4vw;
     }
     .topic_update_date{
-      margin-top: 1vh;
+      margin-top: 16px 0;
       font-size: 1em;
+      
       background: #12710d;
       padding: 5px 6px;
       border-radius: 5px;
       margin-right: 0.4vw;
     }
     .topic_visit{
-      margin-top: 1vh;
+      margin: 16px 0;
       font-size: 1em;
       background: #973011;
       padding: 5px 6px;
@@ -184,7 +192,7 @@ onMounted(() => {
       margin-right: 0.4vw;
     }
     .topic_time {
-      margin-top: 1vh;
+      margin: 16px 0;
       font-size: 1em;
       background: #993255;
       padding: 5px 6px;
@@ -192,15 +200,18 @@ onMounted(() => {
       border-radius: 5px;
     }
     .topic_classification {
-      margin-top: 1vh;
+      margin: 16px 0;
       font-size: 1em;
       background: #ff6b00;
       padding: 5px 6px;
       border-radius: 5px;
     }
     .topic_tag_box {
-      width: 50vw;
-      margin-top: 2vh;
+      width: 60vw;
+      margin-top: auto;
+      margin-bottom: 16px;
+      overflow: scroll;
+      flex-wrap: wrap;
       gap: 0.4vw;
           }
   }
