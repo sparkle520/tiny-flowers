@@ -118,7 +118,7 @@ const width = -50
     transform: translateX(-50%);
     gap: 1vw;
     .rect {
-      width: 4vw;
+      width: 48px;
       height: 1vh;
       transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
       // border: #ffffff70 1px solid;
@@ -127,7 +127,7 @@ const width = -50
       margin: 10px 0;
     }
     .rect_active {
-      width: 3vw;
+      width: 32px;
       height: 1vh;
       // border: #0064fb51 1px solid;
       background: #fff4f4;

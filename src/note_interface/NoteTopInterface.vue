@@ -129,12 +129,12 @@ onMounted(() => {
   </div>
 </template>
 <style lang="scss" scoped>
-  $normal_color: var(--normal_color, #0f1828);
 
 #note_top_main {
-  width: 80vw;
+  width: 100vw;
   margin: 0 auto;
-  height: 40vh;
+  height: 50vh;
+  margin-top: 80px;
   border-radius: 5px;
   box-shadow: #7e7e7e70 0px 4px 10px;
   // animation: note_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -143,7 +143,7 @@ onMounted(() => {
     position: absolute;
     width: 100%;
     height: 80%;
-    background: linear-gradient(to bottom,transparent,rgba(81, 77, 77, 0.139));
+    background: linear-gradient(to bottom,transparent,rgba(34, 23, 23, 0.139));
     bottom: 0;
     left: 0;
   }
@@ -156,71 +156,13 @@ onMounted(() => {
     }
   }
   .note_top_main_bg{
-    width: 80vw;
+    width: 100vw;
     height: inherit;
     border-radius: 5px;
     object-fit: cover;
 
   }
  
-  .note_info_box {
-    width: 86vw;
-    word-wrap: break-word;
-    animation: note_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-    z-index: 1;
-    color: #ffff;
-    margin-top: 5vh;
-
-    .note_title {
-      line-height: 1em;
-      text-align: center;
-      font-size: 3em;
-      width: 86vw;
-    }
-    .note_create_date {
-      margin-top: 1vh;
-      font-size: 1em;
-      background: #7b68ee;
-      padding: 5px 6px;
-      border-radius: 5px;
-      margin-right: 0.4vw;
-    }
-    .note_update_date{
-      margin-top: 1vh;
-      font-size: 1em;
-      background: #12710d;
-      padding: 5px 6px;
-      border-radius: 5px;
-      margin-right: 0.4vw;
-    }
-    .note_visit{
-      margin-top: 1vh;
-      font-size: 1em;
-      background: #973011;
-      padding: 5px 6px;
-      border-radius: 5px;
-      margin-right: 0.4vw;
-    }
-    .note_time {
-      margin-top: 1vh;
-      font-size: 1em;
-      background: #993255;
-      padding: 5px 6px;
-      margin-right: 0.4vw;
-      border-radius: 5px;
-    }
-    .note_classification {
-      margin-top: 1vh;
-      font-size: 1em;
-      background: #ff6b00;
-      padding: 5px 6px;
-      border-radius: 5px;
-    }
-    .note_tag_box {
-      width: 50vw;
-      margin-top: 2vh;
-      gap: 0.4vw;
-          }
-  }
+ 
 }
 </style>

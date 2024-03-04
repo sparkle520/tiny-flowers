@@ -35,17 +35,17 @@ const change_theme = (current_theme) => {
   if (current_theme) {
     c_c("--bg_color", "#0b0e14");
     c_c("--color", "#f7f7f7");
-    c_c("--item_bg", "#242b3d6c");
+    c_c("--item_bg", "#242b3d");
     c_c("--item_shadow", "#242b34");
     c_c("--topic_classification_color", "#5e6d78");
     c_c("--topic_classification_num_color", "#b5b9d6");
   } else {
     c_c("--bg_color", "#f7f3f5");
-    c_c("--color", "#000000");
-    c_c("--item_bg", "#ffffff6c");
+    c_c("--color", "#4d4949");
+    c_c("--item_bg", "#fff");
     c_c("--item_shadow", "#cacaca4f");
-    c_c("--topic_classification_color", "#173e6c");
-    c_c("--topic_classification_num_color", "#e06530");
+    c_c("--topic_classification_color", "#216eba");
+    c_c("--topic_classification_num_color", "#4d4949");
   }
 };
 </script>

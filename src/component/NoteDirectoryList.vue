@@ -15,6 +15,7 @@ import {
 import { useRouter } from "vue-router";
 import NoteDirectoryItem from "/src/component/NoteDirectoryItem.vue";
 import emitter from "@/assets/config/mitt_bus.js";
+import change_theme from "../assets/theme/NoteDirectoryItem";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
@@ -24,7 +25,7 @@ store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
 onMounted(()=>{
-  console.log(props.data);
+  change_theme(theme.value);
 })
 onBeforeMount(() => {});
 onUnmounted(() => {});

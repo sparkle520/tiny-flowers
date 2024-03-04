@@ -35,17 +35,17 @@ const change_theme = (current_theme) => {
   if (current_theme) {
     c_c("--bg_color", "#0b0e14");
     c_c("--color", "#f7f7f7");
-    c_c("--item_bg", "#242b3d6c");
+    c_c("--item_bg", "#242b3d");
     c_c("--item_shadow", "#242b34");
     c_c("--topic_classification_color", "#5e6d78");
     c_c("--topic_classification_num_color", "#b5b9d6");
   } else {
     c_c("--bg_color", "#f7f3f5");
-    c_c("--color", "#000000");
-    c_c("--item_bg", "#ffffff6c");
+    c_c("--color", "#4d4949");
+    c_c("--item_bg", "#fff");
     c_c("--item_shadow", "#cacaca4f");
-    c_c("--topic_classification_color", "#173e6c");
-    c_c("--topic_classification_num_color", "#e06530");
+    c_c("--topic_classification_color", "#216eba");
+    c_c("--topic_classification_num_color", "#4d4949");
   }
 };
 </script>
@@ -82,9 +82,9 @@ const change_theme = (current_theme) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$bg_color: var(--bg_color, #f7f3f5);
-$color: var(--color, #000000);
-$item_bg: var(--item_bg, #ffffff6c);
+$bg_color: var(--bg_color, #fdfbfb);
+$color: var(--color, #4d4949);
+$item_bg: var(--item_bg, #ffff);
 $item_shadow: var(--item_shadow, #cacaca4f);
 $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
@@ -94,8 +94,8 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     width: inherit;
     background-color: $item_bg;
     animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    border-radius: 5px;
-    box-shadow: $item_shadow 2px 3px 10px;
+    border-radius: 10px;
+    box-shadow: #5656561b 1px 1px 10px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 30px;
     margin-bottom: 20px;

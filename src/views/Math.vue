@@ -1,173 +1,134 @@
 <script setup>
-import { ref, onMounted, watch, onUnmounted } from "vue";
+import { ref, onMounted, watch, onUnmounted, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
-import {useMathStore} from '/src/store/math.js'
+import { useMathStore } from "/src/store/math.js";
+import { useConfigStore } from "../store/config";
+import change_theme from "../assets/theme/Math";
 import { storeToRefs } from "pinia";
-
+const config_store = useConfigStore();
+const { theme } = storeToRefs(config_store);
+const { params } = useRoute();
+const search_text = ref("");
 const route = useRoute();
 const router = useRouter();
-const current_subject = ref("");
-const current_difficult = ref("");
-const switch_tag_box = ref(false);
-const pass = ref(false);
+const tags_list = ref([]);
+
+// const current_subject = ref("");
+// const current_difficult = ref("");
+// const switch_tag_box = ref(false);
 const math_store = useMathStore();
+const current_page = ref(params.page);
 const { data } = storeToRefs(math_store);
+config_store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
+onBeforeMount(() => {
+  tags_list.value = math_store.get_tags();
+  console.log(tags_list.value);
+});
+onUnmounted(()=>{
+  document.removeEventListener("click", click_handle);
 
+})
 onMounted(() => {
-  change_theme(props.theme);
+  change_theme(theme.value);
   window.scrollTo(0, 0);
+  document.addEventListener("click", click_handle);
+
+  current_page.value = params.page;
 });
-const show_tag_box = () => {
-  switch_tag_box.value = true;
-  cover.value = true;
-};
-const close_tag_box = () => {
-  switch_tag_box.value = false;
-  cover.value = false;
-};
-const deleteTagByIndex = (index) => {
-  select_tag_list.value.push(tag_list.value[index]);
-  tag_list.value.splice(index, 1);
-};
-const undo_tag_by_index = (index) => {
-  tag_list.value.push(select_tag_list.value[index]);
-  select_tag_list.value.splice(index, 1);
-};
-const click_tag_sure = () => {
-  close_tag_box();
-};
+// const show_tag_box = () => {
+//   switch_tag_box.value = true;
+//   cover.value = true;
+// };
+// const close_tag_box = () => {
+//   switch_tag_box.value = false;
+//   cover.value = false;
+// };
+// const deleteTagByIndex = (index) => {
+//   select_tag_list.value.push(tag_list.value[index]);
+//   tag_list.value.splice(index, 1);
+// };
+// const undo_tag_by_index = (index) => {
+//   tag_list.value.push(select_tag_list.value[index]);
+//   select_tag_list.value.splice(index, 1);
+// };
+
 const current_page_change = (current) => {
-  router.push('/math')
+  router.push(`/math/${current}`);
 };
-const go_to_solution = () => {};
 const page_num = ref(1);
-const subject_list = [
-  { value: "1", label: "高等数学" },
-  { value: "1", label: "概率论与数理统计" },
-  { value: "1", label: "线性代数" },
-  { value: "1", label: "离散数学" },
-];
-
-const tag_list = ref([
-  { tagId: 1, tag_name: "特征值与特征向量" },
-  { tagId: 2, tag_name: "快速傅里叶变换" },
-  { tagId: 3, tag_name: "二次型" },
-  { tagId: 4, tag_name: "一维随机变量及其分布" },
-  { tagId: 5, tag_name: "中心极限定理" },
-  { tagId: 1, tag_name: "参数估计" },
-  { tagId: 1, tag_name: "曲线积分" },
-  { tagId: 1, tag_name: "曲面积分" },
-
-  { tagId: 1, tag_name: "微分中值定理" },
-]);
-const topic_list = ref([
-  {
-    id: "M1",
-    question:
-      "将函数f(x) = 2+|x| (-1 \\leq x \\leq 1)展开成以2为周期的傅里叶级数，并由此求级数\\sum^{\\infty}_{n =1}{\\frac{1}{{n}^{2}} }的和.",
-    tags: "高等数学?无穷级数",
-    difficulty: "困难",
-    link: "困难",
-  },
-  {
-    id: "M2",
-    question: "证明不等式:(1)当x \\in (0, \\frac{\\pi}{2})时,x<tan x;(2)...",
-    tags: "高等数学?积分不等式",
-    difficulty: "简单",
-    link: "困难",
-  },
-  {
-    id: "M3",
-    question:
-      "设 X, Y 独立同分布且服从 N (0; 1), Z = X^{2} + Y^{2}. 计算 E(Z).",
-    tags: "概率论与数理统计?数学期望",
-    difficulty: "中等",
-    link: "困难",
-  },
-  {
-    id: "M4",
-    question: "某省的体育彩票中, 有顺序的 7 个数字组成一个号码, 称为一...",
-    tags: "概率论与数理统计?数学期望",
-    difficulty: "中等",
-    link: "困难",
-  },
-]);
-const current_difficult_list = [
-  { value: "1", label: "简单" },
-  { value: "2", label: "中等" },
-  { value: "3", label: "困难" },
-];
-const props = defineProps({
-  theme: Boolean,
-});
-watch(props, (newV, oldV) => {
-  change_theme(newV.theme);
-});
 //  change scss var
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+
+
+// const cover = ref(false);
+const show_all_tag = () => {
+  const select_tag_ul = document.querySelector(".select_tag ul");
+  select_tag_ul.style.height = "auto";
+  show_all_tag_flag.value = true;
 };
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    night;
-    c_c("--bg_color", "#1e2433");
-    c_c("--math_li_bg", "#2c273d");
-    c_c("--math_li_color", "#fdffff");
-    c_c("--math_com_box_bg", "#373544");
-    c_c("--math_com_box_shadow", "#37354445");
-    c_c("--condition_box", "#f0f0f0");
-    c_c("--tag_btn_color", "#2a3e4a");
-    c_c("--tag_btn_bg", "#d5e2e8");
-    c_c("--tag_choose_box_border", "#6b6b6b");
-    c_c("--tag_choose_box_bg", "#383c50");
-    c_c("--tag_item_bg", "#333547");
-    c_c("--tag_item_hover_bg", "#8d88e5");
-    c_c("--choose_top", "#a7a7a7");
-    c_c("--tag_sure_btn_color", "#333547");
-    c_c("--tag_sure_btn_bg", "#fff");
-    c_c("--math_color", "#f0f0f0");
-    c_c("--subject_hover_name_color", "#ffff");
-    c_c("--subject_name_color", "#ffff");
-    c_c("--content_item_box_hover", "#64bcba");
-    c_c("--content_tag_item_bg", "#8c66cb");
-  } else {
-    c_c("--bg_color", "#f7f3f5");
-    c_c("--math_li_bg", "#fec163");
-    c_c("--math_li_color", "#fdffff");
-    c_c("--math_com_box_bg", "#ffffff");
-    c_c("--math_com_box_shadow", "#d0cfcf45");
-    c_c("--condition_box", "#464879");
-    c_c("--tag_btn_color", "#146e57");
-    c_c("--tag_btn_bg", "#d5e2e8");
-    c_c("--tag_choose_box_border", "#6b6b6b");
-    c_c("--tag_choose_box_bg", "#ffffffeb");
-    c_c("--tag_item_bg", "#e3e9f0");
-    c_c("--tag_item_hover_bg", "#8d88e5");
-    c_c("--choose_top", "#a7a7a7");
-    c_c("--tag_sure_btn_color", "#3cd500");
-    c_c("--tag_sure_btn_bg", "#fff");
-    c_c("--math_color", "#282525");
-    c_c("--subject_hover_name_color", "#fff");
-    c_c("--subject_name_color", "#806262");
-    c_c("--content_item_box_hover", "#ffe4c4");
-    c_c("--content_tag_item_bg", "#6235a1");
+const close_all_tag = () => {
+  const select_tag_ul = document.querySelector(".select_tag ul");
+  select_tag_ul.style.height = "39px";
+  show_all_tag_flag.value = false;
+};
+const show_all_tag_flag = ref(false);
+const show_filter_search_box = ref(false);
+const current_filter_list = ref([]);
+const search_focus_handle = () => {
+  if (search_text.value.length == 0) return;
+  show_filter_search_box.value = true;
+};
+const loop = (arr, current_index, search_text) => {
+  if (current_index > arr.length - 1) return;
+  search_text.toLowerCase();
+  let per_num = Math.min(10, arr.length - current_index);
+  window.requestAnimationFrame(() => {
+    for (let i = 0; i < per_num; i++) {
+      if (
+        arr[current_index + i].id.toString().indexOf(search_text) == -1 &&
+        arr[current_index + i].tags.toLowerCase().indexOf(search_text) == -1
+      )
+        continue;
+      current_filter_list.value.push(arr[current_index + i]);
+    }
+    loop(arr, current_index + per_num, search_text);
+  });
+};
+watch(search_text, (new_val, old_val) => {
+  if (new_val == "") {
+    current_filter_list.value = [];
+    show_filter_search_box.value = false;
+    return;
+  }
+  show_filter_search_box.value = true;
+  current_filter_list.value = [];
+  const query_start = performance.now();
+  loop(math_store.data, 0, new_val);
+  const query_end = performance.now();
+  const query_text = document.querySelector(".query_text");
+  const query_diff = query_end - query_start;
+  query_text.innerHTML = "查询耗时: " + query_diff + "ms";
+});
+const click_handle = (e) => {
+  let search_box = document.querySelector(".search_box");
+  if (!search_box.contains(e.target)) {
+    show_filter_search_box.value = false;
   }
 };
-const select_tag_list = ref([]);
-const cover = ref(false);
 </script>
 <template>
   <div
     id="math_main"
-    class="flex flex_direction_column align-items-center relative"
+    class="flex flex_direction_column align_items_center relative"
   >
-    <div class="cover" v-if="cover"></div>
-    <div
+    <!-- <div class="cover" v-if="cover"></div> -->
+    <!-- <div
       v-if="switch_tag_box"
-      class="fixed tag-choose-box flex flex-direction-column align-items-center"
+      class="fixed tag-choose-box flex flex_direction_column align_items_center"
     >
-      <div class="choose-top flex flex-direction-row align-items-center">
+      <div class="choose-top flex flex_direction_row align_items_center">
         <div @click="close_tag_box" class="close-btn">
           <svg
             t="1697596075825"
@@ -186,131 +147,188 @@ const cover = ref(false);
           </svg>
         </div>
       </div>
-      <div class="to-choose flex flex-direction-column">
+      <div class="to-choose flex flex_direction_column">
         <span class="label-choose">请选择标签</span>
         <div class="flex tag-item-box">
           <div
             @click="deleteTagByIndex(index)"
             v-for="(item, index) in tag_list"
             :id="item.tagId"
-            class="tag-item flex align-items-center justify-content-center"
+            class="tag-item flex align_items_center justify_content_center"
           >
             {{ item.tag_name }}
           </div>
         </div>
       </div>
-      <div class="have-choose flex flex-direction-column">
+      <div class="have-choose flex flex_direction_column">
         <span class="label-choose">已选择标签</span>
         <div class="flex tag-item-box">
           <div
             @click="undo_tag_by_index(index)"
             v-for="(item, index) in select_tag_list"
             :id="item.tagId"
-            class="tag-item flex align-items-center justify-content-center"
+            class="tag-item flex align_items_center justify_content_center"
           >
             {{ item.tag_name }}
           </div>
         </div>
       </div>
-      <div class="choose-bottom flex align-items-center">
+      <div class="choose-bottom flex align_items_center">
         <button @click="click_tag_sure" class="tag-sure-btn">确定</button>
       </div>
-    </div>
+    </div> -->
     <div
       id="top_box"
-      class="flex flex-direction-column com-box align-items-center relative"
+      class="flex flex_direction_column com_box align_items_center relative"
     >
-      <div class="flex flex-direction-row condition-box align-items-center">
-        <div class="flex align-items-center margin-0-10">筛选条件:</div>
-        <div class="margin-0-10">科目</div>
-        <el-select v-model="current_subject" placeholder="不可用">
-          <el-option
-            v-for="item in subject_list"
-            :key="item.value"
-            :value="item.label"
-          >
-          </el-option>
-        </el-select>
-        <div class="margin-0-10">题目难度</div>
-        <el-select v-model="current_difficult" placeholder="不可用">
-          <el-option
-            v-for="item in current_difficult_list"
-            :key="item.value"
-            :value="item.label"
-          >
-          </el-option>
-        </el-select>
-        <div class="tag-box">
-          <button class="tag-btn" @click="show_tag_box">标签</button>
-        </div>
-        <div class="key-search-input-box">
+      <div class="flex flex_direction_row top_top_box align_items_center">
+        <div class="search_box relative">
           <input
+            v-model="search_text"
+            @focus="search_focus_handle"
+            @input="filter_search_handle"
+            @keyup.enter="topic_search_handle"
+            id="math_search"
             type="text"
-            class="key-search-input"
-            placeholder="关键字搜素(暂不可用)"
+            class="search"
+            placeholder="在此键入搜索"
           />
-        </div>
-      </div>
-      <div class="flex flex_direction_column select_tag">
-        <h4 class="">已选择标签：</h4>
-        <ul class="flex flex_direction_row">
-          <li
-            @click="undo_tag_by_index(index)"
-            v-for="(item, index) in select_tag_list"
-            class="relative"
+        
+          <div
+            class="filter_search_box absolute"
+            v-show="show_filter_search_box"
           >
-            {{ item.tag_name }}
-            <svg
-              t="1705223580496"
-              class="icon absolute absolute_center"
+            <ul class="flex flex_direction_column">
+              <li
+                v-for="item in current_filter_list"
+                @click="router.push(`/math/details/${item.id}`)"
+              >
+                M{{ item.id }} <vue-latex
+              style="font-size: 13px"
+              :display-mode="true"
+              :expression="item.question"
+            >
+            </vue-latex>
+              </li>
+            </ul>
+            <div class="query_time"><span class="query_text"></span></div>
+          </div>
+          <label class="search_icon absolute" for="math_search"
+            ><svg
+              t="1708934777476"
+              class="icon"
               viewBox="0 0 1024 1024"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
-              p-id="5997"
-              width="32"
-              height="32"
+              p-id="6287"
+              width="52"
+              height="52"
             >
               <path
-                d="M872.778827 254.203062l-620.739643 592.59052-109.312046-114.504566 620.739643-592.59052 109.312046 114.504566Z"
-                fill="#E96D71"
-                p-id="5998"
+                d="M900.311266 0H123.688734C65.769106 0 19.029036 46.621138 19.029036 104.421835v814.680604C19.029036 976.903136 65.888037 1024 123.807666 1024H123.688734h776.622532c57.800697 0 104.659698-47.096864 104.659698-104.897561v-814.680604C1004.970964 46.621138 958.230894 0 900.311266 0z m52.329849 919.102439c0 28.900348-23.310569 52.567712-52.329849 52.567712H123.688734c-28.900348 0-52.329849-23.667364-52.329849-52.567712v-814.680604c0-28.900348 23.786295-52.44878 52.329849-52.44878v0.356794h776.622532c28.900348 0 52.329849 23.191638 52.329849 52.091986v814.680604z"
+                fill="#3BC06D"
+                p-id="6288"
               ></path>
               <path
-                d="M268.693068 128.199468l592.589813 620.738902-114.505306 109.312753-592.589813-620.738902 114.505306-109.312753Z"
-                fill="#F55555"
-                p-id="5999"
+                d="M399.609756 828.119861c-7.016957 0-13.558188-2.735424-18.55331-7.730546l-58.990012-58.990012-58.990011 58.990012c-4.995122 4.995122-11.536353 7.730546-18.55331 7.730546s-13.558188-2.735424-18.55331-7.730546c-4.995122-4.995122-7.730546-11.536353-7.730546-18.55331s2.735424-13.558188 7.730546-18.55331l58.990011-58.990012-58.990011-58.990012c-10.228107-10.228107-10.228107-26.878513 0-37.10662 4.995122-4.995122 11.536353-7.730546 18.55331-7.730546s13.558188 2.735424 18.55331 7.730546l58.990011 58.990012 58.990012-58.990012c4.995122-4.995122 11.536353-7.730546 18.55331-7.730546s13.558188 2.735424 18.55331 7.730546c10.228107 10.228107 10.228107 26.878513 0 37.10662L359.173055 724.292683l58.990011 58.990012c10.228107 10.228107 10.228107 26.878513 0 37.10662-4.995122 4.995122-11.536353 7.730546-18.55331 7.730546z"
+                fill="#3BC06D"
+                p-id="6289"
+              ></path>
+              <path
+                d="M322.066434 448.728455c-14.50964 0-26.283856-11.774216-26.283856-26.283856V338.954704h-83.489895c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h83.489895v-83.489896c0-14.50964 11.774216-26.283856 26.283856-26.283856 14.50964 0 26.283856 11.774216 26.283856 26.283856V286.624855H431.721254c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856h-83.489895v83.489895c0 14.271777-11.774216 26.045993-26.164925 26.045993zM701.933566 846.673171c-17.245064 0-31.278978-14.033914-31.278978-31.278978s14.033914-31.397909 31.278978-31.39791 31.278978 14.033914 31.278978 31.39791c0.118931 17.126132-13.914983 31.278978-31.278978 31.278978zM592.278746 746.176074c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746zM701.933566 657.572125c-17.245064 0-31.278978-14.033914-31.278978-31.278977s14.033914-31.397909 31.278978-31.39791 31.278978 14.033914 31.278978 31.39791c0.118931 17.245064-13.914983 31.278978-31.278978 31.278977z"
+                fill="#C6F4CB"
+                p-id="6290"
+              ></path>
+              <path
+                d="M592.278746 398.420441c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746zM592.278746 279.726829c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746z"
+                fill="#3BC06D"
+                p-id="6291"
+              ></path></svg
+          ></label>
+        </div>
+      </div>
+      <div class="flex flex_direction_column select_tag">
+        <h4 class="">标签：</h4>
+        <ul class="flex flex_direction_row relative">
+          <div
+            @click="show_all_tag"
+            v-show="!show_all_tag_flag"
+            class="absolute show_all_tag flex flex_direction_row align_items_center"
+          >
+            展开全部<svg
+              t="1708943924609"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="10332"
+              width="18"
+              height="18"
+            >
+              <path
+                d="M737.701647 149.865412l47.104 37.647059v0.12047L520.372706 519.830588 255.879529 187.572706l46.98353-37.707294 217.449412 273.829647 217.389176-273.829647zM520.131765 785.106824l217.328941-273.829648 47.104 37.707295-264.432941 332.257882-264.493177-332.257882 46.98353-37.707295 217.509647 273.829648z"
+                fill="#A9B8C0"
+                p-id="10333"
               ></path>
             </svg>
+          </div>
+          <li
+            @click="undo_tag_by_index(index)"
+            v-for="(item, index) in tags_list"
+            class="relative"
+          >
+            {{ item[0] }}
+            <span class="count"> {{ item[1] }} </span>
           </li>
+          <div
+            @click="close_all_tag"
+            v-show="show_all_tag_flag"
+            class="close_all_tag flex flex_direction_row align_items_center"
+          >
+            收起<svg
+              t="1708943924609"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="10332"
+              width="18"
+              height="18"
+            >
+              <path
+                d="M737.701647 149.865412l47.104 37.647059v0.12047L520.372706 519.830588 255.879529 187.572706l46.98353-37.707294 217.449412 273.829647 217.389176-273.829647zM520.131765 785.106824l217.328941-273.829648 47.104 37.707295-264.432941 332.257882-264.493177-332.257882 46.98353-37.707295 217.509647 273.829648z"
+                fill="#A9B8C0"
+                p-id="10333"
+              ></path>
+            </svg>
+          </div>
         </ul>
       </div>
     </div>
     <div
-      id="content-box"
-      class="flex flex-direction-column com-box align-items-center"
+      id="content_box"
+      class="flex flex_direction_column com_box align_items_center"
     >
       <!-- width：96% -->
-      <div class="content-top-box grid content-grid-com">
-        <div class="flex align-items-center justify-content-center">题号</div>
-        <div class="flex align-items-center justify-content-center">
-          题目名称
-        </div>
-        <div class="flex align-items-center justify-content-center">标签</div>
-        <div class="flex align-items-center justify-content-center">难度</div>
+      <div class="content_top_box grid content_grid_com">
+        <div class="flex align_items_center justify_content_center">题号</div>
+        <div class="flex align_items_center">题目名称</div>
+        <div class="flex align_items_center">标签</div>
+        <div class="flex align_items_center justify_content_center">难度</div>
       </div>
-      <div class="content-mid-box">
+      <div class="content_mid_box">
         <div
           @click="router.push(`/math/details/${item.id}`)"
-          v-for="(item, index) in data.slice(0,10)"
-          class="content-item-box grid content-grid-com"
+          v-for="(item, index) in data.slice(0, 10)"
+          class="content_item_box grid content_grid_com"
         >
           <div
-            class="subject-num flex align-items-center justify-content-center"
+            class="subject-num flex align_items_center justify_content_center"
           >
             M{{ item.id }}
           </div>
           <div
-            class="subject-name flex align-items-center justify-content-center"
+            class="subject_name flex align_items_center justify_content_center"
           >
             <vue-latex
               style="font-size: 13px"
@@ -319,72 +337,72 @@ const cover = ref(false);
             >
             </vue-latex>
           </div>
-          <div class="content-tag-box flex align-items-center">
+          <div class="content_tag_box flex align_items_center">
             <div
               v-for="(item2, index) in item.tags.split('?')"
-              class="flex content-tag-item align-items-center justify-content-center"
+              class="flex content_tag_item align_items_center justify_content_center"
             >
               {{ item2 }}
             </div>
           </div>
           <div
             v-if="item.difficulty == '困难'"
-            class="flex align-items-center justify-content-center difficulty-hard"
+            class="flex align_items_center justify_content_center difficulty_hard"
           >
             {{ item.difficulty }}
           </div>
           <div
             v-if="item.difficulty == '简单'"
-            class="flex align-items-center justify-content-center difficulty-easy"
+            class="flex align_items_center justify_content_center difficulty_easy"
           >
             {{ item.difficulty }}
           </div>
           <div
             v-if="item.difficulty == '中等'"
-            class="flex align-items-center justify-content-center difficulty-mid"
+            class="flex align_items_center justify_content_center difficulty_mid"
           >
             {{ item.difficulty }}
           </div>
         </div>
       </div>
       <div
-        class="content-bottom-box flex align-items-center justify-content-center"
+        class="content_bottom_box flex align_items_center justify_content_center"
       >
-        <el-pagination
-          background
-          :page-size="1"
-          @current-change="current_page_change"
-          layout="prev, pager, next"
-          :total="parseInt(data.length/10)"
+        <Pagination
+          :current_page="current_page"
+          page_size="10"
+          @current_change="current_page_change"
+          :total="data.length"
         >
-        </el-pagination>
+        </Pagination>
       </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 @import url("/src/assets/css/math.scss");
-$bg_color: var(--bg_color, #f7f3f5);
-$math_li_bg: var(--math_li_bg, #fec163);
+$math_bg_color: var(--math_bg_color, #fdfbfb);
+$math_li_bg: var(--math_li_bg, #f5f1ec);
 $math_li_color: var(--math_li_color, #fdffff);
-$math_com_box_bg: var(--math_com_box_bg, #ffffff);
+$math_com_box_bg: var(--math_com_box_bg, #ffff);
 $math_com_box_shadow: var(--math_com_box_shadow, #d0cfcf45);
 $condition_box: var(--condition_box, #464879);
-$tag_btn_color: var(--tag_btn_color, #146e57);
-$tag_btn_bg: var(--tag_btn_bg, #d5e2e8);
-$tag_choose_box_border: var(--tag_choose_box_border, #6b6b6b);
-$tag_choose_box_bg: var(--tag_choose_box_bg, #ffffffeb);
-$tag_item_bg: var(--tag_item_bg, #e3e9f0);
-$tag_item_hover_bg: var(--tag_item_hover_bg, #8d88e5);
-$choose_top: var(--choose_top, #a7a7a7);
+// $tag_btn_color: var(--tag_btn_color, #146e57);
+// $tag_btn_bg: var(--tag_btn_bg, #d5e2e8);
+// $tag_choose_box_border: var(--tag_choose_box_border, #6b6b6b);
+// $tag_choose_box_bg: var(--tag_choose_box_bg, #ffffffeb);
+// $tag_item_bg: var(--tag_item_bg, #e3e9f0);
+// $tag_item_hover_bg: var(--tag_item_hover_bg, #8d88e5);
+// $choose_top: var(--choose_top, #a7a7a7);
 $tag_sure_btn_color: var(--tag_sure_btn_color, #3cd500);
-$tag_sure_btn_bg: var(--tag_sure_btn_bg, #fff);
+$tag_sure_btn_bg: var(--tag_sure_btn_bg, #f4fff9);
 $math_color: var(--math_color, #282525);
 $subject_hover_name_color: var(--subject_hover_name_color, #002661);
 $subject_name_color: var(--subject_name_color, #806262);
 $content_item_box_hover: var(--content_item_box_hover, #d9c9c3);
 $content_tag_item_bg: var(--content_tag_item_bg, #6235a1);
 $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
+$content_item_box_color: var(--content_item_box_color, #fbfdfd);
 ::-webkit-scrollbar {
   width: 0 !important;
 }
@@ -395,7 +413,9 @@ $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
 }
 
 #math_main {
-  background: $bg_color;
+  width: 100vw;
+  min-height: 100vh;
+  background: $math_bg_color;
   color: $math_color;
   &::after {
     width: 100vw;
@@ -403,296 +423,377 @@ $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
     content: "";
     left: 0;
     top: 0;
-    position: absolute;
-    z-index: 0;
-    background: url("https://pic.imgdb.cn/item/65d890bc9f345e8d03b60ddb.png")
-      repeat;
-    background-size: 240px 239px;
-  }
-
-  .cover {
-    width: 100vw;
-    height: 100vh;
     position: fixed;
-    background: #6d6d6e40;
-    z-index: 10;
-  }
-  .tag-choose-box {
-    width: 900px;
-    height: 600px;
-    left: 50%;
-    top: 50%;
-    border: $tag_choose_box_border 1px solid;
-    border-radius: 10px;
-    background-color: $tag_choose_box_bg;
-
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    animation: move_top 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-    .tag-item {
-      background-color: $tag_item_bg;
-      border-radius: 10px;
-      padding: 0 10px;
-      height: 40px;
-      margin: 5px 5px;
-      user-select: none;
-      transform: skewX(-15deg);
-      animation: sparkle 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-      @keyframes sparkle {
-        0% {
-          opacity: 0;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      &:hover {
-        color: $tag_item_bg;
-        background: $tag_item_hover_bg;
-      }
-    }
-
-    .tag-item-box {
-      width: 100%;
-      flex-wrap: wrap;
-    }
-
-    .choose-top {
-      width: 100%;
-      border-bottom: $choose_top 2px solid;
-      height: 50px;
-      border-top-right-radius: inherit;
-      border-top-left-radius: inherit;
-
-      .close-btn {
-        margin-left: auto;
-        margin-right: 10px;
-        svg {
-          path {
-            fill: $subject_name_color;
-          }
-        }
-        &:hover {
-          transform: scale(1.1);
-        }
-
-        &:active {
-          transform: scale(1.2);
-        }
-      }
-    }
-
-    .to-choose {
-      width: 98%;
-      overflow-y: auto;
-      height: 270px;
-      margin-top: 10px;
-      background-image: transparent;
-      border-bottom: $choose_top 2px solid;
-    }
-
-    .label-choose {
-      margin: 10px 10px;
-    }
-
-    .have-choose {
-      width: 98%;
-      overflow-y: auto;
-      margin: 10px 0;
-      height: 180px;
-      background-image: transparent;
-    }
-
-    .choose-bottom {
-      width: 100%;
-      height: 60px;
-      border-bottom-right-radius: inherit;
-      border-bottom-left-radius: inherit;
-
-      .tag-sure-btn {
-        width: 150px;
-        height: 40px;
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 10px;
-        background-color: $tag_sure_btn_bg;
-        z-index: 1;
-        position: relative;
-        color: $tag_sure_btn_color;
-        border: 3px solid $tag_sure_btn_color;
-        font-family: Arial;
-        font-weight: 800;
-        border-radius: 10px;
-        font-size: 1.05em;
-        transition: transform 0.3s ease, color 0.5s ease;
-        &::before {
-          content: "";
-          inset: 0 0 0 0;
-          height: 0px;
-          width: 0px;
-          position: absolute;
-          background-color: $tag_sure_btn_color;
-          z-index: -1;
-          left: 50%;
-          top: 50%;
-          border-radius: 10px;
-          transform: translate(-50%, -50%);
-          transition: all 0.3s ease;
-        }
-
-        &:active {
-          transform: scale(0.9);
-        }
-
-        &:hover {
-          color: $tag_sure_btn_bg;
-          &::before {
-            height: calc(100% + 6px);
-            width: calc(100% + 6px);
-          }
-        }
-      }
-    }
-  }
-  .margin-0-10 {
-    margin: 0 10px;
+    z-index: 0;
+    opacity: 0.1;
+    background: url("https://pic.imgdb.cn/item/65daf42d9f345e8d035803ea.png")
+      repeat;
   }
 
-  width: 100%;
+  // .cover {
+  //   width: 100vw;
+  //   height: 100vh;
+  //   position: fixed;
+  //   background: #6d6d6e40;
+  //   z-index: 10;
+  // }
+  // .tag-choose-box {
+  //   width: 65vw;
+  //   height: 70vh;
+  //   left: 50%;
+  //   top: 50%;
+  //   border: $tag_choose_box_border 1px solid;
+  //   border-radius: 10px;
+  //   background-color: $tag_choose_box_bg;
+
+  //   transform: translate(-50%, -50%);
+  //   z-index: 10;
+  //   animation: move_top 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  //   .tag-item {
+  //     color: $subject_name_color;
+  //     background-color: $tag_item_bg;
+  //     border-radius: 10px;
+  //     padding: 0 10px;
+  //     height: 40px;
+  //     margin: 5px 5px;
+  //     user-select: none;
+  //     transform: skewX(-15deg);
+  //     animation: sparkle 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  //     @keyframes sparkle {
+  //       0% {
+  //         opacity: 0;
+  //       }
+
+  //       100% {
+  //         opacity: 1;
+  //       }
+  //     }
+
+  //     &:hover {
+  //       color: $tag_item_bg;
+  //       background: $tag_item_hover_bg;
+  //     }
+  //   }
+
+  //   .tag-item-box {
+  //     width: 100%;
+  //     flex-wrap: wrap;
+  //   }
+
+  //   .choose-top {
+  //     width: 100%;
+  //     border-bottom: $choose_top 2px solid;
+  //     height: 50px;
+  //     border-top-right-radius: inherit;
+  //     border-top-left-radius: inherit;
+
+  //     .close-btn {
+  //       margin-left: auto;
+  //       margin-right: 10px;
+  //       svg {
+  //         path {
+  //           fill: $subject_name_color;
+  //         }
+  //       }
+  //       &:hover {
+  //         transform: scale(1.1);
+  //       }
+
+  //       &:active {
+  //         transform: scale(1.2);
+  //       }
+  //     }
+  //   }
+
+  //   .to-choose {
+  //     width: 98%;
+  //     overflow-y: auto;
+  //     height: 270px;
+  //     margin-top: 10px;
+  //     background-image: transparent;
+  //     border-bottom: $choose_top 2px solid;
+  //   }
+
+  //   .label-choose {
+  //     margin: 10px 10px;
+  //   }
+
+  //   .have-choose {
+  //     width: 98%;
+  //     overflow-y: auto;
+  //     margin: 10px 0;
+  //     height: 180px;
+  //     background-image: transparent;
+  //   }
+
+  //   .choose-bottom {
+  //     width: 100%;
+  //     height: 60px;
+  //     border-bottom-right-radius: inherit;
+  //     border-bottom-left-radius: inherit;
+  //     .tag-sure-btn {
+  //       width: 150px;
+  //       height: 40px;
+  //       margin-left: auto;
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: center;
+  //       margin-right: 10px;
+  //       background-color: $tag_sure_btn_bg;
+  //       z-index: 1;
+  //       position: relative;
+  //       color: $tag_sure_btn_color;
+  //       border: 3px solid $tag_sure_btn_color;
+  //       font-family: Arial;
+  //       font-weight: 800;
+  //       border-radius: 10px;
+  //       font-size: 1.05em;
+  //       transition: transform 0.3s ease, color 0.5s ease;
+  //       &::before {
+  //         content: "";
+  //         inset: 0 0 0 0;
+  //         height: 0px;
+  //         width: 0px;
+  //         position: absolute;
+  //         background-color: $tag_sure_btn_color;
+  //         z-index: -1;
+  //         left: 50%;
+  //         top: 50%;
+  //         border-radius: 10px;
+  //         transform: translate(-50%, -50%);
+  //         transition: all 0.3s ease;
+  //       }
+
+  //       &:active {
+  //         transform: scale(0.9);
+  //       }
+
+  //       &:hover {
+  //         color: $tag_sure_btn_bg;
+  //         &::before {
+  //           height: calc(100% + 6px);
+  //           width: calc(100% + 6px);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // .margin-0-10 {
+  //   margin: 0 10px;
+  // }
+
   .select_tag {
-    width: calc(100% - 60px);
+    width: calc(100% - 32px);
     justify-items: flex-start;
+    .show_all_tag {
+      right: 0;
+      user-select: none;
+      font-size: 14px;
+      height: 40px;
+      border-radius: 15px;
+      color: $subject_name_color;
+      padding: 0 8px;
+      background: linear-gradient(90deg, transparent 0%, $math_com_box_bg 10%);
+      z-index: 11;
+     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    }
+    .close_all_tag {
+      width: 100%;
+      user-select: none;
+      color: $subject_name_color;
+      font-size: 14px;
+      justify-content: flex-end;
+      svg {
+        transform: rotate(180deg);
+      }
+    }
     h4 {
       margin: 0;
     }
 
     ul {
       flex-wrap: wrap;
+      gap: 8px;
       padding: 0;
+      height: 39px;
+      overflow: hidden;
+      list-style: none;
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       li {
         user-select: none;
         background: $math_li_bg;
         padding: 10px;
-        margin: 5px;
         font-weight: 900;
-
+        border-radius: 10px;
         color: $math_li_color;
-        &:hover {
-          svg {
-            transform: scale(1) translate(-50%, -50%);
-
-            opacity: 1;
-          }
+        transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        .count {
+          font-size: 12px;
+          font-weight: 400;
         }
-        svg {
-          transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-          transform: scale(0.8) translate(-50%, -50%) rotate(30deg);
-          opacity: 0;
+        &:hover {
+          background: $math_li_color;
+          color: $math_li_bg;
         }
       }
     }
   }
 
-  .com-box {
+  .com_box {
     border-radius: 10px;
     box-shadow: 9px 9px 10px $math_com_box_shadow;
     background: $math_com_box_bg;
-    .condition-box {
-      width: 96%;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    .top_top_box {
+      width: calc(100% - 32px);
       height: 60px;
-      margin: 20px;
+      margin-bottom: 16px;
       font-weight: 600;
-      border-radius: 10px;
       color: $condition_box;
+
       border-bottom: $condition_box 2px solid;
-      .key-search-input-box {
-        margin-left: auto;
-        margin-right: 20px;
+      .search_box {
+        margin: auto auto;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-        .key-search-input {
-          height: 30px;
-          font-size: 15px;
-          color: rgb(83, 120, 120);
+        .search {
+          height: 40px;
+
+          width: 40vw;
+          color: $subject_name_color;
+          background: transparent;
           border: none;
-          padding: 0 5px;
+          font-size: 1.2em;
+          padding-left: 20px;
+          border-radius: 10px;
+          font-family: "miscrsoft yahei";
+          box-shadow: $condition_box 0 0 0 1px;
 
+          transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           &:focus {
+            box-shadow: $condition_box 0px 4px 5px;
+
             outline: none;
           }
-
+          &:hover {
+            box-shadow: $condition_box 0px 4px 5px;
+          }
           &::placeholder {
             color: rgb(138, 148, 148);
-            font-size: 13px;
-          }
-
-          &::before {
-            position: absolute;
-            width: 100px;
-            content: "";
-            height: 100px;
+            font-size: 0.9em;
           }
         }
-      }
 
-      .tag-box {
-        margin: 0 16px;
-        .tag-btn {
-          width: 100px;
-          height: 30px;
-          border: none;
-          border-radius: 5px;
-          font-size: 14px;
-          font-weight: 600;
-          color: $tag_btn_color;
-          background: $tag_btn_bg;
-          transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-          &:hover {
-            transform: scale(1.05);
+        .search_icon {
+          right: 0;
+          bottom: 0;
+          transform: rotate(10deg) translateZ(0);
+          svg {
+            path:nth-child(1) {
+              fill: $subject_hover_name_color;
+            }
+            path:nth-child(2) {
+              fill: $subject_hover_name_color;
+            }
+            path:nth-child(3) {
+              fill: $condition_box;
+            }
+            path:nth-child(4) {
+              fill: $subject_hover_name_color;
+            }
           }
-
-          &:active {
-            animation: extend 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-            @keyframes extend {
-              0% {
-                transform: rotateY(30deg);
-              }
-
-              100% {
-                transform: rotateY(0);
+        }
+        .filter_search_box {
+          width: 100%;
+          max-height: 30vh;
+          background: $math_com_box_bg;
+          bottom: 0;
+          z-index: 100;
+          transform: translateY(120%);
+          box-shadow: #8787872f 2px 3px 10px;
+          border-radius: 10px;
+          overflow-y: scroll;
+          .query_time {
+            margin-left: 2vw;
+            margin-bottom: 1vh;
+            color: $math_color;
+            font-size: 0.7em;
+          }
+          ul {
+            list-style: none;
+            margin: 2vh 2vw;
+            padding: 0;
+            gap: 1vh;
+            li {
+              word-wrap: break-word;
+              color: $subject_hover_name_color;
+              user-select: none;
+              font-size: 1.1em;
+              &:hover {
+                color: $math_color;
               }
             }
           }
         }
       }
+
+      // .tag-box {
+      //   margin: 0 16px;
+      //   .tag-btn {
+      //     width: 100px;
+      //     height: 30px;
+      //     border: none;
+      //     border-radius: 10px;
+      //     font-size: 14px;
+      //     font-weight: 600;
+      //     color: $tag_btn_color;
+      //     background: $tag_btn_bg;
+      //     transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+      //     &:hover {
+      //       transform: scale(1.05);
+      //     }
+
+      //     &:active {
+      //       animation: extend 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+      //       @keyframes extend {
+      //         0% {
+      //           transform: rotateY(30deg);
+      //         }
+
+      //         100% {
+      //           transform: rotateY(0);
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
 
   #top_box {
     margin-top: 90px;
-    width: 90%;
-    min-height: 300px;
+    width: 80vw;
     z-index: 9;
+    animation: content_box 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 
-  #content-box {
+  #content_box {
     margin-top: 30px;
-    width: 90%;
+    width: 80vw;
     z-index: 1;
-
     margin-bottom: 20px;
+    animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-    .content-grid-com {
+    .content_grid_com {
       grid-template-columns: 5% 65% 20% 10%;
       gap: 10px;
     }
 
-    .content-top-box {
+    .content_top_box {
       width: 98%;
       height: 60px;
       background: #f9fffc38;
@@ -702,21 +803,22 @@ $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
       border-top-left-radius: inherit;
     }
 
-    .content-mid-box {
+    .content_mid_box {
       width: 98%;
       height: auto;
       margin-bottom: 30px;
-      background: #dae5df38;
       border-bottom-right-radius: inherit;
       border-bottom-left-radius: inherit;
 
-      .content-item-box {
+      .content_item_box {
         min-height: 60px;
+        background: $content_item_box_color;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
         &:hover {
           background: $content_item_box_hover;
 
-          .subject-name {
+          .subject_name {
             color: $subject_hover_name_color;
           }
         }
@@ -731,44 +833,46 @@ $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
           color: #7db8b8;
         }
 
-        .difficulty-hard {
+        .difficulty_hard {
           color: #c54c4c;
           font-weight: 700;
         }
-        .difficulty-easy {
+        .difficulty_easy {
           color: #66a321;
           font-weight: 700;
         }
-        .difficulty-mid {
+        .difficulty_mid {
           color: #f19742;
           font-weight: 700;
         }
 
-        .subject-name {
+        .subject_name {
           justify-self: flex-start;
           color: $subject_name_color;
         }
 
-        .content-tag-box {
+        .content_tag_box {
           flex-wrap: wrap;
           border-bottom: $tag_sure_btn_color 1px solid;
-          .content-tag-item {
+          .content_tag_item {
             width: auto;
             padding: 0 5px;
             height: 30px;
             align-self: start;
             margin: 5px 0px 3px 3px;
-            border-radius: 3px;
+            border-radius: 5px;
             color: $tag_sure_btn_bg;
             font-size: 12px;
             font-weight: 700;
             background: $content_tag_item_bg;
+            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
           }
         }
       }
     }
 
-    .content-bottom-box {
+    .content_bottom_box {
       margin-top: auto;
       margin-bottom: 10px;
       width: 100%;
@@ -781,6 +885,15 @@ $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
   }
   100% {
     transform: translate(-50%, -50%);
+  }
+}
+@keyframes content_box {
+  0% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

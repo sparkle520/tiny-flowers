@@ -41,11 +41,11 @@ const routes = [
         }
     },
     {
-        path: '/note',
+        path: '/note/:page',
         component: () => import("/src/views/Note.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
 
         }
     },

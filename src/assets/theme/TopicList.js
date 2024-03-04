@@ -14,22 +14,24 @@ const change_theme = (current_theme) =>{
       c_c("--topic_classification_num_color", "#b5b9d6");
       c_c("--filter_search_box_bg", "#123");
       c_c("--tag_item_bg", "#242b3dc7");
+      c_c("--layout_hover", "#2d3041c7");
 
   
     } else {
-      c_c("--bg_color", "#f7f3f5");
+      c_c("--bg_color", "#fdfbfb");
       c_c("--topic_list_bg", "#e8f6f9");
       c_c("--color", "#000000");
       c_c("--item_bg", "#ffffffc7");
       c_c("--item_shadow", "#1f2d3d26");
-      c_c("--title_color", "#173e6c");
+      c_c("--title_color", "#4d4949");
       c_c("--title_af_bg", "#22113364");
-      c_c("--tag_box_bg", "#dae6e7c7");
-      c_c("--tag_bg", "#41a8a8");
-      c_c("--topic_classification_color", "#173e6c");
-      c_c("--topic_classification_num_color", "#e06530");
+      c_c("--tag_box_bg", "#e9696933");
+      c_c("--tag_bg", "#e96969");
+      c_c("--topic_classification_color", "#e96969");
+      c_c("--topic_classification_num_color", "#e96969");
       c_c("--filter_search_box_bg", "#ffff");
       c_c("--tag_item_bg", "#f5f5f5");
+      c_c("--layout_hover", "#F3ACAC");
     }
   }
 

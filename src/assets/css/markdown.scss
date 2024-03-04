@@ -1,110 +1,69 @@
 $code_bg: var(--code_bg, #f6f8fa);
 $h1_color: var(--h1_color, #ff7f50);
-$h2_color: var(--h2_color, #73f45b);
-$h3_color: var(--h3_color, #50ffcb);
-$h4_color: var(--h4_color, #8fbc8f);
-$h5_color: var(--h5_color, #ff5070);
-$h6_color: var(--h6_color, #5e86c1);
-$normal_color: var(--normal_color, #0f1828);
+$h_color: var(--h_color, #ff7f50);
+$h2_color: var(--h2_color, #ff7f50);
+$h3_color: var(--h3_color, #ff7f50);
+$h4_color: var(--h4_color, #ff7f50);
+$h5_color: var(--h5_color, #ff7f50);
+$h6_color: var(--h6_color, #ff7f50);
+$normal_color: var(--normal_color, #4d4949);
 
 $blockquote_bg: var(--blockquote_bg, #faebd78c);
+$blockquote_border: var(--blockquote_bg, #fcb378);
 $blockquote_color: var(--blockquote_color, #ff7300);
+.markdown-body *{
+  font-family: 'Microsoft YaHei', '微软雅黑', 'MicrosoftJhengHei', '华文细黑', STHeiti, MingLiu;
+  font-style: normal;
+}
 .markdown-body {
   background: transparent;
   color: $normal_color;
   width: 100%;
+  overflow-x: hidden;
   z-index: 10;
   letter-spacing: 2px;
-  
+  ::selection {
+    color:$code_bg;
+    background-color: $h_color;
+  }
+  strong{
+    color: $h_color;
+  }
   h1 {
     font-size: 24px;
     font-weight: 600;
-    color: $h1_color;
-    &::before {
-      content: "";
-      width: 5px;
-      height: 1em;
-      background: $h1_color;
-      position: absolute;
-      top: 52%;
-      transform: translateY(-50%);
-      left: -10px;
-    }
+    color: $h_color;
+  
   }
   h2 {
     font-size: 20px;
     font-weight: 600;
-    color: $h2_color;
-    &::before {
-      content: "";
-      width: 5px;
-      height: 1em;
-      background: $h2_color;
-      position: absolute;
-      top: 52%;
-      transform: translateY(-50%);
-      left: -10px;
-    }
+    color: $h_color;
+    
   }
   h3 {
     font-size: 16px;
     font-weight: 600;
-    color: $h3_color;
-    &::before {
-      content: "";
-      width: 5px;
-      height: 1em;
-      background: $h3_color;
-      position: absolute;
-      top: 52%;
-      transform: translateY(-50%);
-      left: -10px;
-    }
+    color: $h_color;
+    
   }
   h4 {
     font-size: 14px;
     font-weight: 600;
-    color: $h4_color;
-    &::before {
-      content: "";
-      width: 5px;
-      height: 1em;
-      background: $h4_color;
-      position: absolute;
-      top: 52%;
-      transform: translateY(-50%);
-      left: -10px;
-    }
+    color: $h_color;
+   
   }
   h5 {
     font-size: 13px;
     font-weight: 600;
-    color: $h5_color;
-    &::before {
-      content: "";
-      width: 5px;
-      height: 1em;
-      background: $h5_color;
-      position: absolute;
-      top: 52%;
-      transform: translateY(-50%);
-      left: -10px;
-    }
+    color: $h_color;
+    
   }
   h6 {
     font-size: 12px;
     font-weight: 600;
-    color: $h6_color;
-    &::before {
-      content: "";
-      width: 5px;
-      height: 1em;
-      background: $h6_color;
-      position: absolute;
-      top: 52%;
-      transform: translateY(-50%);
-      left: -10px;
-    }
+    color: $h_color;
+   
   }
   h1,
   h2,
@@ -114,16 +73,21 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   h6 {
     border-bottom: none;
     position: relative;
-    transform: translateX(10px);
     padding: 0;
   }
   code {
+    background:$blockquote_bg ;
+    color: $blockquote_color;
+    font-family: 'yahei';
+  }
+  pre>code{
+    color: $normal_color;
   }
   blockquote {
     background-color: $blockquote_bg;
     color: $blockquote_color;
     padding: 8px 16px;
-    border-left: 0.25em solid $blockquote_bg;
+    border-left: 0.25em solid $blockquote_border;
   }
   p {
   }

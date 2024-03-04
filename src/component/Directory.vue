@@ -115,9 +115,8 @@ function getTitles() {
   }
 
   let serialNumbers = levels.map(() => 0);
-  let top_height = document.querySelector("#note_top_main").clientHeight;
-  
-  let top_nav_height = document.querySelector("#top_nav_main").clientHeight - 20;
+  let top_height = document.querySelector("#note_top_main").clientHeight -20;
+
 
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
@@ -131,7 +130,7 @@ function getTitles() {
       parent: null,
       children: [],
       rawName: element.innerText,
-      scrollTop: element.offsetTop + top_height - top_nav_height ,
+      scrollTop: element.offsetTop + top_height  ,
     };
 
     if (titles.length > 0) {
@@ -178,9 +177,9 @@ const c_c = (mut_val, color) => {
 const change_theme = (current_theme) => {
   if (current_theme) {
     //night
-    c_c("--directory_list_bg", "#2428376c");
+    c_c("--directory_list_bg", "#242837");
   } else {
-    c_c("--directory_list_bg", "#ffffff6c");
+    c_c("--directory_list_bg", "#ffff");
   }
 };
 
@@ -235,7 +234,7 @@ function scrollToView(scrollTop) {
                 p-id="7635"
               ></path>
             </svg>
-            <span>目录</span>
+            <span style="margin-left: 8px;color:#5D6D7E ;">目录</span>
           </div>
         </div>
         <!-- <span class="progress">{{ progress }}</span> -->
@@ -261,14 +260,17 @@ function scrollToView(scrollTop) {
   </div>
 </template>
 <style lang="scss" scoped>
-$directory_list_bg: var(--directory_list_bg, #ffffff6c);
-$directory_list_cover_bg: var(--directory_list_cover_bg, #e06530);
-$normal_color: var(--normal_color, #e06530);
+$directory_list_bg: var(--directory_list_bg, #fff);
+$directory_list_cover_bg: var(--directory_list_cover_bg, #e96969);
+$normal_color: var(--normal_color, #e96969);
 
 #directory_list_main {
   width: 21vw;
   border-radius: 5px;
   background: $directory_list_bg;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  box-shadow: #5656561b 1px 1px 10px;
+
   position: sticky;
   top: 70px;
 }
@@ -338,7 +340,7 @@ $normal_color: var(--normal_color, #e06530);
 
 .active {
   position: relative;
-  color: #f4a460;
+  color: #e96969;
   font-weight: 900;
   &::after{
     content: url('/src/assets/imgs/svg/flower.svg');

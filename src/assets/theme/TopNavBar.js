@@ -4,15 +4,15 @@ const change_theme = (current_theme) => {
         c_c("--nav_bg_color", "#0d1c2b")
         c_c("--nav_fixed_shadow", "transparent")
         c_c("--nav_item_color", "#ffff")
-        c_c("--nav_item_active_color", "#e78287")
-        c_c("--nav_item_hover_color", "#f67d61")
+        c_c("--nav_item_active_color", "#e96969")
+        c_c("--nav_item_hover_color", "#e96969")
 
     } else {
-        c_c("--nav_bg_color", "#f8f8ff")
+        c_c("--nav_bg_color", "#fdfbfb")
         c_c("--nav_fixed_shadow", "transparent")
-        c_c("--nav_item_color", "#4e4e4e")
-        c_c("--nav_item_active_color", "#f67d61")
-        c_c("--nav_item_hover_color", "#f76700")
+        c_c("--nav_item_color", "#4d4949")
+        c_c("--nav_item_active_color", "#e96969")
+        c_c("--nav_item_hover_color", "#e96969")
     }
 }
 

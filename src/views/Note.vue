@@ -3,16 +3,72 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, ref, toRefs, onBeforeMount, onMounted, watch } from "vue";
+import {
+  reactive,
+  ref,
+  toRefs,
+  onBeforeMount,
+  onMounted,
+  watch,
+  onUnmounted,
+} from "vue";
 import { useRouter } from "vue-router";
-import change_theme from "../assets/theme/UnknownWorldMap";
+import { useRoute } from "vue-router";
+import change_theme from "../assets/theme/Note";
 import { useConfigStore } from "../store/config";
 import { useNoteStore } from "../store/note";
 import { storeToRefs } from "pinia";
+const config_store = useConfigStore();
+config_store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
 const store = useConfigStore();
+const { params } = useRoute();
 const note_store = useNoteStore();
 const { theme } = storeToRefs(store);
 const { data } = storeToRefs(note_store);
+const show_filter_search_box = ref(false);
+const current_filter_list = ref([]);
+const search_text = ref();
+watch(search_text, (new_val, old_val) => {
+  if (new_val == "") {
+    current_filter_list.value = [];
+    show_filter_search_box.value = false;
+    return;
+  }
+  show_filter_search_box.value = true;
+  current_filter_list.value = [];
+  const query_start = performance.now();
+  loop(note_store.data, 0, new_val);
+  const query_end = performance.now();
+  const query_text = document.querySelector(".query_text");
+
+  const query_diff = query_end - query_start;
+  query_text.innerHTML = "查询耗时: " + query_diff + "ms";
+});
+onUnmounted(() => {
+  document.removeEventListener("click", click_handle);
+});
+const loop = (arr, current_index, search_text) => {
+  if (current_index > arr.length - 1) return;
+  search_text.toLowerCase();
+  let per_num = Math.min(10, arr.length - current_index);
+  window.requestAnimationFrame(() => {
+    for (let i = 0; i < per_num; i++) {
+      if (
+        arr[current_index + i].name.toLowerCase().indexOf(search_text) == -1 &&
+        arr[current_index + i].tags.toLowerCase().indexOf(search_text) == -1
+      )
+        continue;
+      current_filter_list.value.push(arr[current_index + i]);
+    }
+    loop(arr, current_index + per_num, search_text);
+  });
+};
+const search_focus_handle = () => {
+  if (search_text.value.length == 0) return;
+  show_filter_search_box.value = true;
+};
 store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
@@ -21,12 +77,14 @@ onBeforeMount(() => {});
 onMounted(() => {
   window.scrollTo(0, 0);
   change_theme(theme.value);
+  document.addEventListener("click", click_handle);
   init();
 });
 const init = () => {
   // init_book_list();
   init_re_note_book_list();
 };
+const current_page = ref(params.page);
 const init_re_note_book_list = () => {
   const re_note_book_list = document.querySelectorAll(".re_note_item");
   re_note_book_list.forEach((element) => {
@@ -50,37 +108,43 @@ const init_re_note_book_list = () => {
 //   });
 // };
 const recommend_note_list = [
+{
+    id: 3,
+    name: "线性代数",
+    link: "/note/noteInfo/3",
+    img: "https://pic.imgdb.cn/item/65e2eb629f345e8d031af15c.png",
+  },
   {
-    id: 1,
-    name: "概率论与数理统计",
-    link: "",
-    img: "https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg",
+    id: 2,
+    name: "高等数学",
+    link: "/note/noteInfo/2",
+    img: "https://pic.imgdb.cn/item/65e2edd59f345e8d0321db0d.png",
   },
   {
     id: 1,
     name: "概率论与数理统计",
-    link: "",
-    img: "https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg",
+    link: "/note/noteInfo/1",
+    img: "https://pic.imgdb.cn/item/65e2f0b89f345e8d0329f381.png",
   },
   {
     id: 1,
     name: "概率论与数理统计",
-    link: "",
-    img: "https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg",
-  },
-  {
-    id: 1,
-    name: "概率论与数理统计",
-    link: "",
-    img: "https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg",
+    link: "/note/noteInfo/1",
+    img: "https://pic.imgdb.cn/item/65e2d81a9f345e8d03e2fbba.jpg",
   },
 ];
+const click_handle = (e) => {
+  let search_box = document.querySelector(".search_box");
+  if (!search_box.contains(e.target)) {
+    show_filter_search_box.value = false;
+  }
+};
 const go_to = (id) => {
-  router.push("/note/noteInfo/"+id);
+  router.push("/note/noteInfo/" + id);
 };
 </script>
 <template>
-  <div id="article_main" class="relative flex flex_direction_column">
+  <div id="note_main" class="relative flex flex_direction_column">
     <div class="container">
       <div class="grid top_box relative">
         <div class="top_box_bg absolute"></div>
@@ -89,7 +153,7 @@ const go_to = (id) => {
           <span class="title">推荐笔记</span>
           <ul class="flex flex_direction_row">
             <li
-            @click="go_to(item.id)"
+              @click="go_to(item.id)"
               v-for="item in recommend_note_list"
               class="re_note_item relative"
             >
@@ -105,7 +169,7 @@ const go_to = (id) => {
               >
                 <path
                   d="M266.24 61.44h491.52a122.88 122.88 0 0 1 122.88 122.88v675.84a102.4 102.4 0 0 1-102.4 102.4H245.76a102.4 102.4 0 0 1-102.4-102.4V184.32a122.88 122.88 0 0 1 122.88-122.88z"
-                  fill="#dc143c"
+                  fill="#cca3cc"
                   p-id="5624"
                 ></path>
                 <path
@@ -142,30 +206,60 @@ const go_to = (id) => {
           >
             <path
               d="M428.218182 993.745455H207.127273C132.654545 993.745455 69.818182 930.909091 69.818182 856.436364v-230.4C69.818182 551.563636 132.654545 488.727273 207.127273 488.727273h221.090909c74.472727 0 137.309091 62.836364 137.309091 137.309091v230.4c0 76.8-60.509091 137.309091-137.309091 137.309091z"
-              fill="#6495ed"
+              fill="#e96969"
               opacity=".15"
               p-id="10841"
             ></path>
             <path
               d="M693.527273 193.163636H223.418182c-13.963636 0-27.927273 13.963636-27.927273 27.927273s11.636364 27.927273 27.927273 27.927273h470.109091c13.963636 0 27.927273-11.636364 27.927272-27.927273 0-13.963636-13.963636-27.927273-27.927272-27.927273zM223.418182 386.327273h330.472727c13.963636 0 27.927273-11.636364 27.927273-27.927273 0-13.963636-11.636364-27.927273-27.927273-27.927273H223.418182c-13.963636 0-27.927273 11.636364-27.927273 27.927273s13.963636 27.927273 27.927273 27.927273zM693.527273 470.109091H223.418182c-13.963636 0-27.927273 11.636364-27.927273 27.927273 0 13.963636 11.636364 27.927273 27.927273 27.927272h470.109091c13.963636 0 27.927273-11.636364 27.927272-27.927272s-13.963636-27.927273-27.927272-27.927273zM553.890909 607.418182H223.418182c-13.963636 0-27.927273 11.636364-27.927273 27.927273 0 13.963636 11.636364 27.927273 27.927273 27.927272h330.472727c13.963636 0 27.927273-11.636364 27.927273-27.927272-2.327273-13.963636-13.963636-27.927273-27.927273-27.927273z"
-              fill="#6495ed"
+              fill="#e96969"
               p-id="10842"
             ></path>
             <path
               d="M986.763636 18.618182H525.963636 86.109091c-13.963636 0-27.927273 11.636364-27.927273 27.927273v267.636363h-20.945454c-13.963636 0-27.927273 11.636364-27.927273 27.927273 0 13.963636 11.636364 27.927273 27.927273 27.927273h20.945454v100.072727h-20.945454c-13.963636 0-27.927273 11.636364-27.927273 27.927273 0 13.963636 11.636364 27.927273 27.927273 27.927272h20.945454v100.072728h-20.945454c-13.963636 0-27.927273 11.636364-27.927273 27.927272 0 13.963636 11.636364 27.927273 27.927273 27.927273h20.945454v100.072727h-20.945454c-13.963636 0-27.927273 11.636364-27.927273 27.927273 0 13.963636 11.636364 27.927273 27.927273 27.927273h20.945454v139.636363c0 13.963636 11.636364 27.927273 27.927273 27.927273h900.654545c16.290909 0 27.927273-11.636364 27.927273-27.927273V46.545455c0-16.290909-11.636364-27.927273-27.927273-27.927273z m-25.6 907.636363c0 13.963636-4.654545 23.272727-18.618181 23.272728H130.327273c-9.309091 0-13.963636-4.654545-16.290909-11.636364-2.327273-4.654545-2.327273-9.309091-2.327273-13.963636V97.745455c0-13.963636 4.654545-23.272727 18.618182-23.272728h812.218182c9.309091 0 13.963636 4.654545 16.290909 11.636364 2.327273 4.654545 2.327273 9.309091 2.327272 13.963636v826.181818z"
-              fill="#6495ed"
+              fill="#e96969"
               p-id="10843"
             ></path>
           </svg>
-          <input type="text" class="search" placeholder="在此键入搜索" />
+          <input
+            v-model="search_text"
+            @focus="search_focus_handle"
+            @input="filter_search_handle"
+            @keyup.enter="topic_search_handle"
+            id="note_search"
+            type="text"
+            class="search"
+            placeholder="在此键入搜索"
+          />
+          <div
+            class="filter_search_box absolute"
+            v-show="show_filter_search_box"
+          >
+            <ul class="flex flex_direction_column">
+              <li
+                v-for="item in current_filter_list"
+                @click="router.push(`/note/noteInfo/${item.id}`)"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+            <div class="query_time"><span class="query_text"></span></div>
+          </div>
         </div>
-        <div class="book_list_box relative flex flex_direction_column align_items_center">
-          <ul class="book_list_ul grid relative"> 
-            <li             @click="go_to(item.id)"
- v-for="item in data" class="book_item relative">
+        <div
+          class="book_list_box relative flex flex_direction_column align_items_center"
+        >
+          <ul class="book_list_ul grid relative">
+            <li 
+            @click="go_to(item.id)" v-for="item in data" class="book_item relative">
               <div class="book_item_inner flex flex_direction_row">
                 <div class="book_img_box">
-                  <img v-if="item.img != ''" :src="item.img" alt="" />
+                  <img
+                    @click="go_to(item.id)"
+                    v-if="item.img != ''"
+                    :src="item.img"
+                    alt=""
+                  />
                   <img
                     v-else
                     src="https://pic.imgdb.cn/item/65b3c514871b83018a87b510.png"
@@ -173,44 +267,38 @@ const go_to = (id) => {
                   />
                 </div>
                 <div class="book_text_area flex flex_direction_column">
-                  <div class="book_name">{{ item.name }}</div>
+                  <div  class="book_name">
+                    {{ item.name }}
+                  </div>
                   <div class="short_message">{{ item.short_message }}</div>
-                  <div class="book_item_bottom flex justify_content_space_between">
-                    <div
-                    v-if="(item, update_date != '')"
-                    class="book_update_time"
+                  <div
+                    class="book_item_bottom flex justify_content_space_between"
                   >
-                    更新于 {{ item.update_date.split("?")[0] }}-{{
-                      item.update_date.split("?")[1]
-                    }}-{{ item.update_date.split("?")[2] }}
-                    {{ item.update_date.split("?")[3] }}
-                  </div>
                     <div
-                    v-if="!item.is_finished"
-                    class="load_status"
-                  >
-                   连载中...
-                  </div>
-                    <div
-                    v-else
-                    class="finished_status"
-                  >
-                   已完结
-                  </div>
+                      v-if="(item, update_date != '')"
+                      class="book_update_time"
+                    >
+                      更新于 {{ item.update_date.split("?")[0] }}-{{
+                        item.update_date.split("?")[1]
+                      }}-{{ item.update_date.split("?")[2] }}
+                      {{ item.update_date.split("?")[3] }}
+                    </div>
+                    <div v-if="!item.is_finished" class="load_status">
+                      连载中...
+                    </div>
+                    <div v-else class="finished_status">已完结</div>
                   </div>
                 </div>
               </div>
             </li>
           </ul>
-          <el-pagination
-          background
-          :page-size="1"
-          class="pagination"
-          @current-change="current_page_change"
-          layout="prev, pager, next"
-          :total="parseInt(data.length/10)"
-        >
-        </el-pagination>
+          <Pagination
+            :current_page="current_page"
+            page_size="12"
+            @current_change="current_page_change"
+            :total="data.length"
+          >
+          </Pagination>
         </div>
       </div>
     </div>
@@ -218,120 +306,128 @@ const go_to = (id) => {
   </div>
 </template>
 <style lang="scss" scoped>
-#article_main {
-  $bg_color: var(--bg_color, #f7f3f5);
-  $color: var(--color, #262220);
-  $p: var(--p, #705547);
-  $decorate_bg_1: var(--decorate_bg_1, #f0681e);
-  $decorate_bg_2: var(--decorate_bg_2, #ed8262);
-  $decorate_bg_3: var(--decorate_bg_3, #f89d8a);
-  $item_bg: var(--item_bg, #fffbf9);
-  $item_shadow: var(--item_shadow, #91919127);
-  $item_color: var(--item_color, #f0681e);
-  $item_bf_bg: var(--item_bf_bg, #4d678233);
-  $item_af_bg: var(--item_af_bg, #99d0d9);
-  width: 100vw;
-  background: $bg_color;
-  min-height: 100vh;
+#note_main {
+  $note_bg_color: var(--note_bg_color, #fdfbfb);
+  $box_bg: var(--box_bg, #ffff);
+  $note_book_box_title_color: var(--note_book_box_title_color, #e96969);
+  $re_note_item_bg: var(--re_note_item_bg, #e55656);
+  $text_area_color: var(--text_area_color, #ffffe2);
+  $text_area_before_bg: var(--text_area_before_bg, #f0681e);
+  $text_area_after_bg: var(--text_area_after_bg, #ffb3c5);
+  $filter_search_box_color: var(--filter_search_box_color, #726c65);
+  $filter_search_box_hover_color: var(--filter_search_box_hover_color, #fa2121);
+  $book_name_color: var(--book_name_color, #ffb3c5);
+  $book_name_hover_color: var(--book_name_hover_color, #d5b3ff);
+  $short_message_color: var(--short_message_color, #cca3cc);
+  $book_update_time_color: var(--book_update_time_color, #a09090);
+  $load_status_color: var(--load_status_color, #0ebd7d);
+  $finished_status_color: var(--finished_status_color, #32cdcd);
+  $foot_bg: var(--foot_bg, #ffc0cb);
+  $img_shadow: var(--img_shadow, #d3010130);
+  $search_box_color: var(--search_box_color, #4d4949);
 
+  width: 100vw;
+  background: $note_bg_color;
+  min-height: 100vh;
+  ::selection {
+  color: $book_name_color;
+  background-color:$text_area_color;
+}
+  &::after {
+    content: "";
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    opacity: 0.18;
+    background: url("https://pic.imgdb.cn/item/65dce9ee9f345e8d03b84b8d.png")
+      repeat;
+    background-size: 277px 378px;
+  }
   .container {
-    width: 96vw;
-    background: $bg_color;
+    width: 80vw;
+    background: $note_bg_color;
     align-self: center;
     z-index: 1;
+    margin-top: 70px;
     .top_box {
       width: inherit;
       height: 45vh;
-      grid-template-columns: 4fr 2fr;
+      animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      grid-template-columns: 4fr 1fr;
       // backdrop-filter: blur(6px);
       border-radius: 15px;
       -webkit-backdrop-filter: blur(6px);
       // border: 0.727273px solid rgba(255, 255, 255, 0.18);
-      box-shadow: #8e8e8e30 0px 6px 15px 0px;
+      box-shadow: #27262619 0px 6px 15px 0px;
       // -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
       &::after {
-        content: "";
-        position: absolute;
-        width: 20vw;
-        height: 20vw;
-        left: 0vw;
-        border-radius: 50%;
-        background: #f0768b;
-        filter: blur(4vw);
+        // content: "";
+        // position: absolute;
+        // width: 20vw;
+        // height: 20vw;
+        // left: 0vw;
+        // border-radius: 50%;
+        // background: #f0768b;
+        // filter: blur(4vw);
       }
       &::before {
-        content: "";
-        position: absolute;
-        width: 20vw;
-        height: 20vw;
-        right: 0;
-        border-radius: 50%;
-        background: #9acd32;
-        filter: blur(8vw);
+        // content: "";
+        // position: absolute;
+        // width: 20vw;
+        // height: 20vw;
+        // right: 0;
+        // border-radius: 50%;
+        // background: #9acd32;
+        // filter: blur(8vw);
       }
       .top_box_bg {
-        width: 96vw;
+        width: 80vw;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
         height: 45vh;
         border-radius: inherit;
         object-fit: cover;
 
-        background: linear-gradient(-45deg, #f5cae62c 10%, #c2d3fd20);
+        background: $box_bg;
       }
       .note_book_box {
         z-index: 1;
+
         .title {
           font-size: 1.5em;
           font-weight: 900;
-          color: #6495ed;
-          margin: 1vh 2vw;
+          color: $note_book_box_title_color;
+          margin: 16px;
         }
         ul {
           width: 100%;
           list-style: none;
           padding: 0;
           margin: 0;
-          margin-top: 1vh;
         }
         .re_note_item {
           width: 100%;
           margin: 0 0.5vw;
           transition: all 0.5s cubic-bezier(0.075, 0.82, 0.1);
-          background: linear-gradient(180deg, transparent, #716b69 100%);
+          background: linear-gradient(
+            40deg,
+            transparent,
+            $re_note_item_bg
+          );
           border-radius: 20px;
           height: 36vh;
           border-radius: 15px;
-          box-shadow: 0 8px 15px #ae406c26;
+          box-shadow: #27262639 0px 6px 15px 0px;
           transform: translateZ(0);
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-          &::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 36vh;
-            border-radius: 21px;
-            left: -8px;
-            top: -8px;
-            transform: scale(1.5);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-            border: #dc143cad 8px dotted;
-          }
-          &:hover {
-            box-shadow: 0 3px 5px #b8799d33;
-            &::after {
-              opacity: 1;
-              transform: scale(1);
-            }
-            img {
-              transform: scale(1.1);
-            }
-          }
-          &:active {
-            &::after {
-              opacity: 0;
-              transform: scale(2);
-            }
-          }
+        &:hover{
+          box-shadow: #27262639 0px 3px 5px 0px;
+
+        }
+         
           .note_icon {
             left: 10px;
             top: 10px;
@@ -341,11 +437,13 @@ const go_to = (id) => {
           .img_box {
             overflow: hidden;
             width: inherit;
+            background: #fff;
             height: inherit;
             border-radius: inherit;
           }
           img {
             width: inherit;
+            object-fit: cover;
             height: inherit;
             border-radius: inherit;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -353,10 +451,11 @@ const go_to = (id) => {
           .text_area {
             bottom: 0;
             overflow: hidden;
-            background: linear-gradient(to top, #ffc0cb 30%, transparent);
+           
             width: calc(100% - 1vw);
-            color: #ffffe2;
-            height: 20vh;
+            color: $text_area_color;
+
+            height: inherit;
             padding: 1vh 0.5vw;
             border-bottom-left-radius: inherit;
             border-bottom-right-radius: inherit;
@@ -364,7 +463,7 @@ const go_to = (id) => {
               display: block;
               font-size: 1.1em;
               width: 3.3em;
-              top: 9vh;
+              top: 22vh;
               left: 0vw;
               word-break: normal;
               line-height: 1.5em;
@@ -376,7 +475,7 @@ const go_to = (id) => {
                 width: 150%;
                 height: 150%;
                 filter: blur(10px);
-                background: #f0681e;
+                background: $text_area_before_bg;
                 border-radius: 50%;
                 left: -4vw;
                 top: 2vh;
@@ -388,7 +487,7 @@ const go_to = (id) => {
                 width: 120%;
                 height: 120%;
                 filter: blur(10px);
-                background: #d90a29;
+                background: $text_area_after_bg;
                 border-radius: 50%;
                 right: 0vw;
                 bottom: 0;
@@ -402,21 +501,59 @@ const go_to = (id) => {
     .top_right_box {
     }
     .note_box {
-      width: 96vw;
+      width: 80vw;
       min-height: 40vh;
       border-radius: 15px;
-      margin-top: 13vh;
+      margin-top: 32px;
+      background: $box_bg;
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+      animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       -webkit-backdrop-filter: blur(6px);
       // border: 0.727273px solid rgba(255, 255, 255, 0.18);
-      box-shadow: #8e8e8e30 0px 6px 15px 0px;
+      box-shadow: #27262619 0px 6px 15px 0px;
       .search_box {
         width: 50%;
         height: 5vh;
         margin: 1vh auto;
+        .filter_search_box {
+          width: 100%;
+          max-height: 30vh;
+          background: $box_bg;
+          bottom: 0;
+          z-index: 100;
+          transform: translateY(120%);
+          box-shadow: #8787872f 2px 3px 10px;
+          border-radius: 10px;
+          overflow-y: scroll;
+          .query_time {
+            margin-left: 2vw;
+            margin-bottom: 1vh;
+            color: $note_book_box_title_color;
+            font-size: 0.7em;
+          }
+          ul {
+            list-style: none;
+            margin: 2vh 2vw;
+            padding: 0;
+            gap: 1vh;
+            li {
+              word-wrap: break-word;
+              color: $filter_search_box_color;
+              font-size: 1.1em;
+              &:hover {
+                color: $filter_search_box_hover_color;
+              }
+            }
+          }
+        }
         .search_icon {
           right: 10px;
           top: 50%;
-          transform: translateY(calc(-50% + 2px));
+          transform: translateY(-50%);
+          path {
+            fill: $book_name_color;
+          }
         }
         &:hover {
           &::after {
@@ -430,40 +567,34 @@ const go_to = (id) => {
           border-radius: 10px;
           outline: none;
           padding: 0 2vw;
+          background: $box_bg;
+          color: $search_box_color;
+
           border: none;
           font-size: 1.1em;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           font-family: "miscrsoft yahei";
-          border: transparent 2px solid;
+          box-shadow: $note_book_box_title_color 0 0 0 1px;
 
           &:hover {
-            border: #6495ed 2px solid;
+            background: $box_bg;
+            box-shadow: $note_book_box_title_color 0px 4px 5px;
           }
           &:focus {
-            border: #6495ed 2px solid;
+            background: $box_bg;
+            box-shadow: $note_book_box_title_color 0px 4px 5px;
           }
         }
       }
       .book_list_box {
         width: 100%;
-        margin-top: 3vh;
+        margin-top: 32px;
         border-radius: inherit;
         min-height: 20vh;
-        &::after{
-          content: '';
-          position: absolute;
-          opacity: 1;
-          width: 100%;
-          top: 0;
-          left: 0;
-          opacity: .04;
-          height: 100%;
-        background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png") repeat-y;
-        background-size:cover; 
-        }
+
         .book_list_ul {
           z-index: 20;
-          width: 96%;
+          width: calc(100% - 32px);
           margin: 0 auto;
           height: 100%;
           padding: 0;
@@ -473,11 +604,11 @@ const go_to = (id) => {
 
           .book_item {
             list-style: none;
-            border-radius: 15px;
-            box-shadow: #8e8e8e30 0px 6px 15px 0px;
+            border-radius: 10px;
+            box-shadow: #27262619 0px 6px 15px 0px;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-            &::before{
-              content: '';
+            &::before {
+              content: "";
               height: 100%;
               width: 100%;
               background: transparent;
@@ -487,9 +618,9 @@ const go_to = (id) => {
               z-index: -2;
             }
             &:hover {
-              box-shadow: #8e8e8e30 0px 6px 5px 0px;
+              box-shadow: #27262619 0px 3px 10px 0px;
               transform: scale(0.96);
-              &::before{
+              &::before {
               }
               .book_img_box {
                 transform: scale(1.25) rotateZ(10deg);
@@ -498,7 +629,7 @@ const go_to = (id) => {
               }
             }
             height: 20vh;
-            background: #fff;
+            background: $box_bg;
             .book_item_inner {
               margin: 10px;
               position: relative;
@@ -508,59 +639,64 @@ const go_to = (id) => {
                 width: 13vh;
                 height: calc(20vh - 20px);
                 border-radius: 10px;
+                background: #fff;
                 z-index: 11;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 img {
                   width: inherit;
                   height: inherit;
                   border-radius: inherit;
-                  box-shadow: #d3010130 0px 6px 15px 0px;
+                  object-fit: cover;
+                  box-shadow: $img_shadow 0px 6px 15px 0px;
                 }
               }
               .book_text_area {
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-                
+
                 .book_name {
                   margin: 1vh 0;
                   font-size: 1.2em;
                   font-weight: 600;
-                  color: #ffb3c5;
-                  &:hover{
-                    color: #d5b3ff;
+                  user-select: none;
+                  color: $book_name_color;
+                  &:hover {
+                    color: $book_name_hover_color;
                   }
                 }
-                .short_message{
-                  height: 9vh;
-                  font-size: .9em;
+                .short_message {
+                  height: 48px;
+                  font-size: 0.9em;
                   overflow-y: scroll;
-                  color: #cca3cc;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 3;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                  color: $short_message_color;
                 }
-                .book_item_bottom{
+                .book_item_bottom {
                   margin-top: auto;
-                  .book_update_time{
-                  font-size: .8em;
-                  color: #a09090;
+                  .book_update_time {
+                    font-size: 0.8em;
+                    color: $book_update_time_color;
+                  }
+                  .load_status {
+                    font-size: 0.8em;
+                    color: $load_status_color;
+                    font-weight: 900;
+                    margin-right: 10px;
+                  }
+                  .finished_status {
+                    font-size: 0.8em;
+                    color: $finished_status_color;
+                    font-weight: 900;
+                    margin-right: 10px;
+                  }
                 }
-                .load_status{
-                  font-size: .8em;
-                  color: #9acd32;
-                  font-weight: 900;
-                  margin-right: 10px;
-                }
-                .finished_status{
-                  font-size: .8em;
-                  color: #32cdcd;
-                  font-weight: 900;
-                  margin-right: 10px;
-
-                }
-                }
-               
               }
             }
           }
         }
-        .pagination{
+        .pagination {
           margin: 32px 0;
         }
       }
@@ -570,7 +706,15 @@ const go_to = (id) => {
     width: 100vw;
     height: 30vh;
     margin-top: 10vh;
-    background: #ffc0cb;
+    background: $foot_bg;
+    z-index: 10;
+  }
+}
+@keyframes content_box {
+  0% {
+    opacity: 0;
+  }
+  100% {
   }
 }
 </style>

@@ -1,170 +1,20 @@
 $topic_content_bg: var(--topic_content_bg, #ffff);
-$topic_bg: var(--topic_bg, #e1e4ea);
-$normal_color: var(--normal_color, #0f1828);
-$topic_title_color: var(--topic_title_color, #173e6c);
-$topic_title_af_bg: var(--topic_title_af_bg, #22113364);
-$topic_time_bar_color: var(--topic_time_bar_color, #989e6a);
-$topic_time_color: var(--topic_time_color, #5d6e4a);
-$code_bg: var(--code_bg, #f6f8fa);
-$h1_color: var(--h1_color, #ff7f50);
-$h2_color: var(--h2_color, #73f45b);
-$h3_color: var(--h3_color, #50ffcb);
-$h4_color: var(--h4_color, #8fbc8f);
-$h5_color: var(--h5_color, #ff5070);
-$h6_color: var(--h6_color, #5e86c1);
-$blockquote_bg: var(--blockquote_bg, #faebd78c);
-$blockquote_color: var(--blockquote_color, #ff7300);
+$topic_bg: var(--topic_bg, #fdfbfb);
+$normal_color: var(--normal_color, #4d4949);
 
+@import url('markdown.scss');
 #topic_main {
   width: 100vw;
   background: $topic_bg;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
   min-height: 100vh;
   font-family: "Microsoft YaHei";
   color: $normal_color;
   display: flex;
   flex-direction: column;
-  .markdown-body {
-    background: transparent;
-    color: $normal_color;
-    width: 100%;
-   z-index: 10;
-   letter-spacing: 1px;
-   strong{
-   }
-    h1{
-      font-size: 24px;
-      font-weight: 600;
-      color: $h1_color;
-      &::before{
-        content: '';
-        width: 5px;
-        height: 1em; 
-        background: $h1_color;
-        position: absolute;
-         top: 52%;
-         transform: translateY(-50%);
-        left: -10px;
-      }
-    }
-    h2{
-      font-size: 20px;
-      font-weight: 600;
-      color: $h2_color;
-      &::before{
-        content: '';
-        width: 5px;
-        height: 1em; 
-        background: $h2_color;
-        position: absolute;
-         top: 52%;
-         transform: translateY(-50%);
-        left: -10px;
-      }
-    }
-    h3{
-      font-size: 16px;
-      font-weight: 600;
-      color: $h3_color;
-      &::before{
-        content: '';
-        width: 5px;
-        height: 1em; 
-        background: $h3_color;
-        position: absolute;
-         top: 52%;
-         transform: translateY(-50%);
-        left: -10px;
-      }
-    }
-    h4{
-      font-size: 14px;
-      font-weight: 600;
-      color: $h4_color;
-      &::before{
-        content: '';
-        width: 5px;
-        height: 1em; 
-        background: $h4_color;
-        position: absolute;
-         top: 52%;
-         transform: translateY(-50%);
-        left: -10px;
-      }
-    }
-    h5{
-      font-size: 13px;
-      font-weight: 600;
-      color: $h5_color;
-      &::before{
-        content: '';
-        width: 5px;
-        height: 1em; 
-        background: $h5_color;
-        position: absolute;
-         top: 52%;
-         transform: translateY(-50%);
-        left: -10px;
-      }
-    }
-    h6{
-      font-size: 12px;
-      font-weight: 600;
-      color: $h6_color;
-      &::before{
-        content: '';
-        width: 5px;
-        height: 1em; 
-        background: $h6_color;
-        position: absolute;
-         top: 52%;
-         transform: translateY(-50%);
-        left: -10px;
-      }
-
-    }
-    h1,h2,h3,h4,h5,h6{
-      border-bottom: none;
-      position: relative;
-      transform: translateX(10px);
-     padding: 0;
-    
-    }
-    code{
-      
-    }
-    blockquote{
-      background-color: $blockquote_bg;
-      color: $blockquote_color;
-      padding: 8px 16px;
-      border-left: .25em solid $blockquote_bg;
-    }
-    p{
-      
-    }
-    pre {
-      font-family: "monaco";
-      position: relative;
-      padding-top: 32px;
-      background: $code_bg;
-      &::after{
-        position: absolute;
-        top: 10px;
-        left: 15px;
-        width: 12px;
-        height: 12px;
-        overflow: visible;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 12px;
-        white-space: nowrap;
-        text-indent: 75px;
-        background-color: #fc625d;
-        border-radius: 16px;
-        box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
-        content: attr(codetype);
-      }
-    }
-  }
+  
+  
   .gt-header-textarea {
     background: $topic_bg;
   }
@@ -190,21 +40,21 @@ $blockquote_color: var(--blockquote_color, #ff7300);
     border-radius: 4px;
     min-height: 10vh;
     background: $topic_content_bg;
-  
+    box-shadow: #5656561b 1px 1px 10px;
     display: flex;
     flex-direction: column;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     .topic_text {
       width: 96%;
-      margin: 2vh auto;
+      margin: 32px auto;
       position: relative;
       &::after{
         content: '';
         position: absolute;
         width: 100%;
-        height: calc(100% + 2vh);
-        top: -2vh;
+        height: calc(100% + 64px);
+        top: 0;
         left: 50%;
         transform: translateX(-50%);
         opacity: .07;
@@ -278,40 +128,7 @@ $blockquote_color: var(--blockquote_color, #ff7300);
 .vandyke_brown {
   color: #8f4b28;
 }
-// .topic_title_box {
-//     width: 100%;
-//     margin-top: 20px;
-//     font-weight: 700;
-//     font-size: 30px;
-//     .topic_title {
-//       color: $topic_title_color;
 
-//       margin-left: 30px;
-//       &::after {
-//         content: "";
-//         position: absolute;
-//         left: 0;
-//         bottom: 0;
-//         width: 100%;
-//         height: 15px;
-//         background-color: $topic_title_af_bg;
-//       }
-//     }
-//     .topic_time_bar {
-//       margin-top: 10px;
-//       margin-left: 30px;
-//       font-size: 14px;
-//       color: $topic_time_bar_color;
-//       .topic_time {
-//         margin-left: 30px;
-//         color: $topic_time_color;
-//       }
-//     }
-
-//   }
-//   .directoryList{
-//     margin-top: 20px;
-//   }
 
 .topic_container {
   margin-top: 3vh;

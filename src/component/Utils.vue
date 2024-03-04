@@ -36,7 +36,7 @@ onUnmounted(() => {
 
 });
 const scroll_handle = ()=>{
- 
+
     let wScrY = window.scrollY;
     if (wScrY > 700) {
       const to_top_box = document.querySelector(".to_top_box");
@@ -48,14 +48,8 @@ const scroll_handle = ()=>{
   }
 
 const to_top = () => {
-  let t = setInterval(() => {
-    if (window.scrollY + 60 > 0) {
-        window.scrollTo(0, window.scrollY - 60);
-      } else {
-        window.scrollTo(0, 0);
-        clearInterval(t);
-      }
-    }, 10);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
 };
 const view_change = () => {
   store.change_g_layout();

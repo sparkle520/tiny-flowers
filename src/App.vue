@@ -217,14 +217,14 @@ const music_handle = (status) => {
 </template>
 
 <style lang="scss" scoped>
-$bg_color: var(--bg_color, #f7f3f5);
+$bg_color: var(--bg_color, #fdfbfb);
 
 #main {
   background: $bg_color;
   width: 100vw;
   .nav {
     z-index: 1000000;
-    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .park {
     width: 100vw;

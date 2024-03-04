@@ -10,22 +10,22 @@ export const change_theme = (current_theme) => {
     c_c("--topic_content_bg", "#242837");
     c_c("--topic_bg", "#1e2433");
     c_c("--normal_color", "#f7f3f5");
-    c_c("--topic_title_color", "#c4c3d4");
-    c_c("--topic_title_af_bg", "#22113364");
-    c_c("--topic_time_bar_color", "#c4c3d4");
-    c_c("--topic_time_color", "#c4c3d4");
     c_c("--directory_list_cover_bg", "#b5b9d6");
     c_c("--code_bg", "#123");
+    c_c("--h_color", "#c4c3d4");
+    c_c("--blockquote_color", "#f7f3f5");
+    c_c("--blockquote_border", "#ffff");
+    c_c("--blockquote_bg", "#1e2433");
   } else {
     c_c("--topic_content_bg", "#ffff");
-    c_c("--topic_bg", "#f5f5f5");
-    c_c("--normal_color", "#0f1828");
-    c_c("--topic_title_color", "#173e6c");
-    c_c("--topic_title_af_bg", "#22113364");
-    c_c("--topic_time_bar_color", "#989e6a");
-    c_c("--topic_time_color", "#5d6e4a");
-    c_c("--directory_list_cover_bg", "#e06530");
+    c_c("--topic_bg", "#fdfbfb");
+    c_c("--normal_color", "#4d4949");
+    c_c("--directory_list_cover_bg", "#e96969");
     c_c("--code_bg", "#f6f8fa");
+    c_c("--h_color", "#ff7f50");
+    c_c("--blockquote_color", "#ff7300");
+    c_c("--blockquote_border", "#fcb378");
+    c_c("--blockquote_bg", "#faebd78c");
   }
   change_code_theme(current_theme)
 

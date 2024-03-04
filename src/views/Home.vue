@@ -98,7 +98,7 @@ const change_theme = (current_theme) => {
     c_c("--word_box_color", "#f0f8ff");
     c_c("--f_word_box_color", "#f0f8ff");
   } else {
-    c_c("--home_bg_color", "#f7f3f5");
+    c_c("--home_bg_color", "#fdfbfb");
     c_c("--first_page_cover_bg", "transparent");
     c_c("--home_color", "#e60000");
     c_c("--u_w_m_btn_color", "#ff80bf");
@@ -316,33 +316,34 @@ const carousel_data = [
 ];
 const re_note_list = ref([
   {
-    id: 1,
-    name: "概率论与数理统计",
-    link: "/note/noteInfo/1",
+    id: 3,
+    name: "线性代数",
+    link: "/note/noteInfo/3",
     create_date: "2024?01?14?11:06",
-    img: "",
+    img: "https://pic.imgdb.cn/item/65e2eb629f345e8d031af15c.png",
     author: "",
-    tags: "概率论?数理统计",
+    tags: "线性代数",
     classification: "数学",
-    short_message: "概率论与数理统计是研究随机现象客观规律的数学学科.",
+    short_message: "线性代数是数学重要分支，在各学科中应用广泛.",
+  },
+  {
+    id: 2,
+    name: "高等数学",
+    link: "/note/noteInfo/2",
+    create_date: "2024?01?14?11:06",
+    img: "https://pic.imgdb.cn/item/65e2edd59f345e8d0321db0d.png",
+    author: "",
+    tags: "高等数学?微积分",
+    classification: "数学",
+    short_message:
+      "高等数学是由微积分学，较深入的代数学、几何学以及它们之间的交叉内容所形成的一门基础学科.",
   },
   {
     id: 1,
     name: "概率论与数理统计",
     link: "/note/noteInfo/1",
     create_date: "2024?01?14?11:06",
-    img: "",
-    author: "",
-    tags: "概率论?数理统计",
-    classification: "数学",
-    short_message: "概率论与数理统计是研究随机现象客观规律的数学学科.",
-  },
-  {
-    id: 1,
-    name: "概率论与数理统计",
-    link: "/note/noteInfo/1",
-    create_date: "2024?01?14?11:06",
-    img: "",
+    img: "https://pic.imgdb.cn/item/65e2f0b89f345e8d0329f381.png",
     author: "",
     tags: "概率论?数理统计",
     classification: "数学",
@@ -497,7 +498,7 @@ const leave_recommend_topic = (index) => {
             >
               <path
                 d="M319.905185 355.934815v304.355555H145.066667a7.585185 7.585185 0 0 1-7.585186-7.585185V363.52a7.585185 7.585185 0 0 1 7.585186-7.585185h174.838518m68.266667-68.266667H145.066667a75.851852 75.851852 0 0 0-75.851852 75.851852v289.185185a75.851852 75.851852 0 0 0 75.851852 75.851852h243.105185V287.668148z"
-                fill="#000"
+                fill="#af886e"
                 p-id="5228"
               ></path>
               <path
@@ -507,12 +508,12 @@ const leave_recommend_topic = (index) => {
               ></path>
               <path
                 d="M735.573333 157.582222v707.887408l-347.401481-178.631111V329.955556l347.401481-172.373334m30.340741-86.85037a37.925926 37.925926 0 0 0-15.54963 3.413333l-430.459259 213.522963v440.888889l430.459259 221.297778a37.925926 37.925926 0 0 0 53.665186-34.512593V108.657778a37.925926 37.925926 0 0 0-37.925926-37.925926z"
-                fill="#000"
+                fill="#af886e"
                 p-id="5230"
               ></path>
               <path
                 d="M878.933333 403.531852a7.585185 7.585185 0 0 1 7.585186 7.585185v204.8a7.585185 7.585185 0 0 1-7.585186 7.585185h-73.955555v-219.97037h73.955555m0-68.266667h-142.222222v356.503704h142.222222a75.851852 75.851852 0 0 0 75.851852-75.851852v-204.8a75.851852 75.851852 0 0 0-75.851852-75.851852zM251.638519 728.557037v135.395556a21.048889 21.048889 0 0 1-21.048889 21.048888h-14.411852a21.048889 21.048889 0 0 1-21.048889-21.048888v-135.395556h56.888889m68.266666-68.266667H126.672593v203.662223a89.315556 89.315556 0 0 0 89.315555 89.315555h14.411852a89.315556 89.315556 0 0 0 89.315556-89.315555V660.29037z"
-                fill="#000"
+                fill="#af886e"
                 p-id="5231"
               ></path>
             </svg>
@@ -560,17 +561,17 @@ const leave_recommend_topic = (index) => {
                   >
                     <path
                       d="M610.679467 749.3632a54.0672 54.0672 0 0 1 77.0048 0.1024c21.230933 21.504 21.162667 56.32-0.1024 77.789867l-94.583467 95.197866c-87.2448 87.825067-229.546667 89.088-318.2592 2.935467l-170.325333-168.379733c-86.698667-85.674667-95.368533-222.8224-13.755734-310.920534l152.098134-164.181333c80.9984-87.4496 230.263467-97.006933 322.833066-21.504l138.171734 112.64c23.415467 19.114667 27.067733 53.691733 8.192 77.346133-18.909867 23.620267-53.179733 27.306667-76.5952 8.226134l-138.171734-112.64c-48.401067-39.492267-133.12-34.065067-174.8992 11.0592l-152.132266 164.181333c-39.697067 42.9056-35.362133 111.957333 10.410666 157.218133l169.540267 167.594667a118.5792 118.5792 0 0 0 166.024533-1.467733l94.549334-95.232z"
-                      fill="#FFA116"
+                      fill="#ffeb5d"
                       p-id="5118"
                     ></path>
                     <path
                       d="M380.928 654.097067a54.715733 54.715733 0 0 1-54.442667-54.9888c0-30.378667 24.405333-54.9888 54.4768-54.9888h401.544534c30.071467 0 54.442667 24.576 54.442666 54.954666 0 30.378667-24.3712 55.022933-54.442666 55.022934H380.962133z"
-                      fill="#B3B3B3"
+                      fill="#b1acb3"
                       p-id="5119"
                     ></path>
                     <path
                       d="M456.157867 51.541333a54.0672 54.0672 0 0 1 76.970666-2.56c21.947733 20.718933 23.074133 55.534933 2.56 77.7216L170.1888 521.216c-39.7312 42.871467-35.396267 111.957333 10.376533 157.184l168.789334 166.843733c21.504 21.265067 21.845333 56.081067 0.8192 77.789867a54.0672 54.0672 0 0 1-76.970667 0.8192l-168.823467-166.877867c-86.698667-85.674667-95.3344-222.856533-13.7216-310.920533L456.157867 51.541333z"
-                      fill="#000000"
+                      fill="#000"
                       p-id="5120"
                     ></path>
                   </svg>
@@ -592,7 +593,7 @@ const leave_recommend_topic = (index) => {
                   >
                     <path
                       d="M192 320a64 64 0 0 1 64 64v448a64 64 0 0 1-64 64H64c-35.296 0-64-28.672-64-64V384c0-35.328 28.704-64 64-64h128z m384-192a64 64 0 0 1 64 64v640a64 64 0 0 1-64 64h-128c-35.296 0-64-28.672-64-64V192c0-35.328 28.704-64 64-64h128z m384 320a64 64 0 0 1 64 64v320a64 64 0 0 1-64 64h-128a64 64 0 0 1-64-64V512a64 64 0 0 1 64-64h128z"
-                      fill="#d3d3d3"
+                      fill="#becbd3"
                       p-id="4205"
                     ></path>
                   </svg>
@@ -631,24 +632,24 @@ const leave_recommend_topic = (index) => {
                   ></path>
                   <path
                     d="M661.504 362.496c0-65.536 53.248-120.832 120.832-120.832 65.536 0 120.832 53.248 120.832 120.832v481.28c0 32.768-26.624 59.392-59.392 59.392h-180.224V362.496h-2.048z"
-                    fill="#FFAA44"
+                    fill="#dfbfb2"
                     p-id="12146"
                   ></path>
                   <path
                     d="M120.832 782.336c0 65.536 53.248 120.832 120.832 120.832h600.064c-32.768 0-59.392-26.624-59.392-59.392V241.664c0-65.536-53.248-120.832-120.832-120.832H241.664c-65.536 0-120.832 53.248-120.832 120.832v540.672z"
-                    fill="#FF7744"
+                    fill="#8592a2"
                     p-id="12147"
                   ></path>
                   <path
                     d="M227.328 301.056c0-24.576 20.48-45.056 45.056-45.056h59.392c24.576 0 45.056 20.48 45.056 45.056 0 24.576-20.48 45.056-45.056 45.056h-59.392c-24.576 0-45.056-20.48-45.056-45.056zM227.328 481.28c0-24.576 20.48-45.056 45.056-45.056h360.448c24.576 0 45.056 20.48 45.056 45.056 0 24.576-20.48 45.056-45.056 45.056H272.384c-24.576 0-45.056-20.48-45.056-45.056zM272.384 616.448c-24.576 0-45.056 20.48-45.056 45.056 0 24.576 20.48 45.056 45.056 45.056h180.224c24.576 0 45.056-20.48 45.056-45.056 0-24.576-20.48-45.056-45.056-45.056h-180.224z"
-                    fill="#FFFFFF"
+                    fill="#dcdddf"
                     p-id="12148"
                   ></path></svg
                 >文章
               </div>
               <div
                 class="page_2_nav_item flex align_items_center justify_content_center"
-                @click="router.push('/note')"
+                @click="router.push('/note/1')"
               >
                 <svg
                   t="1708542274864"
@@ -662,17 +663,17 @@ const leave_recommend_topic = (index) => {
                 >
                   <path
                     d="M242.688 311.936m-99.968 0a99.968 99.968 0 1 0 199.936 0 99.968 99.968 0 1 0-199.936 0Z"
-                    fill="#F0919C"
+                    fill="#97a5c0"
                     p-id="21521"
                   ></path>
                   <path
                     d="M242.688 512m-99.968 0a99.968 99.968 0 1 0 199.936 0 99.968 99.968 0 1 0-199.936 0Z"
-                    fill="#F0919C"
+                    fill="#97a5c0"
                     p-id="21522"
                   ></path>
                   <path
                     d="M242.688 712.064m-99.968 0a99.968 99.968 0 1 0 199.936 0 99.968 99.968 0 1 0-199.936 0Z"
-                    fill="#F0919C"
+                    fill="#97a5c0"
                     p-id="21523"
                   ></path>
                   <path
@@ -692,12 +693,12 @@ const leave_recommend_topic = (index) => {
                   ></path>
                   <path
                     d="M281.216 111.872h533.504c36.864 0 66.688 29.824 66.688 66.688v666.88c0 36.864-29.824 66.688-66.688 66.688H281.216c-36.864 0-66.688-29.824-66.688-66.688v-666.88c0-36.736 29.824-66.688 66.688-66.688z"
-                    fill="#E54656"
+                    fill="#97a5c0"
                     p-id="21527"
                   ></path>
                   <path
                     d="M814.592 678.656h66.688v166.656c0 36.864-29.824 66.688-66.688 66.688H581.248c0-128.768 104.448-233.344 233.344-233.344z"
-                    fill="#F77180"
+                    fill="#97a5c0"
                     p-id="21528"
                   ></path>
                   <path
@@ -707,7 +708,7 @@ const leave_recommend_topic = (index) => {
                   ></path>
                   <path
                     d="M848 745.344h33.28v99.968c0 36.864-29.824 66.688-66.688 66.688H681.216c0-92.032 74.624-166.656 166.784-166.656z"
-                    fill="#F3A4AE"
+                    fill="#97a5c0"
                     p-id="21530"
                   ></path>
                 </svg>
@@ -729,7 +730,7 @@ const leave_recommend_topic = (index) => {
                 >
                   <path
                     d="M493.4656 529.1008l-20.6336-51.2512c-15.0016-36.1984-23.1936-55.808-24.5248-58.7776L416.4608 352.256c-22.528-47.872-44.2368-71.8848-65.024-71.8848-31.488 0-56.2176 27.7504-74.3424 83.1488-13.312-4.608-19.968-11.264-19.968-20.0704 0-25.7536 15.9232-55.3472 47.6672-88.6784C336.64 221.44 365.2096 204.8 390.4512 204.8c49.408 0 100.608 67.072 153.7536 201.216l13.568 33.0752 15.3088-23.04C667.2896 275.2 746.7008 204.8 811.3152 204.8c16.7936 0 36.5056 4.608 59.0848 13.7216l-80.384 79.36a101.12 101.12 0 0 0-22.6304-4.352c-48.64 0-106.7008 52.736-173.9776 158.1056l-19.2512 30.4128 15.2064 38.3488c58.2144 151.296 105.984 226.8672 143.872 226.8672 34.7136 0 61.184-23.3472 79.4112-69.9904 12.3904 7.5264 18.5856 15.2064 18.5856 23.1424 0 20.8896-17.664 45.8752-53.0944 75.008-35.4304 29.184-65.8944 43.776-91.5968 43.776-51.3536 0-103.7312-68.096-157.2864-204.3392l-18.5856-46.336-19.2 31.9488C401.2032 746.2912 314.8288 819.2 232.5504 819.2c-30.9248 0-57.2416-7.2704-78.9504-21.7088l76.9536-70.8096c13.312 12.4928 28.7744 18.7392 46.4896 18.7392 49.9712 0 106.24-47.616 168.5504-142.9504l34.56-52.5824 13.312-20.7872z"
-                    fill="#d81e06"
+                    fill="#70859c"
                     p-id="33540"
                   ></path>
                 </svg>
@@ -804,7 +805,7 @@ const leave_recommend_topic = (index) => {
                     </div>
                     <span class="short_meg" v-html="item.short_message"></span>
                     <div
-                      class="flex flex_direction_row align_items_center justify_content_space_between"
+                      class="content_bottom_box flex flex_direction_row align_items_center justify_content_space_between"
                     >
                       <div
                         class="user_item flex flex_direction_row align_items_center"
@@ -871,6 +872,7 @@ const leave_recommend_topic = (index) => {
     >
       <div class="left_foot flex flex_direction_column">
         <span class="title_foot">人生格言</span>
+        <span class="text_foot">Rise again!</span>
       </div>
       <div class="mid_foot flex flex_direction_column">
         <span class="title_foot"></span>
@@ -898,6 +900,10 @@ $index_title_color: var(--index_title_color, #33383a);
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
   background: $home_bg_color;
+  ::selection {
+    color: #ffff;
+    background-color: #a5e3ba;
+  }
   overflow: hidden;
   &::after {
     width: 100vw;
@@ -907,12 +913,13 @@ $index_title_color: var(--index_title_color, #33383a);
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: .5;
-    background: url("https://pic.imgdb.cn/item/65d765569f345e8d03dac4f9.png")
+    opacity: 0.2;
+    background: url("https://pic.imgdb.cn/item/65dc38fc9f345e8d03e7728a.png")
       repeat;
-    background-size: 840px 839px;
+
+    background-size: 725px 707px;
   }
-  
+
   li {
     list-style: none;
     padding: 0 0;
@@ -925,11 +932,11 @@ $index_title_color: var(--index_title_color, #33383a);
     height: 40px;
     font-weight: lighter;
     color: $index_title_color;
-    border-bottom: #ff8c69 1px solid;
+    border-bottom: #a5e3ba 1px solid;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     span {
-      background: #ff8c69;
-      box-shadow: #ff8c6975 0 10px 10px;
+      background: #a5e3ba;
+      box-shadow: #99edb5 0 10px 10px;
       border-radius: 1000px;
       color: #fff;
       padding: 8px 16px;
@@ -956,9 +963,14 @@ $index_title_color: var(--index_title_color, #33383a);
       font-size: 9em;
       top: 50%;
       left: 50%;
-      color: #082567;
+      color: #c6ebbd;
       transform: translate(-50%, -50%);
       font-family: "orbitron-light";
+      text-shadow: 10px 10px 0 rgba(198, 235, 189, 0.8),
+        20px 20px 0 rgba(198, 235, 189, 0.6),
+        30px 30px 0 rgba(198, 235, 189, 0.4),
+        40px 40px 0 rgba(198, 235, 189, 0.2),
+        50px 50px 0 rgba(198, 235, 189, 0.05);
       .title_1 {
         gap: 1vw;
         .flower_icon {
@@ -988,7 +1000,7 @@ $index_title_color: var(--index_title_color, #33383a);
       animation: more 2s infinite linear both;
       z-index: 100;
       path {
-        fill: #fa8072;
+        fill: #65cb5a;
       }
     }
     @keyframes more {
@@ -1026,17 +1038,19 @@ $index_title_color: var(--index_title_color, #33383a);
       .page_2_header {
         z-index: 2;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        background: $home_bg_color;
+
         .notice {
           width: 76vw;
           margin: 16px auto;
-          background: #f8f8ff;
+          background: #ffff;
           padding: 1vh;
           border-radius: 10px;
           box-shadow: 0 4px 10px rgba(61, 73, 87, 0.112);
 
           .notice_text {
             margin-left: 16px;
-            color: #ff9900;
+            color: #af886e;
           }
         }
       }
@@ -1044,6 +1058,7 @@ $index_title_color: var(--index_title_color, #33383a);
         gap: 1vw;
         width: 100vw;
         z-index: 1;
+
         .page_left {
           width: 3vw;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1064,7 +1079,7 @@ $index_title_color: var(--index_title_color, #33383a);
               li {
                 font-size: 1em;
                 font-weight: 100;
-                color: #123;
+                color: rgb(255, 255, 255);
                 .active_item {
                   color: #00cbff;
                   font-weight: bold;
@@ -1110,19 +1125,19 @@ $index_title_color: var(--index_title_color, #33383a);
               }
               .rect_item {
                 border-radius: 10px;
-                background: #ffffff;
+                background: #ffff;
+                user-select: none;
                 overflow: hidden;
                 gap: 8px;
                 font-size: 20px;
                 font-family: "orbitron-light";
                 font-weight: 900;
                 letter-spacing: 2px;
-                color: #1f211cd4;
+                color: #af886e;
                 box-shadow: 0 2px 5px rgba(31, 45, 61, 0.15);
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 &:hover {
-                  background: #fdc5ac;
-                  color: #fff;
+                  color: #8b8079;
                 }
 
                 &:hover {
@@ -1150,19 +1165,19 @@ $index_title_color: var(--index_title_color, #33383a);
               width: 100px;
               height: 35px;
               gap: 4px;
-              background: #ffffff;
-              box-shadow: #ff8c694f 0px 20px 20px;
+              background: #ffff;
+              box-shadow: rgba(245, 233, 229, 0.31) px 20px 20px;
               border-radius: 10px;
               font-size: 14px;
               font-weight: lighter;
-              color: #f48759;
+              color: #af886e;
               transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 box-shadow 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
               &:hover {
-                background: #ff8c69;
-                box-shadow: #fc020271 0 5px 10px;
+                background: #8e9bae;
+                box-shadow: #c0c1c2 0 5px 10px;
                 color: #fff;
                 transform: translateY(4px);
               }
@@ -1181,12 +1196,12 @@ $index_title_color: var(--index_title_color, #33383a);
                 border-radius: 10px;
                 width: 24vw;
                 height: 50vh;
+                color: #747576;
                 background: #fff;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
 
                 &:hover {
-                  // transform: translateY(-0.6vh);
                   box-shadow: 0 3px 5px rgba(31, 45, 61, 0.2);
                 }
                 &:active {
@@ -1194,7 +1209,6 @@ $index_title_color: var(--index_title_color, #33383a);
                 }
                 &:nth-child(even) {
                   .img_box {
-                    // clip-path: circle(123% at 0% -0%);
                   }
                 }
                 .img_box {
@@ -1224,9 +1238,6 @@ $index_title_color: var(--index_title_color, #33383a);
                     border-top-right-radius: 10px;
                     border-top-left-radius: 10px;
                     transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-                    &:hover {
-                      transform: scale(1.1);
-                    }
                   }
                 }
 
@@ -1242,24 +1253,28 @@ $index_title_color: var(--index_title_color, #33383a);
                   .classification {
                     font-size: 0.6em;
                     padding: 0.4em;
-                    background: #00cbff;
+                    background: #0ebd7d;
                     border-radius: 0.4em;
-                    margin-right: 0.3em;
+                    margin-right: 8px;
                     color: #fff;
                   }
                   .title {
                     font-size: 1em;
                     font-weight: 700;
-                    color: #0a0606;
+                    color: #4d4949;
                     overflow: scroll;
+                    user-select: none;
                     &:hover {
-                      color: #4792dd;
+                      color: #0ebd7d;
                     }
                   }
                   .short_meg {
                     margin: 1vh 0;
-                    height: 7vh;
-                    overflow: scroll;
+                    height: 32px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
                     font-size: 0.9em;
                   }
                 }
@@ -1276,7 +1291,7 @@ $index_title_color: var(--index_title_color, #33383a);
             .recommend_item_box {
               width: inherit;
               flex-wrap: wrap;
-              gap: 2vh;
+              gap: 16px;
               padding: 0;
               margin: 0;
 
@@ -1334,7 +1349,7 @@ $index_title_color: var(--index_title_color, #33383a);
                 }
                 .img_box {
                   width: 37vw;
-                  height: inherit;
+                  height: 18vh;
                   order: 1;
                   border-bottom-left-radius: 10px;
                   border-top-left-radius: 10px;
@@ -1353,37 +1368,45 @@ $index_title_color: var(--index_title_color, #33383a);
                 }
                 .content_box {
                   width: calc(37vw - 32px);
-                  height: calc(18vh - 16px);
+                  height: calc(18vh - 32px);
                   order: 2;
                   margin: 16px;
-
+                  color: #747576;
+                  .content_bottom_box {
+                    margin-top: auto;
+                  }
                   .classification {
                     font-size: 0.6em;
                     padding: 0.4em;
                     flex-shrink: 0;
-                    background: #c2ed87;
+                    background: #0ebd7d;
                     border-radius: 0.4em;
-                    margin-right: 0.3em;
+                    margin-right: 8px;
                     color: #ffff;
                   }
                   .title {
                     font-weight: 800;
+                    user-select: none;
+                    color: #4d4949;
                     &:hover {
-                      color: #00cbff;
+                      color: #0ebd7d;
                     }
                   }
                   .short_meg {
                     margin-top: 2vh;
-                    height: 7vh;
+                    height: 16px;
+                    color: #747576;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
                     font-size: 0.9em;
-                    overflow: scroll;
+                    overflow: hidden;
                   }
                   .font_07_em {
                     font-size: 0.7em;
                   }
                   .user_avatar {
                     width: 30px;
-
                     height: 30px;
                     border-radius: 50%;
                     margin-right: 8px;
@@ -1404,7 +1427,8 @@ $index_title_color: var(--index_title_color, #33383a);
             width: 76vw;
             min-height: 30vh;
             border-radius: 10px;
-            background: #ffff;
+            background: #fff;
+
             box-shadow: #94969748 0px 5px 10px;
             margin-bottom: 32px;
             .re_note_item_box {
@@ -1470,14 +1494,23 @@ $index_title_color: var(--index_title_color, #33383a);
                   overflow: scroll;
                   font-size: 16px;
                   font-weight: 900;
+                  color: #747576;
+
                   div:first-child {
+                    user-select: none;
+                    color: #4d4949;
+
                     &:hover {
-                      color: #00cbff;
+                      color: #0ebd7d;
                     }
                   }
                   .note_short_message {
                     font-size: 14px;
+                    overflow: hidden;
                     margin-top: 8px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
                     font-weight: 100;
                   }
                 }
@@ -1507,15 +1540,20 @@ $index_title_color: var(--index_title_color, #33383a);
     height: 30vh;
     gap: 2vw;
     z-index: 1;
-    background: #fffff0;
+    background: #c6ebbd;
     .title_foot {
       font-size: 1.2em;
-      color: #cb0e0e;
-      opacity: 0.4;
+      color: #ffffff;
+    }
+    .text_foot {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffffff;
     }
     .left_foot {
       width: 30vw;
       height: 20vh;
+      gap: 8px;
     }
     .mid_foot {
       width: 20vw;

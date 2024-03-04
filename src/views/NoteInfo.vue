@@ -9,6 +9,12 @@ import { useRoute } from "vue-router";
 import { useNoteStore } from "../store/note";
 import { useUserStore } from "../store/user";
 import { storeToRefs } from "pinia";
+import change_theme from "../assets/theme/NoteInfo";
+import { useConfigStore } from "../store/config";
+const config_store = useConfigStore();
+config_store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
 const note_store = useNoteStore();
 const user_store = useUserStore();
 const { params } = useRoute();
@@ -74,7 +80,12 @@ onMounted(() => {
               >{{ item }}&ensp;</span
             ></span
           >
-          <button class="read_btn relative" @click="router.push(`/note/book/${note_data.id}/1`)">点击阅读</button>
+          <button
+            class="read_btn relative"
+            @click="router.push(`/note/book/${note_data.id}/1`)"
+          >
+            点击阅读
+          </button>
         </div>
         <div class="note_top_right_box">
           <div class="card flex flex_direction_column"></div>
@@ -83,40 +94,56 @@ onMounted(() => {
     </div>
     <div class="note_directory_box flex flex_direction_column relative">
       <h1>目录</h1>
-      <NoteDirectoryList :id="note_data.id" :data="note_data.directory_list" class="note_directory" col=3></NoteDirectoryList>
+      <NoteDirectoryList
+        :id="note_data.id"
+        :data="note_data.directory_list"
+        class="note_directory"
+        col="3"
+      ></NoteDirectoryList>
     </div>
     <div class="foot"></div>
   </div>
 </template>
 <style lang="scss" scoped>
+$note_info_main_bg: var(--note_info_main_bg, #fdfbfb);
+$note_top_mid_box_h1_color: var(--note_top_mid_box_h1_color, #fff);
+$note_top_mid_box_p_color: var(--note_top_mid_box_p_color, #ffffffb5);
+$note_top_mid_box_span_color: var(--note_top_mid_box_span_color, #ffffffc7);
+$load_status_color: var(--load_status_color, #ffffffc7);
+$finished_status_color: var(--finished_status_color, #ffffffc7);
+$read_btn_color: var(--read_btn_color, #ec3755);
+$read_btn_bg: var(--read_btn_bg, #fff);
+$foot_bg: var(--foot_bg, #e96969);
+
 #note_info_main {
   width: 100vw;
   min-height: 100vh;
+  background: $note_info_main_bg;
   .note_top_box {
     width: inherit;
     height: 70vh;
     overflow: hidden;
-    &::after{
+    &::after {
       content: "";
       position: absolute;
       width: 100%;
       height: 100%;
       left: 0;
       top: 0;
-      background-color: rgba(0, 0, 0, 0.171);
+      background-color: rgba(30, 33, 40, 0.384);
       z-index: 1;
     }
-    .top_box_bg{
-        width: 130%;
-        height: 130%;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-        filter: blur(30px);
+    .top_box_bg {
+      width: 130%;
+      height: 130%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      filter: blur(30px);
     }
     .note_top_inner_box {
-        z-index: 2;
+      z-index: 2;
       margin-top: 70px;
       margin-left: 3vw;
       margin-right: 3vw;
@@ -127,23 +154,24 @@ onMounted(() => {
       .note_top_left_box {
         width: 20vw;
         height: 100%;
-        
+
         img {
-          width: 20vw;
+          width: 21vw;
           height: 86%;
           margin: 7% 0;
+          background: $note_top_mid_box_h1_color;
           border-radius: 10px;
+          object-fit: cover;
           box-shadow: rgba(129, 131, 132, 0.381) 0px 5px 10px;
           animation: shrink 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
-        
       }
       .note_top_mid_box {
-        width: 44vw;
+        width: 43vw;
         height: 100%;
         gap: 1vh;
         h1 {
-          color: #fff;
+          color: $note_top_mid_box_h1_color;
           margin: 0;
           margin-top: 5%;
           animation: to_top 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -151,20 +179,18 @@ onMounted(() => {
         p {
           margin: 0;
           margin-bottom: 10vh;
-          color: #ffffffb5;
+          color: $note_top_mid_box_p_color;
           animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
         }
         span {
-          color: #ffffffc7;
+          color: $note_top_mid_box_span_color;
           animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
         }
         .load_status {
-          color: #a0e798b9;
+          color: $load_status_color;
         }
         .finished_status {
-          color: #4ca6eb;
+          color: $finished_status_color;
         }
         .read_btn {
           margin-top: auto;
@@ -178,26 +204,25 @@ onMounted(() => {
           z-index: 1;
           font-size: 1.2em;
           font-weight: 900;
-          color: #ff0e54;
-          background: #ffffff;
-          box-shadow: #ffffff71 0px 3px 10px;
+          color: $read_btn_color;
+          background: $read_btn_bg;
+          box-shadow: #0b090918 0px 3px 10px;
           margin-bottom: 8%;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           animation: shrink 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
           &:hover {
-            color: #fff;
-            box-shadow: #ff0e54 0px 3px 2px;
+            color: $read_btn_bg;
+            box-shadow: $read_btn_color 0px 3px 2px;
 
             &::after {
               transform: skewX(-45deg) scale(1);
               transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
             }
-           
           }
           &::after {
             content: "";
-            background:#ff0e54;
+            background: $read_btn_color;
             position: absolute;
             z-index: -1;
             left: -20%;
@@ -207,13 +232,12 @@ onMounted(() => {
             transform: skewX(-45deg) scale(0, 1);
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           }
-         
         }
       }
       .note_top_right_box {
         width: 26vw;
         height: 100%;
-        .card{
+        .card {
           width: 26vw;
           height: 86%;
           margin: 7% auto;
@@ -223,41 +247,42 @@ onMounted(() => {
       }
     }
   }
-  
-  .note_directory_box{
-   width: 100vw;
-   background: transparent;
-   .note_directory{
+
+  .note_directory_box {
+    width: 100vw;
     background: transparent;
-    margin: 5vh auto;
-    margin-top: 0;
-   }
-    h1{
+    .note_directory {
+      background: transparent;
+      margin: 5vh auto;
+      margin-top: 0;
+    }
+    h1 {
       margin: 3vh auto;
       font-size: 1.5em;
-      color: #ff0e54;
+      color: $read_btn_color;
     }
   }
-  .foot{
+  .foot {
     width: 100vw;
     height: 30vh;
-    background: #ff0e54;
+    background: $foot_bg;
   }
 }
 @keyframes shrink {
-          0%{
-            opacity: 0;
-            transform: scale(1.5);
-          }
-          100%{
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 @keyframes to_top {
-  0%{
+  0% {
     transform: translateY(5vh);
-  }100%{
+  }
+  100% {
     transform: translateY(0);
   }
 }
