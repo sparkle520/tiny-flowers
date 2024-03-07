@@ -51,7 +51,7 @@ $note_directory_item_main_hover_color: var(--note_directory_item_main_hover_colo
     display: block;
     margin-bottom: 1vh;
     color: $note_directory_item_main_color;
-   
+   user-select: none;
   }
   .span_hover{
     &:hover{

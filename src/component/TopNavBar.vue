@@ -623,7 +623,7 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
       }
       .nav_list {
         padding: 0;
-
+        user-select: none;
         .nav_item_active {
           font-size: 15px;
           color: $nav_item_active_color;

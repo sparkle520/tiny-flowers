@@ -136,7 +136,7 @@ onMounted(() => {
   height: 50vh;
   margin-top: 80px;
   border-radius: 5px;
-  box-shadow: #7e7e7e70 0px 4px 10px;
+  box-shadow: #1815151c 0px 4px 10px;
   // animation: note_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   &::after{
     content: '';

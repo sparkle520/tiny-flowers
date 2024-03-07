@@ -33,6 +33,7 @@ onUnmounted(() => {
 onMounted(() => {
   change_theme(theme.value);
   window.scrollTo(0, 0);
+  scroll_handle()
   document.addEventListener("scroll", scroll_handle);
   document.querySelector(".notice_text").innerText = notice[notice_index];
   init();
@@ -91,19 +92,34 @@ const c_c = (mut_val, color) => {
 };
 const change_theme = (current_theme) => {
   if (current_theme) {
-    c_c("--home_bg_color", "#123");
-    c_c("--first_page_cover_bg", "#1e243398");
-    c_c("--home_color", "#f0f8ff");
-    c_c("--u_w_m_btn_color", "#f0f8ff");
-    c_c("--word_box_color", "#f0f8ff");
-    c_c("--f_word_box_color", "#f0f8ff");
+    c_c("--home_bg", "#0b0e14");
+    c_c("--home_color", "#fff");
+    c_c("--index_title_color", "#33383a");  
+    c_c("--text_color", "#fdfbfb");
+    c_c("--box_bg", "#242b3dc7");
+    c_c("--recommend_item_bg", "#242b3dc7");
+    c_c("--home_main_color", "#b5b9d6");  
+    c_c("--page_1_title_color", "#242b3dc7");  
+    c_c("--content_box_color", "#ffff");  
+    c_c("--title_color", "#fdfbfb");  
+    c_c("--short_msg_color", "#fdfbfb");  
+    c_c("--title_hover", "#b5b9d6");  
+    c_c("--home_nav_item_box_shadow", "#b5b9d6");  
+
   } else {
-    c_c("--home_bg_color", "#fdfbfb");
-    c_c("--first_page_cover_bg", "transparent");
-    c_c("--home_color", "#e60000");
-    c_c("--u_w_m_btn_color", "#ff80bf");
-    c_c("--word_box_color", "#003153");
-    c_c("--f_word_box_color", "#0a0606");
+    c_c("--home_bg", "#fdfbfb");
+    c_c("--home_color", "#4d4949");  
+    c_c("--index_title_color", "#33383a");  
+    c_c("--text_color", "#ffff");  
+    c_c("--box_bg", "#ffff");  
+    c_c("--recommend_item_bg", "#ffff");  
+    c_c("--home_main_color", "#a5e3ba");  
+    c_c("--page_1_title_color", "#c6ebbd");  
+    c_c("--content_box_color", "#747576");  
+    c_c("--title_color", "#4d4949");  
+    c_c("--short_msg_color", "#747576");  
+    c_c("--title_hover", "#0ebd7d");  
+    c_c("--home_nav_item_box_shadow", "#99edb5");  
   }
 };
 const go_to_next_page = () => {
@@ -884,13 +900,21 @@ const leave_recommend_topic = (index) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$home_bg_color: var(--home_bg_color, #384f89);
-$home_color: var(--home_color, #1a1814);
-$first_page_cover_bg: var(--first_page_cover_bg, #1e243398);
-$u_w_m_btn_color: var(--u_w_m_btn_color, #ff80bf);
-$word_box_color: var(--word_box_color, #003153);
-$f_word_box_color: var(--f_word_box_color, #0a0606);
+$home_bg: var(--home_bg, #384f89);
+$home_color: var(--home_color, #4d4949);
 $index_title_color: var(--index_title_color, #33383a);
+$home_main_color: var(--home_main_color, #a5e3ba);
+$page_1_title_color: var(--page_1_title_color, #c6ebbd);
+$content_box_color: var(--content_box_color, #747576);
+$title_color: var(--title_color, #4d4949);
+$short_msg_color: var(--short_msg_color, #747576);
+$title_hover: var(--title_hover, #0ebd7d);
+$home_nav_item_box_shadow: var(--home_nav_item_box_shadow, #99edb5);
+
+
+$text_color: var(--text_color, #fff);
+$recommend_item_bg: var(--recommend_item_bg, #fff);
+$box_bg: var(--box_bg, #fff);
 @font-face {
   font-family: "orbitron-black";
   src: url("/src/assets/font/orbitron-black.ttf");
@@ -899,10 +923,11 @@ $index_title_color: var(--index_title_color, #33383a);
   width: 100vw;
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
-  background: $home_bg_color;
+  background: $home_bg;
+  color: $home_color;
   ::selection {
-    color: #ffff;
-    background-color: #a5e3ba;
+    color: $text_color;
+    background-color: $home_main_color;
   }
   overflow: hidden;
   &::after {
@@ -913,7 +938,7 @@ $index_title_color: var(--index_title_color, #33383a);
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: 0.2;
+    opacity: 0.1;
     background: url("https://pic.imgdb.cn/item/65dc38fc9f345e8d03e7728a.png")
       repeat;
 
@@ -932,13 +957,13 @@ $index_title_color: var(--index_title_color, #33383a);
     height: 40px;
     font-weight: lighter;
     color: $index_title_color;
-    border-bottom: #a5e3ba 1px solid;
+    border-bottom: $home_main_color 1px solid;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     span {
-      background: #a5e3ba;
-      box-shadow: #99edb5 0 10px 10px;
+      background: $home_main_color;
+      box-shadow: $home_nav_item_box_shadow 0 10px 10px;
       border-radius: 1000px;
-      color: #fff;
+      color: $text_color;
       padding: 8px 16px;
     }
   }
@@ -966,7 +991,7 @@ $index_title_color: var(--index_title_color, #33383a);
       color: #c6ebbd;
       transform: translate(-50%, -50%);
       font-family: "orbitron-light";
-      text-shadow: 10px 10px 0 rgba(198, 235, 189, 0.8),
+      text-shadow: 10px 10px 0 #c6ebbdcc,
         20px 20px 0 rgba(198, 235, 189, 0.6),
         30px 30px 0 rgba(198, 235, 189, 0.4),
         40px 40px 0 rgba(198, 235, 189, 0.2),
@@ -1000,7 +1025,7 @@ $index_title_color: var(--index_title_color, #33383a);
       animation: more 2s infinite linear both;
       z-index: 100;
       path {
-        fill: #65cb5a;
+        fill: $title_hover;
       }
     }
     @keyframes more {
@@ -1038,15 +1063,15 @@ $index_title_color: var(--index_title_color, #33383a);
       .page_2_header {
         z-index: 2;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        background: $home_bg_color;
+        background: $home_bg;
 
         .notice {
           width: 76vw;
           margin: 16px auto;
-          background: #ffff;
+          background: $box_bg;
           padding: 1vh;
           border-radius: 10px;
-          box-shadow: 0 4px 10px rgba(61, 73, 87, 0.112);
+          box-shadow: 0 4px 10px rgba(26, 27, 28, 0.112);
 
           .notice_text {
             margin-left: 16px;
@@ -1067,10 +1092,10 @@ $index_title_color: var(--index_title_color, #33383a);
             top: 80px;
             width: inherit;
             min-height: 10vh;
-            background: #ffffff;
+            background: $box_bg;
             border-radius: 10px;
             margin-bottom: 2vh;
-            box-shadow: 0 4px 10px rgba(61, 73, 87, 0.112);
+            box-shadow: 0 4px 10px rgba(26, 27, 28, 0.112);
 
             ul {
               padding: 0;
@@ -1125,7 +1150,7 @@ $index_title_color: var(--index_title_color, #33383a);
               }
               .rect_item {
                 border-radius: 10px;
-                background: #ffff;
+                background: $box_bg;
                 user-select: none;
                 overflow: hidden;
                 gap: 8px;
@@ -1165,8 +1190,9 @@ $index_title_color: var(--index_title_color, #33383a);
               width: 100px;
               height: 35px;
               gap: 4px;
-              background: #ffff;
-              box-shadow: rgba(245, 233, 229, 0.31) px 20px 20px;
+              user-select: none;
+              background: $box_bg;
+              box-shadow: 0 4px 5px rgba(26, 27, 28, 0.112);
               border-radius: 10px;
               font-size: 14px;
               font-weight: lighter;
@@ -1178,7 +1204,7 @@ $index_title_color: var(--index_title_color, #33383a);
               &:hover {
                 background: #8e9bae;
                 box-shadow: #c0c1c2 0 5px 10px;
-                color: #fff;
+                color: $text_color;
                 transform: translateY(4px);
               }
             }
@@ -1196,8 +1222,8 @@ $index_title_color: var(--index_title_color, #33383a);
                 border-radius: 10px;
                 width: 24vw;
                 height: 50vh;
-                color: #747576;
-                background: #fff;
+                color: $short_msg_color;
+                background: $box_bg;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
 
@@ -1253,7 +1279,7 @@ $index_title_color: var(--index_title_color, #33383a);
                   .classification {
                     font-size: 0.6em;
                     padding: 0.4em;
-                    background: #0ebd7d;
+                    background: $title_hover;
                     border-radius: 0.4em;
                     margin-right: 8px;
                     color: #fff;
@@ -1261,11 +1287,11 @@ $index_title_color: var(--index_title_color, #33383a);
                   .title {
                     font-size: 1em;
                     font-weight: 700;
-                    color: #4d4949;
+                    color: $title_color;
                     overflow: scroll;
                     user-select: none;
                     &:hover {
-                      color: #0ebd7d;
+                      color: $title_hover;
                     }
                   }
                   .short_meg {
@@ -1285,8 +1311,8 @@ $index_title_color: var(--index_title_color, #33383a);
             width: inherit;
             border-radius: 10px;
             margin-bottom: 32px;
-            background: #ffff;
-            box-shadow: #94969748 0px 5px 10px;
+            background: $box_bg;
+            box-shadow: 0 4px 10px rgba(26, 27, 28, 0.112);
 
             .recommend_item_box {
               width: inherit;
@@ -1300,7 +1326,7 @@ $index_title_color: var(--index_title_color, #33383a);
                 height: 18vh;
                 border-radius: 10px;
                 margin: 0 auto;
-                background: #fff;
+                background: $recommend_item_bg;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 box-shadow: 0 8px 5px #1f2d3d26;
                 &:last-child {
@@ -1314,7 +1340,7 @@ $index_title_color: var(--index_title_color, #33383a);
                   height: inherit;
                   z-index: 10;
                   pointer-events: none;
-                  background: linear-gradient(to left, #fff 20%, transparent);
+                  background: linear-gradient(to left, $box_bg 20%, transparent);
                 }
                 &:hover {
                   // transform: translateY(-0.6vh);
@@ -1336,7 +1362,7 @@ $index_title_color: var(--index_title_color, #33383a);
                     height: inherit;
                     background: linear-gradient(
                       to right,
-                      #ffff 20%,
+                      $box_bg 20%,
                       transparent
                     );
                   }
@@ -1371,7 +1397,7 @@ $index_title_color: var(--index_title_color, #33383a);
                   height: calc(18vh - 32px);
                   order: 2;
                   margin: 16px;
-                  color: #747576;
+                  color: $content_box_color;
                   .content_bottom_box {
                     margin-top: auto;
                   }
@@ -1379,23 +1405,23 @@ $index_title_color: var(--index_title_color, #33383a);
                     font-size: 0.6em;
                     padding: 0.4em;
                     flex-shrink: 0;
-                    background: #0ebd7d;
+                    background: $title_hover;
                     border-radius: 0.4em;
                     margin-right: 8px;
-                    color: #ffff;
+                    color: $text_color;
                   }
                   .title {
                     font-weight: 800;
                     user-select: none;
-                    color: #4d4949;
+                    color: $title_color;
                     &:hover {
-                      color: #0ebd7d;
+                      color: $title_hover;
                     }
                   }
                   .short_meg {
                     margin-top: 2vh;
                     height: 16px;
-                    color: #747576;
+                    color: $short_msg_color;
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
@@ -1427,9 +1453,9 @@ $index_title_color: var(--index_title_color, #33383a);
             width: 76vw;
             min-height: 30vh;
             border-radius: 10px;
-            background: #fff;
+            background: $box_bg;
 
-            box-shadow: #94969748 0px 5px 10px;
+            box-shadow: 0 4px 10px rgba(26, 27, 28, 0.112);
             margin-bottom: 32px;
             .re_note_item_box {
               margin: 0 auto;
@@ -1442,7 +1468,7 @@ $index_title_color: var(--index_title_color, #33383a);
               .re_note_item {
                 width: calc(18vw - 8px);
                 height: inherit;
-                background: #ffffff;
+                background: $recommend_item_bg;
                 border-radius: 10px;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 .re_note_img_box {
@@ -1482,6 +1508,7 @@ $index_title_color: var(--index_title_color, #33383a);
                   height: 40vh;
                   border-radius: inherit;
                   object-fit: cover;
+                  background: #fff;
                   box-shadow: #94969748 0px 5px 10px;
                 }
                 .note_info_box {
@@ -1494,14 +1521,14 @@ $index_title_color: var(--index_title_color, #33383a);
                   overflow: scroll;
                   font-size: 16px;
                   font-weight: 900;
-                  color: #747576;
+                  color: $short_msg_color;
 
                   div:first-child {
                     user-select: none;
-                    color: #4d4949;
+                    color: $title_color;
 
                     &:hover {
-                      color: #0ebd7d;
+                      color: $title_hover;
                     }
                   }
                   .note_short_message {
@@ -1540,15 +1567,15 @@ $index_title_color: var(--index_title_color, #33383a);
     height: 30vh;
     gap: 2vw;
     z-index: 1;
-    background: #c6ebbd;
+    background: $page_1_title_color;
     .title_foot {
       font-size: 1.2em;
-      color: #ffffff;
+      color: $text_color;
     }
     .text_foot {
       font-size: 24px;
       font-weight: 900;
-      color: #ffffff;
+      color: $text_color;
     }
     .left_foot {
       width: 30vw;

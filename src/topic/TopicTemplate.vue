@@ -3,7 +3,7 @@
 <!-- @Description:  -->
 
 <script setup>
-import { ref, onBeforeMount, onMounted, nextTick } from "vue";
+import { ref, onBeforeMount, onMounted, nextTick, watch } from "vue";
 import { useRouter } from "vue-router";
 import TopicTitle from "/src/component/TopicTitle.vue";
 import { change_theme } from "/src/assets/js/topic.js";
@@ -30,6 +30,7 @@ const initContent = () => {
   content.value = marked("");
 };
 const content = ref("");
+
 const config_store = useConfigStore();
 const topic_store = useTopicStore();
 const { theme } = storeToRefs(config_store);
@@ -53,6 +54,7 @@ onMounted(() => {
   change_theme(theme.value);
   change_layout(layout.value);
   initContent();
+  
   nextTick(() => {
     emitter.emit("topic_data", get_topic_data());
   });

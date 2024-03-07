@@ -21,11 +21,12 @@ onMounted(() => {
     const topic_create_date = document.querySelector(".topic_create_date");
     const topic_update_date = document.querySelector(".topic_update_date");
     const topic_time = document.querySelector(".topic_time");
+    const img_list = document.querySelectorAll(".topic_content img");
+  console.log(img_list);
     const topic_classification = document.querySelector(
       ".topic_classification"
     );
     const topic_tag_box = document.querySelector(".topic_tag_box");
-
     if (
       data.value.topic_data.img == undefined ||
       data.value.topic_data.img == ""
@@ -133,10 +134,11 @@ onMounted(() => {
 #topic_top_main {
   width: 80vw;
   margin: 0 auto;
-   min-height: 40vh;
+   height: 40vh;
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
+  margin-top: 70px;
   background-position: center center;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -150,7 +152,7 @@ onMounted(() => {
   }
   .topic_info_box {
     width: 86vw;
-    min-height: 40vh;
+    height: 40vh;
     word-wrap: break-word;
     animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     z-index: 1;

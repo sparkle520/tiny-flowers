@@ -41,15 +41,12 @@ const handleScroll = () => {
     //   directory_list_main.style.top = "0px";
     //   directory_list_main.style.right = "0vw";
     // }
-    if (current_titles.value == undefined || current_titles.value == null) {
-    return;
-  }
+   
   let visibleTitles = [];
 
   for (let i = current_titles.value.length - 1; i >= 0; i--) {
     const title = current_titles.value[i];
-    if (title.scrollTop <= window.scrollY) {
-      if (currentTitle.value.id === title.id) return;
+    if (title.scrollTop-window.scrollY <=10 ) {
 
       Object.assign(currentTitle.value, title);
 
@@ -115,8 +112,7 @@ function getTitles() {
   }
 
   let serialNumbers = levels.map(() => 0);
-  let top_height = document.querySelector("#topic_top_main").clientHeight;
-  
+  let top_height = document.querySelector("#topic_top_main").clientHeight+60;
 
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
@@ -124,15 +120,15 @@ function getTitles() {
     let level = levels.indexOf(tagName);
     if (level == -1) continue;
     let id = tagName + "-" + element.innerText + "-" + i;
+    let height = top_height + element.offsetTop;
     let node = {
       id,
       level,
       parent: null,
       children: [],
       rawName: element.innerText,
-      scrollTop: element.offsetTop + top_height ,
+      scrollTop: height ,
     };
-
     if (titles.length > 0) {
       let lastNode = titles.at(-1);
 
@@ -213,27 +209,7 @@ function scrollToView(scrollTop) {
               class="catalog-icon"
           /></span>
           <div class="flex flex_direction_row align_items_center">
-            <svg
-              t="1705577425453"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="7633"
-              width="20"
-              height="20"
-            >
-              <path
-                d="M128 96h768a32 32 0 0 1 0 64H128a32 32 0 1 1 0-64z m0 192h768a32 32 0 0 1 0 64H128a32 32 0 1 1 0-64z m0 384h288a32 32 0 0 1 0 64H128a32 32 0 0 1 0-64z m0 192h288a32 32 0 0 1 0 64H128a32 32 0 0 1 0-64z"
-                fill="#ACB4C0"
-                p-id="7634"
-              ></path>
-              <path
-                d="M704 480h-80a178.24 178.24 0 0 0-16 0.704V544H128a32 32 0 0 1 0-64h576z m-40 64H608z"
-                fill="#5D6D7E"
-                p-id="7635"
-              ></path>
-            </svg>
+           
             <span style="margin-left: 8px;color:#5D6D7E ;">目录</span>
           </div>
         </div>

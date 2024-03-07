@@ -26,6 +26,7 @@ onBeforeMount(() => {
   note_data.value = note_store.get_note_by_id(params.id);
 });
 onMounted(() => {
+change_theme(config_store.theme);
   window.scrollTo(0, 0);
 });
 </script>

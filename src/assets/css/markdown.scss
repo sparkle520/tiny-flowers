@@ -1,15 +1,16 @@
 $code_bg: var(--code_bg, #f6f8fa);
-$h1_color: var(--h1_color, #ff7f50);
-$h_color: var(--h_color, #ff7f50);
+$h1_color: var(--h1_color, #686870);
+$h_color: var(--h_color, #6261a3);
 $h2_color: var(--h2_color, #ff7f50);
 $h3_color: var(--h3_color, #ff7f50);
 $h4_color: var(--h4_color, #ff7f50);
 $h5_color: var(--h5_color, #ff7f50);
 $h6_color: var(--h6_color, #ff7f50);
 $normal_color: var(--normal_color, #4d4949);
+$code_color: var(--code_color, #ffffff);
 
-$blockquote_bg: var(--blockquote_bg, #faebd78c);
-$blockquote_border: var(--blockquote_bg, #fcb378);
+$blockquote_bg: var(--blockquote_bg, #6261a3a8);
+$blockquote_border: var(--blockquote_bg, #6261a3);
 $blockquote_color: var(--blockquote_color, #ff7300);
 .markdown-body *{
   font-family: 'Microsoft YaHei', '微软雅黑', 'MicrosoftJhengHei', '华文细黑', STHeiti, MingLiu;
@@ -22,6 +23,7 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   overflow-x: hidden;
   z-index: 10;
   letter-spacing: 2px;
+  line-height: 1.9em;
   ::selection {
     color:$code_bg;
     background-color: $h_color;
@@ -77,17 +79,17 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   }
   code {
     background:$blockquote_bg ;
-    color: $blockquote_color;
+    color: $code_color;
     font-family: 'yahei';
   }
   pre>code{
     color: $normal_color;
   }
   blockquote {
-    background-color: $blockquote_bg;
+    background-color: transparent;
     color: $blockquote_color;
     padding: 8px 16px;
-    border-left: 0.25em solid $blockquote_border;
+    border-left: 0.15em solid $blockquote_border;
   }
   p {
   }

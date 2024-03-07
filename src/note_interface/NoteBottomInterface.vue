@@ -141,10 +141,12 @@ $topic_author_info_inner_box_color: var(
 
         &:first-child {
           font-weight: 900;
+          user-select: none;
         }
         &:last-child {
           color: #4e4840;
           font-size: 14px;
+          user-select: none;
           font-weight: 900;
           &:hover {
             color: #00cbff;

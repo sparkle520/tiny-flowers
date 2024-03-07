@@ -69,13 +69,13 @@ export const useNoteStore = defineStore('note', {
                 is_finished: false,
                 directory_list: [
                     {
-                        name: '第一章节 事件的概率',
+                        name: '第一章节 随机事件及其概率',
                         children: [
                             { name: '1.1 随机事件' },
                         ]
                     },
                     {
-                        name: '第二章节 随机变量及概率分布',
+                        name: '第二章节 随机变量及其分布',
                         children: [
                         ]
                     },

@@ -27,10 +27,9 @@ onBeforeMount(() => {
   tags_list.value = math_store.get_tags();
   console.log(tags_list.value);
 });
-onUnmounted(()=>{
+onUnmounted(() => {
   document.removeEventListener("click", click_handle);
-
-})
+});
 onMounted(() => {
   change_theme(theme.value);
   window.scrollTo(0, 0);
@@ -60,7 +59,6 @@ const current_page_change = (current) => {
 };
 const page_num = ref(1);
 //  change scss var
-
 
 // const cover = ref(false);
 const show_all_tag = () => {
@@ -193,7 +191,7 @@ const click_handle = (e) => {
             class="search"
             placeholder="在此键入搜索"
           />
-        
+
           <div
             class="filter_search_box absolute"
             v-show="show_filter_search_box"
@@ -203,12 +201,13 @@ const click_handle = (e) => {
                 v-for="item in current_filter_list"
                 @click="router.push(`/math/details/${item.id}`)"
               >
-                M{{ item.id }} <vue-latex
-              style="font-size: 13px"
-              :display-mode="true"
-              :expression="item.question"
-            >
-            </vue-latex>
+                M{{ item.id }}
+                <vue-latex
+                  style="font-size: 13px"
+                  :display-mode="true"
+                  :expression="item.question"
+                >
+                </vue-latex>
               </li>
             </ul>
             <div class="query_time"><span class="query_text"></span></div>
@@ -331,7 +330,15 @@ const click_handle = (e) => {
             class="subject_name flex align_items_center justify_content_center"
           >
             <vue-latex
-              style="font-size: 13px"
+              style="
+                display: -webkit-box;
+                width: 50vw;
+                -webkit-line-clamp: 1;
+                white-space: wrap;
+                -webkit-box-orient: inline-axis;
+                font-size: 0.9em;
+                overflow: hidden;
+              "
               :display-mode="true"
               :expression="item.question"
             >
@@ -596,8 +603,7 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
       padding: 0 8px;
       background: linear-gradient(90deg, transparent 0%, $math_com_box_bg 10%);
       z-index: 11;
-     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
     .close_all_tag {
       width: 100%;
@@ -849,6 +855,7 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
         .subject_name {
           justify-self: flex-start;
           color: $subject_name_color;
+          
         }
 
         .content_tag_box {
@@ -866,7 +873,6 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
             font-weight: 700;
             background: $content_tag_item_bg;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
           }
         }
       }
