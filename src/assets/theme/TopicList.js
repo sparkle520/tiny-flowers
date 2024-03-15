@@ -1,7 +1,8 @@
 import c_c from "@/assets/js/utils.js"
 const change_theme = (current_theme) =>{
     if (current_theme) {
-      c_c("--bg_color", "#0b0e14");
+      c_c("--topic_bg_color", "#0b0e14");
+      c_c("--topic_bg_top", "#0d1c2b");
       c_c("--topic_list_bg", "#0b0e14");
       c_c("--color", "#f7f7f7");
       c_c("--item_bg", "#242b3dc7");
@@ -18,7 +19,8 @@ const change_theme = (current_theme) =>{
 
   
     } else {
-      c_c("--bg_color", "#fdfbfb");
+      c_c("--topic_bg_color", "#fdfbfb");
+      c_c("--topic_bg_top", "#fdfbfb");
       c_c("--topic_list_bg", "#e8f6f9");
       c_c("--color", "#000000");
       c_c("--item_bg", "#ffffffc7");

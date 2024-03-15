@@ -17,8 +17,10 @@ import { useRouter } from "vue-router";
 import change_theme from "../assets/theme/TopNavBar";
 const router = useRouter();
 import { useConfigStore } from "../store/config";
+import { useUserStore } from "../store/user";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
+const user_store = useUserStore();
 const { theme } = storeToRefs(store);
 let last_position = 0
 store.$subscribe((mutation, state) => {
@@ -28,10 +30,18 @@ onBeforeMount(() => {});
 onMounted(() => {
   change_theme(theme.value);
   document.addEventListener("scroll", nav_handle);
+  document.addEventListener("click", click_handle);
 });
 onUnmounted(() => {
-  document.removeEventListener("scroll", nav_handle);
+  document.removeEventListener("click", click_handle);
 });
+const click_handle = (e) => {
+  let music_player_main = document.querySelector("#music_player_main");
+  let music = document.querySelector("#top_nav_main .music");
+  if (!music_player_main.contains(e.target) && !music.contains(e.target)) {
+    music_active.value = false;
+  }
+};
 const nav_handle = () => {
   let wScrY = window.scrollY;
   const nav_main = document.querySelector(".nav_main");
@@ -487,8 +497,9 @@ c-197 113 -327 163 -475 183 -166 23 -152 18 -147 51 4 28 3 29 -31 28 -20 -1
 
           <ul class="nav_list flex flex_direction_row">
             <li
+            :key="item"
               class="nav_item nav_item_com flex flex_direction_row align_items_center"
-              v-for="(item, index) in nav_list.slice(0, 4)"
+              v-for="(item,) in nav_list.slice(0, 4)"
               @click="link_to(item.path)"
             >
               {{ item.name }}
@@ -499,8 +510,10 @@ c-197 113 -327 163 -475 183 -166 23 -152 18 -147 51 4 28 3 29 -31 28 -20 -1
         <div class="flex flex_direction_row">
           <ul class="nav_list flex flex_direction_row">
             <li
+            :key="item"
+
               class="nav_item nav_item_com flex flex_direction_row align_items_center"
-              v-for="(item, index) in nav_list.slice(4)"
+              v-for="(item, ) in nav_list.slice(4)"
               @click="link_to(item.path)"
             >
               {{ item.name }}
@@ -518,7 +531,8 @@ c-197 113 -327 163 -475 183 -166 23 -152 18 -147 51 4 28 3 29 -31 28 -20 -1
         </div>
       </div>
       <div class="music absolute" @click="active_music">
-        <svg
+        <img :src="user_store.avatar" alt="">
+        <!-- <svg
           v-if="!music_active"
           t="1704963079198"
           class="svg_1"
@@ -571,7 +585,7 @@ c-197 113 -327 163 -475 183 -166 23 -152 18 -147 51 4 28 3 29 -31 28 -20 -1
             fill="#FAD8D7"
             p-id="13971"
           ></path>
-        </svg>
+        </svg> -->
       </div>
     </div>
   </div>
@@ -697,11 +711,45 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
     }
     .music {
       left: 50%;
-      bottom: 10%;
+      top: 8px;
       transform: translateX(-50%);
       transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-      &:hover {
+      &:hover{
+        &::after{
+          opacity: 1;
+          bottom: -30px;
+
+        }
       }
+      &::after{
+        content: '播放本地音频';
+        position: absolute;
+        bottom: -20px;
+        opacity: 0;
+        background: #ffff;
+          left: 50%;
+          transform: translateX(-50%) ;
+          width: 120%;
+          box-shadow: #3031361a 0 0 10px;
+          font-size: 11px;
+          border-radius: 15px;
+          color: #5e6d78;
+          padding: 8px 8px;
+          transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+      img{
+        width: 58px;
+        height: 58px;
+        margin: auto 0;
+        border-radius: 50%;
+        transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        box-shadow: rgba(17, 34, 51, 0.189) 0 0 10px;
+        &:hover {
+        box-shadow: rgba(3, 27, 50, 0.763) 0 0 2px;
+
+      }
+      }
+     
 
       .svg_1 {
         &:hover {

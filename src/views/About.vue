@@ -225,14 +225,14 @@ const create_animation = (start, end, s_v, e_v) => {
 };
 const change_theme = (current_theme) => {
   if (current_theme) {
-    c_c("--home_bg_color", "#123");
+    c_c("--home_bg_color", "#0d1c2b");
     c_c("--first_page_cover_bg", "#1e243398");
     c_c("--home_color", "#f0f8ff");
     c_c("--u_w_m_btn_color", "#f0f8ff");
     c_c("--word_box_color", "#f0f8ff");
     c_c("--f_word_box_color", "#f0f8ff");
   } else {
-    c_c("--home_bg_color", "#f7f3f5");
+    c_c("--home_bg_color", "#fdfbfb");
     c_c("--first_page_cover_bg", "transparent");
     c_c("--home_color", "#e60000");
     c_c("--u_w_m_btn_color", "#ff80bf");

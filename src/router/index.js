@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { useRoutesStore } from "../store/routes";
 import { defineAsyncComponent } from 'vue';
 import {length} from "/src/assets/config/data"
 import Home from '../views/Home.vue'
@@ -63,7 +62,7 @@ const routes = [
         component: () => import("/src/views/TopicList.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: false,
+            screenFull: true,
 
         }
     },

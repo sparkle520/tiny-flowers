@@ -108,7 +108,7 @@ const init_re_note_book_list = () => {
 //   });
 // };
 const recommend_note_list = [
-{
+  {
     id: 3,
     name: "线性代数",
     link: "/note/noteInfo/3",
@@ -155,6 +155,7 @@ const go_to = (id) => {
             <li
               @click="go_to(item.id)"
               v-for="item in recommend_note_list"
+              :key="item"
               class="re_note_item relative"
             >
               <svg
@@ -238,6 +239,7 @@ const go_to = (id) => {
             <ul class="flex flex_direction_column">
               <li
                 v-for="item in current_filter_list"
+                :key="item"
                 @click="router.push(`/note/noteInfo/${item.id}`)"
               >
                 {{ item.name }}
@@ -250,8 +252,12 @@ const go_to = (id) => {
           class="book_list_box relative flex flex_direction_column align_items_center"
         >
           <ul class="book_list_ul grid relative">
-            <li 
-            @click="go_to(item.id)" v-for="item in data" class="book_item relative">
+            <li
+              @click="go_to(item.id)"
+              v-for="item in data"
+              class="book_item relative"
+              :key="item"
+            >
               <div class="book_item_inner flex flex_direction_row">
                 <div class="book_img_box">
                   <img
@@ -267,7 +273,7 @@ const go_to = (id) => {
                   />
                 </div>
                 <div class="book_text_area flex flex_direction_column">
-                  <div  class="book_name">
+                  <div class="book_name">
                     {{ item.name }}
                   </div>
                   <div class="short_message">{{ item.short_message }}</div>
@@ -308,6 +314,8 @@ const go_to = (id) => {
 <style lang="scss" scoped>
 #note_main {
   $note_bg_color: var(--note_bg_color, #fdfbfb);
+  $note_bg_opacity: var(--note_bg_opacity, 1);
+  $note_bg_top: var(--note_bg_top, #fdfbfb);
   $box_bg: var(--box_bg, #ffff);
   $note_book_box_title_color: var(--note_book_box_title_color, #e96969);
   $re_note_item_bg: var(--re_note_item_bg, #e55656);
@@ -327,12 +335,12 @@ const go_to = (id) => {
   $search_box_color: var(--search_box_color, #4d4949);
 
   width: 100vw;
-  background: $note_bg_color;
+  background: linear-gradient( $note_bg_top,$note_bg_color);
   min-height: 100vh;
   ::selection {
-  color: $book_name_color;
-  background-color:$text_area_color;
-}
+    color: $book_name_color;
+    background-color: $text_area_color;
+  }
   &::after {
     content: "";
     position: fixed;
@@ -340,14 +348,12 @@ const go_to = (id) => {
     height: 100vh;
     top: 0;
     left: 0;
-    opacity: 0.18;
-    background: url("https://pic.imgdb.cn/item/65dce9ee9f345e8d03b84b8d.png")
+    opacity: $note_bg_opacity;
+    background: url("https://pic.imgdb.cn/item/65f38f9f9f345e8d03ad1fa8.png")
       repeat;
-    background-size: 277px 378px;
   }
   .container {
     width: 80vw;
-    background: $note_bg_color;
     align-self: center;
     z-index: 1;
     margin-top: 70px;
@@ -357,6 +363,7 @@ const go_to = (id) => {
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       grid-template-columns: 4fr 1fr;
+      overflow: hidden;
       // backdrop-filter: blur(6px);
       border-radius: 15px;
       -webkit-backdrop-filter: blur(6px);
@@ -364,38 +371,39 @@ const go_to = (id) => {
       box-shadow: #27262619 0px 6px 15px 0px;
       // -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
       &::after {
-        // content: "";
-        // position: absolute;
-        // width: 20vw;
-        // height: 20vw;
-        // left: 0vw;
-        // border-radius: 50%;
-        // background: #f0768b;
-        // filter: blur(4vw);
+        content: "";
+        position: absolute;
+        width: 20vw;
+        height: 20vw;
+        left: 0vw;
+        border-radius: 50%;
+        background: $foot_bg;
+        filter: blur(4vw);
       }
       &::before {
-        // content: "";
-        // position: absolute;
-        // width: 20vw;
-        // height: 20vw;
-        // right: 0;
-        // border-radius: 50%;
-        // background: #9acd32;
-        // filter: blur(8vw);
+        content: "";
+        position: absolute;
+        width: 10vw;
+        height: 10vw;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        background: $text_area_after_bg;
+        z-index: 1;
+        filter: blur(8vw);
       }
       .top_box_bg {
         width: 80vw;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        background: $box_bg;
 
         height: 45vh;
         border-radius: inherit;
         object-fit: cover;
 
-        background: $box_bg;
       }
       .note_book_box {
         z-index: 1;
-
         .title {
           font-size: 1.5em;
           font-weight: 900;
@@ -412,22 +420,17 @@ const go_to = (id) => {
           width: 100%;
           margin: 0 0.5vw;
           transition: all 0.5s cubic-bezier(0.075, 0.82, 0.1);
-          background: linear-gradient(
-            40deg,
-            transparent,
-            $re_note_item_bg
-          );
+          background: linear-gradient(40deg, transparent, $re_note_item_bg);
           border-radius: 20px;
           height: 36vh;
           border-radius: 15px;
           box-shadow: #27262639 0px 6px 15px 0px;
           transform: translateZ(0);
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        &:hover{
-          box-shadow: #27262639 0px 3px 5px 0px;
+          &:hover {
+            box-shadow: #27262639 0px 3px 5px 0px;
+          }
 
-        }
-         
           .note_icon {
             left: 10px;
             top: 10px;
@@ -451,7 +454,7 @@ const go_to = (id) => {
           .text_area {
             bottom: 0;
             overflow: hidden;
-           
+
             width: calc(100% - 1vw);
             color: $text_area_color;
 

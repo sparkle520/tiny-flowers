@@ -334,6 +334,8 @@ const search_focus_handle = () => {
         <ul class="flex flex_direction_column">
           <li
             v-for="item in current_filter_list"
+            :key="item"
+
             @click="jump_to_topic(item.link)"
           >
             {{ item.title }}
@@ -403,7 +405,9 @@ const search_focus_handle = () => {
         <div
           v-show="list_layout"
           @click="jump_to_topic(item.link)"
-          v-for="(item, index) in current_data"
+          v-for="(item, ) in current_data"
+          :key="item"
+
           class="topic_item flex flex_direction_column relative"
         >
           <div class="item_inner_box flex flex_direction_row">
@@ -438,7 +442,7 @@ const search_focus_handle = () => {
             </div>
           </div>
           <div class="absolute tag_box flex flex_direction_row">
-            <span class="tag" v-for="(item, index) in item.tags.split('?')"
+            <span class="tag" v-for="item in item.tags.split('?')" :key="item"
               >#{{ item }}</span
             >
           </div>
@@ -450,7 +454,8 @@ const search_focus_handle = () => {
             <div
               v-show="!list_layout"
               @click="jump_to_topic(item.link)"
-              v-for="(item, index) in current_data"
+              v-for="item in current_data"
+              :key="item"
               class="topic_item_grid relative"
             >
               <div class="img_box relative">
@@ -478,7 +483,10 @@ const search_focus_handle = () => {
                   v-html="item.short_message"
                 ></span>
                 <div class="tags_box flex flex_direction_row">
-                  <span v-for="tag in item.tags.split('?')" class="tag_item"
+                  <span
+                    v-for="tag in item.tags.split('?')"
+                    class="tag_item"
+                    :key="tag"
                     >#{{ tag }}</span
                   >
                 </div>
@@ -508,11 +516,15 @@ const search_focus_handle = () => {
         <div
           class="personal_item intro flex relative flex_direction_column align_items_center"
         >
-          <img
+          <!-- <img
             class="avatar_bg absolute"
             src="https://pic.imgdb.cn/item/65a9840f871b83018a77d214.jpg"
             alt=""
-          />
+          /> -->
+          <div
+            class="avatar_bg absolute"
+          >
+          </div>
           <img :src="user_store.avatar" class="z_index_10" alt="" />
           <span
             class="personal_name z_index_10"
@@ -562,6 +574,7 @@ const search_focus_handle = () => {
           <ul class="flex flex_direction_column">
             <li
               v-for="classification in topic_store.classification"
+              :key="classification"
               @click="classification_handle(classification)"
               class="flex flex_direction_row"
             >
@@ -602,7 +615,8 @@ const search_focus_handle = () => {
   <Utils></Utils>
 </template>
 <style lang="scss" scoped>
-$bg_color: var(--bg_color, #fdfbfb);
+$topic_bg_color: var(--topic_bg_color, #fdfbfb);
+$topic_bg_top: var(--topic_bg_top, #fdfbfb);
 $topic_list_bg: var(--topic_list_bg, #f7f3f5);
 $color: var(--color, #000000);
 $item_bg: var(--item_bg, #ffffffa2);
@@ -617,7 +631,7 @@ $item_classification_bg: var(--item_classification_bg, #00cbff);
 $filter_search_box_bg: var(--filter_search_box_bg, #ffffff);
 $tag_item_bg: var(--tag_item_bg, #a5e3ba);
 $tag_item_color: var(--tag_item_color, #00cbff);
-$layout_hover: var(--layout_hover, #F3ACAC);
+$layout_hover: var(--layout_hover, #f3acac);
 
 #topic_list_main {
   // background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png") repeat-y;
@@ -629,12 +643,15 @@ $layout_hover: var(--layout_hover, #F3ACAC);
     opacity: 0.08;
     top: 0;
     height: 100%;
+
     background: url("https://pic.imgdb.cn/item/65d0a7e89f345e8d0368e174.png")
       repeat;
     background-size: contain;
   }
+  background: linear-gradient($topic_bg_top,$topic_bg_color);
+
   width: 100vw;
-  height: auto;
+  min-height: 100vh;
   color: $color;
   li {
     list-style: none;
@@ -667,7 +684,6 @@ $layout_hover: var(--layout_hover, #F3ACAC);
   }
   .topic_search_box {
     z-index: 11;
-
     scrollbar-color: rgba(144, 147, 153, 0.3) transparent; /* 滑块颜色  滚动条背景颜色 */
     scrollbar-width: thin;
     animation: search_item 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -699,9 +715,12 @@ $layout_hover: var(--layout_hover, #F3ACAC);
     width: 50vw;
     height: 7vh;
     margin: 3vh auto;
+    margin-top: 80px;
+
     .filter_search_box {
       width: 52vw;
       max-height: 30vh;
+
       background: $filter_search_box_bg;
       bottom: 0;
       transform: translateY(120%);
@@ -735,8 +754,8 @@ $layout_hover: var(--layout_hover, #F3ACAC);
       bottom: -0.6vh;
       z-index: 11;
       transform: translateX(3vw) rotate(15deg);
-      svg{
-        path{
+      svg {
+        path {
           fill: $tag_bg;
         }
       }
@@ -744,6 +763,7 @@ $layout_hover: var(--layout_hover, #F3ACAC);
     .topic_search {
       width: inherit;
       height: inherit;
+      
       border-radius: 10px;
       background: $item_bg;
       padding-left: 2vw;
@@ -774,11 +794,11 @@ $layout_hover: var(--layout_hover, #F3ACAC);
       z-index: 10;
 
       .list_layout {
-      svg{
-        path{
-          fill: $tag_bg;
+        svg {
+          path {
+            fill: $tag_bg;
+          }
         }
-      }
         &:hover {
           &::after {
             opacity: 1;
@@ -804,11 +824,11 @@ $layout_hover: var(--layout_hover, #F3ACAC);
         }
       }
       .grid_layout {
-        svg{
-        path{
-          fill: $tag_bg;
+        svg {
+          path {
+            fill: $tag_bg;
+          }
         }
-      }
         &:hover {
           &::after {
             opacity: 1;
@@ -903,9 +923,9 @@ $layout_hover: var(--layout_hover, #F3ACAC);
         line-height: 25px;
         font-size: 0.9em;
         display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
       .date {
         font-size: 0.6em;
@@ -1058,7 +1078,7 @@ $layout_hover: var(--layout_hover, #F3ACAC);
       margin: 0;
       object-fit: cover;
       border-radius: 10px;
-
+      background:linear-gradient( $layout_hover,$item_bg);
       z-index: 0;
       width: 20vw;
       height: 20vh;

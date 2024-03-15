@@ -2,7 +2,9 @@ import c_c from "@/assets/js/utils.js"
 const change_theme = (current_theme) =>{
     if (current_theme) {
         c_c("--note_bg_color", "#0b0e14");
-        c_c("--box_bg", "#242b3dc7");
+        c_c("--note_bg_opacity", "0");
+        c_c("--note_bg_top", "#0d1c2b");
+        c_c("--box_bg", "#242b3d");
         c_c("--note_book_box_title_color", "#b5b9d6");
         c_c("--re_note_item_bg", "#b5b9d6");
         c_c("--text_area_color", "#f7f7f7");
@@ -24,6 +26,8 @@ const change_theme = (current_theme) =>{
     } else {
 
       c_c("--note_bg_color", "#fdfbfb");
+      c_c("--note_bg_opacity", "1");
+      c_c("--note_bg_top", "#fdfbfb");
       c_c("--box_bg", "#ffff");
       c_c("--note_book_box_title_color", "#e96969");
       c_c("--re_note_item_bg", "#d3010130");

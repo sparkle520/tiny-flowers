@@ -225,7 +225,7 @@ const reset_clock = () => {
 };
 </script>
 <template>
-  <div class="math_details_main flex flex_direction_column">
+  <div class="math_details_main flex flex_direction_column relative">
     <div class="cover" v-if="show_question_bank"></div>
     <div class="question_bank_box fixed flex flex_direction_column">
       <div
@@ -242,32 +242,8 @@ const reset_clock = () => {
         >
         <div v-if="item.id == params.id" class="question_bank_li_active absolute"></div>
           {{ item.id }}.
-          <vue-latex
-            style="font-size: 10px; width: 30vw"
-            :display-mode="false"
-            :expression="
-              item.question.slice(0, Math.min(item.question.length), 40)
-            "
-          >
-          </vue-latex>
-          <div
-            v-if="item.difficulty == '困难'"
-            class="flex align_items_center difficulty_hard"
-          >
-            {{ item.difficulty }}
-          </div>
-          <div
-            v-if="item.difficulty == '简单'"
-            class="flex align_items_center difficulty_easy"
-          >
-            {{ item.difficulty }}
-          </div>
-          <div
-            v-if="item.difficulty == '中等'"
-            class="flex align_items_center difficulty_mid"
-          >
-            {{ item.difficulty }}
-          </div>
+          
+        
         </li>
       </ul>
     </div>
@@ -509,6 +485,7 @@ const reset_clock = () => {
 
 <style lang="scss" scoped>
 $math_details_main_bg: var(--math_details_main_bg, #fdfbfb);
+$math_details_main_bg_opacity: var(--math_details_main_bg_opacity, 1);
 $cover_bg: var(--cover_bg, #53505071);
 $question_bank_box_bg: var(--question_bank_box_bg, #ffff);
 $question_bank_header_border: var(--question_bank_header_border, #e5e5e5);
@@ -532,6 +509,18 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
   letter-spacing: 4px;
   color: $question_bank_li_color;
   background: $math_details_main_bg;
+  &::after {
+    width: 100vw;
+    height: 100vh;
+    content: "";
+    left: 0;
+    top: 0;
+    position: fixed;
+    z-index: 0;
+    opacity: $math_details_main_bg_opacity;
+    background: url("https://pic.imgdb.cn/item/65f38f9f9f345e8d03ad1fa8.png")
+      repeat;
+  }
   .cover {
     width: 100vw;
     height: 100vh;
@@ -844,6 +833,8 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
     height: calc(80vh - 10px);
     margin: 1% auto;
     margin-top: 8px;
+    z-index: 1;
+
   }
   /*左侧div样式*/
   .left {

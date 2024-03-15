@@ -37,6 +37,12 @@ const props = defineProps({
 const page_list = ref([]);
 const current_page = ref(props.current_page);
 const total_page = ref(Math.ceil(props.total / props.page_size));
+const {total} = toRefs(props)
+watch(total, (new_val, old_val) => {
+  total_page.value = Math.ceil(new_val / props.page_size);
+  current_page.value=props.current_page
+    init()
+});
 //change scss var
 const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
@@ -60,6 +66,7 @@ const init = () => {
   init_page_list();
 };
 const init_page_list = () => {
+  page_list.value = [];
   if (total_page.value <= 7) {
     for (let i = 1; i <= total_page.value; i++) {
       page_list.value.push(i);

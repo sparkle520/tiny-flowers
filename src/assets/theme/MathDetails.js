@@ -5,6 +5,7 @@ const change_theme = (current_theme) => {
     c_c("--topic_content_bg", "#242837");
     c_c("--topic_bg", "#1e2433");
     c_c("--math_details_main_bg", "#0b0e14");
+    c_c("--math_details_main_bg_opacity", "0");
     c_c("--cover_bg", "#53505071");
     c_c("--question_bank_box_bg", "#242b3d");
     c_c("--question_bank_header_border", "#242b3d");
@@ -31,6 +32,7 @@ const change_theme = (current_theme) => {
     c_c("--topic_content_bg", "#ffff");
     c_c("--topic_bg", "#fdfbfb");
     c_c("--math_details_main_bg", "#fdfbfb");
+    c_c("--math_details_main_bg_opacity", "1");
     c_c("--cover_bg", "#53505071");
     c_c("--question_bank_box_bg", "#ffff");
     c_c("--question_bank_header_border", "#e5e5e5");

@@ -21,12 +21,12 @@ onMounted(() => {
 
 const change_theme = (current_theme) => {
   if (current_theme) {
-    c_c("--bg_color", "#1e2433");
+    c_c("--bg_color", "#0d1c2b");
     c_c("--color", "#f7f7f7");
     c_c("--site_content_color", "#8d8d93");
     c_c("--site_item_color", "#f19742");
   } else {
-    c_c("--bg_color", "#f7f3f5");
+    c_c("--bg_color", "#fdfbfb");
     c_c("--color", "#000000");
     c_c("--site_content_color", "#c5b4e5");
     c_c("--site_item_color", "#4d1225");

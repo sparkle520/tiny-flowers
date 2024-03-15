@@ -3,6 +3,9 @@ import c_c from "@/assets/js/utils.js"
 const change_theme = (current_theme) => {
     if (current_theme) {
       c_c("--math_bg_color", "#0b0e14");
+      c_c("--math_bg_opacity", "0");
+      c_c("--math_bg_top", "#0d1c2b");
+
       c_c("--math_li_bg", "#5e6d78");
       c_c("--math_li_color", "#fdffff");
       c_c("--math_com_box_bg", "#242b3d");
@@ -23,8 +26,11 @@ const change_theme = (current_theme) => {
       c_c("--content_item_box_hover", "#1e2433");
       c_c("--content_tag_item_bg", "#8c66cb");
       c_c("--content_item_box_color", "#242b3dc7");
+      c_c("--normal_color", "#ffff");
     } else {
       c_c("--math_bg_color", "#fdfbfb");
+      c_c("--math_bg_opacity", "1");
+      c_c("--math_bg_top", "#fdfbfb");
       c_c("--math_li_bg", "#a5e3ba");
       c_c("--math_li_color", "#ffff");
       c_c("--math_com_box_bg", "#ffff");
@@ -44,7 +50,8 @@ const change_theme = (current_theme) => {
       c_c("--subject_name_color", "#146e57");
       c_c("--content_item_box_hover", "#e3f5de");
       c_c("--content_tag_item_bg", "#216eba");
-      c_c("--content_item_box_color", "#f4fff9");
+      c_c("--content_item_box_color", "#ffff");
+      c_c("--normal_color", "#4d4949");
     }
   };
     export default change_theme

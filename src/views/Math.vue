@@ -1,9 +1,20 @@
 <script setup>
-import { ref, onMounted, watch, onUnmounted, onBeforeMount } from "vue";
+import {
+  ref,
+  onMounted,
+  watch,
+  onUnmounted,
+  onBeforeMount,
+  nextTick,
+} from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import { useMathStore } from "/src/store/math.js";
 import { useConfigStore } from "../store/config";
+import "/src/assets/css/markdown.scss";
+import MathLeftNavBar from "../component/MathLeftNavBar.vue";
+import MathJax, { initMathJax, renderByMathjax } from "mathjax-vue3";
+import { marked, parse } from "marked";
 import change_theme from "../assets/theme/Math";
 import { storeToRefs } from "pinia";
 const config_store = useConfigStore();
@@ -13,25 +24,56 @@ const search_text = ref("");
 const route = useRoute();
 const router = useRouter();
 const tags_list = ref([]);
+const modules = import.meta.glob("/src/math_data/*/*.md", { as: "raw" });
 
 // const current_subject = ref("");
 // const current_difficult = ref("");
 // const switch_tag_box = ref(false);
 const math_store = useMathStore();
 const current_page = ref(params.page);
-const { data } = storeToRefs(math_store);
+const init_content =  () => {
+  const subject_list = document.querySelectorAll(".subject_context");
+  const subject_solution_context = document.querySelectorAll(
+    ".subject_solution_context"
+  );
+  for (let i = 0; i < subject_list.length; i++) {
+    const id = current_data.value[i].id;
+    const solution_path = `/src/math_data/solution/${id}.md`;
+    const problem_path = `/src/math_data/problem/${id}.md`;
+    for (const path in modules) {
+      if (path == solution_path) {
+        modules[path]().then((mod) => {
+          subject_solution_context[i].innerHTML =  marked(mod,true)
+          nextTick(() => {
+            renderByMathjax(subject_solution_context[i]).catch(err=>{
+          });;
+          });
+        });
+      } else if (path == problem_path) {
+        modules[path]().then((mod) => {
+          subject_list[i].innerHTML = marked(mod);
+          nextTick(() => {
+            renderByMathjax(subject_list[i]).catch(err=>{
+          });;
+          });
+        });
+      }
+    }
+  }
+};
+
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
 onBeforeMount(() => {
   tags_list.value = math_store.get_tags();
-  console.log(tags_list.value);
 });
 onUnmounted(() => {
   document.removeEventListener("click", click_handle);
 });
 onMounted(() => {
   change_theme(theme.value);
+  init_data();
   window.scrollTo(0, 0);
   document.addEventListener("click", click_handle);
 
@@ -55,7 +97,10 @@ onMounted(() => {
 // };
 
 const current_page_change = (current) => {
-  router.push(`/math/${current}`);
+  let path_ = route.fullPath.split("/");
+  const query = route.query;
+  path_[2] = current;
+  router.push({ path: path_.join("/"), query: query });
 };
 const page_num = ref(1);
 //  change scss var
@@ -85,7 +130,11 @@ const loop = (arr, current_index, search_text) => {
   window.requestAnimationFrame(() => {
     for (let i = 0; i < per_num; i++) {
       if (
-        arr[current_index + i].id.toString().indexOf(search_text) == -1 &&
+        arr[current_index + i].id
+          .toString()
+          .slice(0, 0)
+          .concat("m", arr[current_index + i].id)
+          .indexOf(search_text) == -1 &&
         arr[current_index + i].tags.toLowerCase().indexOf(search_text) == -1
       )
         continue;
@@ -104,6 +153,7 @@ watch(search_text, (new_val, old_val) => {
   current_filter_list.value = [];
   const query_start = performance.now();
   loop(math_store.data, 0, new_val);
+
   const query_end = performance.now();
   const query_text = document.querySelector(".query_text");
   const query_diff = query_end - query_start;
@@ -115,292 +165,223 @@ const click_handle = (e) => {
     show_filter_search_box.value = false;
   }
 };
+const current_data = ref([]);
+const init_data = () => {
+  current_data.value = math_store.get_data(route);
+  current_data.value.forEach((item) => {
+    Object.assign(item, { show_solution: ref(false) });
+  });
+  nextTick(() => {
+    init_content();
+  });
+};
+
+const cover_flag = ref(false);
 </script>
 <template>
-  <div
-    id="math_main"
-    class="flex flex_direction_column align_items_center relative"
-  >
-    <!-- <div class="cover" v-if="cover"></div> -->
-    <!-- <div
-      v-if="switch_tag_box"
-      class="fixed tag-choose-box flex flex_direction_column align_items_center"
-    >
-      <div class="choose-top flex flex_direction_row align_items_center">
-        <div @click="close_tag_box" class="close-btn">
-          <svg
-            t="1697596075825"
-            class="icon"
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            p-id="14147"
-            width="32"
-            height="32"
-          >
-            <path
-              d="M707.55328 870.61504h-0.03072a28.79488 28.79488 0 0 1-20.5312-8.51968l-176.5376-176.5376L335.9232 860.0576a29.09184 29.09184 0 0 1-41.04192 0.01024L162.816 727.98208a28.7744 28.7744 0 0 1-8.52992-20.52096c0-7.77216 3.03104-15.07328 8.54016-20.55168L337.3056 512.4096 161.77152 336.88576a29.14304 29.14304 0 0 1-0.01024-41.05216l134.11328-134.16448c11.14112-11.10016 29.952-11.08992 41.08288-0.02048L512.512 337.21344l175.53408-175.53408c11.12064-11.12064 29.92128-11.12064 41.0624 0l132.07552 132.096a28.7744 28.7744 0 0 1 8.50944 20.49024 28.8768 28.8768 0 0 1-8.50944 20.59264L685.6704 510.38208 862.208 686.8992v-0.01024 0.01024c5.49888 5.48864 8.51968 12.8 8.50944 20.5824a28.8256 28.8256 0 0 1-8.52992 20.52096L728.08448 862.11584a28.75392 28.75392 0 0 1-20.5312 8.4992zM510.45376 660.8384c2.62144 0 5.24288 1.00352 7.24992 3.00032l183.79776 183.79776a8.41728 8.41728 0 0 0 6.0416 2.49856h0.01024a8.40704 8.40704 0 0 0 6.03136-2.48832l134.15424-134.16448a8.48896 8.48896 0 0 0 2.5088-6.0416 8.47872 8.47872 0 0 0-2.5088-6.06208v-0.01024L663.95136 517.62176a10.22976 10.22976 0 0 1 0-14.47936l182.75328-182.77376a8.54016 8.54016 0 0 0 0.02048-12.09344l-132.096-132.11648c-3.06176-3.05152-9.04192-3.05152-12.10368 0L519.75168 358.93248c-3.82976 3.84-10.62912 3.85024-14.47936 0l-182.79424-182.784c-3.06176-3.03104-9.09312-3.04128-12.15488 0.01024L176.25088 310.29248a8.62208 8.62208 0 0 0 0.02048 12.1344l182.75328 182.74304a10.22976 10.22976 0 0 1 0 14.47936l-181.72928 181.76a8.45824 8.45824 0 0 0-0.02048 12.07296l132.08576 132.096a8.57088 8.57088 0 0 0 12.09344-0.01024l181.76-181.72928a10.20928 10.20928 0 0 1 7.23968-3.00032z"
-              p-id="14148"
-            ></path>
-          </svg>
-        </div>
-      </div>
-      <div class="to-choose flex flex_direction_column">
-        <span class="label-choose">请选择标签</span>
-        <div class="flex tag-item-box">
-          <div
-            @click="deleteTagByIndex(index)"
-            v-for="(item, index) in tag_list"
-            :id="item.tagId"
-            class="tag-item flex align_items_center justify_content_center"
-          >
-            {{ item.tag_name }}
-          </div>
-        </div>
-      </div>
-      <div class="have-choose flex flex_direction_column">
-        <span class="label-choose">已选择标签</span>
-        <div class="flex tag-item-box">
-          <div
-            @click="undo_tag_by_index(index)"
-            v-for="(item, index) in select_tag_list"
-            :id="item.tagId"
-            class="tag-item flex align_items_center justify_content_center"
-          >
-            {{ item.tag_name }}
-          </div>
-        </div>
-      </div>
-      <div class="choose-bottom flex align_items_center">
-        <button @click="click_tag_sure" class="tag-sure-btn">确定</button>
-      </div>
-    </div> -->
-    <div
-      id="top_box"
-      class="flex flex_direction_column com_box align_items_center relative"
-    >
-      <div class="flex flex_direction_row top_top_box align_items_center">
-        <div class="search_box relative">
-          <input
-            v-model="search_text"
-            @focus="search_focus_handle"
-            @input="filter_search_handle"
-            @keyup.enter="topic_search_handle"
-            id="math_search"
-            type="text"
-            class="search"
-            placeholder="在此键入搜索"
-          />
-
-          <div
-            class="filter_search_box absolute"
-            v-show="show_filter_search_box"
-          >
-            <ul class="flex flex_direction_column">
-              <li
-                v-for="item in current_filter_list"
-                @click="router.push(`/math/details/${item.id}`)"
-              >
-                M{{ item.id }}
-                <vue-latex
-                  style="font-size: 13px"
-                  :display-mode="true"
-                  :expression="item.question"
-                >
-                </vue-latex>
-              </li>
-            </ul>
-            <div class="query_time"><span class="query_text"></span></div>
-          </div>
-          <label class="search_icon absolute" for="math_search"
-            ><svg
-              t="1708934777476"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="6287"
-              width="52"
-              height="52"
-            >
-              <path
-                d="M900.311266 0H123.688734C65.769106 0 19.029036 46.621138 19.029036 104.421835v814.680604C19.029036 976.903136 65.888037 1024 123.807666 1024H123.688734h776.622532c57.800697 0 104.659698-47.096864 104.659698-104.897561v-814.680604C1004.970964 46.621138 958.230894 0 900.311266 0z m52.329849 919.102439c0 28.900348-23.310569 52.567712-52.329849 52.567712H123.688734c-28.900348 0-52.329849-23.667364-52.329849-52.567712v-814.680604c0-28.900348 23.786295-52.44878 52.329849-52.44878v0.356794h776.622532c28.900348 0 52.329849 23.191638 52.329849 52.091986v814.680604z"
-                fill="#3BC06D"
-                p-id="6288"
-              ></path>
-              <path
-                d="M399.609756 828.119861c-7.016957 0-13.558188-2.735424-18.55331-7.730546l-58.990012-58.990012-58.990011 58.990012c-4.995122 4.995122-11.536353 7.730546-18.55331 7.730546s-13.558188-2.735424-18.55331-7.730546c-4.995122-4.995122-7.730546-11.536353-7.730546-18.55331s2.735424-13.558188 7.730546-18.55331l58.990011-58.990012-58.990011-58.990012c-10.228107-10.228107-10.228107-26.878513 0-37.10662 4.995122-4.995122 11.536353-7.730546 18.55331-7.730546s13.558188 2.735424 18.55331 7.730546l58.990011 58.990012 58.990012-58.990012c4.995122-4.995122 11.536353-7.730546 18.55331-7.730546s13.558188 2.735424 18.55331 7.730546c10.228107 10.228107 10.228107 26.878513 0 37.10662L359.173055 724.292683l58.990011 58.990012c10.228107 10.228107 10.228107 26.878513 0 37.10662-4.995122 4.995122-11.536353 7.730546-18.55331 7.730546z"
-                fill="#3BC06D"
-                p-id="6289"
-              ></path>
-              <path
-                d="M322.066434 448.728455c-14.50964 0-26.283856-11.774216-26.283856-26.283856V338.954704h-83.489895c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h83.489895v-83.489896c0-14.50964 11.774216-26.283856 26.283856-26.283856 14.50964 0 26.283856 11.774216 26.283856 26.283856V286.624855H431.721254c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856h-83.489895v83.489895c0 14.271777-11.774216 26.045993-26.164925 26.045993zM701.933566 846.673171c-17.245064 0-31.278978-14.033914-31.278978-31.278978s14.033914-31.397909 31.278978-31.39791 31.278978 14.033914 31.278978 31.39791c0.118931 17.126132-13.914983 31.278978-31.278978 31.278978zM592.278746 746.176074c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746zM701.933566 657.572125c-17.245064 0-31.278978-14.033914-31.278978-31.278977s14.033914-31.397909 31.278978-31.39791 31.278978 14.033914 31.278978 31.39791c0.118931 17.245064-13.914983 31.278978-31.278978 31.278977z"
-                fill="#C6F4CB"
-                p-id="6290"
-              ></path>
-              <path
-                d="M592.278746 398.420441c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746zM592.278746 279.726829c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746z"
-                fill="#3BC06D"
-                p-id="6291"
-              ></path></svg
-          ></label>
-        </div>
-      </div>
-      <div class="flex flex_direction_column select_tag">
-        <h4 class="">标签：</h4>
-        <ul class="flex flex_direction_row relative">
-          <div
-            @click="show_all_tag"
-            v-show="!show_all_tag_flag"
-            class="absolute show_all_tag flex flex_direction_row align_items_center"
-          >
-            展开全部<svg
-              t="1708943924609"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="10332"
-              width="18"
-              height="18"
-            >
-              <path
-                d="M737.701647 149.865412l47.104 37.647059v0.12047L520.372706 519.830588 255.879529 187.572706l46.98353-37.707294 217.449412 273.829647 217.389176-273.829647zM520.131765 785.106824l217.328941-273.829648 47.104 37.707295-264.432941 332.257882-264.493177-332.257882 46.98353-37.707295 217.509647 273.829648z"
-                fill="#A9B8C0"
-                p-id="10333"
-              ></path>
-            </svg>
-          </div>
-          <li
-            @click="undo_tag_by_index(index)"
-            v-for="(item, index) in tags_list"
-            class="relative"
-          >
-            {{ item[0] }}
-            <span class="count"> {{ item[1] }} </span>
-          </li>
-          <div
-            @click="close_all_tag"
-            v-show="show_all_tag_flag"
-            class="close_all_tag flex flex_direction_row align_items_center"
-          >
-            收起<svg
-              t="1708943924609"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="10332"
-              width="18"
-              height="18"
-            >
-              <path
-                d="M737.701647 149.865412l47.104 37.647059v0.12047L520.372706 519.830588 255.879529 187.572706l46.98353-37.707294 217.449412 273.829647 217.389176-273.829647zM520.131765 785.106824l217.328941-273.829648 47.104 37.707295-264.432941 332.257882-264.493177-332.257882 46.98353-37.707295 217.509647 273.829648z"
-                fill="#A9B8C0"
-                p-id="10333"
-              ></path>
-            </svg>
-          </div>
-        </ul>
-      </div>
+  <div id="math_main" class="flex flex_direction_row relative">
+    <div class="cover" v-show="cover_flag"></div>
+    <div class="note_left_nav_bar">
+      <MathLeftNavBar></MathLeftNavBar>
     </div>
-    <div
-      id="content_box"
-      class="flex flex_direction_column com_box align_items_center"
-    >
-      <!-- width：96% -->
-      <div class="content_top_box grid content_grid_com">
-        <div class="flex align_items_center justify_content_center">题号</div>
-        <div class="flex align_items_center">题目名称</div>
-        <div class="flex align_items_center">标签</div>
-        <div class="flex align_items_center justify_content_center">难度</div>
-      </div>
-      <div class="content_mid_box">
-        <div
-          @click="router.push(`/math/details/${item.id}`)"
-          v-for="(item, index) in data.slice(0, 10)"
-          class="content_item_box grid content_grid_com"
-        >
-          <div
-            class="subject-num flex align_items_center justify_content_center"
-          >
-            M{{ item.id }}
-          </div>
-          <div
-            class="subject_name flex align_items_center justify_content_center"
-          >
-            <vue-latex
-              style="
-                display: -webkit-box;
-                width: 50vw;
-                -webkit-line-clamp: 1;
-                white-space: wrap;
-                -webkit-box-orient: inline-axis;
-                font-size: 0.9em;
-                overflow: hidden;
-              "
-              :display-mode="true"
-              :expression="item.question"
-            >
-            </vue-latex>
-          </div>
-          <div class="content_tag_box flex align_items_center">
+    <div>
+      <div
+        id="top_box"
+        class="flex flex_direction_column com_box align_items_center relative"
+      >
+        <div class="flex flex_direction_row top_top_box align_items_center">
+          <div class="search_box relative">
+            <input
+              v-model="search_text"
+              @focus="search_focus_handle"
+              @input="filter_search_handle"
+              @keyup.enter="topic_search_handle"
+              id="math_search"
+              type="text"
+              class="search"
+              placeholder="在此键入搜索"
+            />
+
             <div
-              v-for="(item2, index) in item.tags.split('?')"
-              class="flex content_tag_item align_items_center justify_content_center"
+              class="filter_search_box absolute"
+              v-show="show_filter_search_box"
             >
-              {{ item2 }}
+              <ul class="flex flex_direction_column">
+                <li
+                  v-for="item in current_filter_list"
+                  :key="item"
+                  @click="router.push(`/math/details/${item.id}`)"
+                >
+                  M{{ item.id }}
+                  <div class="search_result_text"></div>
+                </li>
+              </ul>
+              <div class="query_time"><span class="query_text"></span></div>
             </div>
+            <label class="search_icon absolute" for="math_search"
+              ><svg
+                t="1708934777476"
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="6287"
+                width="52"
+                height="52"
+              >
+                <path
+                  d="M900.311266 0H123.688734C65.769106 0 19.029036 46.621138 19.029036 104.421835v814.680604C19.029036 976.903136 65.888037 1024 123.807666 1024H123.688734h776.622532c57.800697 0 104.659698-47.096864 104.659698-104.897561v-814.680604C1004.970964 46.621138 958.230894 0 900.311266 0z m52.329849 919.102439c0 28.900348-23.310569 52.567712-52.329849 52.567712H123.688734c-28.900348 0-52.329849-23.667364-52.329849-52.567712v-814.680604c0-28.900348 23.786295-52.44878 52.329849-52.44878v0.356794h776.622532c28.900348 0 52.329849 23.191638 52.329849 52.091986v814.680604z"
+                  fill="#3BC06D"
+                  p-id="6288"
+                ></path>
+                <path
+                  d="M399.609756 828.119861c-7.016957 0-13.558188-2.735424-18.55331-7.730546l-58.990012-58.990012-58.990011 58.990012c-4.995122 4.995122-11.536353 7.730546-18.55331 7.730546s-13.558188-2.735424-18.55331-7.730546c-4.995122-4.995122-7.730546-11.536353-7.730546-18.55331s2.735424-13.558188 7.730546-18.55331l58.990011-58.990012-58.990011-58.990012c-10.228107-10.228107-10.228107-26.878513 0-37.10662 4.995122-4.995122 11.536353-7.730546 18.55331-7.730546s13.558188 2.735424 18.55331 7.730546l58.990011 58.990012 58.990012-58.990012c4.995122-4.995122 11.536353-7.730546 18.55331-7.730546s13.558188 2.735424 18.55331 7.730546c10.228107 10.228107 10.228107 26.878513 0 37.10662L359.173055 724.292683l58.990011 58.990012c10.228107 10.228107 10.228107 26.878513 0 37.10662-4.995122 4.995122-11.536353 7.730546-18.55331 7.730546z"
+                  fill="#3BC06D"
+                  p-id="6289"
+                ></path>
+                <path
+                  d="M322.066434 448.728455c-14.50964 0-26.283856-11.774216-26.283856-26.283856V338.954704h-83.489895c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h83.489895v-83.489896c0-14.50964 11.774216-26.283856 26.283856-26.283856 14.50964 0 26.283856 11.774216 26.283856 26.283856V286.624855H431.721254c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856h-83.489895v83.489895c0 14.271777-11.774216 26.045993-26.164925 26.045993zM701.933566 846.673171c-17.245064 0-31.278978-14.033914-31.278978-31.278978s14.033914-31.397909 31.278978-31.39791 31.278978 14.033914 31.278978 31.39791c0.118931 17.126132-13.914983 31.278978-31.278978 31.278978zM592.278746 746.176074c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746zM701.933566 657.572125c-17.245064 0-31.278978-14.033914-31.278978-31.278977s14.033914-31.397909 31.278978-31.39791 31.278978 14.033914 31.278978 31.39791c0.118931 17.245064-13.914983 31.278978-31.278978 31.278977z"
+                  fill="#C6F4CB"
+                  p-id="6290"
+                ></path>
+                <path
+                  d="M592.278746 398.420441c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746zM592.278746 279.726829c-14.50964 0-26.283856-11.774216-26.283856-26.283856 0-14.50964 11.774216-26.283856 26.283856-26.283856h219.428571c14.50964 0 26.283856 11.774216 26.283856 26.283856 0 14.50964-11.774216 26.283856-26.283856 26.283856H592.278746z"
+                  fill="#3BC06D"
+                  p-id="6291"
+                ></path></svg
+            ></label>
           </div>
-          <div
-            v-if="item.difficulty == '困难'"
-            class="flex align_items_center justify_content_center difficulty_hard"
-          >
-            {{ item.difficulty }}
-          </div>
-          <div
-            v-if="item.difficulty == '简单'"
-            class="flex align_items_center justify_content_center difficulty_easy"
-          >
-            {{ item.difficulty }}
-          </div>
-          <div
-            v-if="item.difficulty == '中等'"
-            class="flex align_items_center justify_content_center difficulty_mid"
-          >
-            {{ item.difficulty }}
-          </div>
+        </div>
+        <div class="flex flex_direction_column select_tag">
+          <h4 class="">标签：</h4>
+          <ul class="flex flex_direction_row relative">
+            <div
+              @click="show_all_tag"
+              v-show="!show_all_tag_flag"
+              class="absolute show_all_tag flex flex_direction_row align_items_center"
+            >
+              展开全部<svg
+                t="1708943924609"
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="10332"
+                width="18"
+                height="18"
+              >
+                <path
+                  d="M737.701647 149.865412l47.104 37.647059v0.12047L520.372706 519.830588 255.879529 187.572706l46.98353-37.707294 217.449412 273.829647 217.389176-273.829647zM520.131765 785.106824l217.328941-273.829648 47.104 37.707295-264.432941 332.257882-264.493177-332.257882 46.98353-37.707295 217.509647 273.829648z"
+                  fill="#A9B8C0"
+                  p-id="10333"
+                ></path>
+              </svg>
+            </div>
+            <li
+              @click="router.push(`/math/1?tag=${item[0]}`)"
+              v-for="item in tags_list"
+              :key="item"
+              class="relative"
+            >
+              {{ item[0] }}
+              <span class="count"> {{ item[1] }} </span>
+            </li>
+            <div
+              @click="close_all_tag"
+              v-show="show_all_tag_flag"
+              class="close_all_tag flex flex_direction_row align_items_center"
+            >
+              收起<svg
+                t="1708943924609"
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="10332"
+                width="18"
+                height="18"
+              >
+                <path
+                  d="M737.701647 149.865412l47.104 37.647059v0.12047L520.372706 519.830588 255.879529 187.572706l46.98353-37.707294 217.449412 273.829647 217.389176-273.829647zM520.131765 785.106824l217.328941-273.829648 47.104 37.707295-264.432941 332.257882-264.493177-332.257882 46.98353-37.707295 217.509647 273.829648z"
+                  fill="#A9B8C0"
+                  p-id="10333"
+                ></path>
+              </svg>
+            </div>
+          </ul>
         </div>
       </div>
       <div
-        class="content_bottom_box flex align_items_center justify_content_center"
+        id="content_box"
+        class="flex flex_direction_column align_items_center"
       >
-        <Pagination
-          :current_page="current_page"
-          page_size="10"
-          @current_change="current_page_change"
-          :total="data.length"
+        <!-- width：100% -->
+        <ul class="content_mid_box flex flex_direction_column">
+          <li
+            v-for="item in current_data.slice(0, 10)"
+            :key="item"
+            class="content_item_box flex flex_direction_column"
+          >
+            <div class="flex flex_direction_row content_item_top_box">
+              ID:{{ item.id }}
+            </div>
+
+            <div
+              @click="item.show_solution = !item.show_solution"
+              class="subject_context markdown-body"
+              v-highlight
+            ></div>
+            <div
+              v-show="item.show_solution"
+              class="subject_solution_context markdown-body"
+              v-highlight
+            ></div>
+            <div class="content_tag_box flex align_items_center">
+              <div
+                v-for="item2 in item.tags.split('?')"
+                class="flex content_tag_item align_items_center justify_content_center"
+                :key="item2"
+              >
+                {{ item2 }}
+              </div>
+            </div>
+            <div class="content_item_bottom_box flex flex_direction_row">
+              <button
+                @click="router.push(`/math/details/${item.id}`)"
+                class="content_item_bottom_btn"
+              >
+                查看详情
+              </button>
+            </div>
+          </li>
+        </ul>
+        <div
+          class="content_bottom_box flex align_items_center justify_content_center"
         >
-        </Pagination>
+          <Pagination
+            style="z-index: 100"
+            :current_page="current_page"
+            page_size="10"
+            @current_change="current_page_change"
+            :total="math_store.current_data.data.length"
+          >
+          </Pagination>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 @import url("/src/assets/css/math.scss");
+
 $math_bg_color: var(--math_bg_color, #fdfbfb);
+$math_bg_opacity: var(--math_bg_opacity, 1);
+$math_bg_top: var(--math_bg_top, #fdfbfb);
 $math_li_bg: var(--math_li_bg, #f5f1ec);
 $math_li_color: var(--math_li_color, #fdffff);
 $math_com_box_bg: var(--math_com_box_bg, #ffff);
 $math_com_box_shadow: var(--math_com_box_shadow, #d0cfcf45);
 $condition_box: var(--condition_box, #464879);
-// $tag_btn_color: var(--tag_btn_color, #146e57);
-// $tag_btn_bg: var(--tag_btn_bg, #d5e2e8);
-// $tag_choose_box_border: var(--tag_choose_box_border, #6b6b6b);
-// $tag_choose_box_bg: var(--tag_choose_box_bg, #ffffffeb);
-// $tag_item_bg: var(--tag_item_bg, #e3e9f0);
-// $tag_item_hover_bg: var(--tag_item_hover_bg, #8d88e5);
-// $choose_top: var(--choose_top, #a7a7a7);
 $tag_sure_btn_color: var(--tag_sure_btn_color, #3cd500);
 $tag_sure_btn_bg: var(--tag_sure_btn_bg, #f4fff9);
 $math_color: var(--math_color, #282525);
@@ -410,6 +391,7 @@ $content_item_box_hover: var(--content_item_box_hover, #d9c9c3);
 $content_tag_item_bg: var(--content_tag_item_bg, #6235a1);
 $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
 $content_item_box_color: var(--content_item_box_color, #fbfdfd);
+$normal_color: var(--normal_color, #fbfdfd);
 ::-webkit-scrollbar {
   width: 0 !important;
 }
@@ -422,8 +404,20 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
 #math_main {
   width: 100vw;
   min-height: 100vh;
-  background: $math_bg_color;
+  background: linear-gradient($math_bg_top,$math_bg_color);
   color: $math_color;
+  gap: 16px;
+  .cover {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 1000000;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+  }
+  .note_left_nav_bar {
+    z-index: 10000;
+  }
   &::after {
     width: 100vw;
     height: 100vh;
@@ -432,163 +426,10 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: 0.1;
-    background: url("https://pic.imgdb.cn/item/65daf42d9f345e8d035803ea.png")
+    opacity: $math_bg_opacity;
+    background: url("https://pic.imgdb.cn/item/65f38f9f9f345e8d03ad1fa8.png")
       repeat;
   }
-
-  // .cover {
-  //   width: 100vw;
-  //   height: 100vh;
-  //   position: fixed;
-  //   background: #6d6d6e40;
-  //   z-index: 10;
-  // }
-  // .tag-choose-box {
-  //   width: 65vw;
-  //   height: 70vh;
-  //   left: 50%;
-  //   top: 50%;
-  //   border: $tag_choose_box_border 1px solid;
-  //   border-radius: 10px;
-  //   background-color: $tag_choose_box_bg;
-
-  //   transform: translate(-50%, -50%);
-  //   z-index: 10;
-  //   animation: move_top 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  //   .tag-item {
-  //     color: $subject_name_color;
-  //     background-color: $tag_item_bg;
-  //     border-radius: 10px;
-  //     padding: 0 10px;
-  //     height: 40px;
-  //     margin: 5px 5px;
-  //     user-select: none;
-  //     transform: skewX(-15deg);
-  //     animation: sparkle 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-  //     @keyframes sparkle {
-  //       0% {
-  //         opacity: 0;
-  //       }
-
-  //       100% {
-  //         opacity: 1;
-  //       }
-  //     }
-
-  //     &:hover {
-  //       color: $tag_item_bg;
-  //       background: $tag_item_hover_bg;
-  //     }
-  //   }
-
-  //   .tag-item-box {
-  //     width: 100%;
-  //     flex-wrap: wrap;
-  //   }
-
-  //   .choose-top {
-  //     width: 100%;
-  //     border-bottom: $choose_top 2px solid;
-  //     height: 50px;
-  //     border-top-right-radius: inherit;
-  //     border-top-left-radius: inherit;
-
-  //     .close-btn {
-  //       margin-left: auto;
-  //       margin-right: 10px;
-  //       svg {
-  //         path {
-  //           fill: $subject_name_color;
-  //         }
-  //       }
-  //       &:hover {
-  //         transform: scale(1.1);
-  //       }
-
-  //       &:active {
-  //         transform: scale(1.2);
-  //       }
-  //     }
-  //   }
-
-  //   .to-choose {
-  //     width: 98%;
-  //     overflow-y: auto;
-  //     height: 270px;
-  //     margin-top: 10px;
-  //     background-image: transparent;
-  //     border-bottom: $choose_top 2px solid;
-  //   }
-
-  //   .label-choose {
-  //     margin: 10px 10px;
-  //   }
-
-  //   .have-choose {
-  //     width: 98%;
-  //     overflow-y: auto;
-  //     margin: 10px 0;
-  //     height: 180px;
-  //     background-image: transparent;
-  //   }
-
-  //   .choose-bottom {
-  //     width: 100%;
-  //     height: 60px;
-  //     border-bottom-right-radius: inherit;
-  //     border-bottom-left-radius: inherit;
-  //     .tag-sure-btn {
-  //       width: 150px;
-  //       height: 40px;
-  //       margin-left: auto;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       margin-right: 10px;
-  //       background-color: $tag_sure_btn_bg;
-  //       z-index: 1;
-  //       position: relative;
-  //       color: $tag_sure_btn_color;
-  //       border: 3px solid $tag_sure_btn_color;
-  //       font-family: Arial;
-  //       font-weight: 800;
-  //       border-radius: 10px;
-  //       font-size: 1.05em;
-  //       transition: transform 0.3s ease, color 0.5s ease;
-  //       &::before {
-  //         content: "";
-  //         inset: 0 0 0 0;
-  //         height: 0px;
-  //         width: 0px;
-  //         position: absolute;
-  //         background-color: $tag_sure_btn_color;
-  //         z-index: -1;
-  //         left: 50%;
-  //         top: 50%;
-  //         border-radius: 10px;
-  //         transform: translate(-50%, -50%);
-  //         transition: all 0.3s ease;
-  //       }
-
-  //       &:active {
-  //         transform: scale(0.9);
-  //       }
-
-  //       &:hover {
-  //         color: $tag_sure_btn_bg;
-  //         &::before {
-  //           height: calc(100% + 6px);
-  //           width: calc(100% + 6px);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  // .margin-0-10 {
-  //   margin: 0 10px;
-  // }
 
   .select_tag {
     width: calc(100% - 32px);
@@ -649,7 +490,7 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
 
   .com_box {
     border-radius: 10px;
-    box-shadow: 9px 9px 10px $math_com_box_shadow;
+    box-shadow: #2825250c 0px 0px 20px;
     background: $math_com_box_bg;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -717,7 +558,7 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
           max-height: 30vh;
           background: $math_com_box_bg;
           bottom: 0;
-          z-index: 100;
+          z-index: 10000;
           transform: translateY(120%);
           box-shadow: #8787872f 2px 3px 10px;
           border-radius: 10px;
@@ -745,88 +586,69 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
           }
         }
       }
-
-      // .tag-box {
-      //   margin: 0 16px;
-      //   .tag-btn {
-      //     width: 100px;
-      //     height: 30px;
-      //     border: none;
-      //     border-radius: 10px;
-      //     font-size: 14px;
-      //     font-weight: 600;
-      //     color: $tag_btn_color;
-      //     background: $tag_btn_bg;
-      //     transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-      //     &:hover {
-      //       transform: scale(1.05);
-      //     }
-
-      //     &:active {
-      //       animation: extend 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-      //       @keyframes extend {
-      //         0% {
-      //           transform: rotateY(30deg);
-      //         }
-
-      //         100% {
-      //           transform: rotateY(0);
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
     }
   }
 
   #top_box {
     margin-top: 90px;
-    width: 80vw;
-    z-index: 9;
-    animation: content_box 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    width: 70vw;
+    z-index: 100000000;
   }
 
   #content_box {
     margin-top: 30px;
-    width: 80vw;
+    width: 70vw;
     z-index: 1;
     margin-bottom: 20px;
-    animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-    .content_grid_com {
-      grid-template-columns: 5% 65% 20% 10%;
-      gap: 10px;
-    }
-
-    .content_top_box {
-      width: 98%;
-      height: 60px;
-      background: #f9fffc38;
-      margin-top: 10px;
-      border-bottom: $tag_sure_btn_color 2px solid;
-      border-top-right-radius: inherit;
-      border-top-left-radius: inherit;
-    }
 
     .content_mid_box {
-      width: 98%;
+      width: 100%;
       height: auto;
+      margin: 0;
+      padding: 0px;
       margin-bottom: 30px;
       border-bottom-right-radius: inherit;
       border-bottom-left-radius: inherit;
-
+      gap: 16px;
       .content_item_box {
         min-height: 60px;
+        z-index: 100;
+        border-radius: 5px;
         background: $content_item_box_color;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        box-shadow: #2825250c 0px 0px 20px;
 
-        &:hover {
-          background: $content_item_box_hover;
-
-          .subject_name {
-            color: $subject_hover_name_color;
+        .content_item_top_box {
+          width: calc(100% - 32px);
+          background: $math_li_bg;
+          padding: 8px 16px;
+          color: $math_li_color;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+        .content_item_bottom_box {
+          width: calc(100% - 32px);
+          background: $content_item_box_color;
+          padding: 8px 16px;
+          color: $math_li_color;
+          justify-content: flex-end;
+          border-bottom-right-radius: 5px;
+          border-bottom-left-radius: 5px;
+          .content_item_bottom_btn {
+            background: $content_item_box_color;
+            border: 1px solid $math_li_bg;
+            font-size: 12px;
+            padding: 4px 12px;
+            color: $math_color;
+            transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+            &:hover {
+              background: $math_color;
+              color: $content_item_box_color;
+            }
           }
+        }
+        &:hover {
+          box-shadow: $content_tag_item_bg 0px 0px 0px 4px;
         }
 
         &:last-child {
@@ -852,12 +674,20 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
           font-weight: 700;
         }
 
-        .subject_name {
-          justify-self: flex-start;
-          color: $subject_name_color;
-          
+        .subject_context {
+          width: calc(100% - 32px);
+          padding: 8px 16px;
+          color: $normal_color;
         }
-
+        .subject_solution_context {
+          width: calc(100% - 48px);
+          margin: 8px 16px;
+          height: auto;
+          border-radius: 5px;
+          padding: 8px 8px;
+          background: $math_com_box_shadow;
+          color: $normal_color;
+        }
         .content_tag_box {
           flex-wrap: wrap;
           border-bottom: $tag_sure_btn_color 1px solid;
@@ -903,3 +733,4 @@ $content_item_box_color: var(--content_item_box_color, #fbfdfd);
   }
 }
 </style>
+../component/MathLeftNavBar.vue

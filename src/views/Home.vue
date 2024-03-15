@@ -33,7 +33,7 @@ onUnmounted(() => {
 onMounted(() => {
   change_theme(theme.value);
   window.scrollTo(0, 0);
-  scroll_handle()
+  scroll_handle();
   document.addEventListener("scroll", scroll_handle);
   document.querySelector(".notice_text").innerText = notice[notice_index];
   init();
@@ -93,44 +93,53 @@ const c_c = (mut_val, color) => {
 const change_theme = (current_theme) => {
   if (current_theme) {
     c_c("--home_bg", "#0b0e14");
+    c_c("--home_bg_opacity", "0");
+    c_c("--home_bg_top", "#0d1c2b");
     c_c("--home_color", "#fff");
-    c_c("--index_title_color", "#33383a");  
+    c_c("--index_title_color", "#33383a");
     c_c("--text_color", "#fdfbfb");
     c_c("--box_bg", "#242b3dc7");
     c_c("--recommend_item_bg", "#242b3dc7");
-    c_c("--home_main_color", "#b5b9d6");  
-    c_c("--page_1_title_color", "#242b3dc7");  
-    c_c("--content_box_color", "#ffff");  
-    c_c("--title_color", "#fdfbfb");  
-    c_c("--short_msg_color", "#fdfbfb");  
-    c_c("--title_hover", "#b5b9d6");  
-    c_c("--home_nav_item_box_shadow", "#b5b9d6");  
-
+    c_c("--home_main_color", "#b5b9d6");
+    c_c("--page_1_title_color", "#242b3dc7");
+    c_c("--content_box_color", "#ffff");
+    c_c("--title_color", "#fdfbfb");
+    c_c("--short_msg_color", "#fdfbfb");
+    c_c("--title_hover", "#b5b9d6");
+    c_c("--home_nav_item_box_shadow", "#b5b9d6");
+    c_c("--page_1_title_color", "#b5b9d6");
+    c_c("--page_1_title_box_shadow_1", "rgba(181, 185, 214,.8)");
+    c_c("--page_1_title_box_shadow_2", "rgba(181, 185, 214,.6)");
+    c_c("--page_1_title_box_shadow_3", "rgba(181, 185, 214,.4)");
+    c_c("--page_1_title_box_shadow_4", "rgba(181, 185, 214,.2)");
+    c_c("--page_1_title_box_shadow_5", "rgba(181, 185, 214,.05)");
   } else {
     c_c("--home_bg", "#fdfbfb");
-    c_c("--home_color", "#4d4949");  
-    c_c("--index_title_color", "#33383a");  
-    c_c("--text_color", "#ffff");  
-    c_c("--box_bg", "#ffff");  
-    c_c("--recommend_item_bg", "#ffff");  
-    c_c("--home_main_color", "#a5e3ba");  
-    c_c("--page_1_title_color", "#c6ebbd");  
-    c_c("--content_box_color", "#747576");  
-    c_c("--title_color", "#4d4949");  
-    c_c("--short_msg_color", "#747576");  
-    c_c("--title_hover", "#0ebd7d");  
-    c_c("--home_nav_item_box_shadow", "#99edb5");  
+    c_c("--home_bg_opacity", "1");
+    c_c("--home_bg_top", "#fdfbfb");
+    c_c("--home_color", "#4d4949");
+    c_c("--index_title_color", "#33383a");
+    c_c("--text_color", "#ffff");
+    c_c("--box_bg", "#ffff");
+    c_c("--recommend_item_bg", "#ffff");
+    c_c("--home_main_color", "#a5e3ba");
+    c_c("--page_1_title_color", "#c6ebbd");
+    c_c("--content_box_color", "#747576");
+    c_c("--title_color", "#4d4949");
+    c_c("--short_msg_color", "#747576");
+    c_c("--title_hover", "#0ebd7d");
+    c_c("--home_nav_item_box_shadow", "#99edb5");
+    c_c("--page_1_title_color", "#c6ebbd");
+    c_c("--page_1_title_box_shadow_1", "rgba(198, 235, 189, 0.8)");
+    c_c("--page_1_title_box_shadow_2", "rgba(198, 235, 189, 0.6)");
+    c_c("--page_1_title_box_shadow_3", "rgba(198, 235, 189, 0.4)");
+    c_c("--page_1_title_box_shadow_4", "rgba(198, 235, 189, 0.2)");
+    c_c("--page_1_title_box_shadow_5", "rgba(198, 235, 189, 0.05)");
   }
 };
 const go_to_next_page = () => {
-  let t = setInterval(() => {
-    if (window.scrollY + 60 < window.innerHeight - 70) {
-      window.scrollTo(0, window.scrollY + 100);
-    } else {
-      window.scrollTo(0, window.innerHeight - 70);
-      clearInterval(t);
-    }
-  }, 10);
+  window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+
 };
 const page_two_handle = () => {
   // let target = item.offsetTop + window.innerHeight - 80;
@@ -757,6 +766,7 @@ const leave_recommend_topic = (index) => {
               <ul class="flex flex_direction_row new_item_box">
                 <li
                   v-for="(item, index) in new_topic_list"
+                  :key="item"
                   @click="go_to_by_path(item.link)"
                   @mouseenter="enter_new_topic(index)"
                   @mouseleave="leave_new_topic(index)"
@@ -802,6 +812,7 @@ const leave_recommend_topic = (index) => {
                   @mouseenter="enter_recommend_topic(index)"
                   @mouseleave="leave_recommend_topic(index)"
                   v-for="(item, index) in recommend_topic_list"
+                  :key="item"
                   class="recommend_item fade_item flex flex_direction_row"
                 >
                   <div class="img_box relative">
@@ -847,7 +858,11 @@ const leave_recommend_topic = (index) => {
             <div class="re_note_box">
               <h2 class="home_nav_item"><span>推荐笔记</span></h2>
               <ul class="re_note_item_box flex flex_direction_row">
-                <li class="re_note_item relative" v-for="item in re_note_list">
+                <li
+                  class="re_note_item relative"
+                  v-for="item in re_note_list"
+                  :key="item"
+                >
                   <div class="re_note_img_box relative">
                     <img
                       @click="router.push(item.link)"
@@ -888,29 +903,36 @@ const leave_recommend_topic = (index) => {
     >
       <div class="left_foot flex flex_direction_column">
         <span class="title_foot">人生格言</span>
-        <span class="text_foot">Rise again!</span>
+        <span class="text_foot">{{user_store.aphorism}}</span>
       </div>
       <div class="mid_foot flex flex_direction_column">
         <span class="title_foot"></span>
       </div>
       <div class="right_foot flex flex_direction_column">
         <span class="title_foot">联系我</span>
+        <span class="text_foot">邮箱:{{user_store.e_mail}}</span>
       </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 $home_bg: var(--home_bg, #384f89);
+$home_bg_opacity: var(--home_bg_opacity, 1);
+$home_bg_top: var(--home_bg_top, #0d1c2b);
 $home_color: var(--home_color, #4d4949);
 $index_title_color: var(--index_title_color, #33383a);
 $home_main_color: var(--home_main_color, #a5e3ba);
-$page_1_title_color: var(--page_1_title_color, #c6ebbd);
 $content_box_color: var(--content_box_color, #747576);
 $title_color: var(--title_color, #4d4949);
 $short_msg_color: var(--short_msg_color, #747576);
 $title_hover: var(--title_hover, #0ebd7d);
 $home_nav_item_box_shadow: var(--home_nav_item_box_shadow, #99edb5);
-
+$page_1_title_color: var(--page_1_title_color, #c6ebbd);
+$page_1_title_box_shadow_1: var(--page_1_title_box_shadow_1, rgba(198, 235, 189, 0.8));
+$page_1_title_box_shadow_2: var(--page_1_title_box_shadow_2, rgba(198, 235, 189, 0.6));
+$page_1_title_box_shadow_3: var(--page_1_title_box_shadow_3, rgba(198, 235, 189, 0.4));
+$page_1_title_box_shadow_4: var(--page_1_title_box_shadow_4, rgba(198, 235, 189, 0.2));
+$page_1_title_box_shadow_5: var(--page_1_title_box_shadow_5, rgba(198, 235, 189, 0.05));
 
 $text_color: var(--text_color, #fff);
 $recommend_item_bg: var(--recommend_item_bg, #fff);
@@ -923,7 +945,7 @@ $box_bg: var(--box_bg, #fff);
   width: 100vw;
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
-  background: $home_bg;
+  background: linear-gradient($home_bg_top,$home_bg);
   color: $home_color;
   ::selection {
     color: $text_color;
@@ -938,11 +960,10 @@ $box_bg: var(--box_bg, #fff);
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: 0.1;
-    background: url("https://pic.imgdb.cn/item/65dc38fc9f345e8d03e7728a.png")
+    opacity: $home_bg_opacity;
+    background: url("https://pic.imgdb.cn/item/65f38f9f9f345e8d03ad1fa8.png")
       repeat;
 
-    background-size: 725px 707px;
   }
 
   li {
@@ -988,14 +1009,14 @@ $box_bg: var(--box_bg, #fff);
       font-size: 9em;
       top: 50%;
       left: 50%;
-      color: #c6ebbd;
+      color: $page_1_title_color;
       transform: translate(-50%, -50%);
       font-family: "orbitron-light";
-      text-shadow: 10px 10px 0 #c6ebbdcc,
-        20px 20px 0 rgba(198, 235, 189, 0.6),
-        30px 30px 0 rgba(198, 235, 189, 0.4),
-        40px 40px 0 rgba(198, 235, 189, 0.2),
-        50px 50px 0 rgba(198, 235, 189, 0.05);
+      text-shadow: 10px 10px 0 $page_1_title_box_shadow_1,
+       20px 20px 0 $page_1_title_box_shadow_2,
+        30px 30px 0 $page_1_title_box_shadow_3,
+        40px 40px 0 $page_1_title_box_shadow_4,
+        50px 50px 0 $page_1_title_box_shadow_5;
       .title_1 {
         gap: 1vw;
         .flower_icon {
@@ -1020,7 +1041,7 @@ $box_bg: var(--box_bg, #fff);
     }
     .more {
       bottom: 0;
-      left: 50%;
+      left: 49%;
       transform: translateX(-50%);
       animation: more 2s infinite linear both;
       z-index: 100;
@@ -1063,7 +1084,6 @@ $box_bg: var(--box_bg, #fff);
       .page_2_header {
         z-index: 2;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        background: $home_bg;
 
         .notice {
           width: 76vw;
@@ -1340,7 +1360,11 @@ $box_bg: var(--box_bg, #fff);
                   height: inherit;
                   z-index: 10;
                   pointer-events: none;
-                  background: linear-gradient(to left, $box_bg 20%, transparent);
+                  background: linear-gradient(
+                    to left,
+                    $box_bg 20%,
+                    transparent
+                  );
                 }
                 &:hover {
                   // transform: translateY(-0.6vh);
@@ -1573,7 +1597,7 @@ $box_bg: var(--box_bg, #fff);
       color: $text_color;
     }
     .text_foot {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 900;
       color: $text_color;
     }
@@ -1589,6 +1613,8 @@ $box_bg: var(--box_bg, #fff);
     .right_foot {
       width: 30vw;
       height: 20vh;
+      gap: 8px;
+
     }
   }
 }

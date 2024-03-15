@@ -152,8 +152,9 @@ watch(music_active,(newV,oldV)=>{
       <div class="absolute nav_box flex flex_direction_column">
         <ul class="nav_list flex flex_direction_column">
           <li
+          :key="item"
             class="nav_item flex flex_direction_row align_items_center"
-            v-for="(item, index) in nav_list"
+            v-for="(item) in nav_list"
             @click="link_to(item.path)"
           >
             <img
