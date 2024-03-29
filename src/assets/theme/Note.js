@@ -26,7 +26,7 @@ const change_theme = (current_theme) =>{
     } else {
 
       c_c("--note_bg_color", "#fdfbfb");
-      c_c("--note_bg_opacity", "1");
+      c_c("--note_bg_opacity", ".05");
       c_c("--note_bg_top", "#fdfbfb");
       c_c("--box_bg", "#ffff");
       c_c("--note_book_box_title_color", "#e96969");
@@ -42,7 +42,7 @@ const change_theme = (current_theme) =>{
       c_c("--book_update_time_color", "#a09090");
       c_c("--load_status_color", "#0ebd7d");
       c_c("--finished_status_color", "#32cdcd");
-      c_c("--foot_bg", "#ffc0cb");
+      c_c("--foot_bg", "#fdfbfb");
       c_c("--img_shadow", "#d3010130");
       c_c("--search_box_color", "#4d4949");
     }

@@ -11,29 +11,50 @@ import { defineEmits } from "vue";
 import { useMathDirectoryStore } from "/src/store/MathDirectory.js";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { useConfigStore } from "../store/config";
+const store = useConfigStore();
+const { theme } = storeToRefs(store);
+store.$subscribe((mutation, state) => {
+  change_theme(state.theme);
+});
 const router = useRouter();
 const math_directory_store = useMathDirectoryStore();
 const emit = defineEmits(["book-text"]);
 
 const data = ref(math_directory_store.data);
-
+const c_c = (mut_val, color) => {
+  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
+};
+const change_theme = (current_theme) => {
+  if (current_theme) {
+    c_c("--math_left_nav_main_color", "#fff");
+    c_c("--left_nav_bg", "#242b3d");
+    c_c("--left_nav_active_color", "#b5b9d6");
+  } else {
+    c_c("--math_left_nav_main_color", "#757474");
+    c_c("--left_nav_bg", "#ffff");
+    c_c("--left_nav_active_color", "#0bb890");
+    
+  }
+};
 onMounted(() => {
+  change_theme(theme.value);
   data.value.forEach((item, index) => {
     Object.assign(item, { show_children: ref(false) });
     Object.assign(item, { active: ref(false) });
   });
 });
 
-const enter_Children = (index, index2) => {
-  document.getElementById(
-    index.toString() + index2.toString()
-  ).style.backgroundColor = "#edf7fe";
-};
-const leave_Children = (index, index2) => {
-  document.getElementById(
-    index.toString() + index2.toString()
-  ).style.backgroundColor = "#ffff";
-};
+// const enter_Children = (index, index2) => {
+//   document.getElementById(
+//     index.toString() + index2.toString()
+//   ).style.backgroundColor =  "#edf7fe";
+// };
+// const leave_Children = (index, index2) => {
+//   document.getElementById(
+//     index.toString() + index2.toString()
+//   ).style.backgroundColor = "#ffff";
+// };
 const show_children = (item) => {
   item.show_children = !item.show_children;
   item.active = !item.active;
@@ -42,6 +63,7 @@ const show_children = (item) => {
 <template>
   <div id="math_left_nav_main">
     <div class="left_nav">
+      <h3>导航</h3>
       <ul>
         <li v-for="(item, index) in data" :key="item">
           <span
@@ -60,8 +82,7 @@ const show_children = (item) => {
               <router-link
                 to=""
                 @click="router.push('')"
-                @mouseleave="leave_Children(index, index2)"
-                @mouseenter="enter_Children(index, index2)"
+               
                 class="nav_item_child"
                 :id="index.toString() + index2.toString()"
               >
@@ -75,26 +96,36 @@ const show_children = (item) => {
   </div>
 </template>
 <style lang="scss" scoped>
+$math_left_nav_main_color: var(--math_left_nav_main_color, #757474);
+$left_nav_bg: var(--left_nav_bg, #ffff);
+$left_nav_active_color: var(--left_nav_active_color, #0bb890);
+
 #math_left_nav_main {
   width: calc(15vw - 32px);
   position: sticky;
   top: 90px;
-  max-height: calc(99vh - 90px);
+  max-height: calc(100vh - 90px);
   margin-left: 16px;
   border-radius: 5px;
   overflow: scroll;
-  color: #757474;
+  color: $math_left_nav_main_color;
 
   .left_nav {
     box-shadow: #0909090c 0px 0px 20px;
-    background: #ffff;
+    background: $left_nav_bg;
     border-radius: 5px;
     padding: 16px 0;
+    h3{
+      margin: 0;
+      padding:12px 16px ;
+
+      border-bottom: $left_nav_active_color 2px solid;
+    }
   }
 }
 
 .active {
-  color: #0bb890;
+  color: $left_nav_active_color;
 }
 .nav_item {
   margin-bottom: 2px;
@@ -123,6 +154,9 @@ const show_children = (item) => {
 font-size: 12px;
   text-overflow: ellipsis;
   animation: nav 0.6s ease-in-out;
+  &:hover{
+    color: $left_nav_active_color;
+  }
 }
 
 @keyframes nav {
@@ -138,12 +172,12 @@ font-size: 12px;
 }
 
 a {
-  color: #757474;
+  color: $math_left_nav_main_color;
   text-decoration: none;
 }
 
 a:hover {
-  color: #0bb890;
+  color: $left_nav_active_color;
 }
 
 ul {

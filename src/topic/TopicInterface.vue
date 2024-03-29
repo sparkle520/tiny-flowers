@@ -8,7 +8,6 @@ import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import MathJax, { initMathJax, renderByMathjax } from 'mathjax-vue3'
 
-import TopicTitle from "/src/component/TopicTitle.vue";
 import { change_theme } from "/src/assets/js/topic.js";
 import emitter from "@/assets/config/mitt_bus.js";
 // import md_str from '/src/assets/topic_md/topic1.md?raw'

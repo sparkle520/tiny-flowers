@@ -15,7 +15,7 @@ const change_theme = (current_theme) =>{
       c_c("--topic_classification_num_color", "#b5b9d6");
       c_c("--filter_search_box_bg", "#123");
       c_c("--tag_item_bg", "#242b3dc7");
-      c_c("--layout_hover", "#2d3041c7");
+      c_c("--layout_hover", "#0b0e14");
 
   
     } else {

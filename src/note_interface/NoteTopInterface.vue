@@ -134,7 +134,7 @@ onMounted(() => {
   width: 100vw;
   margin: 0 auto;
   height: 50vh;
-  margin-top: 80px;
+  margin-top: 90px;
   border-radius: 5px;
   box-shadow: #1815151c 0px 4px 10px;
   // animation: note_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);

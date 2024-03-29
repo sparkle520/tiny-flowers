@@ -10,9 +10,11 @@ import { useTopicStore } from "/src/store/topic.js";
 import c_c from "@/assets/js/utils.js";
 import Directory from '/src/component/Directory.vue'
 import { useConfigStore } from "../store/config";
+import { useNoteStore } from "../store/note";
 const config_store = useConfigStore();
 const user_store = useUserStore();
 const topic_store = useTopicStore();
+const note_store = useNoteStore();
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
@@ -74,7 +76,7 @@ const change_theme = (current_theme) => {
           class="topic_classification_total_box flex flex_direction_column align_items_center"
         >
           <h3>笔记</h3>
-          <span>1</span>
+          <span>{{note_store.data.length}}</span>
         </div>
       </div>
     </div>

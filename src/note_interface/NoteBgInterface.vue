@@ -15,10 +15,10 @@ onMounted(() => {
 
 </script>
 <template>
-   <!-- <Particles
+   <Particles
       id="tsparticles"
       :options="options"
-    /> -->
+    />
 </template>
 <style lang="scss" scoped>
 

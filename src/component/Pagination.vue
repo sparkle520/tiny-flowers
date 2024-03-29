@@ -52,12 +52,12 @@ const change_theme = (current_theme) => {
     c_c("--page_item_active_color", "#efe3df");
     c_c("--page_item_active_bg", "#9b9fb8");
     c_c("--page_item_color", "#969696");
-    c_c("--page_item_bg", "#3d3d3f");
+    c_c("--page_item_bg", "#5e5e5e");
     c_c("--page_item_box_shadow", "transparent");
   } else {
     c_c("--page_item_active_color", "#ffff");
     c_c("--page_item_active_bg", "#b7d4d8");
-    c_c("--page_item_color", "#3d3d3f");
+    c_c("--page_item_color", "#5e5e5e");
     c_c("--page_item_bg", "#ffff");
     c_c("--page_item_box_shadow", "#dcdcdc49");
   }
@@ -126,7 +126,7 @@ const page_handle = (current) => {
 <style lang="scss" scoped>
 $page_item_active_color: var(--page_item_active_color, #b46565);
 $page_item_active_bg: var(--page_item_active_bg, #e35904);
-$page_item_color: var(--page_item_color, #2b2a2a);
+$page_item_color: var(--page_item_color, #5e5e5e);
 $page_item_bg: var(--page_item_bg, #dcdcdc);
 $page_item_box_shadow: var(--page_item_box_shadow, #dcdcdc49);
 

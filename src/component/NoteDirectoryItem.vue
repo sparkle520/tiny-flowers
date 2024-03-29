@@ -32,6 +32,7 @@ const props = defineProps({
   <div id="note_directory_item_main">
     <span  :class="{ chapter_title: level == 1 ,span_hover:level ==1}">{{ data.name }}</span>
     <NoteDirectoryItem
+    :key="item"
       v-if="data.children != undefined && data.children.length > 0"
       v-for="item in data.children"
       :data="item"
@@ -49,7 +50,7 @@ $note_directory_item_main_hover_color: var(--note_directory_item_main_hover_colo
   break-inside: avoid;
   span {
     display: block;
-    margin-bottom: 1vh;
+    margin-bottom: 16px;
     color: $note_directory_item_main_color;
    user-select: none;
   }

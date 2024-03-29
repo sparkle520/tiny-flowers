@@ -613,6 +613,23 @@ const search_focus_handle = () => {
     /> -->
   </div>
   <Utils></Utils>
+  <div
+      class="topic_list_foot relative flex flex_direction_row align_items_center justify_content_center"
+    >
+      <div class="left_foot flex flex_direction_column  justify_content_center">
+        <span class="title_foot">人生格言</span>
+        <span class="text_foot" v-html="user_store.aphorism"></span>
+      </div>
+      <div class="mid_foot flex flex_direction_column">
+        <span class="title_foot"></span>
+      </div>
+      <div class="right_foot flex flex_direction_column justify_content_center">
+        <span class="title_foot">联系我</span>
+        <span class="text_foot">邮箱: {{user_store.e_mail}}</span>
+        <span class="text_foot">GitHub Account: {{user_store.github_account}}</span>
+        <span class="text_foot">小红书ID: {{user_store.red_book_ID}}</span>
+      </div>
+    </div>
 </template>
 <style lang="scss" scoped>
 $topic_bg_color: var(--topic_bg_color, #fdfbfb);
@@ -648,7 +665,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       repeat;
     background-size: contain;
   }
-  background: linear-gradient($topic_bg_top,$topic_bg_color);
+  background: linear-gradient($topic_bg_top 50%,$topic_bg_color);
 
   width: 100vw;
   min-height: 100vh;
@@ -715,7 +732,7 @@ $layout_hover: var(--layout_hover, #f3acac);
     width: 50vw;
     height: 7vh;
     margin: 3vh auto;
-    margin-top: 80px;
+    margin-top: 90px;
 
     .filter_search_box {
       width: 52vw;
@@ -1105,7 +1122,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       color: $title_color;
       transform: translateY(-4vh);
       margin-left: auto;
-      margin-right: 4vw;
+      margin-right: 32px;
     }
     .personal_signature {
       margin: 0 0 32px 0;
@@ -1196,7 +1213,7 @@ $layout_hover: var(--layout_hover, #f3acac);
 
       li {
         span {
-          margin: 1vw;
+          margin: 1vw 0;
           font-size: 0.9em;
           font-weight: 900;
           letter-spacing: 0.1em;
@@ -1206,7 +1223,40 @@ $layout_hover: var(--layout_hover, #f3acac);
     }
   }
 }
+.topic_list_foot {
+    width: 100vw;
+    background: $topic_bg_color;
+    z-index: 10;
+    width: inherit;
+    height: 200px;
+    gap: 2vw;
+    .title_foot {
+      font-size: 16px;
+      color: $tag_bg;
+    }
+    .text_foot {
+      font-size: 14px;
+      font-weight: 700;
+      color: $tag_bg;
+    }
+    .left_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 26px;
+    }
+    .mid_foot {
+      width: 20vw;
+      height: 20vh;
+    }
+    .right_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 22px;
 
+    }
+  }
 @keyframes move_left {
   0% {
     transform: translateX(100px) scale(1);

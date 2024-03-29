@@ -115,7 +115,7 @@ const change_theme = (current_theme) => {
     c_c("--page_1_title_box_shadow_5", "rgba(181, 185, 214,.05)");
   } else {
     c_c("--home_bg", "#fdfbfb");
-    c_c("--home_bg_opacity", "1");
+    c_c("--home_bg_opacity", ".05");
     c_c("--home_bg_top", "#fdfbfb");
     c_c("--home_color", "#4d4949");
     c_c("--index_title_color", "#33383a");
@@ -139,7 +139,6 @@ const change_theme = (current_theme) => {
 };
 const go_to_next_page = () => {
   window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-
 };
 const page_two_handle = () => {
   // let target = item.offsetTop + window.innerHeight - 80;
@@ -209,10 +208,10 @@ const page_two_handle = () => {
     scroll_y >=
     window.innerHeight + home_carousel.offsetTop - window.innerHeight / 2
   ) {
-    home_carousel.style.transform = "scaleX(1)";
+    home_carousel.style.transform = "scale(1)";
     home_carousel.style.opacity = 1;
   } else {
-    home_carousel.style.transform = "scaleX(1.3)";
+    home_carousel.style.transform = "scale(1.2)";
     home_carousel.style.opacity = 0;
   }
   for (let i = 0; i < rect_list.length; ++i) {
@@ -221,13 +220,13 @@ const page_two_handle = () => {
       window.innerHeight + rect_list[0].offsetTop - window.innerHeight / 2
     ) {
       setTimeout(() => {
-        rect_list[i].style.transform = "scaleX(1)";
+        rect_list[i].style.transform = "scale(1)";
         rect_list[i].style.opacity = 1;
       }, i * 100);
     } else {
       setTimeout(() => {
         rect_list[i].style.opacity = 0;
-        rect_list[i].style.transform = "scaleX(1.3)";
+        rect_list[i].style.transform = "scale(1.3)";
       }, i * 100);
     }
   }
@@ -240,10 +239,12 @@ const page_two_handle = () => {
     ) {
       setTimeout(() => {
         page_2_nav_item[i].style.opacity = 1;
+        page_2_nav_item[i].style.transform = "translateX(0)";
       }, i * 100);
     } else {
       setTimeout(() => {
         page_2_nav_item[i].style.opacity = 0;
+        page_2_nav_item[i].style.transform = "translateX(-100px)";
       }, i * 100);
     }
   }
@@ -283,7 +284,7 @@ const page_two_handle = () => {
       home_nav_item[i].style.transform = "scale(1)";
       home_nav_item[i].style.opacity = 1;
     } else {
-      home_nav_item[i].style.transform = "scale(1.4)";
+      home_nav_item[i].style.transform = "scale(2.4)";
       home_nav_item[i].style.opacity = 0;
     }
   }
@@ -344,22 +345,14 @@ const re_note_list = ref([
     id: 3,
     name: "线性代数",
     link: "/note/noteInfo/3",
-    create_date: "2024?01?14?11:06",
     img: "https://pic.imgdb.cn/item/65e2eb629f345e8d031af15c.png",
-    author: "",
-    tags: "线性代数",
-    classification: "数学",
     short_message: "线性代数是数学重要分支，在各学科中应用广泛.",
   },
   {
     id: 2,
     name: "高等数学",
     link: "/note/noteInfo/2",
-    create_date: "2024?01?14?11:06",
     img: "https://pic.imgdb.cn/item/65e2edd59f345e8d0321db0d.png",
-    author: "",
-    tags: "高等数学?微积分",
-    classification: "数学",
     short_message:
       "高等数学是由微积分学，较深入的代数学、几何学以及它们之间的交叉内容所形成的一门基础学科.",
   },
@@ -367,23 +360,15 @@ const re_note_list = ref([
     id: 1,
     name: "概率论与数理统计",
     link: "/note/noteInfo/1",
-    create_date: "2024?01?14?11:06",
     img: "https://pic.imgdb.cn/item/65e2f0b89f345e8d0329f381.png",
-    author: "",
-    tags: "概率论?数理统计",
-    classification: "数学",
     short_message: "概率论与数理统计是研究随机现象客观规律的数学学科.",
   },
   {
-    id: 1,
-    name: "概率论与数理统计",
-    link: "/note/noteInfo/1",
-    create_date: "2024?01?14?11:06",
-    img: "",
-    author: "",
-    tags: "概率论?数理统计",
-    classification: "数学",
-    short_message: "概率论与数理统计是研究随机现象客观规律的数学学科.",
+    id: 4,
+    name: "MySQL高级篇",
+    link: "/note/noteInfo/4",
+    img: "https://pic.imgdb.cn/item/65f5d5bf9f345e8d03e639bd.png",
+    short_message: "mysql高级教程,面向更高级的mysql.",
   },
 ]);
 let notice_index = 0;
@@ -898,20 +883,24 @@ const leave_recommend_topic = (index) => {
     </div>
     <!-- <div class="page_3 bg relative"></div> -->
     <!-- <div class="page_4 bg relative"></div> -->
-    <div
-      class="home_foot relative flex flex_direction_row align_items_center justify_content_center"
-    >
-      <div class="left_foot flex flex_direction_column">
-        <span class="title_foot">人生格言</span>
-        <span class="text_foot">{{user_store.aphorism}}</span>
-      </div>
-      <div class="mid_foot flex flex_direction_column">
-        <span class="title_foot"></span>
-      </div>
-      <div class="right_foot flex flex_direction_column">
-        <span class="title_foot">联系我</span>
-        <span class="text_foot">邮箱:{{user_store.e_mail}}</span>
-      </div>
+  </div>
+  <div
+    class="home_foot relative flex flex_direction_row align_items_center justify_content_center"
+  >
+    <div class="left_foot flex flex_direction_column justify_content_center">
+      <span class="title_foot">人生格言</span>
+      <span class="text_foot" v-html="user_store.aphorism"></span>
+    </div>
+    <div class="mid_foot flex flex_direction_column">
+      <span class="title_foot"></span>
+    </div>
+    <div class="right_foot flex flex_direction_column justify_content_center">
+      <span class="title_foot">联系我</span>
+      <span class="text_foot">邮箱: {{ user_store.e_mail }}</span>
+      <span class="text_foot"
+        >GitHub Account: {{ user_store.github_account }}</span
+      >
+      <span class="text_foot">小红书ID: {{ user_store.red_book_ID }}</span>
     </div>
   </div>
 </template>
@@ -928,11 +917,26 @@ $short_msg_color: var(--short_msg_color, #747576);
 $title_hover: var(--title_hover, #0ebd7d);
 $home_nav_item_box_shadow: var(--home_nav_item_box_shadow, #99edb5);
 $page_1_title_color: var(--page_1_title_color, #c6ebbd);
-$page_1_title_box_shadow_1: var(--page_1_title_box_shadow_1, rgba(198, 235, 189, 0.8));
-$page_1_title_box_shadow_2: var(--page_1_title_box_shadow_2, rgba(198, 235, 189, 0.6));
-$page_1_title_box_shadow_3: var(--page_1_title_box_shadow_3, rgba(198, 235, 189, 0.4));
-$page_1_title_box_shadow_4: var(--page_1_title_box_shadow_4, rgba(198, 235, 189, 0.2));
-$page_1_title_box_shadow_5: var(--page_1_title_box_shadow_5, rgba(198, 235, 189, 0.05));
+$page_1_title_box_shadow_1: var(
+  --page_1_title_box_shadow_1,
+  rgba(198, 235, 189, 0.8)
+);
+$page_1_title_box_shadow_2: var(
+  --page_1_title_box_shadow_2,
+  rgba(198, 235, 189, 0.6)
+);
+$page_1_title_box_shadow_3: var(
+  --page_1_title_box_shadow_3,
+  rgba(198, 235, 189, 0.4)
+);
+$page_1_title_box_shadow_4: var(
+  --page_1_title_box_shadow_4,
+  rgba(198, 235, 189, 0.2)
+);
+$page_1_title_box_shadow_5: var(
+  --page_1_title_box_shadow_5,
+  rgba(198, 235, 189, 0.05)
+);
 
 $text_color: var(--text_color, #fff);
 $recommend_item_bg: var(--recommend_item_bg, #fff);
@@ -945,7 +949,7 @@ $box_bg: var(--box_bg, #fff);
   width: 100vw;
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
-  background: linear-gradient($home_bg_top,$home_bg);
+  background: linear-gradient($home_bg_top 50%, $home_bg);
   color: $home_color;
   ::selection {
     color: $text_color;
@@ -961,9 +965,8 @@ $box_bg: var(--box_bg, #fff);
     position: fixed;
     z-index: 0;
     opacity: $home_bg_opacity;
-    background: url("https://pic.imgdb.cn/item/65f38f9f9f345e8d03ad1fa8.png")
+    background: url("https://pic.imgdb.cn/item/65dc38fc9f345e8d03e7728a.png")
       repeat;
-
   }
 
   li {
@@ -1013,7 +1016,7 @@ $box_bg: var(--box_bg, #fff);
       transform: translate(-50%, -50%);
       font-family: "orbitron-light";
       text-shadow: 10px 10px 0 $page_1_title_box_shadow_1,
-       20px 20px 0 $page_1_title_box_shadow_2,
+        20px 20px 0 $page_1_title_box_shadow_2,
         30px 30px 0 $page_1_title_box_shadow_3,
         40px 40px 0 $page_1_title_box_shadow_4,
         50px 50px 0 $page_1_title_box_shadow_5;
@@ -1585,37 +1588,37 @@ $box_bg: var(--box_bg, #fff);
       }
     }
   }
-
-  .home_foot {
-    width: inherit;
-    height: 30vh;
-    gap: 2vw;
-    z-index: 1;
-    background: $page_1_title_color;
-    .title_foot {
-      font-size: 1.2em;
-      color: $text_color;
-    }
-    .text_foot {
-      font-size: 20px;
-      font-weight: 900;
-      color: $text_color;
-    }
-    .left_foot {
-      width: 30vw;
-      height: 20vh;
-      gap: 8px;
-    }
-    .mid_foot {
-      width: 20vw;
-      height: 20vh;
-    }
-    .right_foot {
-      width: 30vw;
-      height: 20vh;
-      gap: 8px;
-
-    }
+}
+.home_foot {
+  width: inherit;
+  height: 200px;
+  gap: 2vw;
+  z-index: 1;
+  background: $home_bg;
+  .title_foot {
+    font-size: 16px;
+    color: $title_hover;
+  }
+  .text_foot {
+    font-size: 14px;
+    font-weight: 700;
+    color: $title_hover;
+  }
+  .left_foot {
+    width: 20vw;
+    height: 20vh;
+    gap: 8px;
+    line-height: 26px;
+  }
+  .mid_foot {
+    width: 20vw;
+    height: 20vh;
+  }
+  .right_foot {
+    width: 20vw;
+    height: 20vh;
+    gap: 8px;
+    line-height: 22px;
   }
 }
 @keyframes jump {

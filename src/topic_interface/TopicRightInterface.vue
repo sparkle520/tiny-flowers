@@ -7,12 +7,14 @@ import { reactive, toRefs, onBeforeMount, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "/src/store/user.js";
 import { useTopicStore } from "/src/store/topic.js";
+import { useNoteStore } from "/src/store/note.js";
 import c_c from "@/assets/js/utils.js";
 
 import { useConfigStore } from "../store/config";
 const config_store = useConfigStore();
 const user_store = useUserStore();
 const topic_store = useTopicStore();
+const note_store = useNoteStore();
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
@@ -74,7 +76,7 @@ const change_theme = (current_theme) => {
           class="topic_classification_total_box flex flex_direction_column align_items_center"
         >
           <h3>笔记</h3>
-          <span>1</span>
+          <span>{{note_store.data.length}}</span>
         </div>
       </div>
     </div>

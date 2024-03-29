@@ -16,9 +16,11 @@ import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import change_theme from "../assets/theme/Note";
 import { useConfigStore } from "../store/config";
+import { useUserStore } from "../store/user";
 import { useNoteStore } from "../store/note";
 import { storeToRefs } from "pinia";
 const config_store = useConfigStore();
+const user_store = useUserStore();
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
@@ -230,7 +232,7 @@ const go_to = (id) => {
             id="note_search"
             type="text"
             class="search"
-            placeholder="在此键入搜索"
+            placeholder="在此键入搜索(书名或标签)"
           />
           <div
             class="filter_search_box absolute"
@@ -308,34 +310,52 @@ const go_to = (id) => {
         </div>
       </div>
     </div>
-    <div class="foot"></div>
+   
   </div>
+  <div
+      class="note_foot relative flex flex_direction_row align_items_center justify_content_center"
+    >
+      <div class="left_foot flex flex_direction_column justify_content_center">
+        <span class="title_foot">人生格言</span>
+        <span class="text_foot" v-html="user_store.aphorism"></span>
+      </div>
+      <div class="mid_foot flex flex_direction_column">
+        <span class="title_foot"></span>
+      </div>
+      <div class="right_foot flex flex_direction_column justify_content_center">
+        <span class="title_foot">联系我</span>
+        <span class="text_foot">邮箱: {{ user_store.e_mail }}</span>
+        <span class="text_foot"
+          >GitHub Account: {{ user_store.github_account }}</span
+        >
+        <span class="text_foot">小红书ID: {{ user_store.red_book_ID }}</span>
+      </div>
+    </div>
 </template>
 <style lang="scss" scoped>
+$note_bg_color: var(--note_bg_color, #fdfbfb);
+$note_bg_opacity: var(--note_bg_opacity, 1);
+$note_bg_top: var(--note_bg_top, #fdfbfb);
+$box_bg: var(--box_bg, #ffff);
+$note_book_box_title_color: var(--note_book_box_title_color, #e96969);
+$re_note_item_bg: var(--re_note_item_bg, #e55656);
+$text_area_color: var(--text_area_color, #ffffe2);
+$text_area_before_bg: var(--text_area_before_bg, #f0681e);
+$text_area_after_bg: var(--text_area_after_bg, #ffb3c5);
+$filter_search_box_color: var(--filter_search_box_color, #726c65);
+$filter_search_box_hover_color: var(--filter_search_box_hover_color, #fa2121);
+$book_name_color: var(--book_name_color, #ffb3c5);
+$book_name_hover_color: var(--book_name_hover_color, #d5b3ff);
+$short_message_color: var(--short_message_color, #cca3cc);
+$book_update_time_color: var(--book_update_time_color, #a09090);
+$load_status_color: var(--load_status_color, #0ebd7d);
+$finished_status_color: var(--finished_status_color, #32cdcd);
+$foot_bg: var(--foot_bg, #ffc0cb);
+$img_shadow: var(--img_shadow, #d3010130);
+$search_box_color: var(--search_box_color, #4d4949);
 #note_main {
-  $note_bg_color: var(--note_bg_color, #fdfbfb);
-  $note_bg_opacity: var(--note_bg_opacity, 1);
-  $note_bg_top: var(--note_bg_top, #fdfbfb);
-  $box_bg: var(--box_bg, #ffff);
-  $note_book_box_title_color: var(--note_book_box_title_color, #e96969);
-  $re_note_item_bg: var(--re_note_item_bg, #e55656);
-  $text_area_color: var(--text_area_color, #ffffe2);
-  $text_area_before_bg: var(--text_area_before_bg, #f0681e);
-  $text_area_after_bg: var(--text_area_after_bg, #ffb3c5);
-  $filter_search_box_color: var(--filter_search_box_color, #726c65);
-  $filter_search_box_hover_color: var(--filter_search_box_hover_color, #fa2121);
-  $book_name_color: var(--book_name_color, #ffb3c5);
-  $book_name_hover_color: var(--book_name_hover_color, #d5b3ff);
-  $short_message_color: var(--short_message_color, #cca3cc);
-  $book_update_time_color: var(--book_update_time_color, #a09090);
-  $load_status_color: var(--load_status_color, #0ebd7d);
-  $finished_status_color: var(--finished_status_color, #32cdcd);
-  $foot_bg: var(--foot_bg, #ffc0cb);
-  $img_shadow: var(--img_shadow, #d3010130);
-  $search_box_color: var(--search_box_color, #4d4949);
-
   width: 100vw;
-  background: linear-gradient( $note_bg_top,$note_bg_color);
+  background: linear-gradient($note_bg_top, $foot_bg);
   min-height: 100vh;
   ::selection {
     color: $book_name_color;
@@ -349,21 +369,21 @@ const go_to = (id) => {
     top: 0;
     left: 0;
     opacity: $note_bg_opacity;
-    background: url("https://pic.imgdb.cn/item/65f38f9f9f345e8d03ad1fa8.png")
+    background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png")
       repeat;
   }
   .container {
     width: 80vw;
     align-self: center;
     z-index: 1;
-    margin-top: 70px;
+    margin-top: 90px;
+    margin-bottom: 36px;
     .top_box {
       width: inherit;
       height: 45vh;
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       grid-template-columns: 4fr 1fr;
-      overflow: hidden;
       // backdrop-filter: blur(6px);
       border-radius: 15px;
       -webkit-backdrop-filter: blur(6px);
@@ -376,21 +396,22 @@ const go_to = (id) => {
         width: 20vw;
         height: 20vw;
         left: 0vw;
+        bottom: 0;
         border-radius: 50%;
-        background: $foot_bg;
+        background: $re_note_item_bg;
         filter: blur(4vw);
       }
       &::before {
         content: "";
         position: absolute;
-        width: 10vw;
-        height: 10vw;
-        right: 0;
-        bottom: 0;
+        width: 8vw;
+        height: 8vw;
+        right: 4vw;
+        bottom: 4vw;
         border-radius: 50%;
         background: $text_area_after_bg;
         z-index: 1;
-        filter: blur(8vw);
+        filter: blur(6vw);
       }
       .top_box_bg {
         width: 80vw;
@@ -400,7 +421,6 @@ const go_to = (id) => {
         height: 45vh;
         border-radius: inherit;
         object-fit: cover;
-
       }
       .note_book_box {
         z-index: 1;
@@ -411,6 +431,7 @@ const go_to = (id) => {
           margin: 16px;
         }
         ul {
+          
           width: 100%;
           list-style: none;
           padding: 0;
@@ -668,6 +689,7 @@ const go_to = (id) => {
                 }
                 .short_message {
                   height: 48px;
+                  width: 100%;
                   font-size: 0.9em;
                   overflow-y: scroll;
                   display: -webkit-box;
@@ -705,14 +727,42 @@ const go_to = (id) => {
       }
     }
   }
-  .foot {
+  
+}
+.note_foot {
     width: 100vw;
-    height: 30vh;
-    margin-top: 10vh;
     background: $foot_bg;
     z-index: 10;
+    width: inherit;
+    height: 200px;
+    gap: 2vw;
+    .title_foot {
+      font-size: 16px;
+      color: $short_message_color;
+    }
+    .text_foot {
+      font-size: 14px;
+      font-weight: 700;
+      color: $short_message_color;
+    }
+    .left_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 26px;
+    }
+    .mid_foot {
+      width: 20vw;
+      height: 20vh;
+    }
+    .right_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 22px;
+
+    }
   }
-}
 @keyframes content_box {
   0% {
     opacity: 0;

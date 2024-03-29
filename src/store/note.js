@@ -5,6 +5,23 @@ export const useNoteStore = defineStore('note', {
         classification: ['学习笔记', '技术分享', '生活随想'],
         data: [
             {
+                id: 4,
+                name: 'MySQL高级篇',
+                link: '/note/noteInfo/4',
+                create_date: '2024?03?017?11:16',
+                img: 'https://pic.imgdb.cn/item/65f5d5bf9f345e8d03e639bd.png',
+                author: '',
+                tags: 'mysql',
+                classification: '计算机',
+                short_message: 'mysql高级教程,面向更高级的mysql.',
+                update_date: '2024?03?17?11:01',
+                is_visible: true,
+                is_finished: false,
+                directory_list: [
+                   
+                ]
+            },
+            {
                 id: 3,
                 name: '线性代数',
                 link: '/note/noteInfo/3',
@@ -18,14 +35,12 @@ export const useNoteStore = defineStore('note', {
                 is_visible: true,
                 is_finished: false,
                 directory_list: [
-                    {
-                        name: '第十二章节 无穷级数',
-                    },
-                   
-                   
-                    
-                   
-                   
+                    { name: "第一章 行列式" },
+                    { name: "第二章 矩阵及其计算" },
+                    { name: "第三章 矩阵的初等变换与线性方程组" },
+                    { name: "第四章 向量组的线性相关性" },
+                    { name: "第五章 相似矩阵及二次型" },
+                    { name: "第六章 线性空间与线性变换" },
                 ]
             },
             {
@@ -43,17 +58,50 @@ export const useNoteStore = defineStore('note', {
                 is_finished: false,
                 directory_list: [
                     {
+                        name: '第一章 函数与极限',
+                    },
+                    {
+                        name: '第二章 导数与微分',
+                    },
+                    {
+                        name: '第三章 微分中值定理与导数的应用',
+                    },
+                    {
+                        name: '第四章 不定积分',
+                    },
+                    {
+                        name: '第五章 定积分',
+                    },
+                    {
+                        name: '第六章 定积分的应用',
+                    },
+                    {
+                        name: '第七章 微分方程',
+                    },
+                    {
+                        name: '第八章 向量代数与空间解析几何',
+                    },
+                    {
+                        name: '第九章 多元函数微分法及其应用',
+                    },
+                    {
+                        name: '第十章 重积分',
+                    },
+                    {
+                        name: '第十一章 曲线积分与曲面积分',
+                    },
+                    {
                         name: '第十二章节 无穷级数',
                     },
-                   
-                   
-                    
-                   
-                   
+
+
+
+
+
                 ]
             },
-         
-            
+
+
             {
                 id: 1,
                 name: '概率论与数理统计',
@@ -68,24 +116,18 @@ export const useNoteStore = defineStore('note', {
                 is_visible: true,
                 is_finished: false,
                 directory_list: [
-                    {
-                        name: '第一章节 随机事件及其概率',
-                        children: [
-                            { name: '1.1 随机事件' },
-                        ]
-                    },
-                    {
-                        name: '第二章节 随机变量及其分布',
-                        children: [
-                        ]
-                    },
-                   
-                    
-                   
-                   
+                    { name: "第一章 随机事件与概率" },
+                    { name: "第二章 随机变量及其分布" },
+                    { name: "第三章 多维随机变量及其分布" },
+                    { name: "第四章 随机变量的数字特征" },
+                    { name: "第五章 大数定律及中心极限定理" },
+                    { name: "第六章 样本及抽样分布" },
+                    { name: "第七章 参数估计" },
+                    { name: "第八章 假设检验" },
+                    { name: "第九章 方差分析及回归分析" },
                 ]
             },
-           
+
 
         ],
 

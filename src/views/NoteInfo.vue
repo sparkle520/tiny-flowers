@@ -77,7 +77,9 @@ change_theme(config_store.theme);
           >
           <span>分类：{{ note_data.classification }}</span>
           <span
-            >标签：<span v-for="item in note_data.tags.split('?')"
+            >标签：<span 
+            :key="item"
+            v-for="item in note_data.tags.split('?')"
               >{{ item }}&ensp;</span
             ></span
           >
@@ -94,7 +96,7 @@ change_theme(config_store.theme);
       </div>
     </div>
     <div class="note_directory_box flex flex_direction_column relative">
-      <h1>目录</h1>
+      <h1 class="relative">目录</h1>
       <NoteDirectoryList
         :id="note_data.id"
         :data="note_data.directory_list"
@@ -102,8 +104,26 @@ change_theme(config_store.theme);
         col="3"
       ></NoteDirectoryList>
     </div>
-    <div class="foot"></div>
   </div>
+  <div
+      class="note_info_foot relative flex flex_direction_row align_items_center justify_content_center"
+    >
+      <div class="left_foot flex flex_direction_column justify_content_center">
+        <span class="title_foot">人生格言</span>
+        <span class="text_foot" v-html="user_store.aphorism"></span>
+      </div>
+      <div class="mid_foot flex flex_direction_column">
+        <span class="title_foot"></span>
+      </div>
+      <div class="right_foot flex flex_direction_column justify_content_center">
+        <span class="title_foot">联系我</span>
+        <span class="text_foot">邮箱: {{ user_store.e_mail }}</span>
+        <span class="text_foot"
+          >GitHub Account: {{ user_store.github_account }}</span
+        >
+        <span class="text_foot">小红书ID: {{ user_store.red_book_ID }}</span>
+      </div>
+    </div>
 </template>
 <style lang="scss" scoped>
 $note_info_main_bg: var(--note_info_main_bg, #fdfbfb);
@@ -258,17 +278,57 @@ $foot_bg: var(--foot_bg, #e96969);
       margin-top: 0;
     }
     h1 {
-      margin: 3vh auto;
+      width: 60vw;
+      margin: 32px auto;
       font-size: 1.5em;
       color: $read_btn_color;
+      &::after{
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 80%;
+        background:$read_btn_color ;
+        left: -10px;
+        top: 55%;
+        transform: translateY(-50%);
+      }
     }
   }
-  .foot {
-    width: 100vw;
-    height: 30vh;
-    background: $foot_bg;
-  }
+  
 }
+.note_info_foot {
+    width: inherit;
+    height: 200px;
+    gap: 2vw;
+    z-index: 1;
+    background: $foot_bg;
+    .title_foot {
+      font-size: 16px;
+      color: $note_top_mid_box_h1_color;
+    }
+    .text_foot {
+      font-size: 14px;
+      font-weight: 700;
+      color: $note_top_mid_box_h1_color;
+    }
+    .left_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 26px;
+    }
+    .mid_foot {
+      width: 20vw;
+      height: 20vh;
+    }
+    .right_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 22px;
+
+    }
+  }
 @keyframes shrink {
   0% {
     opacity: 0;

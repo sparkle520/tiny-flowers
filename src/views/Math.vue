@@ -11,6 +11,7 @@ import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import { useMathStore } from "/src/store/math.js";
 import { useConfigStore } from "../store/config";
+import { useUserStore } from "../store/user";
 import "/src/assets/css/markdown.scss";
 import MathLeftNavBar from "../component/MathLeftNavBar.vue";
 import MathJax, { initMathJax, renderByMathjax } from "mathjax-vue3";
@@ -18,6 +19,7 @@ import { marked, parse } from "marked";
 import change_theme from "../assets/theme/Math";
 import { storeToRefs } from "pinia";
 const config_store = useConfigStore();
+const user_store = useUserStore();
 const { theme } = storeToRefs(config_store);
 const { params } = useRoute();
 const search_text = ref("");
@@ -179,7 +181,7 @@ const init_data = () => {
 const cover_flag = ref(false);
 </script>
 <template>
-  <div id="math_main" class="flex flex_direction_row relative">
+  <div id="math_main" class="flex flex relative">
     <div class="cover" v-show="cover_flag"></div>
     <div class="note_left_nav_bar">
       <MathLeftNavBar></MathLeftNavBar>
@@ -369,7 +371,25 @@ const cover_flag = ref(false);
         </div>
       </div>
     </div>
+  
   </div>
+  <div
+      class="math_foot relative flex flex_direction_row align_items_center justify_content_center"
+    >
+      <div class="left_foot flex flex_direction_column  justify_content_center">
+        <span class="title_foot">人生格言</span>
+        <span class="text_foot" v-html="user_store.aphorism"></span>
+      </div>
+      <div class="mid_foot flex flex_direction_column">
+        <span class="title_foot"></span>
+      </div>
+      <div class="right_foot flex flex_direction_column justify_content_center">
+        <span class="title_foot">联系我</span>
+        <span class="text_foot">邮箱: {{user_store.e_mail}}</span>
+        <span class="text_foot">GitHub Account: {{user_store.github_account}}</span>
+        <span class="text_foot">小红书ID: {{user_store.red_book_ID}}</span>
+      </div>
+    </div>
 </template>
 <style lang="scss" scoped>
 @import url("/src/assets/css/math.scss");
@@ -404,8 +424,9 @@ $normal_color: var(--normal_color, #fbfdfd);
 #math_main {
   width: 100vw;
   min-height: 100vh;
-  background: linear-gradient($math_bg_top,$math_bg_color);
   color: $math_color;
+  background: linear-gradient($math_bg_top 50%,$math_bg_color);
+
   gap: 16px;
   .cover {
     width: 100vw;
@@ -426,10 +447,11 @@ $normal_color: var(--normal_color, #fbfdfd);
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: $math_bg_opacity;
-    background: url("https://pic.imgdb.cn/item/65f38f9f9f345e8d03ad1fa8.png")
+    opacity: 0.05;
+    background: url("https://pic.imgdb.cn/item/65dc38fc9f345e8d03e7728a.png")
       repeat;
   }
+  
 
   .select_tag {
     width: calc(100% - 32px);
@@ -651,11 +673,6 @@ $normal_color: var(--normal_color, #fbfdfd);
           box-shadow: $content_tag_item_bg 0px 0px 0px 4px;
         }
 
-        &:last-child {
-          border-bottom-right-radius: inherit;
-          border-bottom-left-radius: inherit;
-        }
-
         .subject-num {
           font-family: 600;
           color: #7db8b8;
@@ -714,7 +731,42 @@ $normal_color: var(--normal_color, #fbfdfd);
       width: 100%;
     }
   }
+ 
 }
+.math_foot {
+    width: 100vw;
+    background: $math_bg_color;
+    z-index: 10;
+    width: inherit;
+    height: 200px;
+    gap: 2vw;
+    .title_foot {
+      font-size: 16px;
+      color: $condition_box;
+    }
+    .text_foot {
+      font-size: 14px;
+      font-weight: 700;
+      color: $condition_box;
+    }
+    .left_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 26px;
+    }
+    .mid_foot {
+      width: 20vw;
+      height: 20vh;
+    }
+    .right_foot {
+      width: 20vw;
+      height: 20vh;
+      gap: 8px;
+      line-height: 22px;
+
+    }
+  }
 @keyframes move_top {
   0% {
     transform: translate(-50%, -10%);

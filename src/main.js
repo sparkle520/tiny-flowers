@@ -2,7 +2,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import axios from "axios";
-import topicBox from '/src/component/TopicBox.vue'
 import router from './router/index'
 import "@/assets/css/normalize.css"
 import "@/assets/css/index.scss"

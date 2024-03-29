@@ -138,7 +138,7 @@ onMounted(() => {
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
-  margin-top: 70px;
+  margin-top: 90px;
   background-position: center center;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);

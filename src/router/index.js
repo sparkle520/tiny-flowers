@@ -94,15 +94,7 @@ const routes = [
 
         }
     },
-    {
-        path: '/game/2048',
-        component: () => import("/src/game/Game2048.vue"),
-        meta: {
-            isRouterAuth: false,
-            screenFull: true,
 
-        }
-    },
    
     {
         path: '/updateLog',

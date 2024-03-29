@@ -11,7 +11,6 @@ import NoteTopInterface from '/src/note_interface/NoteTopInterface.vue'
 import NoteBgInterface from '/src/note_interface/NoteBgInterface.vue'
 import NoteRightInterface from '/src/note_interface/NoteRightInterface.vue'
 import NoteBottomInterface from '/src/note_interface/NoteBottomInterface.vue'
-import TopicTitle from "/src/component/TopicTitle.vue";
 import { change_theme } from "/src/assets/js/topic.js";
 import emitter from "@/assets/config/mitt_bus.js";
 // import md_str from '/src/assets/topic_md/topic1.md?raw'
