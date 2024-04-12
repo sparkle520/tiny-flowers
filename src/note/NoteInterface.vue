@@ -41,14 +41,12 @@ function onMathJaxReady() {
 watch(content, (newValue) => {
   content.value = marked(newValue);
   
-// initMathJax({}, onMathJaxReady)
 nextTick(()=>{
-  renderByMathjax(document.getElementById('mathjax'))
-})
-nextTick(()=>{
+  onMathJaxReady()
+  watch_height()
+
   emitter.emit("note_data", note_store.get_note_by_id(params.id));
 })
-
 });
 const config_store = useConfigStore();
 const { theme } = storeToRefs(config_store);
@@ -61,15 +59,28 @@ const router = useRouter();
 onBeforeMount(() => {
   
 });
+// 监听高度
+let watch_height_interval;
+let height;
+const watch_height = () => {
+  watch_height_interval = setInterval(() => {
+    const mathjax_el = document.getElementById("mathjax");
+    if (mathjax_el.clientHeight != height) {
+      emitter.emit("note_data", note_store.get_note_by_id(params.id));
+      height = mathjax_el.clientHeight;
+    }else{
+      clearInterval(watch_mathJax_interval);
+    }
+},1000)}
 const img_load_handle = () => {
   emitter.emit("note_data", note_store.get_note_by_id(params.id));
 };
 
 onMounted(() => {
+
   change_theme(theme.value);
   change_layout(layout.value);
   initContent();
-  
 });
 
 const get_md_file = (id,index) => {

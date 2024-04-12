@@ -959,7 +959,7 @@ $layout_hover: var(--layout_hover, #f3acac);
         flex-wrap: wrap;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         .tag {
-          margin: 10px;
+          margin: 4px;
           color: #ffff;
           padding: 10px;
           background: $tag_bg;

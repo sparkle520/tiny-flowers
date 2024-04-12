@@ -1,6 +1,6 @@
 $code_bg: var(--code_bg, #f6f8fa);
 $h1_color: var(--h1_color, #686870);
-$h_color: var(--h_color, #6261a3);
+$h_color: var(--h_color, #a574d2);
 $h2_color: var(--h2_color, #ff7f50);
 $h3_color: var(--h3_color, #ff7f50);
 $h4_color: var(--h4_color, #ff7f50);
@@ -13,17 +13,27 @@ $blockquote_bg: var(--blockquote_bg, #6261a3a8);
 $blockquote_border: var(--blockquote_bg, #6261a3);
 $blockquote_color: var(--blockquote_color, #ff7300);
 .markdown-body *{
-  font-family: 'Microsoft YaHei', '微软雅黑', 'MicrosoftJhengHei', '华文细黑', STHeiti, MingLiu;
   font-style: normal;
+}
+@font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+@font-face {
+  font-family: "FiraMath-Regular";
+  src: url("/src/assets/font/FiraMath-Regular.ttf");
 }
 .markdown-body {
   background: transparent;
+  font-family: 'misans';
+
   color: $normal_color;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
   z-index: 10;
   letter-spacing: 2px;
   line-height: 1.9em;
+
   ::selection {
     color:$code_bg;
     background-color: $h_color;

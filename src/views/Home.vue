@@ -32,6 +32,7 @@ onUnmounted(() => {
 });
 onMounted(() => {
   change_theme(theme.value);
+  init_shape_icon();
   window.scrollTo(0, 0);
   scroll_handle();
   document.addEventListener("scroll", scroll_handle);
@@ -108,11 +109,11 @@ const change_theme = (current_theme) => {
     c_c("--title_hover", "#b5b9d6");
     c_c("--home_nav_item_box_shadow", "#b5b9d6");
     c_c("--page_1_title_color", "#b5b9d6");
-    c_c("--page_1_title_box_shadow_1", "rgba(181, 185, 214,.8)");
-    c_c("--page_1_title_box_shadow_2", "rgba(181, 185, 214,.6)");
-    c_c("--page_1_title_box_shadow_3", "rgba(181, 185, 214,.4)");
-    c_c("--page_1_title_box_shadow_4", "rgba(181, 185, 214,.2)");
-    c_c("--page_1_title_box_shadow_5", "rgba(181, 185, 214,.05)");
+    // c_c("--page_1_title_box_shadow_1", "rgba(181, 185, 214,.8)");
+    // c_c("--page_1_title_box_shadow_2", "rgba(181, 185, 214,.6)");
+    // c_c("--page_1_title_box_shadow_3", "rgba(181, 185, 214,.4)");
+    // c_c("--page_1_title_box_shadow_4", "rgba(181, 185, 214,.2)");
+    // c_c("--page_1_title_box_shadow_5", "rgba(181, 185, 214,.05)");
   } else {
     c_c("--home_bg", "#fdfbfb");
     c_c("--home_bg_opacity", ".05");
@@ -130,11 +131,11 @@ const change_theme = (current_theme) => {
     c_c("--title_hover", "#0ebd7d");
     c_c("--home_nav_item_box_shadow", "#99edb5");
     c_c("--page_1_title_color", "#c6ebbd");
-    c_c("--page_1_title_box_shadow_1", "rgba(198, 235, 189, 0.8)");
-    c_c("--page_1_title_box_shadow_2", "rgba(198, 235, 189, 0.6)");
-    c_c("--page_1_title_box_shadow_3", "rgba(198, 235, 189, 0.4)");
-    c_c("--page_1_title_box_shadow_4", "rgba(198, 235, 189, 0.2)");
-    c_c("--page_1_title_box_shadow_5", "rgba(198, 235, 189, 0.05)");
+    // c_c("--page_1_title_box_shadow_1", "rgba(198, 235, 189, 0.8)");
+    // c_c("--page_1_title_box_shadow_2", "rgba(198, 235, 189, 0.6)");
+    // c_c("--page_1_title_box_shadow_3", "rgba(198, 235, 189, 0.4)");
+    // c_c("--page_1_title_box_shadow_4", "rgba(198, 235, 189, 0.2)");
+    // c_c("--page_1_title_box_shadow_5", "rgba(198, 235, 189, 0.05)");
   }
 };
 const go_to_next_page = () => {
@@ -324,6 +325,33 @@ const page_two_handle = () => {
     }
   }
 };
+const init_shape_icon = () => {
+  const shape_icon = document.querySelectorAll(".shape_icon");
+  const max_size = 100;
+  const min_size = 50;
+  const position = [
+    { x: 10, y: 40 },
+    { x: 15, y: 60 },
+    { x: 20, y: 20 },
+    { x: 30, y: 70 },
+    { x: 40, y: 20 },
+    { x: 60, y: 40 },
+    { x: 70, y: 30 },
+    { x: 80, y: 40 },
+    { x: 65, y: 80 },
+    { x: 85, y: 70 },
+  ];
+  shape_icon.forEach((item, number) => {
+    setTimeout(() => {
+      const size = Math.random() * (max_size - min_size) + min_size;
+      item.style.width = `${size}px`;
+      item.style.height = `${size}px`;
+      item.style.top = `${position[number].y}vh`;
+      item.style.left = `${position[number].x}vw`;
+      item.style.opacity = Math.random() * 0.5 + 0.5;
+    }, number * 300);
+  });
+};
 const notice = [
   "欢迎来到TinyFlowers🌷",
   "给湿润的天空绘上乾燥的色彩🏵️",
@@ -448,6 +476,27 @@ const leave_recommend_topic = (index) => {
 };
 </script>
 <template>
+  <div class="fixed" style="width: 100vw; height: 100vh">
+    <svg
+      v-for="i in 10"
+      :key="i"
+      t="1711858749853"
+      class="shape_icon absolute"
+      style="opacity: 0; transition: all 1s"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="4470"
+      width="52"
+      height="52"
+    >
+      <path
+        d="M375.373 841.843c92.96-12.518 203.878-71.264 299.545-166.925 22.612-22.61 43.162-46.08 61.524-69.952C712.762 786.394 621.26 921.6 512 921.6c-51.149 0-98.4-29.632-136.627-79.757z m-87.808-422.81C311.238 237.607 402.733 102.4 512 102.4c51.149 0 98.4 29.632 136.627 79.757-92.96 12.518-203.878 71.264-299.545 166.925a719.123 719.123 0 0 0-61.524 69.952zM158.029 558.599c57.325 74.247 163.66 140.935 294.336 175.95a719.123 719.123 0 0 0 91.347 18.303C374.746 823.06 211.904 811.424 157.28 716.8c-25.574-44.288-23.546-100.032 0.755-158.202z m322.259-287.45c168.966-70.207 331.808-58.572 386.432 36.052 25.574 44.288 23.546 100.032-0.755 158.202-57.319-74.247-163.648-140.935-294.336-175.95a719.123 719.123 0 0 0-91.341-18.303z m-185.632-42.393c-35.635 86.765-40.224 212.199-5.203 342.874a719.123 719.123 0 0 0 29.817 88.256C173.99 548.659 102.643 401.824 157.274 307.2c25.574-44.288 74.86-70.4 137.382-78.445z m410.074 135.36C850.01 475.341 921.357 622.176 866.726 716.8c-25.574 44.288-74.86 70.4-137.382 78.445 35.635-86.765 40.224-212.199 5.203-342.874a719.123 719.123 0 0 0-29.817-88.256zM512 678.4c-88.365 0-160-71.635-160-160s71.635-160 160-160 160 71.635 160 160-71.635 160-160 160z m0-83.2c42.413 0 76.8-34.387 76.8-76.8s-34.387-76.8-76.8-76.8-76.8 34.387-76.8 76.8 34.387 76.8 76.8 76.8z"
+        fill="#abf49d"
+        p-id="4471"
+      ></path>
+    </svg>
+  </div>
   <div id="home_main">
     <!-- <img
       class="home_main_bg fixed"
@@ -455,6 +504,16 @@ const leave_recommend_topic = (index) => {
       alt=""
     /> -->
     <div class="page_1 relative">
+      <!-- <iframe
+        src="//player.bilibili.com/player.html?aid=355531973&bvid=BV14X4y1m7CQ&cid=1114327199&p=1&high_quality=1&danmaku=0"
+        allowfullscreen="allowfullscreen"
+        width="40%"
+        height="40%"
+        style="position:absolute; right:20px;top:100px;"
+        scrolling="no"
+        frameborder="0"
+        sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
+      ></iframe> -->
       <!-- <img
         class="page_1_bg"
         src="https://pic.imgdb.cn/item/65d04ac49f345e8d0318b9e3.jpg"
@@ -611,10 +670,54 @@ const leave_recommend_topic = (index) => {
                 </div>
                 <div
                   class="rect_item rect_3 flex align_items_center justify_content_center relative"
-                ></div>
+                  @click="
+                    go_to('https://github.com/sparkle520?tab=repositories')
+                  "
+                >
+                  <svg
+                    t="1711933909983"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="4210"
+                    width="52"
+                    height="52"
+                  >
+                    <path
+                      d="M512 0c-282.784 0-512 229.216-512 512s229.216 512 512 512 512-229.216 512-512-229.216-512-512-512zM816.064 816.064c-39.52 39.52-85.504 70.528-136.704 92.192-12.992 5.504-26.208 10.336-39.616 14.496l0-76.736c0-40.32-13.824-70.016-41.504-88.992 17.344-1.664 33.248-4 47.744-7.008s29.824-7.328 46.016-12.992 30.656-12.416 43.488-20.256 25.152-18.016 36.992-30.496 21.76-26.656 29.76-42.496 14.336-34.848 19.008-56.992 7.008-46.592 7.008-73.248c0-51.68-16.832-95.68-50.496-132 15.328-40 13.664-83.488-4.992-130.496l-12.512-1.504c-8.672-0.992-24.256 2.656-46.752 11.008s-47.744 22.016-75.744 40.992c-39.68-11.008-80.832-16.512-123.488-16.512-43.008 0-84 5.504-123.008 16.512-17.664-12-34.4-21.92-50.24-29.76s-28.512-13.152-38.016-16-18.336-4.576-26.496-5.248-13.408-0.832-15.744-0.512-4 0.672-4.992 0.992c-18.656 47.328-20.32 90.848-4.992 130.496-33.664 36.32-50.496 80.32-50.496 132 0 26.656 2.336 51.072 7.008 73.248s11.008 41.152 19.008 56.992 17.92 30.016 29.76 42.496 24.16 22.656 36.992 30.496 27.328 14.592 43.488 20.256 31.488 10.016 46.016 12.992 30.4 5.344 47.744 7.008c-27.328 18.656-40.992 48.32-40.992 88.992l0 78.24c-15.104-4.48-29.984-9.792-44.608-16-51.2-21.664-97.184-52.672-136.704-92.192s-70.528-85.504-92.192-136.704c-22.4-52.96-33.76-109.248-33.76-167.36s11.36-114.4 33.76-167.36c21.664-51.2 52.672-97.184 92.192-136.704s85.504-70.528 136.704-92.192c52.96-22.4 109.28-33.76 167.36-33.76s114.4 11.36 167.36 33.76c51.2 21.664 97.184 52.672 136.704 92.192s70.528 85.504 92.192 136.704c22.4 52.96 33.76 109.28 33.76 167.36s-11.36 114.4-33.76 167.36c-21.664 51.2-52.672 97.184-92.192 136.704z"
+                      fill="#444444"
+                      p-id="4211"
+                    ></path>
+                  </svg>
+                </div>
                 <div
                   class="rect_item rect_4 flex align_items_center justify_content_center relative"
-                ></div>
+                  @click="go_to('https://www.bilibili.com/')"
+                >
+                  <svg
+                    t="1711934195026"
+                    class="icon"
+                    viewBox="0 0 1069 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="11197"
+                    width="42"
+                    height="42"
+                  >
+                    <path
+                      d="M868.93 171.112H697.817l77.535-77.535c13.369-13.368 13.369-32.084 0-45.452s-32.083-13.368-45.451 0L598.893 179.133H470.559L339.55 48.125c-10.695-13.368-26.736-16.041-42.778-8.02-2.674 0-2.674 2.673-5.347 5.347-13.369 13.368-13.369 32.083 0 45.451l80.208 80.21H200.522c-93.577 0-171.112 77.535-171.112 171.112v425.107c0 90.903 77.535 168.438 171.112 168.438h26.736c0 32.084 26.737 56.146 56.147 56.146s56.146-26.736 56.146-56.146h395.697c2.674 32.084 29.41 56.146 61.494 53.473 29.41-2.674 50.798-24.063 53.472-53.473h21.39c93.576 0 171.111-77.535 171.111-171.112V339.551c-2.673-93.577-80.208-168.439-173.785-168.439zM863.582 831.5H211.217c-34.757 0-61.494-29.41-64.167-64.167l-2.674-433.128c0-34.758 29.41-64.167 64.167-64.167H860.91c34.757 0 61.493 29.41 64.167 64.167l2.673 433.128c-2.673 37.43-29.41 64.167-64.167 64.167z"
+                      fill="#fb77b4"
+                      p-id="11198"
+                    ></path>
+                    <path
+                      d="M422.433 417.086l16.042 80.209-213.89 40.104-16.042-80.208 213.89-40.105z m205.87 80.209l16.042-80.209 213.89 40.105-16.042 80.208-213.89-40.104z m42.778 168.439c0 2.673 0 8.02-2.674 10.694-13.368 29.41-42.778 48.126-77.535 50.8-21.389 0-42.778-10.695-56.146-26.737-16.042 16.042-34.757 26.736-56.146 26.736-32.084-2.673-61.494-21.389-77.536-50.799 0-2.673-2.673-5.347-2.673-10.694 0-10.695 8.02-18.716 18.715-21.39h2.674c8.02 0 13.368 2.674 16.042 10.695 0 0 21.389 29.41 40.104 29.41 37.43 0 37.43-32.083 58.82-56.146 24.063 26.736 24.063 56.146 58.82 56.146 24.062 0 40.104-29.41 40.104-29.41 2.674-5.347 10.695-10.694 16.042-10.694 10.694-2.674 18.715 5.347 21.389 16.041v5.348z"
+                      fill="#fb77b4"
+                      p-id="11199"
+                    ></path>
+                  </svg>
+                  bilibili
+                </div>
               </div>
             </div>
             <div
@@ -941,6 +1044,17 @@ $page_1_title_box_shadow_5: var(
 $text_color: var(--text_color, #fff);
 $recommend_item_bg: var(--recommend_item_bg, #fff);
 $box_bg: var(--box_bg, #fff);
+.shape_icon {
+  animation: shape 5s infinite linear both;
+  @keyframes shape {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
 @font-face {
   font-family: "orbitron-black";
   src: url("/src/assets/font/orbitron-black.ttf");
@@ -1014,12 +1128,12 @@ $box_bg: var(--box_bg, #fff);
       left: 50%;
       color: $page_1_title_color;
       transform: translate(-50%, -50%);
-      font-family: "orbitron-light";
-      text-shadow: 10px 10px 0 $page_1_title_box_shadow_1,
-        20px 20px 0 $page_1_title_box_shadow_2,
-        30px 30px 0 $page_1_title_box_shadow_3,
-        40px 40px 0 $page_1_title_box_shadow_4,
-        50px 50px 0 $page_1_title_box_shadow_5;
+      font-family: "orbitron-black";
+      // text-shadow: 10px 10px 0 $page_1_title_box_shadow_1,
+      // 20px 20px 0 $page_1_title_box_shadow_2,
+      // 30px 30px 0 $page_1_title_box_shadow_3,
+      // 40px 40px 0 $page_1_title_box_shadow_4,
+      // 50px 50px 0 $page_1_title_box_shadow_5;
       .title_1 {
         gap: 1vw;
         .flower_icon {

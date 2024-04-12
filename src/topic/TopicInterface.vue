@@ -42,6 +42,7 @@ watch(content, (newValue) => {
 nextTick(()=>{
   renderByMathjax(document.getElementById('mathjax'))
   emitter.emit("topic_data", get_topic_data());
+  watch_height()
 
 })
 });
@@ -87,6 +88,20 @@ const get_md_file = (index) => {
     }
   }
 };
+// 监听高度
+let watch_height_interval;
+let height;
+const watch_height = () => {
+  watch_height_interval = setInterval(() => {
+    const mathjax_el = document.getElementById("mathjax");
+    if (mathjax_el.clientHeight != height) {
+      emitter.emit("topic_data", get_topic_data());
+      height = mathjax_el.clientHeight;
+    }else{
+      clearInterval(watch_mathJax_interval);
+    }
+},1000)}
+
 //  await import('/src/assets/topic_md/topic'+index+'.md?raw').then((module)=>{
 //   content.value = module.default;
 //  })

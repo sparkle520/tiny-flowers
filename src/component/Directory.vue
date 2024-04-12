@@ -96,7 +96,7 @@ let currentTitle = ref({});
 // 获取目录的标题
 function getTitles() {
   let titles = [];
-  let levels = ["h1", "h2", "h3"];
+  let levels = ["h1", "h2", "h3",'h4','h5'];
 
   let articleElement = document.querySelector(".markdown-body");
   
@@ -114,7 +114,7 @@ function getTitles() {
   }
 
   let serialNumbers = levels.map(() => 0);
-  let top_height = document.querySelector("#note_top_main").clientHeight -20;
+  let top_height = document.querySelector("#note_top_main").clientHeight +60;
 
 
   for (let i = 0; i < elements.length; i++) {
@@ -176,9 +176,7 @@ const c_c = (mut_val, color) => {
 const change_theme = (current_theme) => {
   if (current_theme) {
     //night
-    c_c("--directory_list_bg", "#242837");
   } else {
-    c_c("--directory_list_bg", "#ffff");
   }
 };
 
@@ -198,7 +196,7 @@ function setChildrenVisible(title, isVisible) {
 
 // 滚动到指定的位置
 function scrollToView(scrollTop) {
-  window.scrollTo({ top: scrollTop, behavior: "smooth" });
+  window.scrollTo({ top: scrollTop + 10, behavior: "smooth" });
 }
 </script>
 <template>
@@ -212,7 +210,7 @@ function scrollToView(scrollTop) {
               class="catalog-icon"
           /></span>
           <div class="flex flex_direction_row align_items_center">
-            <span >目录</span>
+            <strong >目录</strong>
           </div>
         </div>
         <!-- <span class="progress">{{ progress }}</span> -->
@@ -238,24 +236,20 @@ function scrollToView(scrollTop) {
   </div>
 </template>
 <style lang="scss" scoped>
-$directory_list_bg: var(--directory_list_bg, #fff);
 $directory_list_cover_bg: var(--directory_list_cover_bg, #e96969);
 $normal_color: var(--normal_color, #e96969);
 
 #directory_list_main {
   width: 21vw;
-  border-radius: 5px;
-  background: $directory_list_bg;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-  box-shadow: #5656561b 1px 1px 10px;
 
   position: sticky;
-  top: 70px;
+  top: 50px;
 }
 .catalog-card {
   background: transparent;
   // border-radius: 5px;
-  padding: 20px 24px;
+  padding: 16px 16px;
   width: 100%;
   box-sizing: border-box;
   // transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -264,7 +258,7 @@ $normal_color: var(--normal_color, #e96969);
 
 .catalog-card-header {
   text-align: left !important;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -281,11 +275,7 @@ $normal_color: var(--normal_color, #e96969);
   color: $normal_color;
 }
 
-.progress {
-  color: $normal_color;
-  font-style: italic;
-  font-size: 140%;
-}
+
 
 .catalog-content {
   max-height: calc(100vh - 120px);

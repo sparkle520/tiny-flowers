@@ -8,6 +8,19 @@ export const useTopicStore = defineStore('topic', {
 
            
             {
+                id: 3,
+                title: '卷积公式',
+                link: '/article/topic/3',
+                create_date: '2024?03?31?12:06',
+                img: 'https://pic.imgdb.cn/item/6608c4649f345e8d0324925c.jpg',
+                author: '',
+                tags: 'math?卷积',
+                classification: '学习笔记',
+                short_message: '在多维随机变量变量当中，大家都会需要用到二重积分或者卷积的公式，今天我们就来学习一下卷积的公式。',
+                update_date: '',
+                is_visible: true
+            },
+            {
                 id: 2,
                 title: '最长回文子序列',
                 link: '/article/topic/2',

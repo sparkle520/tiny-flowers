@@ -226,7 +226,7 @@ const reset_clock = () => {
 </script>
 <template>
   <div class="math_details_main flex flex_direction_column relative">
-    <div class="cover" v-if="show_question_bank"></div>
+    <!-- <div class="cover" v-if="show_question_bank"></div>
     <div class="question_bank_box fixed flex flex_direction_column">
       <div
         class="question_bank_header flex flex_direction_row align_items_center"
@@ -246,11 +246,11 @@ const reset_clock = () => {
         
         </li>
       </ul>
-    </div>
+    </div> -->
 
     <div class="math_top_box grid">
       <div class="math_top_left_box flex flex_direction_row align_items_center">
-        <button
+        <!-- <button
           @click="show_question_bank = true"
           class="question_bank_btn relative flex flex_direction_row align_items_center justify_content_center"
         >
@@ -270,7 +270,7 @@ const reset_clock = () => {
               p-id="9999"
             ></path></svg
           >题库
-        </button>
+        </button> -->
       </div>
       <div
         class="math_top_mid_box flex flex_direction_row align_items_center justify_content_center"

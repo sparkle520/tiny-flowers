@@ -9,11 +9,9 @@ $normal_color: var(--normal_color, #4d4949);
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   min-height: 100vh;
-  font-family: "Microsoft YaHei";
   color: $normal_color;
   display: flex;
   flex-direction: column;
-  
   
   .gt-header-textarea {
     background: $topic_bg;
@@ -38,7 +36,6 @@ $normal_color: var(--normal_color, #4d4949);
   .topic_content {
     width: 60vw;
     border-radius: 4px;
-    min-height: 10vh;
     background: $topic_content_bg;
     box-shadow: #5656561b 1px 1px 10px;
     display: flex;
@@ -53,7 +50,7 @@ $normal_color: var(--normal_color, #4d4949);
         content: '';
         position: absolute;
         width: 100%;
-        height: calc(100% + 64px);
+        height: calc(100%);
         top: 0;
         left: 50%;
         transform: translateX(-50%);
@@ -66,7 +63,6 @@ $normal_color: var(--normal_color, #4d4949);
       }
       display: flex;
       flex-direction: column;
-      
     }
   }
   // h1{
@@ -80,60 +76,14 @@ $normal_color: var(--normal_color, #4d4949);
   // }
 }
 
-.normal {
-  font-size: 16px;
-  color: $normal_color;
-  margin: 0.3vh 0;
-  line-height: 25px;
-}
-.center_18_title {
-  margin: 20px auto;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 20px;
-}
-.orange {
-  color: #d77f57;
-}
-.pink {
-  color: #df4c58;
-}
-.line_height_30 {
-  line-height: 30px;
-}
-.font_weight_900 {
-  font-weight: 900;
-}
-.cyan {
-  color: #41a8a8;
-}
-.purple {
-  color: #84709b;
-}
-.blue {
-  color: #b6cad7;
-}
-.green {
-  color: #91b5a9;
-}
-.yellow {
-  color: #f3af27;
-}
-.tiffany_blue {
-  color: #81d8cf;
-}
-.titian_red {
-  color: #b05923;
-}
-.vandyke_brown {
-  color: #8f4b28;
-}
+
+
 
 
 .topic_container {
-  margin-top: 3vh;
-  gap: 1vw;
-  margin: 3vh auto;
+  margin-top: 32px;
+  gap: 32px;
+  margin: 32px auto;
   align-items: stretch;
   z-index: 1;
   display: flex;

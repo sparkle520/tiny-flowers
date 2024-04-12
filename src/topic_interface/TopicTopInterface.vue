@@ -22,7 +22,6 @@ onMounted(() => {
     const topic_update_date = document.querySelector(".topic_update_date");
     const topic_time = document.querySelector(".topic_time");
     const img_list = document.querySelectorAll(".topic_content img");
-  console.log(img_list);
     const topic_classification = document.querySelector(
       ".topic_classification"
     );

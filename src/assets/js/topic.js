@@ -22,10 +22,10 @@ export const change_theme = (current_theme) => {
     c_c("--normal_color", "#4d4949");
     c_c("--directory_list_cover_bg", "#e96969");
     c_c("--code_bg", "#f6f8fa");
-    c_c("--h_color", "#6261a3");
+    c_c("--h_color", "rgb(239, 112, 96)");
     c_c("--blockquote_color", "#686870");
-    c_c("--blockquote_border", "#6263ad");
-    c_c("--blockquote_bg", "#afaed8e6");
+    c_c("--blockquote_border", "rgb(239, 112, 96)");
+    c_c("--blockquote_bg", "rgb(239, 112, 96)");
   }
   change_code_theme(current_theme)
 

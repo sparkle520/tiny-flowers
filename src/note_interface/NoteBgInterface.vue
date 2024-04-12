@@ -12,13 +12,13 @@ onBeforeMount(() => {
 })
 onMounted(() => {
 })
-
-</script>
-<template>
-   <Particles
+/* <Particles
       id="tsparticles"
       :options="options"
-    />
+    /> */
+</script>
+<template>
+  
 </template>
 <style lang="scss" scoped>
 

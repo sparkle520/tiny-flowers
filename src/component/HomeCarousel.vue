@@ -69,11 +69,22 @@ watch(position, (newVal, oldVal) => {
   }
 });
 const width = -50
-
+const enter_handler = ()=>{
+  clearInterval(cycle);
+}
+const leave_handler = ()=>{
+  cycle = setInterval(() => {
+  if (position.value === width * 3) {
+    position.value = 0;
+  } else {
+    position.value += width;
+  }
+}, 4000);
+}
 
 </script>
 <template>
-  <div id="home_carousel_main" class="relative" @mouseenter="play_dyn_text">
+  <div id="home_carousel_main" class="relative" @mouseenter="enter_handler" @mouseleave="leave_handler">
     <div class="content relative">
       <div class="item absolute flex flex_direction_row">
         <div class="img_box relative" v-for="(item, index) in data">

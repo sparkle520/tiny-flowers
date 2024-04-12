@@ -195,7 +195,7 @@ function setChildrenVisible(title, isVisible) {
 
 // 滚动到指定的位置
 function scrollToView(scrollTop) {
-  window.scrollTo({ top: scrollTop, behavior: "smooth" });
+  window.scrollTo({ top: scrollTop+10, behavior: "smooth" });
 }
 </script>
 <template>

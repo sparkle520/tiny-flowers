@@ -63,7 +63,7 @@ const show_children = (item) => {
 <template>
   <div id="math_left_nav_main">
     <div class="left_nav">
-      <h3>导航</h3>
+      <h3>导航(未完成)</h3>
       <ul>
         <li v-for="(item, index) in data" :key="item">
           <span
