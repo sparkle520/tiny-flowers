@@ -112,7 +112,7 @@ export const useNoteStore = defineStore('note', {
                 tags: '概率论?数理统计',
                 classification: '数学',
                 short_message: '概率论与数理统计是研究随机现象客观规律的数学学科.',
-                update_date: '2024?01?14?11:04',
+                update_date: '2024?05?17?11:04',
                 is_visible: true,
                 is_finished: false,
                 directory_list: [
