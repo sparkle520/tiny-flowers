@@ -281,6 +281,7 @@ const notice = [
   "给湿润的天空绘上乾燥的色彩🏵️",
   "烟雾化作云朵 染上朝霞的颜色🌼",
   "如果闭上眼睛的话 能否再回到过去呢🌻",
+  "从你的前前前世开始 我就一直在寻找你的踪迹👣"
 ];
 const carousel_data = [
   { link: "https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" },
