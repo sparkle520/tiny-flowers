@@ -96,7 +96,7 @@ let currentTitle = ref({});
 // 获取目录的标题
 function getTitles() {
   let titles = [];
-  let levels = ["h1", "h2", "h3",'h4','h5'];
+  let levels = ["h1", "h2", "h3",'h4','h5','h6'];
 
   let articleElement = document.querySelector(".markdown-body");
   
@@ -161,10 +161,11 @@ function getTitles() {
     }
 
     serialNumbers[level] += 1;
-    let serialNumber = serialNumbers.slice(0, level + 1).join(".");
+    // let serialNumber = serialNumbers.slice(0, level + 1).join(".");
 
     node.isVisible = node.parent == null;
-    node.name = serialNumber + ". " + element.innerText;
+    // node.name = serialNumber + ". " + element.innerText; before
+    node.name = element.innerText; //now
     titles.push(node);
   }
   return titles;
@@ -225,7 +226,7 @@ function scrollToView(scrollTop) {
             'catalog-item',
             currentTitle.id == title.id ? 'active' : 'not-active',
           ]"
-          :style="{ marginLeft: title.level * 20 + 'px' }"
+          :style="{ marginLeft: title.level * 10 + 'px' }"
           v-show="title.isVisible"
           :title="title.rawName"
         >

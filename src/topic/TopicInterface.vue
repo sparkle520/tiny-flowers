@@ -98,7 +98,7 @@ const watch_height = () => {
       emitter.emit("topic_data", get_topic_data());
       height = mathjax_el.clientHeight;
     }else{
-      clearInterval(watch_mathJax_interval);
+      clearInterval(watch_height_interval);
     }
 },1000)}
 

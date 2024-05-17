@@ -37,10 +37,10 @@ export const useNoteStore = defineStore('note', {
                 directory_list: [
                     { name: "第一章 行列式" },
                     { name: "第二章 矩阵及其计算" },
-                    { name: "第三章 矩阵的初等变换与线性方程组" },
-                    { name: "第四章 向量组的线性相关性" },
-                    { name: "第五章 相似矩阵及二次型" },
-                    { name: "第六章 线性空间与线性变换" },
+                    { name: "第三章 向量组" },
+                    { name: "第四章 线性方程组" },
+                    { name: "第五章 特征值与特征向量" },
+                    { name: "第六章 二次型" },
                 ]
             },
             {
@@ -121,10 +121,8 @@ export const useNoteStore = defineStore('note', {
                     { name: "第三章 多维随机变量及其分布" },
                     { name: "第四章 随机变量的数字特征" },
                     { name: "第五章 大数定律及中心极限定理" },
-                    { name: "第六章 样本及抽样分布" },
-                    { name: "第七章 参数估计" },
-                    { name: "第八章 假设检验" },
-                    { name: "第九章 方差分析及回归分析" },
+                    { name: "第六章 数理统计的基本概念" },
+                    { name: "第七章 参数估计与假设检验" },
                 ]
             },
 

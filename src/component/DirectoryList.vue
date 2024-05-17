@@ -94,7 +94,7 @@ let currentTitle = ref({});
 // 获取目录的标题
 function getTitles() {
   let titles = [];
-  let levels = ["h1", "h2", "h3"];
+  let levels = ["h1", "h2", "h3","h4", "h5", "h6"];
 
   let articleElement = document.querySelector(".markdown-body");
   
@@ -245,7 +245,7 @@ $normal_color: var(--normal_color, #216eba);
   border-radius: 5px;
   background: $directory_list_bg;
   position: sticky;
-  top: 70px;
+  top: 80px;
   box-shadow: #5656561b 1px 1px 10px;
 
 }

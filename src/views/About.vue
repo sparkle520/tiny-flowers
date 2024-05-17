@@ -45,22 +45,48 @@ const go_to_unknown_world_map = () => {
   router.push("/unknownWorldMap");
 };
 const update_fif_animation = () => {
-  const latter_list = document.querySelectorAll(".latter_box span");
+  const latter_1 = document.querySelectorAll(".latter_1 span");
+  const latter_2 = document.querySelectorAll(".latter_2 span");
+  const latter_3 = document.querySelectorAll(".latter_3 span");
+  const latter_4 = document.querySelectorAll(".latter_4 span");
+  const latter_5 = document.querySelectorAll(".latter_5 span");
+  const latter_6 = document.querySelectorAll(".latter_6 span");
+  const latter_7 = document.querySelectorAll(".latter_7 span");
+  circle_animation(latter_1,true,20,800,400)
+  circle_animation(latter_2,false,30,700,300)
+  circle_animation(latter_3,false,20,200,400)
+  circle_animation(latter_4,true,20,200,200)
+  circle_animation(latter_5,false,30,300,500)
+  circle_animation(latter_6,false,30,500,400)
+  circle_animation(latter_7,true,30,900,300)
+};
+const circle_animation = (dom,positive,offset,p_x,p_y) =>{
   const fifth_page = document.querySelector(".fifth_page");
+  
   if (window.scrollY + 250 >= fifth_page.offsetTop) {
-    for (let i = 0; i < latter_list.length; i++) {
-      latter_list[i].style.transform = `rotate(${
-        (i + 1) * 12
-      }deg) translate(${i}em,${i}em)`;
-      latter_list[i].style.opacity = `${1 - i * 0.2}`;
+    for (let i = 0; i < dom.length; i++) {
+      dom[i].style.left =`${p_x}px`
+  dom[i].style.top =`${p_y}px`
+      if(positive){
+        dom[i].style.transform = `rotate(${
+        (i + 1) * (360/dom.length)
+      }deg) translate(${offset * i}px,${offset * i}px)`;
+      dom[i].style.opacity = `${1 - i * 0.01}`;
+      }else{
+        dom[i].style.transform = `rotate(-${
+        (i + 1) * (360/dom.length)
+      }deg) translate(${offset * i}px,${offset * i}px)`;
+      dom[i].style.opacity = `${1 - i * 0.01}`;
+      }
     }
   } else {
-    for (let i = 0; i < latter_list.length; i++) {
-      latter_list[i].style.transform = `rotate(0)`;
-      latter_list[i].style.opacity = `0`;
+    for (let i = 0; i < dom.length; i++) {
+      dom[i].style.transform = `rotate(0)`;
+      dom[i].style.opacity = `0`;
     }
+    
   }
-};
+}
 const update_f_animation = () => {
   const fourth_page = document.querySelector(".fourth_page");
   const f_word_inner_box = document.querySelector(".f_word_inner_box");
@@ -342,12 +368,29 @@ const change_theme = (current_theme) => {
       </div>
     </div>
     <div class="fifth_page relative">
-      <div class="latter_box absolute">
-        <span class="absolute" v-for="item in user_store.name.split('')">{{
+      <div class="latter_1 relative">
+        <span  class="absolute" v-for="item in user_store.name.split('')">{{
           item
         }}</span>
       </div>
-      <div></div>
+      <div class="latter_2 relative"> <span class="absolute"  v-for="item in 'Mozart'.split('')">{{
+          item
+        }}</span></div>
+      <div class="latter_3 relative"> <span class="absolute"  v-for="item in 'Schubert'.split('')">{{
+          item
+        }}</span></div>
+      <div class="latter_4 relative"> <span class="absolute"  v-for="item in 'Brahms'.split('')">{{
+          item
+        }}</span></div>
+      <div class="latter_5 relative"> <span class="absolute"  v-for="item in 'Chopin'.split('')">{{
+          item
+        }}</span></div>
+      <div class="latter_6 relative"> <span class="absolute"  v-for="item in 'Bach'.split('')">{{
+          item
+        }}</span></div>
+      <div class="latter_7 relative"> <span class="absolute"  v-for="item in 'Mendelssohn'.split('')">{{
+          item
+        }}</span></div>
     </div>
   </div>
 </template>
@@ -958,13 +1001,78 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
 
       transform: translateY(-50%);
     }
-    .latter_box {
-      left: 10vw;
+    .latter_1 {
+      
       z-index: 100;
-      top: 38vh;
-      color: #ff9028;
+      color: #ff6505;
       font-size: 3em;
       font-weight: 900;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
+    }
+    .latter_2{
+      
+      color: #dda0dd;
+      font-size: 3em;
+      font-weight: 900;
+      z-index: 100;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
+    }
+    .latter_3{
+      
+      color: #8ce600;
+      font-size: 3em;
+      font-weight: 900;
+      z-index: 100;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
+    }
+    .latter_4{
+      
+      color: #4798b3;
+      font-size: 3em;
+      font-weight: 900;
+      z-index: 100;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
+    }
+    .latter_5{
+      
+      color: #73e68c;
+      font-size: 3em;
+      font-weight: 900;
+      z-index: 100;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
+    }
+    .latter_6{
+      
+      color: #ff0063;
+      font-size: 3em;
+      font-weight: 900;
+      z-index: 100;
+      span {
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+        opacity: 0;
+      }
+    }
+    .latter_7{
+      
+      color: #404040;
+      font-size: 3em;
+      font-weight: 900;
+      z-index: 100;
       span {
         transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
         opacity: 0;

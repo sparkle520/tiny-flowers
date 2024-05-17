@@ -69,7 +69,7 @@ const watch_height = () => {
       emitter.emit("note_data", note_store.get_note_by_id(params.id));
       height = mathjax_el.clientHeight;
     }else{
-      clearInterval(watch_mathJax_interval);
+      clearInterval(watch_height_interval);
     }
 },1000)}
 const img_load_handle = () => {

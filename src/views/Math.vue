@@ -47,8 +47,11 @@ const init_content =  () => {
         modules[path]().then((mod) => {
           subject_solution_context[i].innerHTML =  marked(mod,true)
           nextTick(() => {
-            renderByMathjax(subject_solution_context[i]).catch(err=>{
-          });;
+            setTimeout(() => {
+              renderByMathjax(subject_solution_context[i]).catch(err=>{
+          });
+            },1000)
+            
           });
         });
       } else if (path == problem_path) {

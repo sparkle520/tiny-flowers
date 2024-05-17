@@ -17,7 +17,7 @@ import { createPinia } from 'pinia'
 // import 'highlight.js/styles/github-dark.css'
 import 'gitalk/dist/gitalk.css'
 import hljs from 'highlight.js';
-import "github-markdown-css";
+//import "github-markdown-css";
 // import "highlight.js/styles/github.css";
 import Particles from "vue3-particles";
 // import 'highlight.js/lib/common'

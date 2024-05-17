@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', {
     state: () => ({
 
-        name: '鱼鱼蒸饭了',
+        name: 'concentrate',
         signature: "人一旦失去重要的东西，就很难再获得了",
         avatar:'https://pic.imgdb.cn/item/65f271609f345e8d03f68b71.jpg',
         aphorism:'Personality is to a man what perfume is to a flower.<br>(个性之于人恰如芳香之于花。)',

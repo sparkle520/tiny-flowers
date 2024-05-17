@@ -33,6 +33,49 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   z-index: 10;
   letter-spacing: 2px;
   line-height: 1.9em;
+  
+  // 对于表格的美化
+table{
+  border-collapse:collapse;
+  table-layout:auto;
+  width: 80%;
+  border-radius:5px;
+  overflow:hidden;
+  margin: 16px auto;
+  border:none ;
+  border-collapse:collapse;
+  background: transparent;
+  color: $normal_color;
+  thead th {
+    background-color: transparent;
+    color: $normal_color;
+    border-bottom-width: 0;
+    border: none;
+    }
+    td,tr{
+      /* padding: 5px;
+      width: 33%; */
+      background: transparent;
+      border:none;
+      
+      border-bottom:1px $h_color solid ;
+      border-top:1px $h_color solid ;
+      text-align: center;
+      vertical-align:middle;
+      /* font-size: 15px; */
+    
+      &:nth-child(odd){
+        background-color: transparent;
+      }
+      &:nth-child(even){
+        background-color: transparent;
+      
+      }
+    }
+  }
+  
+  
+
 
   ::selection {
     color:$code_bg;
@@ -48,31 +91,31 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   
   }
   h2 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     color: $h_color;
     
   }
   h3 {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     color: $h_color;
     
   }
   h4 {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
     color: $h_color;
    
   }
   h5 {
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     color: $h_color;
     
   }
   h6 {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
     color: $h_color;
    
@@ -127,3 +170,5 @@ $blockquote_color: var(--blockquote_color, #ff7300);
     }
   }
 }
+
+
