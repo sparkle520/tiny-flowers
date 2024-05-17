@@ -1,0 +1,270 @@
+const n=`# 第六章 数理统计的基本概念  \r
+\r
+## 总体与样本  \r
+\r
+#### 总体、简单随机样本、抽样的概念  \r
+\r
+1. 在数理统计中所研究对象的某项数量指标$X$取值的全体称为**总体**，$X$是一个随机变量.$X$的分布函数和数字特征分别称为**总体**的**分布函数**和**数字特征**.总体中的每个元素称为**个体**，每个个体是一个实数.  \r
+\r
+2. $n$个**相互独立**且与总体$X$(设$X$的分布函数为$F(x)$)**同分布**的随机变量$X_1,X_2,\\cdots,X_n$称为来自总体$X$或来自分布函数$F$的**简单随机样本**，简称为**样本**，$n$称为样本容量;设$x_1,x_2,\\cdots,x_n$分别是$X_1,X_2,\\cdots,X_n$的**观测值**，则称$x_1,x_2,\\cdots,x_n$为**样本值**，又称为总体$X$的$n$个**独立的观测值**.简单地说，样本指一组随机变量，样本值指一组具体的统计数据，样本容量指观测值或数据个数.\r
+\r
+3. 对于总体$X$的$n$次独立重复观测，称为来自总体$X$的$n$次**简单随机抽样**. \r
+\r
+#### 简单随机样本的概率分布 \r
+\r
+1. 如果总体$X$的分布函数为$F(x),X_1,X_2,\\cdots,X_n$是来自总体$X$的简单随机样本，则随机变量$X_1,X_2,\\cdots,X_n$的联合分布函数为\r
+\r
+$$\r
+F(x_1,x_2,\\cdots,x_n)=\\prod_{i=1}^nF(x_i),x_i\\in R(1=1,2,\\cdots,n).\r
+$$\r
+\r
+2. 如果总体$X$的概率密度为$f(x)$，则样本$X_1,X_2,\\cdots,X_n$，的联合概率密度为\r
+\r
+$$\r
+f(x_1,x_2,\\cdots,x_n)=\\prod_{i=1}^nf(x_i),x_i\\in R(i=1,2,\\cdots,n).\r
+$$\r
+\r
+3. 如果总体$X$的概率分布为$P\\left\\\\{X=a_j\\right\\\\}=p_j(j=1,2,\\cdots)$，则样本$X_1,X_2,\\cdots,X_n$的联合概率分布为\r
+\r
+$$\r
+P\\left\\\\{X_1=x_1,X_2=x_2,\\cdots,X_n=x_n\\right\\\\}=\\prod_{i=1}^nP\\left\\\\{X_i=x_i\\right\\\\}.\r
+$$\r
+\r
+其中$X_i$取$a_1,a_2,\\cdots$中的某一个数.\r
+\r
+## 统计量 \r
+\r
+### 统计量的概念\r
+\r
+设$X_1,X_2,\\cdots,X_n$是来自总体$X$的样本，$g(X_1,X_2,\\cdots,X_n)$是一个关于$X_1,X_2,\\cdots,X_n$的函数，若$g$中**不含任何未知参数**，则称$g(X_1,X_2,\\cdots,X_n)$为样本$(X_1,X_2,\\cdots,X_n)$的**一个统计量**.设$x_1,x_2,\\cdots,x_n$是相应于样本$X_1,X_2,\\cdots,X_n$的样本值，则称$g(x_1,x_2,\\cdots,x_n)$是$g(X_1,X_2,\\cdots,X_n)$的**观测值**. \r
+\r
+统计量是样本$(X_1,X_2,\\cdots,X_n)$的函数:$T=f(X_1,X_2,\\cdots,X_n)$.统计量不依赖于任何未知参数.作为随机样本的函数，统计量也是随机变量.样本的数字特征是最常用的统计量. \r
+\r
+### 常用统计量 \r
+\r
+设$X_1,X_2,\\cdots,X_n$是来自总体$X$的简单随机样本，则 \r
+\r
+1. **样本均值** $\\overline{X}=\\displaystyle\\frac{1}{n}\\displaystyle\\sum_{i=1}^n X_i$.\r
+\r
+2. **样本方差** $S^2=\\displaystyle\\frac{1}{n-1}\\displaystyle\\sum_{i=1}^n(X_i-\\overline{X})^2=\\frac{1}{n-1}\\left\\(\\sum_{i=1}^n X_i^2-n\\overline{X}^2\\right\\)$.\r
+\r
+3. **样本标准差** $S=\\sqrt{\\displaystyle\\frac{1}{n-1}\\displaystyle\\sum_{i=1}^n(X_i-\\overline{X})^2}$.\r
+\r
+4. **样本$k$阶原点矩** $A_k=\\displaystyle\\frac{1}{n}\\displaystyle\\sum_{i=1}^n X_i^k,k=1,2,\\cdots$. \r
+\r
+5. **样本$k$阶中心矩** $B_k=\\displaystyle\\frac{1}{n}\\displaystyle\\sum_{i=1}^n(X_i-\\overline{X})^k,k=2,3,\\cdots$. \r
+\r
+> [注] \r
+> \r
+> 1. 如果总体$X$(不管服从什么分布，只要其均值和方差存在)具有数学期望$E(X)=\\mu$和方差$DX=\\sigma^2$，则总有 \r
+>$$\r
+E(\\overline{X})=EX=\\mu,\\quad D\\overline{X}=\\frac{DX}{n}=\\frac{\\sigma^2}{n},\\quad E(S^2)=DX=\\sigma^2.\r
+$$\r
+> 2. $B_2=\\frac{n-1}{n}S^2<S^2$. \r
+> \r
+> 3. 如果总体$X$的$k$阶原点矩$E(X^k)=\\mu_k(k=1,2,\\cdots)$存在，则当$n\\to\\infty$时，有\r
+>$$\r
+A_k=\\frac{1}{n}\\displaystyle\\sum_{i=1}^n X_i^k\\mu_k,k=1,2,\\cdots.\r
+$$\r
+\r
+## 抽样分布 \r
+\r
+### 来自正态总体的三个常用统计量的分布   \r
+\r
+#### $\\chi^2$分布 \r
+\r
+$\\chi^2$分布是一种非负连续型随机变量的分布，其密度函数的图形位于第一象限，峰值向左偏，随着$n$的增大，峰值向右移动. \r
+\r
+##### 典型模式\r
+\r
+设$X_1,X_2,\\cdots,X_n$**相互独立**，都服从**标准正态分布**$N(0,1)$，则称统计量 \r
+\r
+$$\r
+\\chi^2=\\sum_{i=1}^n X_i^2.\r
+$$\r
+\r
+服从自由度为$n$的$\\chi^2$**分布**，记为$\\chi^2\\sim\\chi^2(n)$.此处，自由度是指上式右端包含的**独立变量**的**个数**. \r
+\r
+![$\\chi^2图像$](https://pic.imgdb.cn/item/663456630ea9cb1403b75efd.png)\r
+\r
+##### $\\chi^2$分布的分位点\r
+\r
+对于给定的$\\alpha(0<\\alpha<1)$，称满足条件\r
+\r
+$$\r
+P\\left\\\\{\\chi^2>\\chi^2_{\\alpha}(n)\\right\\\\}=\\int_{\\chi^2_{\\alpha}(n)}^{+\\infty}f(t)dt=\\alpha.\\quad(f(t)为\\chi^2(n)分布的概率密度函数)\r
+$$\r
+\r
+的点$\\chi^2_{\\alpha}(n)$为$\\chi^2(n)$分布的上$\\alpha$分位点.(如上图所示)\r
+\r
+##### $\\chi^2$分布的性质 \r
+\r
+1. $\\chi^2$分布的数学期望和方差分别为$E(\\chi^2(n))=n,D(\\chi^2(n))=2n$.\r
+\r
+2. $\\chi^2$分布具有可加性:设$\\chi^2_1\\sim\\chi^2(n_1),\\chi^2_2\\sim\\chi^2(n_2)$，且$\\chi^2_1,\\chi^2_2$**相互独立**，则有\r
+\r
+$$\r
+\\chi^2_1+\\chi^2_2\\sim\\chi^2(n_1+n_2).\r
+$$\r
+\r
+#### $t$分布 \r
+\r
+$t$分布是一种连续型随机变量的分布，其密度函数的图形关于$y$轴对称，形状与标准正态分布曲线相类似. \r
+\r
+##### 典型模式 \r
+\r
+设$X\\sim N(0,1),Y\\sim\\chi^2(n)$，且$X,Y$**相互独立**，则称随机变量 \r
+\r
+$$\r
+t=\\frac{X}{\\sqrt{Y/n}}.\r
+$$\r
+\r
+服从自由度为$n$的**t分布**，记为$t\\sim t(n)$. \r
+\r
+![$t图像$](https://pic.imgdb.cn/item/66345b040ea9cb1403c24318.png)\r
+\r
+##### $t$分布的分位点 \r
+\r
+对于给定的$\\alpha(0<\\alpha<1)$，称满足条件 \r
+\r
+$$\r
+P\\left\\\\{t>t_{\\alpha}(n)\\right\\\\}=\\int_{t_{\\alpha}(n)}^{+\\infty}f(t)dt=\\alpha.\\quad(f(t)为t(n)分布的概率密度函数)\r
+$$\r
+\r
+的点$t_{\\alpha}(n)$为$t(n)$分布的上$\\alpha$分位点.(如上图所示) \r
+\r
+由$t$分布上$\\alpha$分位点的定义及$f(t)$图形的对称性知$t_{1-\\alpha}(n)=-t_{\\alpha}(n)$.\r
+\r
+##### $t$分布的性质 \r
+\r
+1. $t(n)$分布的概率密度函数$f(t)$是**偶函数**，且有\r
+$$\r
+\\lim_{n\\to\\infty}f(t)=\\frac{1}{\\sqrt{2\\pi}}e^{-\\frac{t^2}{2}}.\r
+$$\r
+可见，当$n$足够大时$t$分布近似于$N(0,1)$分布，但对于较小的$n,t$分布于$N(0,1)$分布相差较大. \r
+\r
+2. 若$t\\sim t(n)$，则$t^2\\sim F(1,n)$.\r
+\r
+#### $F$分布 \r
+\r
+$F$分布是一种非负连续型随机变量$X$的分布，其密度函数含有两个参数$n_1,n_2$，函数曲线的形状于$\\chi^2$分布相似. \r
+\r
+##### 典型模式 \r
+\r
+设$X\\sim\\chi^2(n_1),Y\\sim\\chi^2(n_2)$，且$X,Y$**相互独立**，则称随机变量 \r
+\r
+$$\r
+F=\\frac{X/n_1}{Y/n_2}.\r
+$$\r
+\r
+服从自由度为$(n_1,n_2)$的**F分布**，记为$F\\sim F(n_1,n_2)$. \r
+\r
+![$F图像$](https://pic.imgdb.cn/item/66345ebd0ea9cb1403cb4218.png)\r
+\r
+##### $F$分布的分位点 \r
+\r
+对于给定的$\\alpha(0<\\alpha<1)$，称满足条件 \r
+\r
+$$\r
+P\\left\\\\{F>F_{\\alpha}(n_1,n_2)\\right\\\\}=\\int_{F_{\\alpha}(n_1,n_2)}^{+\\infty}f(t)dt=\\alpha.\\quad(f(t)为F(n_1,n_2)分布的概率密度函数)\r
+$$\r
+\r
+的点$F_{\\alpha}(n_1,n_2)$为$F(n_1,n_2)$分布的上$\\alpha$分位点.(如上图所示) \r
+\r
+##### $F$分布的性质 \r
+\r
+1. 如果$F\\sim F(n_1,n_2)$，则$\\displaystyle\\frac{1}{F}\\sim F(n_2,n_1)$.\r
+\r
+2. $F_{1-\\alpha}(n_1,n_2)=\\displaystyle\\frac{1}{F_{\\alpha}(n_2,n_1)}$. \r
+\r
+### 正态总体的样本均值与样本方差的分布 \r
+\r
+#### 单个正态总体 \r
+\r
+设$X\\sim N(\\mu,\\sigma^2)$，$X_1,X_2,\\cdots,X_n$是来自总体$X$的简单随机样本， $\\overline{X}=\\displaystyle\\frac{1}{n}\\displaystyle\\sum_{i=1}^n X_i$与$S^2=\\displaystyle\\frac{1}{n-1}\\displaystyle\\sum_{i=1}^n(X_i-\\overline{X})^2$分别为相应的样本均值和样本方差，则 \r
+\r
+1. 样本均值的分布: \r
+\r
+- $$\r
+\\overline{X}\\sim N(\\mu,\\sigma^2/n).\\hspace{100cm}\r
+$$\r
+\r
+- $$\r
+\\frac{\\overline{X}-\\mu}{\\sigma/\\sqrt{n}}=\\frac{\\sqrt{n}(\\overline{X}-\\mu)}{\\sigma}\\sim N(0,1).\\hspace{100cm}\r
+$$\r
+\r
+- $$\r
+\\frac{\\overline{X}-\\mu}{S/\\sqrt{n}}=\\frac{\\sqrt{n}(\\overline{X}-\\mu)}{S}\\sim t(n-1).\\hspace{100cm}\r
+$$\r
+\r
+2. 样本方差的分布: \r
+\r
+- $$\r
+\\frac{1}{\\sigma^2}\\sum_{i=1}^n(X_i-\\mu)^2\\sim\\chi^2(n).\\hspace{100cm}\r
+$$\r
+\r
+- $$\r
+\\frac{1}{S^2}\\sum_{i=1}^n(X_i-\\overline{X})^2\\sim\\chi^2(n-1).\\hspace{100cm}\r
+$$\r
+\r
+- $$\r
+\\frac{(n-1)S^2}{\\sigma^2}=\\sum_{i=1}^n(\\frac{X_i-\\overline{X}}{\\sigma})^2\\sim\\chi^2(n-1).\\hspace{100cm}\r
+$$\r
+\r
+- $\\overline{X}$与$S^2$**相互独立**.(正态总体特有的性质)\r
+\r
+#### 两个正态总体\r
+\r
+设$X_1,X_2,\\cdots,X_{n_1}$与$Y_1,Y_2,\\cdots,Y_{n_2}$分别是来自正态总体$N(\\mu_1,\\sigma_1^2)$和$N(\\mu_2,\\sigma_2^2)$的样本，且这两个样本**相互独立**(注:指随机变量$(X_1,X_2,\\cdots,X_{n_1})$与$(Y_1,Y_2,\\cdots,Y_{n_2})$相互独立).设$\\overline{X},S_X^2$和$\\overline{Y},S_Y^2$是相应的样本均值和样本方差，$S_{XY}^2$是总体$X$和$Y$的联合样本方差,记 \r
+\r
+$$\r
+\\overline{X}=\\displaystyle\\frac{1}{n_1}\\displaystyle\\sum_{i=1}^{n_1} X_i\\quad\\overline{Y}=\\displaystyle\\frac{1}{n_2}\\displaystyle\\sum_{i=1}^{n_2} Y_i. \\hspace{100cm}\r
+$$\r
+\r
+$$\r
+S_X^2=\\displaystyle\\frac{1}{n_1-1}\\displaystyle\\sum_{i=1}^{n_1}(X_i-\\overline{X})^2\\quad S_Y^2=\\displaystyle\\frac{1}{n_2-1}\\displaystyle\\sum_{i=1}^{n_2}(Y_i-\\overline{Y})^2.\\hspace{100cm}\r
+$$\r
+\r
+$$\r
+S^2_{XY}=\\frac{(n_1-1)S^2_X+(n_2-1)S^2_Y}{n_1+n_2-2}.\\hspace{100cm}\r
+$$ \r
+\r
+则\r
+\r
+1. **样本均值差的抽样分布** \r
+\r
+$$\r
+\\overline{X}-\\overline{Y}\\sim N(\\mu_1-\\mu_2,\\frac{\\sigma_1^2}{n_1}+\\frac{\\sigma_2^2}{n_2})\\quad\\quad\\frac{\\overline{X}-\\overline{Y}-(\\mu_1-\\mu_2)}{\\sqrt{\\sigma^2_1/n_1+\\sigma^2_2/n_2}}\\sim N(0,1).\\hspace{100cm}\r
+$$\r
+\r
+2. **样本方差比的抽样分布**\r
+\r
+$$\r
+F=\\frac{S_X^2/\\sigma^2_1}{S_Y^2\\sigma^2_2}\\sim F(n_1-1,n_2-1).\\hspace{100cm}\r
+$$\r
+\r
+特别地，当$\\sigma^2_1=\\sigma^2_2\\triangleq\\sigma^2$时，\r
+\r
+$$\r
+T=\\frac{(\\overline{X}-\\overline{Y})-(\\mu_1-\\mu_2)}{S_{XY}\\sqrt{\\displaystyle\\frac{1}{n_1}+\\displaystyle\\frac{1}{n_2}}}\\sim t(n_1+n_2-2).\\hspace{100cm}\r
+$$\r
+\r
+$$\r
+W=\\frac{(n_1+n_2-2)S^2_{XY}}{\\sigma^2}\\sim \\chi^2(n_1+n_2-2).\\hspace{100cm}\r
+$$\r
+\r
+### $X(n)=\\max(X_1,X_2,\\cdots,X_n)$和$X(n)=\\min(X_1,X_2,\\cdots,X_n)$的分布 \r
+\r
+设总体$X$的分布函数为$F(x),X_1,X_2,\\cdots,X_n$是来自总体$X$的简单随机样本，则统计量$X(n)=\\max(X_1,X_2,\\cdots,X_n)$和$X(n)=\\min(X_1,X_2,\\cdots,X_n)$的分布函数分别为 \r
+\r
+$$\r
+\\begin{equation*}\r
+  \\begin{aligned}\r
+  F_{\\max}(x)&=P\\left\\\\{\\max(X_1,X_2,\\cdots,X_n)\\leq x\\right\\\\}=[F(x)]^n.\r
+. \\\\\\\\\\\\\r
+  \\\\\\\\\\\\\r
+  F_{\\min}(x)&=P\\left\\\\{\\min(X_1,X_2,\\cdots,X_n)\\leq x\\right\\\\}=1-[1-F(x)]^n.\r
+ \\\\\\\\\\\\\r
+  \\end{aligned}\r
+\\end{equation*}\r
+$$ `;export{n as default};

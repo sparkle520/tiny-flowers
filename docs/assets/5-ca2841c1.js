@@ -1,0 +1,85 @@
+const n=`# 第五章 大数定律及中心极限定理 \r
+\r
+## 大数定律 \r
+\r
+### 依概率收敛 \r
+\r
+设$Y_1,Y_2,\\cdots,Y_n,\\cdots$是一个随机变量序列，$a$是一个常数，若对于任意给定的正数$\\epsilon$，有 \r
+\r
+$$\r
+\\lim_{n \\to \\infty}P\\left\\\\{|Y_n-a|<\\epsilon\\right\\\\}=1\r
+$$\r
+\r
+则称随机变量序列$Y_1,Y_2,\\cdots,Y_n,\\cdots$**依概率收敛于常数a**.记作$Y_n \\xrightarrow[\\quad\\quad]{P} a$. \r
+\r
+> [注]\r
+> \r
+> 设$X_n \\xrightarrow[\\quad\\quad]{P} a,Y_n \\xrightarrow[\\quad\\quad]{P} b$，又设函数$g(x,y)$在点$(a,b)$连续，则$g(X_n,Y_n) \\xrightarrow[\\quad\\quad]{P} g(a,b)$.\r
+\r
+### 切比雪夫不等式 \r
+\r
+设随机变量$X$的**数学期望**和**方差**都**存在**，则对任意给定的$\\epsilon>0$，总有\r
+\r
+$$\r
+P\\left\\\\{|X-EX|\\geq \\epsilon\\right\\\\}\\leq \\frac{DX}{\\epsilon^2} 或 P\\left\\\\{|X-EX|< \\epsilon\\right\\\\}\\geq 1-\\frac{DX}{\\epsilon^2}.\r
+$$\r
+\r
+切比雪夫不等式给出了在随机变量$X$的分布未知，而只知道$EX$和$DX$的情况下估计概率$P\\left\\\\{|X-EX|< \\epsilon\\right\\\\}$的界限. \r
+\r
+### 切比雪夫大数定律 \r
+\r
+设随机变量$X_1,X_2,\\cdots,X_n,\\cdots$**相互独立**，**数学期望**$EX_i$和**方差**$DX_i$都**存在**，并且方差有**公共上界**，即$DX_i\\leq c,i=1,2,\\cdots,$则对任意给定的$\\epsilon>0$，有\r
+\r
+$$\r
+\\lim_{n \\to \\infty}P\\left\\\\{\\left\\|\\frac{1}{n}\\sum_{i=1}^n X_i-\\frac{1}{n}\\sum_{i=1}^n EX_i\\right\\|<\\epsilon\\right\\\\}=1.\r
+$$\r
+\r
+### 伯努利大数定律  \r
+\r
+设随机变量$X_n$服从参数为$n$和$p$的**二项分布**，即$X_n \\sim B(n,p)$，$\\mu_n$是$n$次实验中事件$A$发生的次数$(n=1,2,\\cdots)$，则对任意给定的$\\epsilon>0$，有\r
+\r
+$$\r
+\\lim_{n \\to \\infty}P\\left\\\\{\\left\\|\\frac{\\mu_n}{n}-p\\right\\|<\\epsilon\\right\\\\}=1.\r
+$$\r
+\r
+### 辛钦大数定律  \r
+\r
+设随机变量$X_1,X_2,\\cdots,X_n,\\cdots$**相互独立同分布**，**期望存在**，记$\\mu$为它们共同的期望,则对任意$\\epsilon>0$，有\r
+\r
+$$\r
+\\lim_{n \\to \\infty}P\\left\\\\{\\left\\|\\frac{1}{n}\\sum_{i=1}^n X_i-\\mu\\right\\|<\\epsilon\\right\\\\}=1.\r
+$$\r
+\r
+## 中心极限定理 \r
+\r
+### 列维-林德伯格定理 \r
+\r
+设随机变量$X_1,X_2,\\cdots,X_n,\\cdots$**相互独立同分布**，且**数学期望**和**方差存在**，即\r
+\r
+$$\r
+EX_i=\\mu,DX_i=\\sigma^2,i=1,2,\\cdots.\r
+$$\r
+\r
+则对任意实数$x$，恒有\r
+$$\r
+\\lim_{n \\to \\infty}P\\left\\\\{\\frac{1}{\\sigma\\sqrt{n}}\\left\\(\\sum_{i=1}^n X_i-n\\mu\\right\\)\\leq x\\right\\\\}=\\Phi(x).\r
+$$\r
+\r
+其中$\\Phi(x)$是标准正态分布的分布函数. \r
+\r
+> [注]\r
+> \r
+> 1. 定理的三个条件:“独立、同分布、数学期望与方差存在”，缺一不可. \r
+> 2. 只要$X_n$满足定理条件，那么当$n$很大时，独立同分布随机变量的和$\\displaystyle\\sum_{i=1}^n X_i\\$就**近似于标准正态分布**$N(n\\mu,n\\sigma^2)$，且$\\displaystyle\\sum_{i=1}^n X_i\\$的标准化随机变量$\\frac{\\displaystyle\\sum_{i=1}^n X_i-n\\mu}{\\displaystyle\\sigma\\sqrt{n}}=\\frac{\\displaystyle\\frac{1}{n}\\sum_{i=1}^2 X_i-\\mu}{\\displaystyle\\sigma/\\sqrt{n}}$近似服从标准正态分布$N(0,1)$.\r
+\r
+### 棣莫弗-拉普拉斯定理 \r
+\r
+假设随机变量$Y_n$服从参数为$n,p(0<p<1,n=1,2,\\cdots)$的**二项分布**，则对任何实数$x$，有\r
+\r
+$$\r
+\\lim_{n \\to \\infty}P\\left\\\\{\\frac{Y_n-np}{\\sqrt{np(1-p)}}\\leq x\\right\\\\}=\\Phi(x).\r
+$$\r
+\r
+> [注]\r
+> \r
+> 该定理表明，当$n$充分大时，服从$B(n.p)$的随机变量$Y_n$的标准化随机变量$\\displaystyle\\frac{Y_n-np}{\\sqrt{np(1-p)}}$就**近似服从标准正态分布**$N(0,1)$，或者说$Y_n$近似服从$N(np,np(1-p))$.`;export{n as default};
