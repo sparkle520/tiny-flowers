@@ -6,7 +6,7 @@ $normal_color: var(--normal_color, #4d4949);
 #topic_main {
   width: 100vw;
   background: $topic_bg;
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   min-height: 100vh;
   color: $normal_color;

@@ -15,6 +15,7 @@ import {
 } from "vue";
 import { useRouter } from "vue-router";
 import change_theme from "../assets/theme/TopNavBar";
+import c_c from "@/assets/js/utils.js"
 const router = useRouter();
 import { useConfigStore } from "../store/config";
 import { useUserStore } from "../store/user";
@@ -44,8 +45,17 @@ const click_handle = (e) => {
 const nav_handle = () => {
   let wScrY = window.scrollY;
   const top_nav_main = document.querySelector("#top_nav_main");
-  const music_img = document.querySelector(".music img");
-  music_img.style.transform = `rotate(${wScrY%360}deg)`;
+  // const music_img = document.querySelector(".music img");
+  // music_img.style.transform = `rotate(${wScrY%360}deg)`;
+  if(wScrY < 70){
+    c_c("--nav_bg_color", "transparent")
+    top_nav_main.style.transform = `translateY(-100%)`;
+    setTimeout(()=>{
+      top_nav_main.style.transform = `translateY(0%)`;
+    },500)
+  }else{
+    change_theme(theme.value);
+  }
 };
 const emits = defineEmits(["music_change"]);
 
@@ -116,33 +126,6 @@ const switch_nav_active = () => {
         break;
       }
     }
-    //   switch (active_item.value) {
-    //     case "首页":
-    //       switch_nav_item(0);
-    //       break;
-    //     case "":
-    //       switch_nav_item(1);
-    //       break;
-    //     case "note":
-    //       switch_nav_item(1);
-    //       break;
-    //     case "math":
-    //       switch_nav_item(1);
-    //       break;
-    //     case "about":
-    //       switch_nav_item(2);
-    //       break;
-
-    //     case "siteNav":
-    //       switch_nav_item(3);
-    //       break;
-    //     case "updateLog":
-    //       switch_nav_item(4);
-    //       break;
-    //     default:
-    //       switch_nav_item(0);
-    //       break;
-    //   }
   });
 };
 watch(
@@ -177,6 +160,9 @@ const theme_change = () => {
 <template>
   <div id="top_nav_main" class="nav_main">
     <div class="content flex flex_direction_row relative">
+    <div class="absolute stave flex flex_direction_column">
+      <div v-for="item in 5" :key="item" class="stave_line"></div>
+    </div>
       <div
         class="absolute nav_box flex flex_direction_row justify_content_space_between"
       >
@@ -302,11 +288,6 @@ $nav_item_color: var(--nav_item_color, #5e6d78);
 $nav_item_active_color: var(--nav_item_active_color, #f67d61);
 $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 
-.nav_fixed {
-  background: $nav_bg_color;
-  // backdrop-filter: blur(6px);
-  // -webkit-backdrop-filter: blur(6px);
-}
 
 @font-face {
   font-family: "orbitron-black";
@@ -319,18 +300,18 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 #top_nav_main {
   position: fixed;
   width: 100vw;
-  background: transparent;
-  box-shadow: #30313617 2px 0px 10px;
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  // box-shadow: #30313617 2px 0px 10px;
+  transition: all 10s cubic-bezier(0.075, 0.82, 0.165, 1);
   font-family: "orbitron-black";
   height: 80px;
 
   .content {
     width: 100%;
     z-index: 11;
+    background: $nav_bg_color;
     height: inherit;
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+    transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+   
     .nav_box {
       top: 50%;
       width: 100%;

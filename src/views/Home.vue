@@ -1392,9 +1392,10 @@ $box_bg: var(--box_bg, #fff);
       width: 100vw;
       height: 100vw;
       z-index: 100;
-      background: radial-gradient(circle, rgba(238, 182, 71, 0.5) 1%, rgba(230, 88, 59, 0.5) 13%, rgba(239, 78, 123, 0.5) 26%, rgba(175, 104, 187, 0.5) 39%, rgba(65, 131, 203, 0.5) 52%, rgba(18, 157, 179, 0.5) 65%, rgba(7, 179, 155, 0.5) 77%, rgba(111, 186, 130, 0.5) 89%, rgba(172, 191, 85, 0.5) 98%);
+      background: radial-gradient(circle, #92fe9d 0%, #00c9ff 50%,#21d4fd 100%);
+            // background: radial-gradient(circle, #eeb64780 1%, rgba(230, 88, 59, 0.5) 13%, rgba(239, 78, 123, 0.5) 26%, rgba(175, 104, 187, 0.5) 39%, rgba(65, 131, 203, 0.5) 52%, rgba(18, 157, 179, 0.5) 65%, rgba(7, 179, 155, 0.5) 77%, rgba(111, 186, 130, 0.5) 89%, rgba(172, 191, 85, 0.5) 98%);
       z-index: -1000;
-      animation: page_bg_1 4s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate;
+      animation: page_bg_1 4s infinite linear alternate;
       @keyframes page_bg_1 {
         50%{
           transform: scale(5);

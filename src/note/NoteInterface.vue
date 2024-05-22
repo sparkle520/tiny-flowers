@@ -3,7 +3,7 @@
 <!-- @Description:  -->
 
 <script setup>
-import { ref, onBeforeMount, onMounted, nextTick, watch } from "vue";
+import { ref, onBeforeMount, onMounted, nextTick, watch,onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import MathJax, { initMathJax, renderByMathjax } from 'mathjax-vue3'
@@ -17,7 +17,6 @@ import emitter from "@/assets/config/mitt_bus.js";
 import { useConfigStore } from "../store/config";
 import { useNoteStore } from "../store/note";
 const { params } = useRoute();
-
 import { change_layout } from "/src/assets/js/topic.js";
 import { storeToRefs } from "pinia";
 import { marked } from "marked";
@@ -29,7 +28,9 @@ marked.setOptions({
   pedantic: false,
   sanitize: true,
 });
-
+onUnmounted(()=>{
+  clearInterval(watch_height_interval)
+})
 const initContent = () => {
   get_md_file(params.id,params.index);
 };
@@ -62,16 +63,25 @@ onBeforeMount(() => {
 // 监听高度
 let watch_height_interval;
 let height;
+const check_over = ref(false)
+
+
 const watch_height = () => {
+  if(watch_height_interval)return;
   watch_height_interval = setInterval(() => {
     const mathjax_el = document.getElementById("mathjax");
     if (mathjax_el.clientHeight != height) {
       emitter.emit("note_data", note_store.get_note_by_id(params.id));
       height = mathjax_el.clientHeight;
-    }else{
-      clearInterval(watch_height_interval);
+      check_over.value = true
+
     }
 },1000)}
+watch(check_over,(newV)=>{
+  if(newV){
+    clearInterval(watch_height_interval)
+  }
+})
 const img_load_handle = () => {
   emitter.emit("note_data", note_store.get_note_by_id(params.id));
 };
@@ -94,14 +104,7 @@ const get_md_file = (id,index) => {
     }
   }
 };
-//  await import('/src/assets/topic_md/topic'+index+'.md?raw').then((module)=>{
-//   content.value = module.default;
-//  })
 
-/* <vue-latex :display-mode="true" expression="设\lim_{x \to x_{0}} f(x) =A."></vue-latex> */
-/* <div class="hljs_container" style="width: 700px;" codetype="JavaScript" >
-        <highlightjs  style="width: 700px;" language="JavaScript" :autodetect="false" :code="code"></highlightjs>
-    </div> */
 </script>
 <template>
   <div id="topic_main">
