@@ -26,7 +26,7 @@ $blockquote_color: var(--blockquote_color, #ff7300);
 .markdown-body {
   background: transparent;
   font-family: 'misans';
-
+  font-size: 18px;
   color: $normal_color;
   width: 100%;
   overflow: hidden;
