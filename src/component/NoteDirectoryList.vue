@@ -72,12 +72,12 @@ const get_col = () => {
 </template>
 <style lang="scss" scoped>
 #directory_list_main {
-  width: 60vw;
+  width: 860px;
   border-radius: 5px;
   
   .Note_inner_directory_box {
     column-count: 3;
-    width: 60vw;
+    width: 860px;
    
     column-gap: 8px;
   }

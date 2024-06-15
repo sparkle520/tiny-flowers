@@ -53,7 +53,7 @@ export const useNoteStore = defineStore('note', {
                 tags: '高等数学?微积分',
                 classification: '数学',
                 short_message: '高等数学是由微积分学，较深入的代数学、几何学以及它们之间的交叉内容所形成的一门基础学科.',
-                update_date: '2024?01?14?11:06',
+                update_date: '2024?06?14?11:06',
                 is_visible: true,
                 is_finished: false,
                 directory_list: [

@@ -41,7 +41,7 @@ $normal_color: var(--normal_color, #4d4949);
     display: flex;
     flex-direction: column;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+    
     .topic_text {
       width: 96%;
       margin: 32px auto;
@@ -58,6 +58,7 @@ $normal_color: var(--normal_color, #4d4949);
         z-index: 0;
         // background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png") repeat-y;
         background: url("https://pic.imgdb.cn/item/65d0a7e89f345e8d0368e174.png") repeat-y;
+        
         background-size:100%; 
         
       }

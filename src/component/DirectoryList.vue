@@ -173,9 +173,9 @@ const c_c = (mut_val, color) => {
 const change_theme = (current_theme) => {
   if (current_theme) {
     //night
-    c_c("--directory_list_bg", "#242837");
+    c_c("--directory_list_bg", "#1e2433");
   } else {
-    c_c("--directory_list_bg", "#ffff");
+    c_c("--directory_list_bg", "#fdfbfb");
   }
 };
 
@@ -210,7 +210,7 @@ function scrollToView(scrollTop) {
           /></span>
           <div class="flex flex_direction_row align_items_center">
            
-            <span style="margin-left: 8px;color:#5D6D7E ;">目录</span>
+            <span style="margin-left: 8px;color:#5D6D7E ;">目录🌻</span>
           </div>
         </div>
         <!-- <span class="progress">{{ progress }}</span> -->
@@ -237,7 +237,7 @@ function scrollToView(scrollTop) {
 </template>
 <style lang="scss" scoped>
 $directory_list_bg: var(--directory_list_bg, #ffff);
-$directory_list_cover_bg: var(--directory_list_cover_bg, #e96969);
+$directory_list_cover_bg: var(--directory_list_cover_bg, #9584d0);
 $normal_color: var(--normal_color, #216eba);
 
 #directory_list_main {
@@ -246,7 +246,7 @@ $normal_color: var(--normal_color, #216eba);
   background: $directory_list_bg;
   position: sticky;
   top: 80px;
-  box-shadow: #5656561b 1px 1px 10px;
+  // box-shadow: #5656561b 1px 1px 10px;
 
 }
 .catalog-card {
@@ -292,7 +292,7 @@ $normal_color: var(--normal_color, #216eba);
 }
 
 .catalog-item {
-  color: $normal_color;
+  color: #8491a5;
   margin: 5px 0;
   transition: color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -309,18 +309,18 @@ $normal_color: var(--normal_color, #216eba);
   
 
   &:hover {
-    color: $directory_list_cover_bg;
+    color: #1772f6;
   }
 }
 
 .active {
   position: relative;
-  color: #ffff;
+  color: #1772f6;
   background: $directory_list_cover_bg;
   font-weight: 900;
  
   &:hover {
-    color:$directory_list_cover_bg;
+    color:#1772f6;
   }
 }
 </style>

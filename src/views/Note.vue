@@ -130,9 +130,9 @@ const recommend_note_list = [
   },
   {
     id: 1,
-    name: "概率论与数理统计",
-    link: "/note/noteInfo/1",
-    img: "https://pic.imgdb.cn/item/65e2d81a9f345e8d03e2fbba.jpg",
+    name: "MySQL高级篇",
+    link: "/note/noteInfo/4",
+    img: 'https://pic.imgdb.cn/item/65f5d5bf9f345e8d03e639bd.png',
   },
 ];
 const click_handle = (e) => {

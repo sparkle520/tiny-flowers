@@ -90,9 +90,7 @@ change_theme(config_store.theme);
             点击阅读
           </button>
         </div>
-        <div class="note_top_right_box">
-          <div class="card flex flex_direction_column"></div>
-        </div>
+       
       </div>
     </div>
     <div class="note_directory_box flex flex_direction_column relative">
@@ -129,7 +127,7 @@ change_theme(config_store.theme);
 $note_info_main_bg: var(--note_info_main_bg, #fdfbfb);
 $note_top_mid_box_h1_color: var(--note_top_mid_box_h1_color, #fff);
 $note_top_mid_box_p_color: var(--note_top_mid_box_p_color, #ffffffb5);
-$note_top_mid_box_span_color: var(--note_top_mid_box_span_color, #ffffffc7);
+$note_top_mid_box_span_color: var(--note_top_mid_box_span_color, #f5f5f5);
 $load_status_color: var(--load_status_color, #ffffffc7);
 $finished_status_color: var(--finished_status_color, #ffffffc7);
 $read_btn_color: var(--read_btn_color, #ec3755);
@@ -142,7 +140,7 @@ $foot_bg: var(--foot_bg, #e96969);
   background: $note_info_main_bg;
   .note_top_box {
     width: inherit;
-    height: 70vh;
+    height: 500px;
     overflow: hidden;
     &::after {
       content: "";
@@ -151,7 +149,7 @@ $foot_bg: var(--foot_bg, #e96969);
       height: 100%;
       left: 0;
       top: 0;
-      background-color: rgba(30, 33, 40, 0.384);
+      background-color: rgba(30, 33, 40, 0.249);
       z-index: 1;
     }
     .top_box_bg {
@@ -165,19 +163,18 @@ $foot_bg: var(--foot_bg, #e96969);
     }
     .note_top_inner_box {
       z-index: 2;
+      margin: 0 auto;
       margin-top: 70px;
-      margin-left: 3vw;
-      margin-right: 3vw;
-      width: inherit;
-      gap: 2vw;
+     gap: 32px;
+      width: 1000px;
 
       height: calc(100% - 70px);
       .note_top_left_box {
-        width: 20vw;
+        width: 268px;
         height: 100%;
 
         img {
-          width: 21vw;
+          width: 268px;
           height: 86%;
           margin: 7% 0;
           background: $note_top_mid_box_h1_color;
@@ -188,9 +185,9 @@ $foot_bg: var(--foot_bg, #e96969);
         }
       }
       .note_top_mid_box {
-        width: 43vw;
+        width: 600px;
         height: 100%;
-        gap: 1vh;
+        gap: 16px;
         h1 {
           color: $note_top_mid_box_h1_color;
           margin: 0;
@@ -199,7 +196,7 @@ $foot_bg: var(--foot_bg, #e96969);
         }
         p {
           margin: 0;
-          margin-bottom: 10vh;
+          margin-bottom: 32px;
           color: $note_top_mid_box_p_color;
           animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
@@ -208,14 +205,16 @@ $foot_bg: var(--foot_bg, #e96969);
           animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         .load_status {
+          font-weight: bold;
           color: $load_status_color;
         }
         .finished_status {
+          font-weight: bold;
           color: $finished_status_color;
         }
         .read_btn {
           margin-top: auto;
-          height: 6vh;
+          height: 48px;
           width: 100%;
           margin-left: auto;
           border: none;
@@ -255,17 +254,7 @@ $foot_bg: var(--foot_bg, #e96969);
           }
         }
       }
-      .note_top_right_box {
-        width: 26vw;
-        height: 100%;
-        .card {
-          width: 26vw;
-          height: 86%;
-          margin: 7% auto;
-          background: rgba(236, 236, 236, 0.269);
-          border-radius: 10px;
-        }
-      }
+       
     }
   }
 
@@ -278,7 +267,7 @@ $foot_bg: var(--foot_bg, #e96969);
       margin-top: 0;
     }
     h1 {
-      width: 60vw;
+      width: 900px;
       margin: 32px auto;
       font-size: 1.5em;
       color: $read_btn_color;

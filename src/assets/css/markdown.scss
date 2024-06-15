@@ -23,6 +23,10 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   font-family: "FiraMath-Regular";
   src: url("/src/assets/font/FiraMath-Regular.ttf");
 }
+@font-face {
+  font-family: "monaco";
+  src: url("/src/assets/font/monaco.ttf");
+}
 .markdown-body {
   background: transparent;
   font-family: 'misans';

@@ -211,7 +211,7 @@ function scrollToView(scrollTop) {
               class="catalog-icon"
           /></span>
           <div class="flex flex_direction_row align_items_center">
-            <strong >目录</strong>
+            <strong >目录🌼</strong>
           </div>
         </div>
         <!-- <span class="progress">{{ progress }}</span> -->
@@ -226,7 +226,7 @@ function scrollToView(scrollTop) {
             'catalog-item',
             currentTitle.id == title.id ? 'active' : 'not-active',
           ]"
-          :style="{ marginLeft: title.level * 10 + 'px' }"
+          :style="{ paddingLeft: title.level * 10 + 'px' }"
           v-show="title.isVisible"
           :title="title.rawName"
         >
@@ -237,20 +237,23 @@ function scrollToView(scrollTop) {
   </div>
 </template>
 <style lang="scss" scoped>
-$directory_list_cover_bg: var(--directory_list_cover_bg, #e96969);
-$normal_color: var(--normal_color, #e96969);
+$directory_list_cover_bg: var(--directory_list_cover_bg, #ffffff);
+$directory_active_color: var(--directory_active_color, #1772f6);
+
+$directory_color: var(--directory_color, #8491a5);
 
 #directory_list_main {
   width: 21vw;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+  background: $directory_list_cover_bg;
   position: sticky;
-  top: 50px;
+  top: 80px;
+  border-radius: 5px;
 }
 .catalog-card {
   background: transparent;
   // border-radius: 5px;
-  padding: 16px 16px;
+  padding: 8px 16px;
   width: 100%;
   box-sizing: border-box;
   // transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -259,7 +262,7 @@ $normal_color: var(--normal_color, #e96969);
 
 .catalog-card-header {
   text-align: left !important;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -273,7 +276,7 @@ $normal_color: var(--normal_color, #e96969);
 
 .catalog-card-header div > span {
   font-size: 17px;
-  color: $normal_color;
+  color: $directory_active_color;
 }
 
 
@@ -286,7 +289,7 @@ $normal_color: var(--normal_color, #e96969);
 }
 
 .catalog-item {
-  color: $normal_color;
+  color: $directory_color;
   margin: 5px 0;
   transition: color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -303,13 +306,13 @@ $normal_color: var(--normal_color, #e96969);
   
 
   &:hover {
-    color: $directory_list_cover_bg;
+    color: $directory_active_color;
   }
 }
 
 .active {
   position: relative;
-  color: #e96969;
+  color: $directory_active_color;
   font-weight: 900;
   &::after{
     content: url('/src/assets/imgs/svg/flower.svg');
@@ -321,7 +324,7 @@ $normal_color: var(--normal_color, #e96969);
     // background: $directory_list_cover_bg;
   }
   &:hover {
-    color:$directory_list_cover_bg;
+    color:$directory_active_color;
   }
 }
 </style>

@@ -793,8 +793,8 @@ const leave_recommend_topic = (index) => {
   <div id="home_main">
   
     <div class="page_1 relative flex align_items_center justify_content_center">
-      <div class="page_bg_1 relative"></div>
-    
+     <!--<div class="page_bg_1 relative"></div>--> 
+      <div class="wave_bg"></div>
       <div class="page_1_bg absolute">
         <img src="https://pic.imgdb.cn/item/6646fee8d9c307b7e9ed0c6b.png" alt="">
       </div>
@@ -1278,7 +1278,6 @@ $home_bg: var(--home_bg, #384f89);
 $home_bg_opacity: var(--home_bg_opacity, 1);
 $home_bg_top: var(--home_bg_top, #0d1c2b);
 $home_color: var(--home_color, #4d4949);
-$your_name: var(--your_name, #e2eef9);
 $index_title_color: var(--index_title_color, #33383a);
 $home_main_color: var(--home_main_color, #a5e3ba);
 $content_box_color: var(--content_box_color, #747576);
@@ -1388,6 +1387,7 @@ $box_bg: var(--box_bg, #fff);
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+   
     .page_bg_1{
       width: 100vw;
       height: 100vw;
@@ -1414,10 +1414,11 @@ $box_bg: var(--box_bg, #fff);
      
       .icon{
         path{
-            fill: $your_name;
+            fill: $title_hover;
         }
       }
       .title_1 {
+        color: $title_hover;
         
         animation: title 3s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
@@ -1434,13 +1435,13 @@ $box_bg: var(--box_bg, #fff);
       }
     }
     .more {
-      bottom: 0;
+      bottom: 16px;
       left: 49%;
       transform: translateX(-50%);
       animation: more 2s infinite linear both;
       z-index: 100000;
       path {
-        fill: $home_bg;
+        fill: $title_hover;
       }
     }
     @keyframes more {

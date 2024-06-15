@@ -115,6 +115,7 @@ const change_theme = (current_theme) => {
 <style lang="scss" scoped>
 $topic_author_info_box_color: var(--topic_author_info_box_color, #b0c4de);
 $topic_author_info_box_bg: var(--topic_author_info_box_bg, #f8f8ff);
+$normal_color: var(--normal_color, #f8f8ff);
 $topic_author_info_inner_box_color: var(
   --topic_author_info_inner_box_color,
   #1e2433
@@ -122,6 +123,7 @@ $topic_author_info_inner_box_color: var(
 
 #topic_bottom_main {
   width: 100%;
+  
   img {
     box-shadow: none;
   }
@@ -144,7 +146,7 @@ $topic_author_info_inner_box_color: var(
           user-select: none;
         }
         &:last-child {
-          color: #4e4840;
+          color: $normal_color;
           font-size: 14px;
           user-select: none;
           font-weight: 900;

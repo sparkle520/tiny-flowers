@@ -10,9 +10,9 @@ const change_theme = (current_theme) => {
     } else {
         c_c("--nav_bg_color", "#ffffffeb")
         c_c("--nav_fixed_shadow", "transparent")
-        c_c("--nav_item_color", "#404040")
-        c_c("--nav_item_active_color", "#e96969")
-        c_c("--nav_item_hover_color", "#e96969")
+        c_c("--nav_item_color", "#696161")
+        c_c("--nav_item_active_color", "#b399ff")
+        c_c("--nav_item_hover_color", "#c8b7f9")
     }
     let wScrY = window.scrollY;
     if(wScrY < 70){

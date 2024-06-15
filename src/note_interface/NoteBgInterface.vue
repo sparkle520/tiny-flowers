@@ -5,20 +5,20 @@
 <script setup>
 import { reactive, toRefs, onBeforeMount, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-// import { options } from "/src/assets/js/topic.js";
+ import { options } from "/src/assets/js/topic.js";
 
 const router = useRouter()
 onBeforeMount(() => {
 })
 onMounted(() => {
 })
-/* <Particles
-      id="tsparticles"
-      :options="options"
-    /> */
+ 
 </script>
 <template>
-  
+  <Particles
+      id="tsparticles"
+      :options="options"
+    /> 
 </template>
 <style lang="scss" scoped>
 

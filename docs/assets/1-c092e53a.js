@@ -431,4 +431,28 @@ $(\\displaystyle\\frac{n}{n^3+n^2}+\\frac{2n}{n^3+n^2}+\\cdots+\\frac{n^2}{n^3+n
 \r
 由夹逼准则可知，$\\displaystyle\\lim_{n\\to\\infty}(\\frac{n}{n^3+1^2}+\\frac{2n}{n^3+2^2}+\\cdots+\\frac{n^2}{n^3+n^2})=\\frac{1}{2}$.\r
 \r
-### 用定积分定义求数列极限  `;export{n as default};
+### 用定积分定义求数列极限  \r
+\r
+用定积分定义求极限实际上是一种特殊取点(通常取右端点)，即 \r
+\r
+$\\displaystyle\\int_{a}^{b}f(x)dx=\\displaystyle\\lim_{n\\to\\infty}\\frac{b-a}{n}\\displaystyle\\sum_{i=1}^nf[a+\\frac{i(b-a)}{n}]$ (取右端点) \r
+\r
+其中$\\displaystyle\\frac{b-a}{n}$为分割的小矩形的宽，$f[a+\\displaystyle\\frac{i(b-a)}{n}]$为分割的小矩形的高.\r
+\r
+通常将宽取为$\\displaystyle\\frac{1}{n}$.\r
+\r
+**<例题17>** \r
+\r
+$\\displaystyle\\lim_{n\\to\\infty}\\displaystyle\\frac{\\displaystyle\\sum_{k=1}^n\\sqrt{k}}{\\displaystyle\\sum_{k=1}^n\\sqrt{n+k}}.$ \r
+\r
+**[分析]** 注意到，上下同时除以$n\\sqrt{n}$. \r
+\r
+**[解]** \r
+\r
+原式$=\\displaystyle\\lim_{n\\to\\infty}\\displaystyle\\frac{\\displaystyle\\frac{1}{n}\\displaystyle\\sum_{k=1}^n\\sqrt{\\displaystyle\\frac{k}{n}}}{\\displaystyle\\frac{1}{n}\\displaystyle\\sum_{k=1}^n\\sqrt{1+\\displaystyle\\frac{k}{n}}}$  \r
+\r
+&emsp;&emsp;$=\\frac{\\displaystyle\\int_0^1\\sqrt{x}dx}{\\displaystyle\\int_0^1\\sqrt{1+x}dx}$ \r
+\r
+&emsp;&emsp;$=\\displaystyle\\frac{1}{2\\sqrt{2}-1}.$\r
+\r
+`;export{n as default};

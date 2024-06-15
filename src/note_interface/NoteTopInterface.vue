@@ -125,7 +125,7 @@ onMounted(() => {
     id="note_top_main"
     class="relative flex align_items_center justify_content_center"
   >
-   <img class="note_top_main_bg" src="https://pic.imgdb.cn/item/65d5a2f19f345e8d0320a3c9.jpg" alt="">
+   <img class="note_top_main_bg" src="https://pic.imgdb.cn/item/666c45e4d9c307b7e930def6.png" alt="">
   </div>
 </template>
 <style lang="scss" scoped>
@@ -137,7 +137,8 @@ onMounted(() => {
   margin-top: 90px;
   border-radius: 5px;
   box-shadow: #1815151c 0px 4px 10px;
-  // animation: note_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+   animation: note_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   &::after{
     content: '';
     position: absolute;
@@ -149,9 +150,9 @@ onMounted(() => {
   }
   @keyframes note_top_bg {
     0%{
-      transform: scaleX(0);
+      transform: translateY(-300px);
     }100%{
-      transform: scaleX(1);
+      transform: translateY(0px);
 
     }
   }
