@@ -57,9 +57,7 @@ var Paul_Pio = function (prop) {
 
     current.body.appendChild(elements.dialog);
     current.body.appendChild(elements.show);
-    const hello = (()=>{
-        console.log('sss')
-      })
+    
     /* - 方法 */
     const modules = {
         // 更换模型
@@ -312,7 +310,3 @@ var Paul_Pio = function (prop) {
     localStorage.getItem("posterGirl") === "0" ? this.initHidden() : this.init();
 };
 
-// 请保留版权说明
-if (window.console && window.console.log) {
-    console.log("%c Pio %c https://paugram.com ","color: #fff; margin: 1em 0; padding: 5px 0; background: #673ab7;","margin: 1em 0; padding: 5px 0; background: #efefef;");
-}

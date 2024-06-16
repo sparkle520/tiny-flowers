@@ -7,13 +7,11 @@ import "@/assets/css/normalize.css"
 import "@/assets/css/index.scss"
 import "@/assets/css/pattern.css"
 import ElementPlus from 'element-plus'
-import 'element-plus/theme-chalk/index.css'
 import GlobalComponents from '/src/component/index'
 // import "/src/assets/untils/mathjax";
 // import "mathjax/es5/tex-mml-chtml";
 import { VueLatex } from "vatex"
 import MathJax, { initMathJax, renderByMathjax } from 'mathjax-vue3'
-
 import { createPinia } from 'pinia'
 // import 'highlight.js/styles/github-dark.css'
 import 'gitalk/dist/gitalk.css'

@@ -307,7 +307,7 @@ $directory_color: var(--directory_color, #8491a5);
   
 
   &:hover {
-    color: $directory_active_color;
+    text-decoration: underline;
   }
 }
 

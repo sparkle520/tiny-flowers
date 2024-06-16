@@ -12,9 +12,9 @@ $code_color: var(--code_color, #ffffff);
 
 $blockquote_bg: var(--blockquote_bg, #e3e3f3a8);
 $blockquote_border: var(--blockquote_border, #6261a3);
-$blockquote_color: var(--blockquote_color, #ff7300);
+$blockquote_color: var(--blockquote_color, #ff7300); 
 .markdown-body *{
-  font-style: normal;
+  font-style: normal !important;
 }
 @font-face {
   font-family: "misans";
@@ -29,51 +29,56 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   src: url("/src/assets/font/monaco.ttf");
 }
 .markdown-body {
-  background: transparent;
-  font-family: 'misans';
-  font-size: 18px;
-  color: $normal_color;
-  width: 100%;
-  overflow-x:visible;
-  z-index: 10;
-  letter-spacing: 2px;
-  line-height: 1.9em;
-  
+  background: transparent !important;
+  font-family: 'misans' !important;
+  font-size: 18px !important;
+  color: $normal_color !important;
+  width: 100% !important;
+  overflow-x:visible !important;
+  z-index: 10 !important;
+  letter-spacing: 2px !important;
+  line-height: 1.9em !important;
+
+  a{
+    color: #ff7300 !important;
+    text-decoration: underline !important;
+  }
+ 
   // 对于表格的美化
 table{
-  border-collapse:collapse;
-  table-layout:auto;
-  width: 80%;
-  border-radius:5px;
-  overflow:hidden;
-  margin: 16px auto;
-  border:none ;
-  border-collapse:collapse;
-  background: transparent;
-  color: $normal_color;
+  border-collapse:collapse !important;
+  table-layout:auto !important;
+  width: 80% !important;
+  border-radius:5px !important;
+  overflow:hidden !important;
+  margin: 16px auto !important;
+  border:none  !important;
+  border-collapse:collapse !important;
+  background: transparent !important;
+  color: $normal_color !important;
   thead th {
-    background-color: transparent;
-    color: $normal_color;
-    border-bottom-width: 0;
-    border: none;
+    background-color: transparent !important;
+    color: $normal_color !important;
+    border-bottom-width: 0 !important;
+    border: none !important;
     }
     td,tr{
       /* padding: 5px;
       width: 33%; */
-      background: transparent;
-      border:none;
+      background: transparent !important;
+      border:none !important;
       
-      border-bottom:1px $h_color solid ;
-      border-top:1px $h_color solid ;
-      text-align: center;
-      vertical-align:middle;
+      border-bottom:1px $h_color solid  !important;
+      border-top:1px $h_color solid  !important;
+      text-align: center !important;
+      vertical-align:middle !important;
       /* font-size: 15px; */
     
       &:nth-child(odd){
-        background-color: transparent;
+        background-color: transparent !important; ;
       }
       &:nth-child(even){
-        background-color: transparent;
+        background-color: transparent !important;
       
       }
     }
@@ -83,46 +88,46 @@ table{
 
 
   ::selection {
-    color:$pre_bg;
-    background-color: $h_color;
+    color:$pre_bg !important;
+    background-color: $h_color !important;
   }
   strong{
-    color: $h_color;
+    color: $h_color !important;
   }
   h1 {
-    font-size: 24px;
-    font-weight: 600;
-    color: $h_color;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    color: $h_color !important;
   
   }
   h2 {
-    font-size: 22px;
-    font-weight: 600;
-    color: $h_color;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    color: $h_color !important;
     
   }
   h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: $h_color;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: $h_color !important;
     
   }
   h4 {
-    font-size: 18px;
-    font-weight: 600;
-    color: $h_color;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: $h_color !important;
    
   }
   h5 {
-    font-size: 16px;
-    font-weight: 600;
-    color: $h_color;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: $h_color !important;
     
   }
   h6 {
-    font-size: 15px;
-    font-weight: 600;
-    color: $h_color;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: $h_color !important;
    
   }
   h1,
@@ -131,31 +136,44 @@ table{
   h4,
   h5,
   h6 {
-    border-bottom: none;
-    position: relative;
-    padding: 0;
+    border-bottom: none !important;
+    position: relative !important;
+    padding: 0 !important;
+    &::after{
+      content: '';
+      position: absolute !important;
+      top: 50% !important;
+      transform: translateY(calc(-50%)) !important;
+      width: .3em !important;
+      border-radius: 0 .3em .3em 0 !important;
+            left: calc(-16px) !important;
+      height: 1em !important;
+      background: $h_color !important;
+    }
   }
   code {
-    background:$code_bg ;
-    color: $code_color;
-    font-family: 'yahei';
+    background:$code_bg;
+    color: $code_color !important;
+    font-family: 'yahei' !important;
   }
   pre>code{
-    color: $normal_color;
+    color: $normal_color !important; 
   }
-  blockquote {
-    background-color: $blockquote_bg;
-    color: $blockquote_color;
-    padding: 8px 16px;
-    border-left: 0.15em solid $blockquote_border;
-  }
+  
   p {
   }
+  blockquote {
+    background-color: $blockquote_bg !important;
+    color: $blockquote_color !important;
+    border-left: 0.15em solid $blockquote_border !important;
+    padding: 8px 16px !important;
+
+  }
   pre {
-    font-family: "monaco";
-    position: relative;
-    padding-top: 32px;
-    background: $pre_bg;
+    font-family: "monaco" !important;
+    position: relative !important;
+    padding-top: 32px !important;
+    background: $pre_bg !important;
     &::after {
       position: absolute;
       top: 10px;

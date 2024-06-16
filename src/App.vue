@@ -233,7 +233,7 @@ const music_handle = (status) => {
   <div id="main" class="flex flex_direction_column">
     <div class="pio-container right">
     <div class="pio-action"></div>
-    <canvas id="pio" width="250" height="250"></canvas>
+    <canvas id="pio" width="900" height="900" style="width: 300px;height: 300px;"></canvas>
 </div>
     <!-- <canvas  id="canvas" width="800" height="500" class="absolute"></canvas> -->
     <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->

@@ -15,7 +15,7 @@ export const change_theme = (current_theme) => {
     c_c("--directory_list_cover_bg", "#1e2433");
     c_c("--code_bg", "#fdfbfb");
     c_c("--pre_bg", "#123");
-    c_c("--code_color", "#ffff");
+    c_c("--code_color", "#4d4949");
 
     c_c("--h_color", "#c4c3d4");
     c_c("--blockquote_color", "#fdfbfb");

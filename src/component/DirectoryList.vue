@@ -310,7 +310,7 @@ $normal_color: var(--normal_color, #216eba);
   
 
   &:hover {
-    color: #1772f6;
+    text-decoration: underline;
   }
 }
 
