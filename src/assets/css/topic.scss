@@ -1,6 +1,8 @@
 $topic_content_bg: var(--topic_content_bg, #ffff);
 $topic_bg: var(--topic_bg, #fdfbfb);
 $normal_color: var(--normal_color, #4d4949);
+$topic_content_box_shadpw: var(--topic_content_box_shadpw, #5656561b);
+$topic_text_linear_bg: var(--topic_text_linear_bg, #b5b5f450);
 
 @import url('markdown.scss');
 #topic_main {
@@ -34,10 +36,10 @@ $normal_color: var(--normal_color, #4d4949);
     z-index: 1;
   }
   .topic_content {
-    width: 60vw;
+    width: 800px;
     border-radius: 4px;
     background: $topic_content_bg;
-    box-shadow: #5656561b 1px 1px 10px;
+    box-shadow: $topic_content_box_shadpw 1px 2px 5px;
     display: flex;
     flex-direction: column;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -46,6 +48,11 @@ $normal_color: var(--normal_color, #4d4949);
       width: 96%;
       margin: 32px auto;
       position: relative;
+      background:
+      -webkit-linear-gradient(top, transparent 39px, $topic_text_linear_bg 40px),
+      -webkit-linear-gradient(left, transparent 39px, $topic_text_linear_bg 40px);
+      background-size: 40px 40px;
+
       &::after{
         content: '';
         position: absolute;
@@ -57,7 +64,7 @@ $normal_color: var(--normal_color, #4d4949);
         opacity: .07;
         z-index: 0;
         // background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png") repeat-y;
-        background: url("https://pic.imgdb.cn/item/65d0a7e89f345e8d0368e174.png") repeat-y;
+        // background: url("https://pic.imgdb.cn/item/65d0a7e89f345e8d0368e174.png") repeat-y;
         
         background-size:100%; 
         

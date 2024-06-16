@@ -1,8 +1,11 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { inject, onMounted, watch, ref, onUnmounted, nextTick } from "vue";
+import { useUserStore } from "/src/store/user";
+
+import { inject, onMounted, watch, ref, onUnmounted, nextTick ,onBeforeMount} from "vue";
 import { clickEffect } from "/src/assets/js/mouse.js";
 import emitter from "@/assets/config/mitt_bus.js";
+const user_store = useUserStore();
 
 const route = useRoute();
 // const change_current_index =(index) =>{
@@ -10,14 +13,35 @@ const route = useRoute();
 // }
 // let g_side_bar = inject('g_side_bar')
 let current_side_view = true;
+onBeforeMount(()=>{
+})
 onMounted(() => {
   // emitter.emit('new_side_view', {current_side_view:current_side_view})
   document.addEventListener("click", click_handle)
+ 
+
+  let pio = new Paul_Pio({
+    "mode": "fixed",
+    "hidden": true,
+    "content": {
+        "welcome": [`欢迎来到${user_store.name}的小世界！`, "今天天气不错，一起来玩吧！", "博主每天都有些折腾记录，欢迎前往他的小窝阅读~"],
+        "custom": [
+            {"selector": ".comment-form", "text": "欢迎参与本文评论，别发小广告噢~"},
+            {"selector": ".home-social a:last-child", "text": "在这里可以了解博主的日常噢~"},
+            {"selector": ".post-item a", "type": "read"},
+            {"selector": ".post-content a, .page-content a", "type": "link"}
+        ]
+    },
+    "night": "night()",
+    tips: true,
+    "model": ["/src/assets/live2dw/model/snow_miku/model.json"]
+});
 });
 const click_handle = (e) => {
 
     
 }
+
 //鼠标特效
 onUnmounted(() => {
   // emitter.all.clear()
@@ -207,6 +231,10 @@ const music_handle = (status) => {
 
 <template>
   <div id="main" class="flex flex_direction_column">
+    <div class="pio-container right">
+    <div class="pio-action"></div>
+    <canvas id="pio" width="250" height="250"></canvas>
+</div>
     <!-- <canvas  id="canvas" width="800" height="500" class="absolute"></canvas> -->
     <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->
     <TopNavBar @music_change="music_handle" class="nav"></TopNavBar>

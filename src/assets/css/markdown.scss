@@ -1,4 +1,5 @@
-$code_bg: var(--code_bg, #f6f8fa);
+$code_bg: var(--code_bg, #6261a3a8);
+$pre_bg: var(--pre_bg, #f6f8fa);
 $h1_color: var(--h1_color, #686870);
 $h_color: var(--h_color, #a574d2);
 $h2_color: var(--h2_color, #ff7f50);
@@ -9,8 +10,8 @@ $h6_color: var(--h6_color, #ff7f50);
 $normal_color: var(--normal_color, #4d4949);
 $code_color: var(--code_color, #ffffff);
 
-$blockquote_bg: var(--blockquote_bg, #6261a3a8);
-$blockquote_border: var(--blockquote_bg, #6261a3);
+$blockquote_bg: var(--blockquote_bg, #e3e3f3a8);
+$blockquote_border: var(--blockquote_border, #6261a3);
 $blockquote_color: var(--blockquote_color, #ff7300);
 .markdown-body *{
   font-style: normal;
@@ -33,7 +34,7 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   font-size: 18px;
   color: $normal_color;
   width: 100%;
-  overflow: hidden;
+  overflow-x:visible;
   z-index: 10;
   letter-spacing: 2px;
   line-height: 1.9em;
@@ -82,7 +83,7 @@ table{
 
 
   ::selection {
-    color:$code_bg;
+    color:$pre_bg;
     background-color: $h_color;
   }
   strong{
@@ -135,7 +136,7 @@ table{
     padding: 0;
   }
   code {
-    background:$blockquote_bg ;
+    background:$code_bg ;
     color: $code_color;
     font-family: 'yahei';
   }
@@ -143,7 +144,7 @@ table{
     color: $normal_color;
   }
   blockquote {
-    background-color: transparent;
+    background-color: $blockquote_bg;
     color: $blockquote_color;
     padding: 8px 16px;
     border-left: 0.15em solid $blockquote_border;
@@ -154,7 +155,7 @@ table{
     font-family: "monaco";
     position: relative;
     padding-top: 32px;
-    background: $code_bg;
+    background: $pre_bg;
     &::after {
       position: absolute;
       top: 10px;

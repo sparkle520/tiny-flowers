@@ -9,27 +9,33 @@ export const change_theme = (current_theme) => {
     //night
     c_c("--topic_content_bg", "#242837");
     c_c("--topic_bg", "#1e2433");
+    c_c("--topic_content_box_shadpw", "transparent");
+    c_c("--topic_text_linear_bg","#b5b5f410");
     c_c("--normal_color", "#f7f3f5");
     c_c("--directory_list_cover_bg", "#1e2433");
-    c_c("--code_bg", "#123");
+    c_c("--code_bg", "#fdfbfb");
+    c_c("--pre_bg", "#123");
     c_c("--code_color", "#ffff");
 
     c_c("--h_color", "#c4c3d4");
     c_c("--blockquote_color", "#fdfbfb");
-    c_c("--blockquote_border", "#ffff");
-    c_c("--blockquote_bg", "#fdfbfb");
+    c_c("--blockquote_border", "#c4c3d4");
+    c_c("--blockquote_bg", "#1e2433");
   } else {
     c_c("--topic_content_bg", "#ffff");
     c_c("--topic_bg", "#fdfbfb");
+    c_c("--topic_content_box_shadpw", "#5656561b");
+    c_c("--topic_text_linear_bg", "#b5b5f450");
     c_c("--normal_color", "#4d4949");
     c_c("--directory_list_cover_bg", "#fdfbfb");
-    c_c("--code_bg", "#f6f8fa");
+    c_c("--code_bg", "#b399ff");
+    c_c("--pre_bg", "#f6f8fa");
     c_c("--code_color", "#e8ecfc");
 
     c_c("--h_color", "#b399ff");
-    c_c("--blockquote_color", "#686870");
-    c_c("--blockquote_border", "rgb(239, 112, 96)");
-    c_c("--blockquote_bg", "#b399ff");
+    c_c("--blockquote_color", "#5f526c");
+    c_c("--blockquote_border", "#b399ff");
+    c_c("--blockquote_bg", "#e3e3f3a8");
   }
   change_code_theme(current_theme)
 
@@ -155,7 +161,7 @@ export const options = {
 export const change_layout = (flag) => {
   const topic_content = document.querySelector(".topic_content");
   if (flag) {
-    topic_content.style.width = "60vw";
+    topic_content.style.width = "800px";
   } else {
     topic_content.style.width = "80vw";
   }

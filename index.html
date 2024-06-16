@@ -3,20 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/src/assets/imgs/favicon.ico">
+    <link href='/src/assets/live2dw/static/pio.css' rel='stylesheet' type='text/css'/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiny flowers</title>
     <style>
    
-   /* .boxLoading {  
-  width: 50px;
-  height: 50px;
-  margin: auto;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-} */
+  
 .boxLoading {  
   width: 150px;
   height: 150px;
@@ -27,30 +20,9 @@
   top: 0;
   bottom: 0;
   animation: animate infinite 1s linear;
+  filter: drop-shadow(1px 1px 5px #5656561b);
 }
-/* .boxLoading:before {
-  content: '';
-  width: 50px;
-  height: 5px;
-  background: #fdfbfb;
-  opacity: 0.7;
-  position: absolute;
-  top: 59px;
-  left: 0;
-  border-radius: 50%;
-  animation: shadow .5s linear infinite;
-}
-.boxLoading:after {
-  content: '';
-  width: 50px;
-  height: 50px;
-  background: #a5e3ba;
-  animation: animate .5s linear infinite;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 3px;
-} */
+
 @keyframes animate {
   
   0% {
@@ -60,32 +32,7 @@
     transform:  rotate(360deg);
   }
 }
-/* @keyframes animate {
-  17% {
-    border-bottom-right-radius: 3px;
-  }
-  25% {
-    transform: translateY(9px) rotate(22.5deg);
-  }
-  50% {
-    transform: translateY(18px) scale(1, .9) rotate(45deg);
-    border-bottom-right-radius: 40px;
-  }
-  75% {
-    transform: translateY(9px) rotate(67.5deg);
-  }
-  100% {
-    transform: translateY(0) rotate(90deg);
-  }
-} */
-/* @keyframes shadow {
-  0%, 100% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1.2, 1);
-  }
-} */
+
 
      .load_title {
       font-family: 'Open Sans';
@@ -112,6 +59,10 @@
     </div>
     </div>
     <script type="module" src="/src/main.js"></script>
-      <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+<!-- 引用 Live2D 核心组件 -->
+    <script src='/src/assets/live2dw//static/l2d.js'></script>
+<!-- 引用看板娘交互组件 -->
+    <script src='/src/assets/live2dw//static/pio.js'></script>
+    
   </body>
 </html>

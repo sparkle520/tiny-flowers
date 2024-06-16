@@ -114,7 +114,6 @@ const get_md_file = (id,index) => {
       <TopicLeftInterface></TopicLeftInterface>
       <div class="topic_content">
         <div class="topic_text">
-          
           <div v-html="content" id="mathjax" class="markdown-body" v-highlight></div>
         </div>
         <NoteBottomInterface></NoteBottomInterface>

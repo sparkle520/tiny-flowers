@@ -202,15 +202,15 @@ function scrollToView(scrollTop) {
   <div id="directory_list_main">
     <div class="catalog-card" v-show="layout">
       <div class="catalog-card-header">
-        <div>
+        <div class="flex justify_content_center">
           <span
             ><font-awesome-icon
               :icon="['fas', 'bars-staggered']"
               class="catalog-icon"
           /></span>
-          <div class="flex flex_direction_row align_items_center">
+          <div class="flex flex_direction_row justify_content_center align_items_center">
            
-            <span style="margin-left: 8px;color:#5D6D7E ;">目录🌻</span>
+            <strong>目录🌻</strong>
           </div>
         </div>
         <!-- <span class="progress">{{ progress }}</span> -->
@@ -261,7 +261,8 @@ $normal_color: var(--normal_color, #216eba);
 
 .catalog-card-header {
   text-align: left !important;
-  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: #8491a5 1px solid;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -300,7 +301,7 @@ $normal_color: var(--normal_color, #216eba);
   line-height: 28px;
   cursor: pointer;
   font-size: 14px;
-  padding: 2px 26px;
+  padding: 2px 26px;  
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
