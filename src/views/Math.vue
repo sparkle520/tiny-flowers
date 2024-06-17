@@ -413,6 +413,7 @@ $content_tag_item_bg: var(--content_tag_item_bg, #6235a1);
 $content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
 $content_item_box_color: var(--content_item_box_color, #fbfdfd);
 $normal_color: var(--normal_color, #fbfdfd);
+$subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
 ::-webkit-scrollbar {
   width: 0 !important;
 }
@@ -582,23 +583,23 @@ $normal_color: var(--normal_color, #fbfdfd);
           border-radius: 10px;
           overflow-y: scroll;
           .query_time {
-            margin-left: 2vw;
-            margin-bottom: 1vh;
+            margin-left: 16px;
+            margin-bottom: 8px;
             color: $math_color;
             font-size: 0.7em;
           }
           ul {
             list-style: none;
-            margin: 2vh 2vw;
+            margin: 16px;
             padding: 0;
-            gap: 1vh;
+            gap: 4px;
             li {
               word-wrap: break-word;
-              color: $subject_hover_name_color;
+              color: $math_color;
               user-select: none;
               font-size: 1.1em;
               &:hover {
-                color: $math_color;
+                color: $subject_hover_name_color;
               }
             }
           }
@@ -620,7 +621,7 @@ $normal_color: var(--normal_color, #fbfdfd);
     margin-bottom: 20px;
 
     .content_mid_box {
-      width: 100%;
+      width: 1000px;
       height: auto;
       margin: 0;
       padding: 0px;
@@ -637,7 +638,7 @@ $normal_color: var(--normal_color, #fbfdfd);
         box-shadow: #2825250c 0px 0px 20px;
 
         .content_item_top_box {
-          width: calc(100% - 32px);
+          width: 968px;
           background: $math_li_bg;
           padding: 8px 16px;
           color: $math_li_color;
@@ -645,7 +646,7 @@ $normal_color: var(--normal_color, #fbfdfd);
           border-top-right-radius: 5px;
         }
         .content_item_bottom_box {
-          width: calc(100% - 32px);
+          width: 968px;
           background: $content_item_box_color;
           padding: 8px 16px;
           color: $math_li_color;
@@ -656,7 +657,7 @@ $normal_color: var(--normal_color, #fbfdfd);
             background: $content_item_box_color;
             border: 1px solid $math_li_bg;
             font-size: 12px;
-            padding: 4px 12px;
+            padding: 4px 16px;
             color: $math_color;
             transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
             &:hover {
@@ -669,37 +670,22 @@ $normal_color: var(--normal_color, #fbfdfd);
           box-shadow: $content_tag_item_bg 0px 0px 0px 4px;
         }
 
-        .subject-num {
-          font-family: 600;
-          color: #7db8b8;
-        }
+       
 
-        .difficulty_hard {
-          color: #c54c4c;
-          font-weight: 700;
-        }
-        .difficulty_easy {
-          color: #66a321;
-          font-weight: 700;
-        }
-        .difficulty_mid {
-          color: #f19742;
-          font-weight: 700;
-        }
 
         .subject_context {
-          width: calc(100% - 32px);
+          width: 968px !important;
           padding: 8px 16px;
           color: $normal_color;
         }
         .subject_solution_context {
-          width: calc(100% - 48px);
-          margin: 8px 16px;
+          width: 936px !important;
           height: auto;
           border-radius: 5px;
-          padding: 8px 8px;
-          background: $math_com_box_shadow;
+          margin: 8px 16px;
+          padding:  16px;
           color: $normal_color;
+          background-color: $subject_solution_context_bg !important;
         }
         .content_tag_box {
           flex-wrap: wrap;
@@ -735,7 +721,7 @@ $normal_color: var(--normal_color, #fbfdfd);
     z-index: 10;
     width: inherit;
     height: 200px;
-    gap: 2vw;
+    gap: 16px;
     .title_foot {
       font-size: 16px;
       color: $condition_box;
@@ -746,18 +732,18 @@ $normal_color: var(--normal_color, #fbfdfd);
       color: $condition_box;
     }
     .left_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 26px;
     }
     .mid_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
     }
     .right_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 22px;
 

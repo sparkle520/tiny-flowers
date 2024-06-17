@@ -123,7 +123,7 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
     h3{
       margin: 0;
       padding:12px 16px ;
-      font-size: 17px;
+      font-size: 14px;
       height: 38px;
       padding: 16px;
       line-height: 38px;
@@ -145,6 +145,7 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
   user-select: none;
   padding: 6px 8px;
   display: block;
+  font-weight: 900;
   width: 164px;
   overflow: hidden;
   white-space: nowrap;
@@ -153,15 +154,12 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
 }
 
 .nav_item_child {
-  margin-bottom: 2px;
   border-radius: 5px;
   padding: 8px 16px;
   width: 148px;
-  overflow: hidden;
-  transform: rotate3d(0, 1, 0, 0);
   display: block;
-  overflow: hidden;
   white-space: nowrap;
+  overflow: hidden;
 font-size: 12px;
   text-overflow: ellipsis;
   animation: nav 0.6s ease-in-out;
@@ -178,7 +176,6 @@ transform-origin: bottom left;
   }
   span{
     position: relative;
-    overflow: hidden;
     &::after{
     content: '';
     background: $math_left_nav_main_color;
@@ -186,8 +183,8 @@ transform-origin: bottom left;
     max-width: 148px;
     width: 100%;
     opacity: .6;
-    height: 3px;
-    bottom: -4px;
+    height: 1px;
+    bottom: -2px;
     left: 0;
     transform: scaleX(0);
     transform-origin: bottom right;
@@ -223,16 +220,5 @@ ul {
 li {
   list-style-type: none;
 }
-.link
-{
-}
-.link:hover::after
-{
-   
-}
 
-.link::after
-{
-   
-}
 </style>

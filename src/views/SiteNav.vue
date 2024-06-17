@@ -193,8 +193,7 @@ $site_item_hover_color: var(--site_item_hover_color, #917979);
   }
   .site_content {
     z-index: 2;
-    width: 80vw;
-    min-height: 40vh;
+    width: 1100px;
     overflow: hidden;
     margin: 0px auto;
     color: $site_content_color;

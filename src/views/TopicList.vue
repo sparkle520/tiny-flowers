@@ -79,7 +79,7 @@ const change_layout = (flag) => {
   const topic_grid_inner_box = document.querySelector(".topic_grid_inner_box");
 
   if (flag) {
-    topic_box.style.width = "60vw";
+    topic_box.style.width = "866px";
     show_personal_info.value = true;
     topic_grid_inner_box.style.width = "100%";
   } else {
@@ -729,13 +729,13 @@ $layout_hover: var(--layout_hover, #f3acac);
       display: none;
     }
 
-    width: 50vw;
-    height: 7vh;
-    margin: 3vh auto;
+    width: 550px;
+    height: 36px;
+    margin: 16px auto;
     margin-top: 90px;
-
+    
     .filter_search_box {
-      width: 52vw;
+      width: 550px;
       max-height: 30vh;
 
       background: $filter_search_box_bg;
@@ -766,11 +766,11 @@ $layout_hover: var(--layout_hover, #f3acac);
     }
 
     .search_icon {
-      width: 5vw;
+      width: 72px;
       right: 0;
-      bottom: -0.6vh;
+      bottom: -4px;
       z-index: 11;
-      transform: translateX(3vw) rotate(15deg);
+      transform: translateX(48px) rotate(15deg);
       svg {
         path {
           fill: $tag_bg;
@@ -783,11 +783,11 @@ $layout_hover: var(--layout_hover, #f3acac);
       
       border-radius: 10px;
       background: $item_bg;
-      padding-left: 2vw;
+      padding-left: 16px;
       border: none;
       outline: none;
       color: $color;
-      font-size: 1.3em;
+      font-size: 1.1em;
       box-shadow: $tag_bg 0 0 0 1px;
 
       caret-color: $color;
@@ -802,12 +802,12 @@ $layout_hover: var(--layout_hover, #f3acac);
   }
   .topic_box {
     min-height: calc(100vh);
-    width: 60vw;
-    padding-bottom: 30px;
+    width: 866px;
+    padding-bottom: 32px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     .layout_box {
-      transform: translateY(-1vh);
-      gap: 0.2vw;
+      transform: translateY(-8px);
+      gap: 4px;
       z-index: 10;
 
       .list_layout {
@@ -888,11 +888,10 @@ $layout_hover: var(--layout_hover, #f3acac);
     }
     .topic_item {
       width: 100%;
-      min-height: 200px;
-      max-height: 200px;
+      height: 200px;
       background: $item_bg;
       transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-      margin: 0 0 2vh 0;
+      margin: 0 0 16px 0;
       opacity: 0;
       border-radius: 10px;
       box-shadow: 0px 13px 15px $item_shadow;
@@ -901,7 +900,7 @@ $layout_hover: var(--layout_hover, #f3acac);
         animation: jelly 0.5s;
       }
       &:hover {
-        transform: translateY(-1vh);
+        transform: translateY(-8px);
         box-shadow: 0 3px 5px #1f2d3d33;
         .tag_box {
           opacity: 1;
@@ -909,16 +908,17 @@ $layout_hover: var(--layout_hover, #f3acac);
         }
       }
       .item_inner_box {
-        width: 96%;
-        min-height: 200px;
+        width: 834px;
+        height: 168px;
+        padding: 16px;
         .item_img {
-          max-width: 30%;
-          margin: 16px;
+          max-width: 250px;
+          height: 168px;
           border-radius: 10px;
           object-fit: cover;
+          margin-right: 16px;
         }
         .item_content {
-          margin: 16px;
           .item_classification {
             font-size: 14px;
             padding: 4px 4px;
