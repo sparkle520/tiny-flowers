@@ -30,10 +30,12 @@ const change_theme = (current_theme) => {
     c_c("--math_left_nav_main_color", "#fff");
     c_c("--left_nav_bg", "#242b3d");
     c_c("--left_nav_active_color", "#b5b9d6");
+    c_c("--left_nav_border", "#b5b9d6");
   } else {
     c_c("--math_left_nav_main_color", "#757474");
     c_c("--left_nav_bg", "#ffff");
     c_c("--left_nav_active_color", "#0bb890");
+    c_c("--left_nav_border", "#a5e3ba");
     
   }
 };
@@ -64,7 +66,7 @@ const show_children = (item) => {
   <div id="math_left_nav_main">
     <div class="left_nav">
       <h3>导航(未完成)</h3>
-      <ul>
+      <ul class="left_nav_ul">
         <li v-for="(item, index) in data" :key="item">
           <span
             @click="show_children(item)"
@@ -99,6 +101,7 @@ const show_children = (item) => {
 $math_left_nav_main_color: var(--math_left_nav_main_color, #757474);
 $left_nav_bg: var(--left_nav_bg, #ffff);
 $left_nav_active_color: var(--left_nav_active_color, #0bb890);
+$left_nav_border: var(--left_nav_border, #a5e3ba);
 
 #math_left_nav_main {
   width:180px;
@@ -115,12 +118,20 @@ $left_nav_active_color: var(--left_nav_active_color, #0bb890);
     background: $left_nav_bg;
     border-radius: 5px;
     padding: 16px 0;
+    padding-top: 0;
     h3{
       margin: 0;
       padding:12px 16px ;
-
-      border-bottom: $left_nav_active_color 2px solid;
+      font-size: 17px;
+      height: 38px;
+      padding: 16px;
+      line-height: 38px;
     }
+    .left_nav_ul{
+      border-top: $left_nav_border 2px solid;
+      margin-top:0 ;
+    }
+
   }
 }
 
@@ -144,9 +155,8 @@ $left_nav_active_color: var(--left_nav_active_color, #0bb890);
   margin-bottom: 2px;
   border-radius: 5px;
   padding: 8px 16px;
-  width: calc(15vw - 80px);
-  margin-right: 2px;
-  margin-left: 10px;
+  width: 148px;
+  
   transform: rotate3d(0, 1, 0, 0);
   display: block;
   overflow: hidden;

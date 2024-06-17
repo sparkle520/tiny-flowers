@@ -457,8 +457,10 @@ $normal_color: var(--normal_color, #fbfdfd);
   
 
   .select_tag {
-    width: calc(100% - 32px);
+    width: 968px;
     justify-items: flex-start;
+    border-top: $condition_box 2px solid;
+    padding-top: 16px;
     .show_all_tag {
       right: 0;
       user-select: none;
@@ -520,21 +522,21 @@ $normal_color: var(--normal_color, #fbfdfd);
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     .top_top_box {
-      width: calc(100% - 32px);
-      height: 60px;
-      margin-bottom: 16px;
+      width: 968px;
+      height: 38px;
+      margin: 0 0;
       font-weight: 600;
       color: $condition_box;
+      padding: 16px;
 
-      border-bottom: $condition_box 2px solid;
       .search_box {
         margin: auto auto;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
         .search {
-          height: 40px;
+          height: 36px;
 
-          width: 40vw;
+          width: 500px;
           color: $subject_name_color;
           background: transparent;
           border: none;
