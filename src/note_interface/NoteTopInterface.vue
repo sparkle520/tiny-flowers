@@ -151,6 +151,7 @@ onMounted(() => {
   @keyframes note_top_bg {
     0%{
       transform: translateY(-300px);
+      opacity: .1;
     }100%{
       transform: translateY(0px);
 

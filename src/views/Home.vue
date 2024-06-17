@@ -1766,7 +1766,7 @@ $box_bg: var(--box_bg, #fff);
               margin-bottom: 16px;
               padding: 0;
               width: 1068px;
-              height: 378px;
+              height: 376px;
               gap: 16px;
 
               .re_note_item {
@@ -1838,7 +1838,7 @@ $box_bg: var(--box_bg, #fff);
                   .note_short_message {
                     font-size: 14px;
                     overflow: hidden;
-                    height: 34px;
+                    height: 32px;
 
                     margin-top: 8px;
                     display: -webkit-box;
@@ -1857,7 +1857,7 @@ $box_bg: var(--box_bg, #fff);
   }
 }
 .home_foot {
-  width: inherit;
+  width: 100vw;
   height: 200px;
   gap:16px;
   z-index: 1;

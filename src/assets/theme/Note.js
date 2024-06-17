@@ -8,8 +8,7 @@ const change_theme = (current_theme) =>{
         c_c("--note_book_box_title_color", "#b5b9d6");
         c_c("--re_note_item_bg", "#b5b9d6");
         c_c("--text_area_color", "#f7f7f7");
-        c_c("--text_area_before_bg", "#5e6d78");
-        c_c("--text_area_after_bg", "#9fa3bc");
+        c_c("--text_area_bg", "#9fa3bc");
         c_c("--filter_search_box_color", "#f7f7f7");
         c_c("--filter_search_box_hover_color", "#5e6d78");
         c_c("--book_name_color", "#b5b9d6");
@@ -32,9 +31,8 @@ const change_theme = (current_theme) =>{
       c_c("--note_book_box_title_color", "#e96969");
       c_c("--re_note_item_bg", "#d3010130");
       c_c("--text_area_color", "#ffffe2");
-      c_c("--text_area_before_bg", "#f0681e");
-      c_c("--text_area_after_bg", "#d90a29");
-      c_c("--filter_search_box_color", "#726c65");
+      c_c("--text_area_bg", "#ff7b5a");
+      c_c("--filter_search_box_color", "#a0a0a0");
       c_c("--filter_search_box_hover_color", "#fa2121");
       c_c("--book_name_color", "#ffb3c5");
       c_c("--book_name_hover_color", "#d5b3ff");

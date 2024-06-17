@@ -616,13 +616,13 @@ $normal_color: var(--normal_color, #fbfdfd);
 
   #top_box {
     margin-top: 90px;
-    width: 70vw;
+    width: 1000px;
     z-index: 100000000;
   }
 
   #content_box {
     margin-top: 30px;
-    width: 70vw;
+    width: 1000px;
     z-index: 1;
     margin-bottom: 20px;
 

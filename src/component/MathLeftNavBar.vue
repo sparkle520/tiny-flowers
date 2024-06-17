@@ -101,7 +101,7 @@ $left_nav_bg: var(--left_nav_bg, #ffff);
 $left_nav_active_color: var(--left_nav_active_color, #0bb890);
 
 #math_left_nav_main {
-  width: calc(15vw - 32px);
+  width:180px;
   position: sticky;
   top: 90px;
   max-height: calc(100vh - 90px);
@@ -131,9 +131,9 @@ $left_nav_active_color: var(--left_nav_active_color, #0bb890);
   margin-bottom: 2px;
   border-radius: 5px;
   user-select: none;
-  padding: 8px 8px;
+  padding: 6px 8px;
   display: block;
-  width: calc(15vw - 32px);
+  width: 164px;
   overflow: hidden;
   white-space: nowrap;
 

@@ -89,10 +89,14 @@ const init = () => {
 const current_page = ref(params.page);
 const init_re_note_book_list = () => {
   const re_note_book_list = document.querySelectorAll(".re_note_item");
-  re_note_book_list.forEach((element) => {
-    element.style.transform = `rotate(${
+  re_note_book_list.forEach((element,index) => {
+    element.style.transform='scale(1.1)';
+    setTimeout(()=>{
+      element.style.transform = `scale(1) rotate(${
       Math.floor(Math.random() * 20) * (Math.random() > 0.5 ? -1 : 1)
     }deg) translateZ(0)`;
+    },(index+1)*200)
+  
     // setTimeout(() => {
     //   element.style.transform = `rotate(0deg)`;
     //   element.style.transitionDelay = `${Math.floor(Math.random()*3)}s`;
@@ -148,12 +152,12 @@ const go_to = (id) => {
 <template>
   <div id="note_main" class="relative flex flex_direction_column">
     <div class="container">
-      <div class="grid top_box relative">
+      <div class="top_box relative">
         <div class="top_box_bg absolute"></div>
 
         <div class="note_book_box flex flex_direction_column">
           <span class="title">推荐笔记</span>
-          <ul class="flex flex_direction_row">
+          <ul class="note_book_ul flex flex_direction_row">
             <li
               @click="go_to(item.id)"
               v-for="item in recommend_note_list"
@@ -184,7 +188,11 @@ const go_to = (id) => {
               <div class="img_box">
                 <img :src="item.img" alt="" />
               </div>
-              <div class="text_area absolute">
+              <div class="text_area_box absolute flex align_items_center justify_content_center ">
+                <div class="circle_breath"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute text_area_bg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 700 700" style="overflow: hidden; display: block;" width="700" height="700"><defs><linearGradient id="two-3" x1="350" y1="-350" x2="350" y2="350" spreadMethod="pad" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="hsl(1.4, 100%, 67%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(167, 52%, 78%)" stop-opacity="1"></stop></linearGradient></defs><g id="two-0" transform="matrix(1 0 0 1 0 0)" opacity="1"><path transform="matrix(1 0 0 1 350 350)" id="two-567" d="M 310.555355 128.63624 C 306.400805 171.137859 268.511154 212.04721 229.565653 229.565653 C 188.202424 248.171638 133.810286 204.555171 92.291539 222.811485 C 48.655877 241.998632 47.581261 331.059812 0 333.930552 C -45.05357 336.648788 -75.987926 278.570213 -99.404807 239.98443 C -118.884576 207.886128 -102.427118 155.426648 -130.552816 130.552815 C -164.108127 100.877133 -228.436691 135.965488 -264.673736 109.63145 C -297.477546 85.792399 -311.06588 39.513576 -320.180025 0 C -329.955891 -42.382412 -343.833519 -96.674588 -318.165284 -131.788376 C -289.49744 -171.005587 -225.212699 -164.921162 -178.600295 -178.600295 C -147.667467 -187.678013 -115.425805 -195.855944 -83.882995 -202.511464 C -56.408311 -208.308612 -28.047214 -215.442513 -0.000001 -216.791211 C 28.81017 -218.176597 58.407909 -208.356695 87.1747 -210.458346 C 140.591115 -214.360853 196.695758 -267.414196 245.619532 -245.619533 C 285.987457 -227.636346 310.860744 -173.210991 311.48933 -129.023106 C 312.174182 -80.8799 243.472953 -48.147958 243.36591 -0.000001 C 243.259437 47.891629 315.214585 80.971671 310.555355 128.63624 Z " fill="hsl(10, 75%, 40%)" stroke="undefined" stroke-width="1" stroke-opacity="1" fill-opacity="1" visibility="visible" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4"></path></g></svg>
+              </div>
+              <div class="text_area flex absolute">
                 <span class="relative">{{ item.name }}</span>
               </div>
             </li>
@@ -196,7 +204,7 @@ const go_to = (id) => {
         </div>
       </div>
       <div class="note_box relative flex flex_direction_column">
-        <div class="search_box relative">
+        <div class="search_box flex relative align_items_center">
           <svg
             t="1708088494282"
             class="search_icon absolute"
@@ -265,11 +273,13 @@ const go_to = (id) => {
                   <img
                     @click="go_to(item.id)"
                     v-if="item.img != ''"
+                    class="book_img"
                     :src="item.img"
                     alt=""
                   />
                   <img
                     v-else
+                    class="book_img"
                     src="https://pic.imgdb.cn/item/65b3c514871b83018a87b510.png"
                     alt=""
                   />
@@ -340,9 +350,8 @@ $box_bg: var(--box_bg, #ffff);
 $note_book_box_title_color: var(--note_book_box_title_color, #e96969);
 $re_note_item_bg: var(--re_note_item_bg, #e55656);
 $text_area_color: var(--text_area_color, #ffffe2);
-$text_area_before_bg: var(--text_area_before_bg, #f0681e);
-$text_area_after_bg: var(--text_area_after_bg, #ffb3c5);
-$filter_search_box_color: var(--filter_search_box_color, #726c65);
+$text_area_bg: var(--text_area_bg, #ffb3c5);
+$filter_search_box_color: var(--filter_search_box_color, #a0a0a0);
 $filter_search_box_hover_color: var(--filter_search_box_hover_color, #fa2121);
 $book_name_color: var(--book_name_color, #ffb3c5);
 $book_name_hover_color: var(--book_name_hover_color, #d5b3ff);
@@ -373,17 +382,16 @@ $search_box_color: var(--search_box_color, #4d4949);
       repeat;
   }
   .container {
-    width: 80vw;
+    width: 1100px;
     align-self: center;
     z-index: 1;
     margin-top: 90px;
     margin-bottom: 36px;
     .top_box {
-      width: inherit;
-      height: 45vh;
+      width: 1100px;
+      height: 340px;
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-      grid-template-columns: 4fr 1fr;
       // backdrop-filter: blur(6px);
       border-radius: 15px;
       -webkit-backdrop-filter: blur(6px);
@@ -393,32 +401,33 @@ $search_box_color: var(--search_box_color, #4d4949);
       &::after {
         content: "";
         position: absolute;
-        width: 20vw;
-        height: 20vw;
-        left: 0vw;
+        width: 288px;
+        height: 288px;
+        left: 0;
         bottom: 0;
         border-radius: 50%;
         background: $re_note_item_bg;
-        filter: blur(4vw);
+        filter: blur(58px);
       }
       &::before {
         content: "";
         position: absolute;
-        width: 8vw;
-        height: 8vw;
-        right: 4vw;
-        bottom: 4vw;
+        width: 115px;
+        height: 115px;
+        right: 58px;
+        bottom: 58px;
         border-radius: 50%;
-        background: $text_area_after_bg;
+        background: $text_area_bg;
         z-index: 1;
-        filter: blur(6vw);
+        filter: blur(86px);
       }
       .top_box_bg {
-        width: 80vw;
+        width: 1100px;
+        z-index: -1;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         background: $box_bg;
 
-        height: 45vh;
+        height: 340px;
         border-radius: inherit;
         object-fit: cover;
       }
@@ -429,104 +438,124 @@ $search_box_color: var(--search_box_color, #4d4949);
           font-weight: 900;
           color: $note_book_box_title_color;
           margin: 16px;
+          height: 30px;
         }
-        ul {
-          
-          width: 100%;
+        .note_book_ul {
+          width: 880px;
+          height: 276px;
           list-style: none;
           padding: 0;
           margin: 0;
-        }
-        .re_note_item {
-          width: 100%;
-          margin: 0 0.5vw;
-          transition: all 0.5s cubic-bezier(0.075, 0.82, 0.1);
-          background: linear-gradient(40deg, transparent, $re_note_item_bg);
-          border-radius: 20px;
-          height: 36vh;
-          border-radius: 15px;
-          box-shadow: #27262639 0px 6px 15px 0px;
-          transform: translateZ(0);
-          transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-          &:hover {
-            box-shadow: #27262639 0px 3px 5px 0px;
-          }
-
-          .note_icon {
-            left: 10px;
-            top: 10px;
-            z-index: 11;
-            transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-          }
-          .img_box {
-            overflow: hidden;
-            width: inherit;
-            background: #fff;
-            height: inherit;
-            border-radius: inherit;
-          }
-          img {
-            width: inherit;
-            object-fit: cover;
-            height: inherit;
-            border-radius: inherit;
+          gap: 16px;
+          .re_note_item{
+            width: 208px;
+            height: 276px;
+            border-radius: 10px;
+            z-index: 10;
+            background: #ffff;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-          }
-          .text_area {
-            bottom: 0;
-            overflow: hidden;
-
-            width: calc(100% - 1vw);
-            color: $text_area_color;
-
-            height: inherit;
-            padding: 1vh 0.5vw;
-            border-bottom-left-radius: inherit;
-            border-bottom-right-radius: inherit;
-            span {
-              display: block;
-              font-size: 1.1em;
-              width: 3.3em;
-              top: 22vh;
-              left: 0vw;
-              word-break: normal;
-              line-height: 1.5em;
-              font-weight: 900;
-              transform-style: preserve-3d;
-              &::before {
-                content: "";
-                position: absolute;
-                width: 150%;
-                height: 150%;
-                filter: blur(10px);
-                background: $text_area_before_bg;
-                border-radius: 50%;
-                left: -4vw;
-                top: 2vh;
-                transform: translateZ(-1px);
+            box-shadow: #27262619 0px 6px 15px 0px;
+           
+            &:hover{
+              .text_area{
+                height: 100px;
               }
-              &::after {
-                content: "";
-                position: absolute;
-                width: 120%;
-                height: 120%;
-                filter: blur(10px);
-                background: $text_area_after_bg;
-                border-radius: 50%;
-                right: 0vw;
-                bottom: 0;
-                transform: translateZ(-2px);
+             
+            }
+
+            .note_icon{
+              left: 8px;
+              top: 8px;
+            }
+            .img_box{
+              width: 208px;
+              height: 276px;
+              pointer-events: none;
+              img{
+                width: 208px;
+              height: 276px;
+              object-fit: cover;
               }
+            }
+            .text_area_box{
+              width: 208px;
+              height: 276px;
+              left: 0;
+              top: 0;
+              overflow: hidden;
+              border-radius: 10px;
+              &:hover{
+                .circle_breath {
+                  opacity: .6;
+                }
+              }
+              .circle_breath {
+                opacity: 0;
+
+            background: $book_name_color;
+            box-shadow: 0 0 0 0 $book_name_color;
+            height:32px;
+            width: 32px;
+            
+            border-radius: 50%;
+            animation: circle_breath 2.4s infinite;
+        }
+
+        @keyframes circle_breath {
+            0% {
+                transform: scale(0.60);
+                /* 注意rgba中的a的设置 */
+                box-shadow: 0 0 0 0 $text_area_bg;
+            }
+
+            60% {
+                transform: scale(1);
+                box-shadow: 0 0 0 32px #cc499800;
+            }
+
+            100% {
+                transform: scale(0.60);
+                box-shadow: 0 0 0 0 #cc499800;
+            }
+        }
+              .text_area_bg{
+                bottom: -350px;
+                transform: scale(.4);
+                left: -240px;
+                pointer-events: none;
+                filter: blur(40px);
+                path{
+                  fill: $note_book_box_title_color;
+                }
+              }
+            }
+            .text_area{
+              width: 176px;
+              padding: 0 16px;
+              padding-bottom:8px;
+              font-weight: 800;
+              pointer-events: none;
+              height: 36px;
+              z-index: 11;
+              align-items: center;
+              transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+              bottom: 0;
+              color: $text_area_color;
+              left: 0;
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+             
             }
           }
         }
+       
       }
     }
     .top_right_box {
     }
     .note_box {
-      width: 80vw;
-      min-height: 40vh;
+      width: 1100px;
       border-radius: 15px;
       margin-top: 32px;
       background: $box_bg;
@@ -537,12 +566,13 @@ $search_box_color: var(--search_box_color, #4d4949);
       // border: 0.727273px solid rgba(255, 255, 255, 0.18);
       box-shadow: #27262619 0px 6px 15px 0px;
       .search_box {
-        width: 50%;
-        height: 5vh;
-        margin: 1vh auto;
+        width: 550px;
+        height: 38px;
+        margin: 16px auto;
+        margin-bottom: 0px;
         .filter_search_box {
           width: 100%;
-          max-height: 30vh;
+          max-height: 226px;
           background: $box_bg;
           bottom: 0;
           z-index: 100;
@@ -551,16 +581,16 @@ $search_box_color: var(--search_box_color, #4d4949);
           border-radius: 10px;
           overflow-y: scroll;
           .query_time {
-            margin-left: 2vw;
-            margin-bottom: 1vh;
+            margin-left: 16px;
+            margin-bottom: 8px;
             color: $note_book_box_title_color;
             font-size: 0.7em;
           }
           ul {
             list-style: none;
-            margin: 2vh 2vw;
+            margin:16px 16px;
             padding: 0;
-            gap: 1vh;
+            gap: 8px;
             li {
               word-wrap: break-word;
               color: $filter_search_box_color;
@@ -586,11 +616,11 @@ $search_box_color: var(--search_box_color, #4d4949);
         }
 
         .search {
-          width: calc(100% - 4vw);
-          height: 5vh;
+          width: 486px;
+          height: 38px;
           border-radius: 10px;
           outline: none;
-          padding: 0 2vw;
+          padding: 0 32px;
           background: $box_bg;
           color: $search_box_color;
 
@@ -611,20 +641,22 @@ $search_box_color: var(--search_box_color, #4d4949);
         }
       }
       .book_list_box {
-        width: 100%;
-        margin-top: 32px;
+        width: 1100px;
+        margin-top: 16px;
         border-radius: inherit;
-        min-height: 20vh;
+        min-height: 300px;
 
         .book_list_ul {
           z-index: 20;
-          width: calc(100% - 32px);
+          width: 1064px;
           margin: 0 auto;
           height: 100%;
           padding: 0;
+          padding-top: 16px;
+          border-top: $book_name_color 2px solid;
           grid-template-columns: repeat(3, 1fr);
           flex-wrap: wrap;
-          gap: 1vw;
+          gap: 16px;
 
           .book_item {
             list-style: none;
@@ -652,16 +684,16 @@ $search_box_color: var(--search_box_color, #4d4949);
               .book_text_area {
               }
             }
-            height: 20vh;
+            height: 150px;
             background: $box_bg;
             .book_item_inner {
-              margin: 10px;
+              margin: 8px;
               position: relative;
               z-index: 11;
-              gap: 1vw;
+              gap: 16px;
               .book_img_box {
-                width: 13vh;
-                height: calc(20vh - 20px);
+                width: 98px;
+                height: 134px;
                 border-radius: 10px;
                 background: #fff;
                 z-index: 11;
@@ -678,7 +710,7 @@ $search_box_color: var(--search_box_color, #4d4949);
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
                 .book_name {
-                  margin: 1vh 0;
+                  margin: 8px 0;
                   font-size: 1.2em;
                   font-weight: 600;
                   user-select: none;
@@ -735,7 +767,7 @@ $search_box_color: var(--search_box_color, #4d4949);
     z-index: 10;
     width: inherit;
     height: 200px;
-    gap: 2vw;
+    gap:16px;
     .title_foot {
       font-size: 16px;
       color: $short_message_color;
@@ -746,18 +778,18 @@ $search_box_color: var(--search_box_color, #4d4949);
       color: $short_message_color;
     }
     .left_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 26px;
     }
     .mid_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
     }
     .right_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 22px;
 

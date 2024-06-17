@@ -263,7 +263,7 @@ $foot_bg: var(--foot_bg, #e96969);
     background: transparent;
     .note_directory {
       background: transparent;
-      margin: 5vh auto;
+      margin: 36px auto;
       margin-top: 0;
     }
     h1 {
@@ -288,7 +288,7 @@ $foot_bg: var(--foot_bg, #e96969);
 .note_info_foot {
     width: inherit;
     height: 200px;
-    gap: 2vw;
+    gap: 16px;
     z-index: 1;
     background: $foot_bg;
     .title_foot {
@@ -301,18 +301,18 @@ $foot_bg: var(--foot_bg, #e96969);
       color: $note_top_mid_box_h1_color;
     }
     .left_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 26px;
     }
     .mid_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
     }
     .right_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 22px;
 
@@ -330,7 +330,8 @@ $foot_bg: var(--foot_bg, #e96969);
 }
 @keyframes to_top {
   0% {
-    transform: translateY(5vh);
+    transform: translateY(128px);
+    opacity: 0;
   }
   100% {
     transform: translateY(0);
