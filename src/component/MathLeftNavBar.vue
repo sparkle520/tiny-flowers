@@ -85,10 +85,11 @@ const show_children = (item) => {
                 to=""
                 @click="router.push('')"
                
-                class="nav_item_child"
+                class="nav_item_child "
                 :id="index.toString() + index2.toString()"
               >
-                {{ sonItem.name }}
+              <span class="link">{{ sonItem.name }}</span>
+                
               </router-link>
             </li>
           </ul>
@@ -156,7 +157,7 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
   border-radius: 5px;
   padding: 8px 16px;
   width: 148px;
-  
+  overflow: hidden;
   transform: rotate3d(0, 1, 0, 0);
   display: block;
   overflow: hidden;
@@ -164,9 +165,36 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
 font-size: 12px;
   text-overflow: ellipsis;
   animation: nav 0.6s ease-in-out;
+  position: relative;
   &:hover{
-    color: $left_nav_active_color;
+    span{
+      &::after{
+
+transform: scaleX(1);
+transform-origin: bottom left;
+}
+    }
+   
   }
+  span{
+    position: relative;
+    overflow: hidden;
+    &::after{
+    content: '';
+    background: $math_left_nav_main_color;
+    position: absolute;
+    max-width: 148px;
+    width: 100%;
+    opacity: .6;
+    height: 3px;
+    bottom: -4px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-in-out;
+  }
+  }
+  
 }
 
 @keyframes nav {
@@ -186,9 +214,7 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: $left_nav_active_color;
-}
+
 
 ul {
   padding: 0;
@@ -196,5 +222,17 @@ ul {
 
 li {
   list-style-type: none;
+}
+.link
+{
+}
+.link:hover::after
+{
+   
+}
+
+.link::after
+{
+   
 }
 </style>

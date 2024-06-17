@@ -181,11 +181,9 @@ const init_data = () => {
   });
 };
 
-const cover_flag = ref(false);
 </script>
 <template>
   <div id="math_main" class="flex flex relative">
-    <div class="cover" v-show="cover_flag"></div>
     <div class="note_left_nav_bar">
       <MathLeftNavBar></MathLeftNavBar>
     </div>
@@ -431,14 +429,7 @@ $normal_color: var(--normal_color, #fbfdfd);
   background: linear-gradient($math_bg_top 50%,$math_bg_color);
 
   gap: 16px;
-  .cover {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    z-index: 1000000;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-  }
+ 
   .note_left_nav_bar {
     z-index: 10000;
   }
