@@ -4,12 +4,11 @@
 
 <script setup>
 import {
-  reactive,
-  toRefs,
   onBeforeMount,
   onMounted,
   ref,
   onUnmounted,
+  nextTick,
 } from "vue";
 import { useRouter } from "vue-router";
 import { useConfigStore } from "../store/config";
@@ -18,10 +17,15 @@ import anime from 'animejs/lib/anime.es.js';
 import { useUserStore } from "../store/user";
 import { useTopicStore } from "../store/topic";
 import HomeCarousel from "@/component/HomeCarousel.vue";
+import * as echarts from 'echarts';
+import 'echarts-liquidfill'
+
+
 const config_store = useConfigStore();
 const topic_store = useTopicStore();
 const { theme } = storeToRefs(config_store);
 const user_store = useUserStore();
+const wave_color = ref(['black','black','black'])
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
@@ -33,19 +37,91 @@ onUnmounted(() => {
 });
 onMounted(() => {
   change_theme(theme.value);
+  
   // const d = document.querySelector('.bg_shape')
   // const bg_shape_path = document.querySelector('.bg_shape_path')
   // let path = document.createElementNS("http://www.w3.org/2000/svg",
   // "path")
   // d.setAttribute('path',path)
   init_shape_icon();
- 
   window.scrollTo(0, 0);
   scroll_handle();
   document.addEventListener("scroll", scroll_handle);
   document.querySelector(".notice_text").innerText = notice[notice_index];
   init();
+    wave_animation()
 });
+const wave_animation = ()=>{
+  const el = document.querySelector('#wave_animation')
+  // 初始化
+  const chartInstance = echarts.init(el)
+  // 设置option
+  chartInstance.setOption(
+    {
+      series: [
+        { // 水球图
+        type: 'liquidFill', // 水球图
+        name: 'Liquid Fill1', // 水球图名称
+        shape:'rect',                      // 水球形状  'circle'， 'rect'， 'roundRect'， 'triangle'， 'diamond'， 'pin'， 'arrow'，'container'
+        radius:'200%',                        // 圆形半径,默认50%
+        amplitude:70,                          // 水波的振幅大小
+        waveSpeed:0.05,                       // 水波的速度
+        
+       
+        data: [
+           { 
+                value: 0.3,
+                itemStyle: {
+                    opacity: 0.6,
+                    shadowBlur: 0 // 波浪的阴影范围
+                },
+                emphasis: {
+                    itemStyle: {
+                        opacity: 0.6
+                    }
+                }
+            }, { 
+                value: 0.26,
+                itemStyle: {
+                    opacity: 0.6,
+                    shadowBlur: 0 // 波浪的阴影范围
+                },
+                emphasis: {
+                    itemStyle: {
+                        opacity: 0.6
+                    }
+                }
+            },{ 
+                value: 0.23,
+                itemStyle: {
+                    opacity: 0.6,
+                    shadowBlur: 0 // 波浪的阴影范围
+                },
+                emphasis: {
+                    itemStyle: {
+                        opacity: 0.6
+                    }
+                }
+            }],
+            color: wave_color.value,
+        backgroundStyle: {   // 设置水球图内部背景色
+          color: "transparent",//水球图内部背景色
+        },
+        label: {   // 设置百分比展示
+          normal: { // 百分比正常样式
+            textStyle: { // 百分比正常样式字体
+              color: 'transparent'
+            },
+          }
+        },
+        //外部细圆
+        outline: { // 是否显示外圈
+          show: false,
+        },
+      }],
+    }
+  )
+}
 const scroll_handle = () => {
   page_one_handle();
   page_two_handle();
@@ -93,7 +169,10 @@ const change_theme = (current_theme) => {
     c_c("--short_msg_color", "#fdfbfb");
     c_c("--title_hover", "#b5b9d6");
     c_c("--home_nav_item_box_shadow", "#b5b9d6");
-    
+    c_c("--rect_item_color", "#fdfbfb");
+
+    wave_color.value = ['#b5b9d6','#b5b9d6','#b5b9d6']
+    wave_animation()
   } else {
     document.querySelector('.page_1_bg').style.opacity='1'
     c_c("--home_bg", "#fdfbfb");
@@ -111,9 +190,12 @@ const change_theme = (current_theme) => {
     c_c("--short_msg_color", "#747576");
     c_c("--title_hover", "#0ebd7d");
     c_c("--home_nav_item_box_shadow", "#99edb5");
-    
+    c_c("--rect_item_color", "#7D9773");
+    wave_color.value = ['#9CE881','#9CE881','#9CE881']
+    wave_animation()
   }
 };
+
 const go_to_next_page = () => {
   window.scrollTo({ top: window.innerHeight - 80, behavior: "smooth" });
 };
@@ -370,7 +452,7 @@ const leave_recommend_topic = (index) => {
 };
 </script>
 <template>
-  <div class="absolute" style="width: max(1440px,100vw); height: 100vh; z-index: 10;">
+  <div class="absolute" style="width: max(1440px,100vw); height: 100vh; z-index: 100;">
     <svg
       t="1714893337176"
       class="shape_icon absolute"
@@ -653,65 +735,15 @@ const leave_recommend_topic = (index) => {
       ></path>
     </svg>
      
-     <svg
-      t="1714892970215"
-      class="shape_icon absolute"
-      style="opacity: 0; transition: all 3s"
-      viewBox="0 0 1024 1024"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      p-id="4774"
-      width="52"
-      height="52"
-    >
-      <path
-        d="M344 356h338l-20.4 439.8c-0.9 20.3-17.7 36.2-38 36.2H402.4c-20.3 0-37-16-38-36.2L344 356z"
-        fill="#FF6C6D"
-        p-id="4775"
-      ></path>
-      <path
-        d="M670.8 597.4l-5.6 120.1c-26.4 1.8-51.7 1.8-75.8-0.1-69.1-5.4-104.9-92.9-179.3-132.8-11-5.9-29.7-9.5-56-10.8l-6.3-135.7c3.6 0.6 7.3 1.2 11.2 1.9 122.6 22.7 174.5 181.3 230.4 190.4 22.5 3.6 49.6-7.4 81.4-33z"
-        fill="#FFFFFF"
-        p-id="4776"
-      ></path>
-      <path
-        d="M670.8 597.4l-5.6 120.1c-26.4 1.8-51.7 1.8-75.8-0.1-69.1-5.4-104.9-92.9-179.3-132.8-11-5.9-29.7-9.5-56-10.8l-6.3-135.7c3.6 0.6 7.3 1.2 11.2 1.9 122.6 22.7 174.5 181.3 230.4 190.4 22.5 3.6 49.6-7.4 81.4-33z"
-        fill="#FFFFFF"
-        p-id="4777"
-      ></path>
-      <path
-        d="M680.2 356.8l1.8 0.1-1.8 38.1v1.5h-0.1l-18.5 399.2c-0.9 20.3-17.7 36.2-38 36.2h-62.2l30.4-435.4H332.2v-50.9h348v11.2z"
-        fill="#FA3C48"
-        p-id="4778"
-      ></path>
-      <path
-        d="M670.8 597.4l-5.6 120.1c-26.4 1.8-51.7 1.8-75.8-0.1-6.9-0.5-13.4-1.9-19.7-3.9l6.2-88.1c4.5 2.5 9 4.2 13.5 5 22.5 3.6 49.6-7.4 81.4-33z"
-        fill="#E9F4FF"
-        p-id="4779"
-      ></path>
-      <path
-        d="M538.2 283.5H713V356H311v-72.5h185.9v-75.1l-48.5-33.1 27.8-27.3 62 39.8z"
-        fill="#EEF6FF"
-        p-id="4780"
-      ></path>
-      <path
-        d="M311 283.5h212V210l-73.5-52.5 29-17.5 87.5 45.5 4 98h143V326H311z"
-        fill="#FFFFFF"
-        p-id="4781"
-      ></path>
-      <path
-        d="M344 356l20.4 439.8c0.9 20.3 17.7 36.2 38 36.2h221.3c20.3 0 37-16 38-36.2L682 356h31v-66.5c0-3.3-2.7-6-6-6H538.2v-95.7l-62-39.8-27.8 27.3 48.4 33v75.1H317c-3.3 0-6 2.7-6 6V356h33z m-38.2 39.7c-19.6-2.6-34.8-19.3-34.8-39.7v-66.5c0-25.4 20.6-46 46-46h139.9v-14l-31-21.1c-20.8-14.2-23.5-43.9-5.5-61.6l27.8-27.3c13.3-13.1 33.9-15.2 49.7-5.2l61.9 39.8c11.5 7.4 18.4 20 18.4 33.7v55.7H707c25.4 0 46 20.6 46 46V356c0 19.6-14.1 36-32.8 39.4l-18.7 402.3c-1.9 41.6-36.2 74.4-77.9 74.4H402.4c-41.7 0-76-32.8-77.9-74.4l-18.7-402z"
-        fill="#721D0F"
-        p-id="4782"
-      ></path>
-    </svg> 
+    <svg t="1718716534679" class="shape_icon absolute"
+    style="opacity: 0; transition: all 3s" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9642" width="52" height="52"><path d="M554.84811 298.412549h-85.226521a21.366313 21.366313 0 0 1 0-42.732626h85.226521a21.366313 21.366313 0 0 1 0 42.732626z" fill="#F6BB42" p-id="9643"></path><path d="M810.527675 724.664522A511.59786 511.59786 0 0 1 331.993886 33.064429 511.35913 511.35913 0 1 0 990.768638 692.316641a509.449292 509.449292 0 0 1-180.240963 32.347881z" fill="#FFCE54" p-id="9644"></path><path d="M554.84811 980.344087a511.35913 511.35913 0 0 1-381.967604-850.832838 511.239765 511.239765 0 1 0 721.441312 721.799407A509.329927 509.329927 0 0 1 554.84811 980.344087z" fill="#F6BB42" p-id="9645"></path><path d="M767.914414 277.284966a21.366313 21.366313 0 1 1-21.366313-21.366313 21.366313 21.366313 0 0 1 21.366313 21.366313z" fill="#4A89DC" p-id="9646"></path><path d="M661.440945 490.35127a21.366313 21.366313 0 1 1-21.366313-21.366313 21.366313 21.366313 0 0 1 21.366313 21.366313z" fill="#48CFAD" p-id="9647"></path><path d="M1023.593979 234.31361a21.366313 21.366313 0 1 1-21.366313-21.246948 21.366313 21.366313 0 0 1 21.366313 21.246948z" fill="#ED5564" p-id="9648"></path><path d="M640.074632 21.247306A21.366313 21.366313 0 1 1 618.827684 0.000358a21.366313 21.366313 0 0 1 21.246948 21.246948z" fill="#AC92EB" p-id="9649"></path><path d="M512.234849 192.058444a21.366313 21.366313 0 0 0-21.246948 21.366313v127.720418a21.366313 21.366313 0 1 0 42.613261 0v-127.720418a21.366313 21.366313 0 0 0-21.366313-21.366313z" fill="#FFCE54" p-id="9650"></path><path d="M874.387884 426.371696a21.366313 21.366313 0 0 0-21.246948 21.366313v127.839783a21.366313 21.366313 0 0 0 42.613261 0V447.738009a21.366313 21.366313 0 0 0-21.366313-21.366313z" fill="#F6BB42" p-id="9651"></path><path d="M917.001145 532.964531H831.774623a21.366313 21.366313 0 0 1 0-42.613261h85.226522a21.366313 21.366313 0 1 1 0 42.613261z" fill="#FFCE54" p-id="9652"></path></svg>
   </div>
   <div id="home_main">
     <svg xmlns="http://www.w3.org/2000/svg" class="bg_shape" width="400" height="340"><path class="bg_shape_path" fill="#b399ff" d="M302.1365889531657,273.19508443432414C296.15187809393854,286.7899505495625,272.4500958262396,293.6740982055747,257.09399766737863,301.56919669142997C241.73789950851767,309.46429517728524,222.926574063567,325.3659245340324,210,320.5656753494559C197.073425936433,315.7654261648794,192.95133108259083,281.7824672030142,179.5345532859766,272.76770158397085C166.1177754893624,263.7529359649275,137.17483813460018,275.27169856585743,129.49933322031478,266.47708163519565C121.82382830602938,257.68246470453386,134.77484556693125,236.23906021519923,133.4815238002642,220C132.18820203359715,203.76093978480077,114.98895338263134,179.4395807063706,121.7394026203125,169.0427203440003C128.48985185799367,158.64585998162997,159.27411966307,164.3085295120519,173.98421922635123,157.6188378257781C188.69431878963246,150.92914613950427,198.19119090192632,128.56430683636188,209.99999999999997,128.90457022635732C221.80880909807362,129.24483361635276,236.1508139826239,149.49286098916429,244.83707381479317,159.66041816575077C253.52333364696244,169.82797534233725,254.09002749169088,179.85331631350132,262.1175589930156,189.9099132858762C270.14509049434037,199.96651025825108,286.33242449605007,206.11913814192533,293.0022628227417,220C299.6721011494334,233.88086185807467,308.12129981239286,259.6002183190858,302.1365889531657,273.19508443432414" stroke="none" stroke-width="3"/></svg>
     <svg xmlns="http://www.w3.org/2000/svg" class="bg_shape_2" width="400" height="340"><path class="bg_shape_path" fill="#b399ff" d="M276.1902270629109,302.99991947777875C263.2411727951601,312.92684752832906,219.83252515715526,287.4255974799391,196.40546071032813,279.56156830330195C172.978396263501,271.6975391266648,142.56023242029949,270.17226736784767,135.62784038194815,255.815744417956C128.6954483435968,241.45922146806436,145.39473945637428,212.44353331630845,154.81110848022007,193.42243060395194C164.22747750406586,174.40132789159543,172.77189769468353,149.99476477106265,192.12605452502294,141.6891281438169C211.48021135536234,133.38349151657115,257.2737608302882,130.53679886444704,270.93604946225656,143.58861084047754C284.5983380942249,156.64042281650805,273.22409005005716,193.4314485604498,274.0997863168329,220C274.9754825836086,246.5685514395502,289.1392813306617,293.07299142722843,276.1902270629109,302.99991947777875" stroke="none" stroke-width="3"/></svg>
     <div class="page_1  relative flex align_items_center justify_content_center">
      <!--<div class="page_bg_1 relative"></div>--> 
-    
+     <div  id="wave_animation" class="absolute"></div>
      <svg class="page_1_bg" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 1422 800"><defs><radialGradient id="cccircular-grad" r="50%" cx="50%" cy="50%">
        <stop offset="0%" stop-color="#95b98d" stop-opacity="0.5"></stop>
        <stop offset="50%" stop-color="hsl(108, 53%, 83%)" stop-opacity="0"></stop>
@@ -1192,6 +1224,7 @@ $short_msg_color: var(--short_msg_color, #747576);
 $title_hover: var(--title_hover, #0ebd7d);
 $home_nav_item_box_shadow: var(--home_nav_item_box_shadow, #99edb5);
 $page_1_title_color: var(--page_1_title_color, #c6ebbd);
+$rect_item_color: var(--rect_item_color, #7D9773);
 
 
 $text_color: var(--text_color, #fff);
@@ -1298,7 +1331,7 @@ $box_bg: var(--box_bg, #fff);
     width: max(1440px,100vw);
     height: 100vh;
     overflow-x: hidden;
-   
+  
               
     .page_1_title {
       font-size: 1.2em;
@@ -1391,7 +1424,7 @@ $box_bg: var(--box_bg, #fff);
 
           .notice_text {
             margin-left: 16px;
-            color: #af886e;
+            color: $rect_item_color;
           }
         }
       }
@@ -1443,7 +1476,7 @@ $box_bg: var(--box_bg, #fff);
                 font-family: "orbitron-light";
                 font-weight: 900;
                 letter-spacing: 2px;
-                color: #af886e;
+                color: $rect_item_color;
                 box-shadow: 0 2px 5px rgba(31, 45, 61, 0.15);
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 &:hover {
@@ -1478,14 +1511,14 @@ $box_bg: var(--box_bg, #fff);
               border-radius: 10px;
               font-size: 14px;
               font-weight: lighter;
-              color: #af886e;
+              color: $rect_item_color;
               transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 box-shadow 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
               &:hover {
                 background: #8e9bae;
-                box-shadow: #c0c1c2 0 5px 10px;
+                box-shadow:none;
                 color: $text_color;
                 transform: translateY(4px);
               }
@@ -1856,6 +1889,14 @@ $box_bg: var(--box_bg, #fff);
     }
   }
 }
+#wave_animation {
+    left: 0;
+    top: 0;
+    width: max(1440px,100vw);
+    height: 100vh;
+    z-index: 100;
+    pointer-events: none;
+   }
 .home_foot {
   width: max(1440px,100vw);
   height: 200px;
