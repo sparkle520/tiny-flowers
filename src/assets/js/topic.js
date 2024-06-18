@@ -30,7 +30,7 @@ export const change_theme = (current_theme) => {
     c_c("--directory_list_cover_bg", "#fdfbfb");
     c_c("--code_bg", "#b399ff");
     c_c("--pre_bg", "#f6f8fa");
-    c_c("--code_color", "#e8ecfc");
+    c_c("--code_color", "#b399ff");
 
     c_c("--h_color", "#b399ff");
     c_c("--blockquote_color", "#5f526c");

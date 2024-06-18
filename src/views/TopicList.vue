@@ -45,7 +45,7 @@ const change_list_layout = (v) => {
   if (v) {
     layout_list[0].classList.add("layout_active");
     layout_list[1].classList.remove("layout_active");
-    topic_grid_box.style.transform = "translateY(-20vw)";
+    topic_grid_box.style.transform = "translateY(-128px)";
     topic_grid_box.style.opacity = 0.5;
   } else {
     layout_list[1].classList.add("layout_active");
@@ -81,11 +81,11 @@ const change_layout = (flag) => {
   if (flag) {
     topic_box.style.width = "866px";
     show_personal_info.value = true;
-    topic_grid_inner_box.style.width = "100%";
+    topic_grid_inner_box.style.width = "866px";
   } else {
-    topic_box.style.width = "80vw";
+    topic_box.style.width = "1100px";
     show_personal_info.value = false;
-    topic_grid_inner_box.style.width = "92%";
+    topic_grid_inner_box.style.width = "1100px";
   }
 };
 
@@ -345,7 +345,7 @@ const search_focus_handle = () => {
       </div>
     </div>
     <div
-      class="width_full flex flex_direction_row justify_content_center gap_1vw z_index_10"
+      class="width_full flex flex_direction_row justify_content_center gap_16 z_index_10"
     >
       <div class="topic_box">
         <div
@@ -471,7 +471,7 @@ const search_focus_handle = () => {
                   <span class="classification_box">{{
                     item.classification
                   }}</span>
-                  <span class="date relative"
+                  <span class="date relative flex flex_direction_row align_items_center"
                     >{{ item.create_date.split("?")[0] }}-{{
                       item.create_date.split("?")[1]
                     }}-{{ item.create_date.split("?")[2] }}</span
@@ -736,7 +736,7 @@ $layout_hover: var(--layout_hover, #f3acac);
     
     .filter_search_box {
       width: 550px;
-      max-height: 30vh;
+      max-height: 226px;
 
       background: $filter_search_box_bg;
       bottom: 0;
@@ -801,7 +801,6 @@ $layout_hover: var(--layout_hover, #f3acac);
     }
   }
   .topic_box {
-    min-height: calc(100vh);
     width: 866px;
     padding-bottom: 32px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -971,28 +970,28 @@ $layout_hover: var(--layout_hover, #f3acac);
     .topic_grid_box {
       width: 100%;
       flex-wrap: wrap;
-      margin-bottom: 10vh;
+      margin-bottom: 128px;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       .topic_grid_inner_box {
-        width: 92%;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        width: 100%;
         gap: 2%;
       }
       .topic_item_grid {
         width: 32%;
         border-radius: 10px;
-        height: 50vh;
+        height: 370px;
         background: $filter_search_box_bg;
         box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
         transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
         &:hover {
-          // transform: translateY(-0.6vh);
-          transform: translateY(-1vh);
+          transform: translateY(-8px);
           box-shadow: 0 3px 5px rgba(31, 45, 61, 0.2);
         }
         .img_box {
           width: 100%;
-          height: 30vh;
+          height: 210px;
 
           img {
             width: inherit;
@@ -1003,9 +1002,9 @@ $layout_hover: var(--layout_hover, #f3acac);
           }
         }
         .topic_item_inner_grid {
-          width: 94%;
-          height: calc(94% - 30vh);
-          margin: 3%;
+          width: calc(100% - 32px);
+          height: 128px;
+          margin: 16px;
           .classification_box {
             background: $item_classification_bg;
             font-size: 0.6em;
@@ -1015,23 +1014,26 @@ $layout_hover: var(--layout_hover, #f3acac);
             border-radius: 10px;
           }
           .date {
+            height: 24px;
             font-size: 0.7em;
             font-weight: 500;
-            margin-left: 1vw;
+            margin-left: 16px;
             &::after {
               content: "";
               position: absolute;
-              width: 0.2vw;
-              height: 100%;
+              width: 2px;
+              height: 16px;
               background: $item_classification_bg;
-              top: 0;
-              left: -0.4vw;
+              top: 4px;
+              left: -8px;
             }
           }
           .topic_title {
             margin: 8px 0;
-            overflow: scroll;
-
+            display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
             &:hover {
               color: $item_classification_bg;
             }
@@ -1045,7 +1047,7 @@ $layout_hover: var(--layout_hover, #f3acac);
           }
           .tags_box {
             margin-top: auto;
-            gap: 0.4vw;
+            gap: 0;
             height: 30px;
             overflow: scroll;
 
@@ -1071,23 +1073,23 @@ $layout_hover: var(--layout_hover, #f3acac);
 
     .pagination {
       align-self: center;
-      margin-top: 16vh;
+      margin-top: 128px;
     }
   }
 }
 
 //personal info
 .personal_box {
-  width: 20vw;
+  width: 288px;
   .personal_item {
-    width: 100%;
+    width: 288px;
     background-color: $item_bg;
     animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     border-radius: 10px;
     box-shadow: $item_shadow 2px 3px 10px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    padding-bottom: 30px;
-    margin-bottom: 20px;
+    padding-bottom: 32px;
+    margin-bottom: 16px;
   }
   .intro {
     .avatar_bg {
@@ -1097,18 +1099,18 @@ $layout_hover: var(--layout_hover, #f3acac);
       border-radius: 10px;
       background:linear-gradient( $layout_hover,$item_bg);
       z-index: 0;
-      width: 20vw;
-      height: 20vh;
+      width: 288px;
+      height: 152px;
       pointer-events: none;
       opacity: 0.9;
       border: none;
     }
     img {
-      width: 8vw;
-      height: 8vw;
+      width: 118px;
+      height: 118px;
       border-radius: 50%;
-      margin: 10vh auto 0vh 1vw;
-      border: $item_shadow 2px solid;
+      margin: 74px auto 0 16px;
+      border: $item_shadow 1px solid;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       &:hover {
@@ -1120,7 +1122,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       font-size: 1.4em;
       font-weight: 900;
       color: $title_color;
-      transform: translateY(-4vh);
+      transform: translateY(-32px);
       margin-left: auto;
       margin-right: 32px;
     }
@@ -1155,7 +1157,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       color: $title_color;
       li {
         span {
-          margin: 0.4vh;
+          margin: 4px;
           font-size: 0.9em;
           font-weight: 900;
         }
@@ -1195,10 +1197,7 @@ $layout_hover: var(--layout_hover, #f3acac);
             margin-left: 16px;
             color: #ffff;
 
-            // &:last-child {
-            //   margin-left: auto;
-            //   margin-right: 1vw;
-            // }
+          
           }
         }
       }
@@ -1213,7 +1212,7 @@ $layout_hover: var(--layout_hover, #f3acac);
 
       li {
         span {
-          margin: 1vw 0;
+          margin: 4px 0;
           font-size: 0.9em;
           font-weight: 900;
           letter-spacing: 0.1em;
@@ -1229,7 +1228,7 @@ $layout_hover: var(--layout_hover, #f3acac);
     z-index: 10;
     width: inherit;
     height: 200px;
-    gap: 2vw;
+    gap: 16px;
     .title_foot {
       font-size: 16px;
       color: $tag_bg;
@@ -1240,18 +1239,18 @@ $layout_hover: var(--layout_hover, #f3acac);
       color: $tag_bg;
     }
     .left_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 26px;
     }
     .mid_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
     }
     .right_foot {
-      width: 20vw;
-      height: 20vh;
+      width: 300px;
+      height: 152px;
       gap: 8px;
       line-height: 22px;
 
