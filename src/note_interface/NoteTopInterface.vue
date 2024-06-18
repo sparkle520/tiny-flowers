@@ -131,7 +131,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 
 #note_top_main {
-  width: 100vw;
+  width: max(1100px,100vw);
   margin: 0 auto;
   height: 378px;
   margin-top: 90px;
@@ -158,7 +158,7 @@ onMounted(() => {
     }
   }
   .note_top_main_bg{
-    width: 100vw;
+    width: max(1100px,100vw);
     height: inherit;
     border-radius: 5px;
     object-fit: cover;

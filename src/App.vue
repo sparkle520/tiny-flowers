@@ -250,6 +250,7 @@ $bg_color: var(--bg_color, #fdfbfb);
 #main {
   background: $bg_color;
   width: max(1440px,100vw);
+  overflow-x: hidden;
   .nav {
     z-index: 10000000000;
     transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
