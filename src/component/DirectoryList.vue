@@ -241,7 +241,7 @@ $directory_list_cover_bg: var(--directory_list_cover_bg, #9584d0);
 $normal_color: var(--normal_color, #216eba);
 
 #directory_list_main {
-  width: 21vw;
+  width: 286px;
   border-radius: 5px;
   background: $directory_list_bg;
   position: sticky;

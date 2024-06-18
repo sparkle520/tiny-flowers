@@ -91,7 +91,7 @@ $item_shadow: var(--item_shadow, #5656561b);
 $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 #topic_right_main {
-  width: 21vw;
+  width: 284px;
   .personal_item {
     width: inherit;
     background-color: $item_bg;
@@ -103,10 +103,10 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
   }
   .intro {
     img {
-      width: 8vw;
-      height: 8vw;
+      width: 118px;
+      height: 118px;
       border-radius: 50%;
-      margin: 2vh 0;
+      margin: 16px 0;
       box-shadow: none;
       border: $item_shadow 2px solid;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);

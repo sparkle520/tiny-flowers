@@ -243,7 +243,7 @@ $directory_active_color: var(--directory_active_color, #1772f6);
 $directory_color: var(--directory_color, #8491a5);
 
 #directory_list_main {
-  width: 21vw;
+  width: 286px;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   background: $directory_list_cover_bg;
   position: sticky;
