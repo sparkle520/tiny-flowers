@@ -6,6 +6,7 @@ import router from './router/index'
 import "@/assets/css/normalize.css"
 import "@/assets/css/index.scss"
 import "@/assets/css/pattern.css"
+
 import ElementPlus from 'element-plus'
 import GlobalComponents from '/src/component/index'
 // import "/src/assets/untils/mathjax";

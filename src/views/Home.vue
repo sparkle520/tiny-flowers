@@ -17,15 +17,15 @@ import anime from 'animejs/lib/anime.es.js';
 import { useUserStore } from "../store/user";
 import { useTopicStore } from "../store/topic";
 import HomeCarousel from "@/component/HomeCarousel.vue";
-import * as echarts from 'echarts';
-import 'echarts-liquidfill'
+// import * as echarts from 'echarts';
+// import 'echarts-liquidfill'
 
 
 const config_store = useConfigStore();
 const topic_store = useTopicStore();
 const { theme } = storeToRefs(config_store);
 const user_store = useUserStore();
-const wave_color = ref(['black','black','black'])
+// const wave_color = ref(['black','black','black'])
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
@@ -43,87 +43,87 @@ onMounted(() => {
   // let path = document.createElementNS("http://www.w3.org/2000/svg",
   // "path")
   // d.setAttribute('path',path)
-  init_shape_icon();
+  // init_shape_icon();
   window.scrollTo(0, 0);
   scroll_handle();
   document.addEventListener("scroll", scroll_handle);
   document.querySelector(".notice_text").innerText = notice[notice_index];
   init();
-    wave_animation()
+    // wave_animation()
 });
-const wave_animation = ()=>{
-  const el = document.querySelector('#wave_animation')
-  // 初始化
-  const chartInstance = echarts.init(el)
-  // 设置option
-  chartInstance.setOption(
-    {
-      series: [
-        { // 水球图
-        type: 'liquidFill', // 水球图
-        name: 'Liquid Fill1', // 水球图名称
-        shape:'rect',                      // 水球形状  'circle'， 'rect'， 'roundRect'， 'triangle'， 'diamond'， 'pin'， 'arrow'，'container'
-        radius:'200%',                        // 圆形半径,默认50%
-        amplitude:70,
-       // waveLength: 550,                          // 水波的振幅大小
-       //phase: 'auto', // 波浪的相位
-        waveSpeed:0.05,                       // 水波的速度
-        waveAnimation: true,
+// const wave_animation = ()=>{
+//   const el = document.querySelector('#wave_animation')
+//   // 初始化
+//   const chartInstance = echarts.init(el)
+//   // 设置option
+//   chartInstance.setOption(
+//     {
+//       series: [
+//         { // 水球图
+//         type: 'liquidFill', // 水球图
+//         name: 'Liquid Fill1', // 水球图名称
+//         shape:'rect',                      // 水球形状  'circle'， 'rect'， 'roundRect'， 'triangle'， 'diamond'， 'pin'， 'arrow'，'container'
+//         radius:'200%',                        // 圆形半径,默认50%
+//         amplitude:70,
+//        // waveLength: 550,                          // 水波的振幅大小
+//        //phase: 'auto', // 波浪的相位
+//         waveSpeed:0.05,                       // 水波的速度
+//         waveAnimation: true,
        
-        data: [
-           { 
-                value: 0.3,
-                itemStyle: {
-                    opacity: 0.6,
-                    shadowBlur: 0 // 波浪的阴影范围
-                },
-                emphasis: {
-                    itemStyle: {
-                        opacity: 0.6
-                    }
-                }
-            }, { 
-                value: 0.26,
-                itemStyle: {
-                    opacity: 0.6,
-                    shadowBlur: 0 // 波浪的阴影范围
-                },
-                emphasis: {
-                    itemStyle: {
-                        opacity: 0.6
-                    }
-                }
-            },{ 
-                value: 0.23,
-                itemStyle: {
-                    opacity: 0.6,
-                    shadowBlur: 0 // 波浪的阴影范围
-                },
-                emphasis: {
-                    itemStyle: {
-                        opacity: 0.6
-                    }
-                }
-            }],
-            color: wave_color.value,
-        backgroundStyle: {   // 设置水球图内部背景色
-          color: "transparent",//水球图内部背景色
-        },
-        label: {   // 设置百分比展示
-          normal: { // 百分比正常样式
-            textStyle: { // 百分比正常样式字体
-              color: 'transparent'
-            },
-          }
-        },
-        //外部细圆
-        outline: { // 是否显示外圈
-          show: false,
-        },
-      }],
-    }
-  )
-}
+//         data: [
+//            { 
+//                 value: 0.3,
+//                 itemStyle: {
+//                     opacity: 0.6,
+//                     shadowBlur: 0 // 波浪的阴影范围
+//                 },
+//                 emphasis: {
+//                     itemStyle: {
+//                         opacity: 0.6
+//                     }
+//                 }
+//             }, { 
+//                 value: 0.26,
+//                 itemStyle: {
+//                     opacity: 0.6,
+//                     shadowBlur: 0 // 波浪的阴影范围
+//                 },
+//                 emphasis: {
+//                     itemStyle: {
+//                         opacity: 0.6
+//                     }
+//                 }
+//             },{ 
+//                 value: 0.23,
+//                 itemStyle: {
+//                     opacity: 0.6,
+//                     shadowBlur: 0 // 波浪的阴影范围
+//                 },
+//                 emphasis: {
+//                     itemStyle: {
+//                         opacity: 0.6
+//                     }
+//                 }
+//             }],
+//             color: wave_color.value,
+//         backgroundStyle: {   // 设置水球图内部背景色
+//           color: "transparent",//水球图内部背景色
+//         },
+//         label: {   // 设置百分比展示
+//           normal: { // 百分比正常样式
+//             textStyle: { // 百分比正常样式字体
+//               color: 'transparent'
+//             },
+//           }
+//         },
+//         //外部细圆
+//         outline: { // 是否显示外圈
+//           show: false,
+//         },
+//       }],
+//     }
+//   )
+// }
 const scroll_handle = () => {
   page_one_handle();
   page_two_handle();
@@ -173,8 +173,7 @@ const change_theme = (current_theme) => {
     c_c("--home_nav_item_box_shadow", "#b5b9d6");
     c_c("--rect_item_color", "#fdfbfb");
 
-    wave_color.value = ['#b5b9d6','#b5b9d6','#b5b9d6']
-    wave_animation()
+    // wave_color.value = ['#b5b9d6','#b5b9d6','#b5b9d6']
   } else {
     document.querySelector('.page_1_bg').style.opacity='1'
     c_c("--home_bg", "#fdfbfb");
@@ -193,8 +192,7 @@ const change_theme = (current_theme) => {
     c_c("--title_hover", "#0ebd7d");
     c_c("--home_nav_item_box_shadow", "#99edb5");
     c_c("--rect_item_color", "#7D9773");
-    wave_color.value = ['#9CE881','#9CE881','#9CE881']
-    wave_animation()
+    // wave_color.value = ['#9CE881','#9CE881','#9CE881']
   }
 };
 
@@ -340,38 +338,37 @@ const page_two_handle = () => {
     }
   }
 };
-const init_shape_icon = () => {
-  const shape_icon = document.querySelectorAll(".shape_icon");
-  const [center_x,center_y]= [document.documentElement.clientWidth/2,document.documentElement.clientHeight/2]
-  const pi = 3.14;
-  const position = [
-    { x: center_x-200, y: center_y },
-    { x: center_x-100*1.414, y: center_y-100*1.414 },
-    { x: center_x, y: center_y-200 },
-    { x: center_x+100*1.414, y: center_y-100*1.414 },
-    { x: center_x+200, y: center_y },
-    { x: center_x+100*1.414, y: center_y+100*1.414 },
-    { x: center_x, y: center_y+200 },
-    { x: center_x-100*1.414, y: center_y+100*1.414 },
-    { x: center_x-200, y: center_y },
+// const init_shape_icon = () => {
+//   const shape_icon = document.querySelectorAll(".shape_icon");
+//   const [center_x,center_y]= [document.documentElement.clientWidth/2,document.documentElement.clientHeight/2]
+//   const position = [
+//     { x: center_x-200, y: center_y },
+//     { x: center_x-100*1.414, y: center_y-100*1.414 },
+//     { x: center_x, y: center_y-200 },
+//     { x: center_x+100*1.414, y: center_y-100*1.414 },
+//     { x: center_x+200, y: center_y },
+//     { x: center_x+100*1.414, y: center_y+100*1.414 },
+//     { x: center_x, y: center_y+200 },
+//     { x: center_x-100*1.414, y: center_y+100*1.414 },
+//     { x: center_x-200, y: center_y },
 
-    // { x: 70, y: 75 },
-    // { x: 50, y: 80 },
-  ];
-  shape_icon.forEach((item, number) => {
-    setTimeout(() => {
-      // const size = Math.random() * (max_size - min_size) + min_size;
-      item.style.width = `100px`;
-      item.style.height = `100px`;
-      item.style.top = `${position[number].y-50}px`;
-      item.style.left = `${position[number].x-50}px`;
-      item.style.opacity = 1;
-    }, number * 500);
-    setTimeout(() => {
-      item.style.opacity = 0;
-    }, (number+1) * 700);
-  });
-};
+//     // { x: 70, y: 75 },
+//     // { x: 50, y: 80 },
+//   ];
+//   shape_icon.forEach((item, number) => {
+//     setTimeout(() => {
+//       // const size = Math.random() * (max_size - min_size) + min_size;
+//       item.style.width = `100px`;
+//       item.style.height = `100px`;
+//       item.style.top = `${position[number].y-50}px`;
+//       item.style.left = `${position[number].x-50}px`;
+//       item.style.opacity = 1;
+//     }, number * 500);
+//     setTimeout(() => {
+//       item.style.opacity = 0;
+//     }, (number+1) * 700);
+//   });
+// };
 const notice = [
   "欢迎来到TinyFlowers🌷",
   "给湿润的天空绘上乾燥的色彩🏵️",
@@ -454,7 +451,7 @@ const leave_recommend_topic = (index) => {
 };
 </script>
 <template>
-  <div class="absolute" style="width: max(1440px,100vw); height: 100vh; z-index: 100; pointer-events: none;">
+  <!-- <div class="absolute" style="width: max(1440px,100vw); height: 100vh; z-index: 100; pointer-events: none;">
     <svg
       t="1714893337176"
       class="shape_icon absolute"
@@ -739,13 +736,13 @@ const leave_recommend_topic = (index) => {
      
     <svg t="1718721197562"  class="shape_icon absolute"
       style="opacity: 0; transition: all 3s" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="35646" width="40" height="40"><path d="M246.6 673.8c84-45.8 133.1-48.1 180.6 42.8 27.1 51.8 75.5 89.9 125.8 100.2 3.8-43.2 7-348.8 7-348.8l178.3-227.3-1.3-135.1-383.1-18.4 1.2 135.1-111 181.2 2.5 270.3z" fill="#98E0F9" p-id="35647"></path><path d="M847.1 591.9V423l-107-135.1v-4.4L605 468v352.6c22.5-14.8 58.1-18.3 90.1-82.4 64.5-128.9 78.8-146.3 152-146.3z" fill="#6AC3EA" p-id="35648"></path><path d="M755.1 258.5l-480.5-24V113.8c0-12.6 5.2-24.7 14.4-33.3s21.6-13.1 34.1-12.4L372 71c8.3 0.5 14.6 7.6 14.1 15.9s-7.6 14.6-15.9 14.1l-48.8-3c-4.4-0.3-8.6 1.3-11.8 4.3-3.2 3-5 7.1-5 11.5V206l420.5 21v-99.1c0-3.5-2.7-6.3-6.1-6.5l-127.6-7.5c-8.3-0.5-14.6-7.6-14.1-15.9s7.6-14.6 15.9-14.1l127.6 7.5c19.3 1.1 34.4 17.2 34.4 36.5v130.6z" fill="" p-id="35649"></path><path d="M514.9 109.4h-0.9l-78.8-4.6c-8.3-0.5-14.6-7.6-14.1-15.9s7.6-14.6 15.9-14.1l78.8 4.6c8.3 0.5 14.6 7.6 14.1 15.9-0.5 7.9-7.1 14.1-15 14.1zM566.8 484.4l-376.5-65.8c-8.5-1.8-15.6-7.7-19-15.7-3.4-8-2.7-17.2 1.9-24.6l108.4-173.5 463.8 24.4-178.6 255.2z m-365.6-94.3l351.9 61.5 136.7-195.3-392.1-20.6-96.5 154.4z" fill="" p-id="35650"></path><path d="M549.9 951.8c-2.5 0-4.9-0.4-7.3-1.1l-349.2-78-0.9-0.3c-18.3-6.5-30.5-23.9-30.5-43.3V400.4c0-8.3 6.7-15 15-15s15 6.7 15 15V829c0 6.5 3.9 12.3 9.9 14.8l343 76.6V468c0-8.3 6.7-15 15-15s15 6.7 15 15v458.8c0 8.1-4 15.8-10.6 20.4-4.2 3.1-9.3 4.6-14.4 4.6zM803 843.9c-5.7 0-11.1-3.2-13.6-8.7-3.5-7.5-0.2-16.4 7.3-19.9l41.1-19V423c0-8.3 6.7-15 15-15s15 6.7 15 15v392.5l-58.5 27c-2.1 0.9-4.2 1.4-6.3 1.4z" fill="" p-id="35651"></path><path d="M560 956c-5.7 0-11.1-3.2-13.6-8.7-3.5-7.5-0.2-16.4 7.3-19.9l179.5-82.9c7.5-3.5 16.4-0.2 19.9 7.3s0.2 16.4-7.3 19.9l-179.5 82.9c-2.1 1-4.2 1.4-6.3 1.4zM559.9 483c-7.3 0-13.7-5.3-14.8-12.7-1.3-8.2 4.4-15.8 12.5-17.1L828 411.6 727.4 250.7c-4.4-7-2.3-16.3 4.8-20.7 7-4.4 16.3-2.3 20.7 4.8l104.2 166.7c4.5 7.3 5.1 16.3 1.6 24.1-3.6 7.8-10.8 13.2-19.3 14.5l-277.1 42.6c-0.8 0.3-1.6 0.3-2.4 0.3z m271.7-65.5z" fill="" p-id="35652"></path><path d="M257.301896 597.47625a27.8 24.2 47.01 1 0 35.40328-33.002542 27.8 24.2 47.01 1 0-35.40328 33.002542Z" fill="#050400" p-id="35653"></path><path d="M413.007912 619.345526a27.8 24.2 47.01 1 0 35.40328-33.002542 27.8 24.2 47.01 1 0-35.40328 33.002542Z" fill="#050400" p-id="35654"></path><path d="M357.7 729.5c-2 0-4-0.1-6-0.4-22.6-3.2-41-24.2-41-46.9 0-4.1 3.4-7.5 7.5-7.5s7.5 3.4 7.5 7.5c0 15.5 12.6 29.8 28.1 32 7.1 1 13.7-0.8 18.6-5 4.8-4.2 7.4-10.3 7.4-17.3 0-4.1 3.4-7.5 7.5-7.5s7.5 3.4 7.5 7.5c0 11.4-4.5 21.5-12.6 28.6-6.7 5.9-15.2 9-24.5 9z" fill="#050400" p-id="35655"></path><path d="M199.058319 654.102822a32.5 28.2 47.01 1 0 41.255061-38.457508 32.5 28.2 47.01 1 0-41.255061 38.457508Z" fill="#F8B0CB" p-id="35656"></path><path d="M465.384975 697.88051a32.5 28.2 47.01 1 0 41.255062-38.457508 32.5 28.2 47.01 1 0-41.255062 38.457508Z" fill="#F8B0CB" p-id="35657"></path></svg>
-  </div>
+  </div> -->
   <div id="home_main">
     <svg xmlns="http://www.w3.org/2000/svg" class="bg_shape" width="400" height="340"><path class="bg_shape_path" fill="#b399ff" d="M302.1365889531657,273.19508443432414C296.15187809393854,286.7899505495625,272.4500958262396,293.6740982055747,257.09399766737863,301.56919669142997C241.73789950851767,309.46429517728524,222.926574063567,325.3659245340324,210,320.5656753494559C197.073425936433,315.7654261648794,192.95133108259083,281.7824672030142,179.5345532859766,272.76770158397085C166.1177754893624,263.7529359649275,137.17483813460018,275.27169856585743,129.49933322031478,266.47708163519565C121.82382830602938,257.68246470453386,134.77484556693125,236.23906021519923,133.4815238002642,220C132.18820203359715,203.76093978480077,114.98895338263134,179.4395807063706,121.7394026203125,169.0427203440003C128.48985185799367,158.64585998162997,159.27411966307,164.3085295120519,173.98421922635123,157.6188378257781C188.69431878963246,150.92914613950427,198.19119090192632,128.56430683636188,209.99999999999997,128.90457022635732C221.80880909807362,129.24483361635276,236.1508139826239,149.49286098916429,244.83707381479317,159.66041816575077C253.52333364696244,169.82797534233725,254.09002749169088,179.85331631350132,262.1175589930156,189.9099132858762C270.14509049434037,199.96651025825108,286.33242449605007,206.11913814192533,293.0022628227417,220C299.6721011494334,233.88086185807467,308.12129981239286,259.6002183190858,302.1365889531657,273.19508443432414" stroke="none" stroke-width="3"/></svg>
     <svg xmlns="http://www.w3.org/2000/svg" class="bg_shape_2" width="400" height="340"><path class="bg_shape_path" fill="#b399ff" d="M276.1902270629109,302.99991947777875C263.2411727951601,312.92684752832906,219.83252515715526,287.4255974799391,196.40546071032813,279.56156830330195C172.978396263501,271.6975391266648,142.56023242029949,270.17226736784767,135.62784038194815,255.815744417956C128.6954483435968,241.45922146806436,145.39473945637428,212.44353331630845,154.81110848022007,193.42243060395194C164.22747750406586,174.40132789159543,172.77189769468353,149.99476477106265,192.12605452502294,141.6891281438169C211.48021135536234,133.38349151657115,257.2737608302882,130.53679886444704,270.93604946225656,143.58861084047754C284.5983380942249,156.64042281650805,273.22409005005716,193.4314485604498,274.0997863168329,220C274.9754825836086,246.5685514395502,289.1392813306617,293.07299142722843,276.1902270629109,302.99991947777875" stroke="none" stroke-width="3"/></svg>
     <div class="page_1  relative flex align_items_center justify_content_center">
      <!--<div class="page_bg_1 relative"></div>--> 
-     <div  id="wave_animation" class="absolute"></div>
+     <!-- <div  id="wave_animation" class="absolute"></div> -->
      <svg class="page_1_bg" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 1422 800"><defs><radialGradient id="cccircular-grad" r="50%" cx="50%" cy="50%">
        <stop offset="0%" stop-color="#95b98d" stop-opacity="0.5"></stop>
        <stop offset="50%" stop-color="hsl(108, 53%, 83%)" stop-opacity="0"></stop>
@@ -1891,14 +1888,7 @@ $box_bg: var(--box_bg, #fff);
     }
   }
 }
-#wave_animation {
-    left: 0;
-    top: 0;
-    width: max(1440px,100vw);
-    height: 100vh;
-    z-index: 100;
-    pointer-events: none;
-   }
+
 .home_foot {
   width: max(1440px,100vw);
   height: 200px;
