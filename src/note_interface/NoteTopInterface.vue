@@ -133,7 +133,7 @@ onMounted(() => {
 #note_top_main {
   width: 100vw;
   margin: 0 auto;
-  height: 50vh;
+  height: 378px;
   margin-top: 90px;
   border-radius: 5px;
   box-shadow: #1815151c 0px 4px 10px;

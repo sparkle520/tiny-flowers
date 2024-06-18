@@ -38,14 +38,12 @@ const log = [
   //     content: ["Features:", "Fixed:", "Changed:", "Refactored:", "Removed:"],
   //   },
   {
-    version: "1.0.0已发布",
-    date: "2024-02-10",
+    version: "1.0.0 (测试)",
+    date: "2024-06-18",
     content: [
-      "Features:",
-      "Fixed:",
-      "Changed: Translated the background color of the music player.",
-      "Refactored: Rebuilt Navigation Bar.",
-      "Removed:",
+      "1. 优化UI和交互体验",
+      "2. 新增看板娘功能",
+      "3. 修复若干BUG",
     ],
   },
 ];
@@ -83,33 +81,9 @@ const log = [
           }}<br />
           <span
             v-for="(item2, index2) in item.content"
-            class="flex flex_direction_column"
+            class="text flex flex_direction_column"
+            v-html="item2"
           >
-            <div
-              v-if="item2.startsWith('Features')"
-              class="features flex flex_direction_column"
-              v-html="item2"
-            ></div>
-            <div
-              v-else-if="item2.startsWith('Fixed')"
-              class="fixed_ flex flex_direction_column"
-              v-html="item2"
-            ></div>
-            <div
-              v-else-if="item2.startsWith('Changed')"
-              class="changed flex flex_direction_column"
-              v-html="item2"
-            ></div>
-            <div
-              v-else-if="item2.startsWith('Refactored')"
-              class="refactored flex flex_direction_column"
-              v-html="item2"
-            ></div>
-            <div
-              v-else="item2.startsWith('Removed')"
-              class="removed flex flex_direction_column"
-              v-html="item2"
-            ></div>
           </span>
         </li>
       </ul>
@@ -144,7 +118,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
     animation: move_bottom 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .content {
-    width: 90%;
+    width: 1100px;
     margin: 80px auto;
     z-index: 1;
     animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -157,8 +131,8 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
       }
       li {
         line-height: 25px;
-        margin: 10px 0;
-        padding: 10px;
+        width: 1068px;
+        padding: 16px;
         border-radius: 5px;
         background: $li;
 
@@ -184,21 +158,11 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
     }
   }
 }
-.features {
-  color: #eb4d99;
+.text {
+  color: $color;
+  margin-top: 8px;
 }
-.fixed_ {
-  color: #3d1ef0;
-}
-.changed {
-  color: #de1ef0;
-}
-.refactored {
-  color: #718e31;
-}
-.removed {
-  color: #ff0000;
-}
+
 @keyframes move_bottom {
   0% {
     transform: translateY(-100vh);
