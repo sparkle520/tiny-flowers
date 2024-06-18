@@ -47,6 +47,8 @@ const nav_handle = () => {
   const top_nav_main = document.querySelector("#top_nav_main");
   // const music_img = document.querySelector(".music img");
   // music_img.style.transform = `rotate(${wScrY%360}deg)`;
+  let sl=-Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
+  top_nav_main.style.left=sl+'px';
   if(wScrY < 70){
     c_c("--nav_bg_color", "transparent")
     top_nav_main.style.transform = `translateY(-100%)`;
@@ -286,14 +288,14 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 }
 #top_nav_main {
   position: fixed;
-  width: 100vw;
+  width: max(1440px,100vw);
   // box-shadow: #30313617 2px 0px 10px;
   transition: all 10s cubic-bezier(0.075, 0.82, 0.165, 1);
   font-family: "orbitron-black";
   height: 80px;
 
   .content {
-    width: 100%;
+    width: max(1440px,100vw);
     z-index: 11;
     background: $nav_bg_color;
     height: inherit;

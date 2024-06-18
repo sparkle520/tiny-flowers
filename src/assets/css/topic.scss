@@ -6,7 +6,7 @@ $topic_text_linear_bg: var(--topic_text_linear_bg, #b5b5f450);
 
 @import url('markdown.scss');
 #topic_main {
-  width: 100vw;
+  width: max(1440px,100vw);
   background: $topic_bg;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 

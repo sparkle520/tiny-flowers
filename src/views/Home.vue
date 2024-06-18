@@ -370,7 +370,7 @@ const leave_recommend_topic = (index) => {
 };
 </script>
 <template>
-  <div class="absolute" style="width: 100vw; height: 100vh z-index: 10;">
+  <div class="absolute" style="width: max(1440px,100vw); height: 100vh; z-index: 10;">
     <svg
       t="1714893337176"
       class="shape_icon absolute"
@@ -1214,7 +1214,7 @@ $box_bg: var(--box_bg, #fff);
   src: url("/src/assets/font/MonsieurLaDoulaise-Regular-2.ttf");
 }
 #home_main {
-  width: 100vw;
+  width: max(1440px,100vw);
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
   background: linear-gradient($home_bg_top 50%, $home_bg);
@@ -1248,7 +1248,7 @@ $box_bg: var(--box_bg, #fff);
   }
   overflow: hidden;
   &::after {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     content: "";
     left: 0;
@@ -1295,7 +1295,7 @@ $box_bg: var(--box_bg, #fff);
   }
   .page_1 {
     z-index: 10;
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     overflow-x: hidden;
    
@@ -1372,11 +1372,11 @@ $box_bg: var(--box_bg, #fff);
     }
   }
   .page_2 {
-    width: 100vw;
+    width: max(1440px,100vw);
     
 
     .page_container {
-      width: 100vw;
+      width: max(1440px,100vw);
       .page_2_header {
         z-index: 2;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1857,7 +1857,7 @@ $box_bg: var(--box_bg, #fff);
   }
 }
 .home_foot {
-  width: 100vw;
+  width: max(1440px,100vw);
   height: 200px;
   gap:16px;
   z-index: 1;

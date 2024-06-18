@@ -363,7 +363,7 @@ $foot_bg: var(--foot_bg, #ffc0cb);
 $img_shadow: var(--img_shadow, #d3010130);
 $search_box_color: var(--search_box_color, #4d4949);
 #note_main {
-  width: 100vw;
+  width: max(1440px,100vw);
   background: linear-gradient($note_bg_top, $foot_bg);
   min-height: 100vh;
   ::selection {
@@ -373,7 +373,7 @@ $search_box_color: var(--search_box_color, #4d4949);
   &::after {
     content: "";
     position: fixed;
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     top: 0;
     left: 0;
@@ -762,8 +762,8 @@ $search_box_color: var(--search_box_color, #4d4949);
   
 }
 .note_foot {
-    width: 100vw;
-    background: $foot_bg;
+  width: max(1440px,100vw);
+  background: $foot_bg;
     z-index: 10;
     width: inherit;
     height: 200px;

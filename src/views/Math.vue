@@ -424,7 +424,7 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
 }
 
 #math_main {
-  width: 100vw;
+  width: max(1440px,100vw);
   min-height: 100vh;
   color: $math_color;
   background: linear-gradient($math_bg_top 50%,$math_bg_color);
@@ -435,7 +435,7 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
     z-index: 10000;
   }
   &::after {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     content: "";
     left: 0;
@@ -716,8 +716,8 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
  
 }
 .math_foot {
-    width: 100vw;
-    background: $math_bg_color;
+  width: max(1440px,100vw);
+  background: $math_bg_color;
     z-index: 10;
     width: inherit;
     height: 200px;

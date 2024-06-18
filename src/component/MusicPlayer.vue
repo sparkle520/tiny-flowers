@@ -819,7 +819,7 @@ $music_player_main_box_shadow_color: var(
         margin-top: 10px;
       }
       .list_item {
-        padding-left: 1vw;
+        padding-left: 8px;
         min-height: 25px;
         color: $list_item_color;
         padding-top: 3px;
@@ -831,7 +831,7 @@ $music_player_main_box_shadow_color: var(
           right: 3em;
         }
         &:hover {
-          transform: translateX(0.5vw);
+          transform: translateX(4px);
           svg {
             opacity: 1;
           }
@@ -840,14 +840,14 @@ $music_player_main_box_shadow_color: var(
       .item_active {
         color: $list_item_active_color;
         &::after {
-          width: 0.4vw;
+          width: 4px;
           height: 60%;
           top: 50%;
           transform: translateY(-50%);
           background: $list_item_active_color;
           content: "";
           position: absolute;
-          left: -0.4vw;
+          left: 4px;
         }
         font-weight: bold;
       }

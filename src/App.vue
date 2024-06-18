@@ -249,13 +249,13 @@ $bg_color: var(--bg_color, #fdfbfb);
 
 #main {
   background: $bg_color;
-  width: 100vw;
+  width: max(1440px,100vw);
   .nav {
     z-index: 10000000000;
     transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
   }
   .park {
-    width: 100vw;
+    width: max(1440px,100vw);
     z-index: 99;
     height: 70px;
     top: 0;

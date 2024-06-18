@@ -667,7 +667,7 @@ $layout_hover: var(--layout_hover, #f3acac);
   }
   background: linear-gradient($topic_bg_top 50%,$topic_bg_color);
 
-  width: 100vw;
+  width: max(1440px,100vw);
   min-height: 100vh;
   color: $color;
   li {
@@ -692,7 +692,7 @@ $layout_hover: var(--layout_hover, #f3acac);
   }
   .topic_list_main_bg {
     position: fixed;
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     object-fit: cover;
     left: 0;
@@ -1223,8 +1223,8 @@ $layout_hover: var(--layout_hover, #f3acac);
   }
 }
 .topic_list_foot {
-    width: 100vw;
-    background: $topic_bg_color;
+  width: max(1440px,100vw);
+  background: $topic_bg_color;
     z-index: 10;
     width: inherit;
     height: 200px;

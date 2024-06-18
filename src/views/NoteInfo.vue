@@ -33,7 +33,7 @@ change_theme(config_store.theme);
 <template>
   <div id="note_info_main" class="flex flex_direction_column">
     <div class="note_top_box flex flex_direction_row relative">
-      <img
+      <!-- <img
         class="top_box_bg absolute"
         v-if="note_data.img != ''"
         :src="note_data.img"
@@ -44,13 +44,21 @@ change_theme(config_store.theme);
         v-else
         src="https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg"
         alt=""
-      />
+      /> -->
       <div class="note_top_inner_box flex flex_direction_row">
-        <div class="note_top_left_box">
-          <img v-if="note_data.img != ''" :src="note_data.img" alt="" />
+        <div class="note_top_left_box relative">
+          <img class="note_top_inner_box_img" v-if="note_data.img != ''" :src="note_data.img" alt="" />
           <img
             v-else
             src="https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg"
+            class="note_top_inner_box_img"
+            alt=""
+          />
+          <img class="note_top_inner_box_img_bg" v-if="note_data.img != ''" :src="note_data.img" alt="" />
+          <img
+            v-else
+            src="https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg" 
+            class="note_top_inner_box_img_bg"
             alt=""
           />
         </div>
@@ -125,33 +133,23 @@ change_theme(config_store.theme);
 </template>
 <style lang="scss" scoped>
 $note_info_main_bg: var(--note_info_main_bg, #fdfbfb);
-$note_top_mid_box_h1_color: var(--note_top_mid_box_h1_color, #fff);
-$note_top_mid_box_p_color: var(--note_top_mid_box_p_color, #ffffffb5);
-$note_top_mid_box_span_color: var(--note_top_mid_box_span_color, #f5f5f5);
-$load_status_color: var(--load_status_color, #ffffffc7);
-$finished_status_color: var(--finished_status_color, #ffffffc7);
+$note_top_mid_box_h1_color: var(--note_top_mid_box_h1_color, #363333b5);
+$note_top_mid_box_color: var(--note_top_mid_box_color, #363333b5);
+$load_status_color: var(--load_status_color, #71c138c7);
+$finished_status_color: var(--finished_status_color, #51a0fac7);
 $read_btn_color: var(--read_btn_color, #ec3755);
 $read_btn_bg: var(--read_btn_bg, #fff);
 $foot_bg: var(--foot_bg, #e96969);
 
 #note_info_main {
-  width: 100vw;
+  width: max(1440px,100vw);
   min-height: 100vh;
   background: $note_info_main_bg;
   .note_top_box {
     width: inherit;
     height: 500px;
     overflow: hidden;
-    &::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      background-color: rgba(30, 33, 40, 0.249);
-      z-index: 1;
-    }
+   
     .top_box_bg {
       width: 130%;
       height: 130%;
@@ -173,15 +171,30 @@ $foot_bg: var(--foot_bg, #e96969);
         width: 268px;
         height: 100%;
 
-        img {
+        .note_top_inner_box_img {
           width: 268px;
           height: 86%;
+          --n:4;
+          --r:0deg;
+          --d:0%;
+          -webkit-mask:
+    linear-gradient(var(--r), transparent var(--d), red 0 calc(100% - var(--d)), transparent 0),
+    linear-gradient(calc(var(--r) + 90deg), transparent var(--d), red 0 calc(100% - var(--d)), transparent 0);
+  -webkit-mask-size: calc(100%/var(--n)) calc(100%/var(--n));
+  -webkit-mask-composite: source-in;
           margin: 7% 0;
-          background: $note_top_mid_box_h1_color;
+          background: #ffff;
           border-radius: 10px;
           object-fit: cover;
-          box-shadow: rgba(129, 131, 132, 0.381) 0px 5px 10px;
-          animation: shrink 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+          animation: note_top_inner_box_img 1s;
+        }
+        .note_top_inner_box_img_bg{
+          position: absolute;
+          width: 268px;
+          height: 86%;
+          top:16px;
+          filter:blur(20px) ;
+          left: 0px;
         }
       }
       .note_top_mid_box {
@@ -197,11 +210,11 @@ $foot_bg: var(--foot_bg, #e96969);
         p {
           margin: 0;
           margin-bottom: 32px;
-          color: $note_top_mid_box_p_color;
+          color: $note_top_mid_box_color;
           animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         span {
-          color: $note_top_mid_box_span_color;
+          color: $note_top_mid_box_color;
           animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         .load_status {
@@ -259,7 +272,7 @@ $foot_bg: var(--foot_bg, #e96969);
   }
 
   .note_directory_box {
-    width: 100vw;
+    width: max(1440px,100vw);
     background: transparent;
     .note_directory {
       background: transparent;
@@ -286,19 +299,19 @@ $foot_bg: var(--foot_bg, #e96969);
   
 }
 .note_info_foot {
-    width: inherit;
-    height: 200px;
+  width: max(1440px,100vw);
+  height: 200px;
     gap: 16px;
     z-index: 1;
     background: $foot_bg;
     .title_foot {
       font-size: 16px;
-      color: $note_top_mid_box_h1_color;
+      color: $read_btn_bg;
     }
     .text_foot {
       font-size: 14px;
       font-weight: 700;
-      color: $note_top_mid_box_h1_color;
+      color: $read_btn_bg;
     }
     .left_foot {
       width: 300px;
@@ -335,6 +348,28 @@ $foot_bg: var(--foot_bg, #e96969);
   }
   100% {
     transform: translateY(0);
+  }
+}
+@property --d {
+  syntax: "<percentage>";
+    initial-value: 0%;
+    inherits: false;
+}
+@property --r {
+  syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+@keyframes note_top_inner_box_img {
+  0%{
+    --d: 0%
+  }
+  100%{
+    --d: 0%;
+    --r: 90deg
+  }
+  50%{
+    --d: 20%
   }
 }
 </style>

@@ -129,13 +129,14 @@ $site_content_color: var(--site_content_color, #8d8d93);
 $site_item_color: var(--site_item_color, #4d1225);
 $site_item_hover_color: var(--site_item_hover_color, #917979);
 #site_nav_main {
-  width: 100%;
+  width: max(1440px,100vw);
   min-height: 100vh;
-  background: $bg_color;
+  background: $bg_color;   
+
   overflow: hidden;
   color: $color;
   &::after {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     content: "";
     left: 0;

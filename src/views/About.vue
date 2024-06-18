@@ -402,12 +402,12 @@ $u_w_m_btn_color: var(--u_w_m_btn_color, #ff80bf);
 $word_box_color: var(--word_box_color, #003153);
 $f_word_box_color: var(--f_word_box_color, #0a0606);
 #about_main {
-  width: 100vw;
+  width: max(1440px,100vw);
   height: 100vh;
   // scroll-snap-type: y mandatory;
   background: $home_bg_color;
   .first_page {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     background: $home_bg_color;
     z-index: 100;
@@ -587,7 +587,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
       }
     }
     .first_page_cover {
-      width: 100vw;
+      width: max(1440px,100vw);
       height: 100vh;
       left: 0;
       top: 0;
@@ -626,7 +626,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     }
   }
   .second_page {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 400vh;
     z-index: 21;
     background: $home_bg_color;
@@ -635,7 +635,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
 
     .s_animation_box {
       position: sticky;
-      width: 100vw;
+      width: max(1440px,100vw);
       height: 100vh;
       top: 0;
       color: $word_box_color;
@@ -676,7 +676,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
       //   bottom: 0;
       // }
       .s_animation_box_bg_box {
-        width: 100vw;
+        width: max(1440px,100vw);
         height: 68vh;
         left: 50%;
         top: 50%;
@@ -795,13 +795,13 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     }
   }
   .third_page {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 300vh;
     background: $home_bg_color;
     // scroll-snap-align: start;
 
     .t_animation_box {
-      width: 100vw;
+      width: max(1440px,100vw);
       height: 100vh;
       top: 0;
       position: sticky;
@@ -841,7 +841,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     // scroll-snap-align: start;
   }
   .fourth_page {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     background: $home_bg_color;
     // border-bottom:3px #11223318 solid ;
@@ -969,7 +969,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     }
   }
   .fifth_page {
-    width: 100vw;
+    width: max(1440px,100vw);
     height: 100vh;
     //  scroll-snap-align: start;
 
