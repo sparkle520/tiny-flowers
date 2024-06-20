@@ -123,7 +123,7 @@ onMounted(() => {
 <template>
   <div
     id="note_top_main"
-    class="relative flex align_items_center justify_content_center"
+    class="r f a_c j_c_c"
   >
    <img class="note_top_main_bg" src="https://pic.imgdb.cn/item/666c45e4d9c307b7e930def6.png" alt="">
   </div>

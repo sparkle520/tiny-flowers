@@ -122,13 +122,13 @@ watch(music_active,(newV,oldV)=>{
 </script>
 <template>
   <div id="main" class="">
-    <div class="content flex flex_direction_column relative">
+    <div class="content f f_d_c r">
       <!-- <div class="cover_box absolute">
         <div class="absolute me">
           <img src="/src/assets/imgs/me.jpg" alt="" />
         </div>
         <div
-          class="github_me absolute flex align_items_center justify_content_center"
+          class="github_me absolute f a_c j_c_c"
           @click="go_github"
         >
           <svg
@@ -149,11 +149,11 @@ watch(music_active,(newV,oldV)=>{
         </div>
         <p class="absolute name">ferris</p>
       </div> -->
-      <div class="absolute nav_box flex flex_direction_column">
-        <ul class="nav_list flex flex_direction_column">
+      <div class="a nav_box f f_d_c">
+        <ul class="nav_list f f_d_c">
           <li
           :key="item"
-            class="nav_item flex flex_direction_row align_items_center"
+            class="nav_item f f_d_r a_c"
             v-for="(item) in nav_list"
             @click="link_to(item.path)"
           >
@@ -166,7 +166,7 @@ watch(music_active,(newV,oldV)=>{
           </li>
         </ul>
       </div>
-      <div class="music absolute" @click="active_music">
+      <div class="music a" @click="active_music">
         <svg v-if="!music_active"
         t="1704963079198"
         class="svg_1"

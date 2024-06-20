@@ -77,9 +77,9 @@ const change_theme = (current_theme) => {
 </script>
 <template>
   <div id="topic_bottom_main">
-    <div class="note_context_switch_box flex flex_direction_row">
+    <div class="note_context_switch_box f f_d_r">
       <div
-        class="note_switch_item flex flex_direction_column justify_content_center"
+        class="note_switch_item f f_d_c j_c_c"
       >
         <div v-if="pre == '--'"></div>
         <div v-else>上一章</div>
@@ -94,7 +94,7 @@ const change_theme = (current_theme) => {
         </div>
       </div>
       <div
-        class="note_switch_item flex flex_direction_column justify_content_center"
+        class="note_switch_item f f_d_c j_c_c"
       >
         <div v-if="next == '--'"></div>
         <div v-else>下一章</div>

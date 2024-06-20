@@ -43,7 +43,7 @@ const to_topic_list = (name) => {
       </span>
     </div>
     <div
-      class="top_title relative flex align_items_center justify_content_center flex_direction_column"
+      class="top_title relative flex align_items_center j_c_c flex_direction_column"
     >
       <span class="top_head">UNKNOWN<br />WORLD<br />MAP</span>
       <div class="rectangle_1"></div>
@@ -56,7 +56,7 @@ const to_topic_list = (name) => {
       </div>
     </div>
     <div
-      class="statistics_box relative flex flex_direction_row justify_content_center relative"
+      class="statistics_box relative flex flex_direction_row j_c_c relative"
     >
       <div class="topic_count flex flex_direction_column align_items_center">
         <p>文章</p>
@@ -69,11 +69,11 @@ const to_topic_list = (name) => {
       </div>
     </div>
     <div class="content width_full relative flex flex_direction_column">
-      <div class="class_box flex flex_direction_row justify_content_center">
+      <div class="class_box flex flex_direction_row j_c_c">
         <div
           @click="to_topic_list(item.name)"
           v-for="(item, index) in classification"
-          class="relative item flex align_items_center justify_content_center"
+          class="relative item flex align_items_center j_c_c"
         >
           {{ item.name }}
         </div>

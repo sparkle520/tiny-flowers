@@ -27,10 +27,10 @@ onMounted(() => {
 <template>
     <div id="user_info_main">
         <div
-          class="personal_item intro flex relative flex_direction_column align_items_center"
+          class="personal_item intro f r f_d_c a_c"
         >
           <img
-            class="avatar_bg absolute"
+            class="avatar_bg a"
             src="https://pic.imgdb.cn/item/65a9840f871b83018a77d214.jpg"
             alt=""
           />
@@ -40,15 +40,15 @@ onMounted(() => {
             v-text="user_store.name"
           ></span>
           <span class="personal_signature" v-text="user_store.signature"></span>
-          <div class="width_full flex flex_direction_row">
+          <div class="width_full f f_d_r">
             <div
-              class="topic_classification_total_box flex flex_direction_column align_items_center"
+              class="topic_classification_total_box f f_d_c a_c"
             >
               <h3>文章</h3>
               <span v-text="topic_store.length()"></span>
             </div>
             <div
-              class="topic_classification_total_box flex flex_direction_column align_items_center"
+              class="topic_classification_total_box f f_d_c a_c"
             >
               <h3>分类</h3>
               <span v-text="personal_info.classification_total"></span>

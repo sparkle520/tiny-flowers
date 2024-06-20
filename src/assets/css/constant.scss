@@ -13,10 +13,19 @@
 .flex{
   display: flex;
 }
+.f{
+  display: flex;
+}
 .absolute{
   position: absolute;
 }
+.a{
+  position: absolute;
+}
 .relative{
+  position: relative;
+}
+.r{
   position: relative;
 }
 .fixed{
@@ -56,6 +65,9 @@
 .align_items_center{
   align-items: center;
 }
+.a_c{
+  align-items: center;
+}
 .justify_content_space_around{
   justify-content: space-around;
 }
@@ -65,10 +77,20 @@
 .justify_content_center{
   justify-content: center;
 }
+.j_c_c{
+  justify-content: center;
+}
 .flex_direction_column{
   flex-direction: column;
 }
+.f_d_c{
+  flex-direction: column;
+}
 .flex_direction_row
+{
+  flex-direction: row;
+}
+.f_d_r
 {
   flex-direction: row;
 }

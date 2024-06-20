@@ -50,7 +50,7 @@ const init_content =  () => {
             setTimeout(() => {
               renderByMathjax(subject_solution_context[i]).catch(err=>{
           });
-            },1000)
+            },2000)
             
           });
         });
@@ -183,17 +183,17 @@ const init_data = () => {
 
 </script>
 <template>
-  <div id="math_main" class="flex flex relative">
+  <div id="math_main" class="f  r j_c_c">
     <div class="note_left_nav_bar">
       <MathLeftNavBar></MathLeftNavBar>
     </div>
     <div>
       <div
         id="top_box"
-        class="flex flex_direction_column com_box align_items_center relative"
+        class="f f_d_c com_box a_c r"
       >
-        <div class="flex flex_direction_row top_top_box align_items_center">
-          <div class="search_box relative">
+        <div class="f f_d_r top_top_box a_c">
+          <div class="search_box r">
             <input
               v-model="search_text"
               @focus="search_focus_handle"
@@ -206,10 +206,10 @@ const init_data = () => {
             />
 
             <div
-              class="filter_search_box absolute"
+              class="filter_search_box a"
               v-show="show_filter_search_box"
             >
-              <ul class="flex flex_direction_column">
+              <ul class="f f_d_c">
                 <li
                   v-for="item in current_filter_list"
                   :key="item"
@@ -221,7 +221,7 @@ const init_data = () => {
               </ul>
               <div class="query_time"><span class="query_text"></span></div>
             </div>
-            <label class="search_icon absolute" for="math_search"
+            <label class="search_icon a" for="math_search"
               ><svg
                 t="1708934777476"
                 class="icon"
@@ -255,13 +255,13 @@ const init_data = () => {
             ></label>
           </div>
         </div>
-        <div class="flex flex_direction_column select_tag">
+        <div class="f f_d_c select_tag">
           <h4 class="">标签：</h4>
-          <ul class="flex flex_direction_row relative">
+          <ul class="f f_d_r r">
             <div
               @click="show_all_tag"
               v-show="!show_all_tag_flag"
-              class="absolute show_all_tag flex flex_direction_row align_items_center"
+              class="a show_all_tag f f_d_r a_c"
             >
               展开全部<svg
                 t="1708943924609"
@@ -284,7 +284,7 @@ const init_data = () => {
               @click="router.push(`/math/1?tag=${item[0]}`)"
               v-for="item in tags_list"
               :key="item"
-              class="relative"
+              class="r"
             >
               {{ item[0] }}
               <span class="count"> {{ item[1] }} </span>
@@ -292,7 +292,7 @@ const init_data = () => {
             <div
               @click="close_all_tag"
               v-show="show_all_tag_flag"
-              class="close_all_tag flex flex_direction_row align_items_center"
+              class="close_all_tag f f_d_r a_c"
             >
               收起<svg
                 t="1708943924609"
@@ -316,16 +316,16 @@ const init_data = () => {
       </div>
       <div
         id="content_box"
-        class="flex flex_direction_column align_items_center"
+        class="f f_d_c a_c"
       >
         <!-- width：100% -->
-        <ul class="content_mid_box flex flex_direction_column">
+        <ul class="content_mid_box f f_d_c">
           <li
             v-for="item in current_data.slice(0, 10)"
             :key="item"
-            class="content_item_box flex flex_direction_column"
+            class="content_item_box f f_d_c"
           >
-            <div class="flex flex_direction_row content_item_top_box">
+            <div class="f f_d_r content_item_top_box">
               ID:{{ item.id }}
             </div>
 
@@ -339,16 +339,16 @@ const init_data = () => {
               class="subject_solution_context markdown-body"
               v-highlight
             ></div>
-            <div class="content_tag_box flex align_items_center">
+            <div class="content_tag_box f a_c">
               <div
                 v-for="item2 in item.tags.split('?')"
-                class="flex content_tag_item align_items_center justify_content_center"
+                class="f content_tag_item a_c j_c_c"
                 :key="item2"
               >
                 {{ item2 }}
               </div>
             </div>
-            <div class="content_item_bottom_box flex flex_direction_row">
+            <div class="content_item_bottom_box f f_d_r">
               <button
                 @click="router.push(`/math/details/${item.id}`)"
                 class="content_item_bottom_btn"
@@ -359,7 +359,7 @@ const init_data = () => {
           </li>
         </ul>
         <div
-          class="content_bottom_box flex align_items_center justify_content_center"
+          class="content_bottom_box f a_c j_c_c"
         >
           <Pagination
             style="z-index: 100"
@@ -372,19 +372,19 @@ const init_data = () => {
         </div>
       </div>
     </div>
-  
+    <div style="width:180px;"></div>
   </div>
   <div
-      class="math_foot relative flex flex_direction_row align_items_center justify_content_center"
+      class="math_foot r f f_d_r a_c j_c_c"
     >
-      <div class="left_foot flex flex_direction_column  justify_content_center">
+      <div class="left_foot f f_d_c  j_c_c">
         <span class="title_foot">人生格言</span>
         <span class="text_foot" v-html="user_store.aphorism"></span>
       </div>
-      <div class="mid_foot flex flex_direction_column">
+      <div class="mid_foot f f_d_c">
         <span class="title_foot"></span>
       </div>
-      <div class="right_foot flex flex_direction_column justify_content_center">
+      <div class="right_foot f f_d_c j_c_c">
         <span class="title_foot">联系我</span>
         <span class="text_foot">邮箱: {{user_store.e_mail}}</span>
         <span class="text_foot">GitHub Account: {{user_store.github_account}}</span>

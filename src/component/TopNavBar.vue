@@ -31,6 +31,8 @@ onMounted(() => {
   change_theme(theme.value);
   document.addEventListener("scroll", nav_handle);
   document.addEventListener("click", click_handle);
+  top_nav_main  = document.querySelector("#top_nav_main");
+
 });
 onUnmounted(() => {
   document.removeEventListener("click", click_handle);
@@ -42,19 +44,15 @@ const click_handle = (e) => {
     music_active.value = false;
   }
 };
+let top_nav_main;
 const nav_handle = () => {
   let wScrY = window.scrollY;
-  const top_nav_main = document.querySelector("#top_nav_main");
   // const music_img = document.querySelector(".music img");
   // music_img.style.transform = `rotate(${wScrY%360}deg)`;
   let sl=-Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
   top_nav_main.style.left=sl+'px';
   if(wScrY < 70){
     c_c("--nav_bg_color", "transparent")
-    top_nav_main.style.transform = `translateY(-100%)`;
-    setTimeout(()=>{
-      top_nav_main.style.transform = `translateY(0%)`;
-    },500)
   }else{
     change_theme(theme.value);
   }
@@ -161,25 +159,25 @@ const theme_change = () => {
 </script>
 <template>
   <div id="top_nav_main" class="nav_main">
-    <div class="content flex flex_direction_row relative">
-    <div class="absolute stave flex flex_direction_column">
+    <div class="content f f_d_r r">
+    <div class="a stave f f_d_c">
       <div v-for="item in 5" :key="item" class="stave_line"></div>
     </div>
       <div
-        class="absolute nav_box flex flex_direction_row justify_content_space_between"
+        class="a nav_box f f_d_r justify_content_space_between"
       >
-        <div class="flex flex_direction_row justify_content_space_around">
-          <div class="logo flex align_items_center justify_content_center"
+        <div class="f f_d_r justify_content_space_around">
+          <div class="logo f a_c j_c_c"
           @click="link_to(nav_list[0].path)"
           >
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 200 200" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"><path fill="url(&quot;#SvgjsLinearGradient1232&quot;)" fill-rule="evenodd" d="M99.994 183.711C106.781 191.856 113.567 200 127.14 200c31.244 0 40.269-41.556 40.281-72.844 0-13.572 8.144-20.358 16.289-27.144C191.855 93.225 200 86.439 200 72.868c0-31.254-41.616-40.29-72.849-40.29-13.572 0-20.359-8.145-27.145-16.29C93.219 8.145 86.433 0 72.86 0 41.605 0 32.568 41.614 32.568 72.844c0 13.573-8.142 20.359-16.284 27.145C8.142 106.775 0 113.56 0 127.132c0 31.253 41.605 40.29 72.849 40.29 13.572 0 20.359 8.144 27.145 16.288ZM100 137c20.435 0 37-16.565 37-37 0-20.434-16.565-37-37-37-20.434 0-37 16.566-37 37 0 20.435 16.566 37 37 37Z" clip-rule="evenodd"></path><defs><linearGradient gradientTransform="rotate(0 0.5 0.5)" id="SvgjsLinearGradient1232"><stop stop-opacity=" 1" stop-color="rgba(105, 234, 203)" offset="0"></stop><stop stop-opacity=" 1" stop-color="rgba(234, 204, 248)" offset="0.48"></stop><stop stop-opacity=" 1" stop-color="rgba(249, 249, 249)" offset="1"></stop></linearGradient></defs></svg>
             <span> Tiny Flowers </span>
           </div>
 
-          <ul class="nav_list flex flex_direction_row">
+          <ul class="nav_list f f_d_r">
             <li
               :key="item"
-              class="nav_item nav_item_com flex flex_direction_row align_items_center"
+              class="nav_item nav_item_com f f_d_r a_c"
               v-for="item in nav_list.slice(0, 4)"
               @click="link_to(item.path)"
             >
@@ -188,29 +186,29 @@ const theme_change = () => {
           </ul>
         </div>
 
-        <div class="flex flex_direction_row">
-          <ul class="nav_list flex flex_direction_row">
+        <div class="f f_d_r">
+          <ul class="nav_list f f_d_r">
             <li
               :key="item"
-              class="nav_item nav_item_com flex flex_direction_row align_items_center"
+              class="nav_item nav_item_com f f_d_r a_c"
               v-for="item in nav_list.slice(4)"
               @click="link_to(item.path)"
             >
               {{ item.name }}
             </li>
           </ul>
-          <label class="switch" for="theme">
+          <label class="switch r" for="theme">
             <input
               id="theme"
               type="checkbox"
               @click="theme_change"
               v-model="current_theme"
             />
-            <span class="slider"></span>
+            <span class="slider a"></span>
           </label>
         </div>
       </div>
-      <div class="music absolute" @click="active_music">
+      <div class="music a" @click="active_music">
         <img :src="user_store.avatar" alt="" />
         <!-- <svg
           v-if="!music_active"
@@ -293,7 +291,7 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
   transition: all 10s cubic-bezier(0.075, 0.82, 0.165, 1);
   font-family: "orbitron-black";
   height: 80px;
-
+  top: 0;
   .content {
     width: max(1440px,100vw);
     z-index: 11;
@@ -345,7 +343,6 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
 
       .switch {
         font-size: 17px;
-        position: relative;
         margin: auto 0;
         margin-left: 128px;
 
@@ -360,7 +357,6 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
       }
 
       .slider {
-        position: absolute;
         cursor: pointer;
         top: 0;
         left: 0;

@@ -73,10 +73,10 @@ const change_theme = (current_theme) => {
 };
 </script>
 <template>
-  <div class="fixed utils_box flex flex_direction_column">
+  <div class="fixed utils_box f f_d_c">
     <div
       @click="view_change"
-      class="to_top_btn flex flex_direction_column align_items_center justify_content_center"
+      class="to_top_btn f f_d_c a_c j_c_c"
     >
       <div class="">
         <svg
@@ -109,7 +109,7 @@ const change_theme = (current_theme) => {
     </div>
     <div
       @click="to_top"
-      class="to_top_btn to_top_box flex flex_direction_column align_items_center justify_content_center"
+      class="to_top_btn to_top_box f f_d_c a_c j_c_c"
     >
       <div class="top">
         <svg

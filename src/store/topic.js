@@ -8,6 +8,19 @@ export const useTopicStore = defineStore('topic', {
 
            
             {
+                id: 4,
+                title: '绝对值不等式',
+                link: '/article/topic/4',
+                create_date: '2024?06?19?20:00',
+                img: 'https://pic.imgdb.cn/item/66746ba6d9c307b7e9af3651.png',
+                author: '',
+                tags: 'math?绝对值不等式',
+                classification: '学习笔记',
+                short_message: '本章节介绍一下绝对值不等式及其证明.',
+                update_date: '',
+                is_visible: true
+            },
+            {
                 id: 3,
                 title: '卷积公式',
                 link: '/article/topic/3',

@@ -207,7 +207,7 @@ const change_theme = (current_theme) => {
 <template>
   <div
     id="main"
-    class="flex flex_direction_row align_items_center justify_content_center"
+    class="f f_d_r a_c j_c_c"
   >
     <div
       class="left_button left_button_limit left_right_button"
@@ -242,10 +242,10 @@ const change_theme = (current_theme) => {
         ></path>
       </svg>
     </div>
-    <div class="mid_box flex flex_direction_row">
-      <ul class="item_list flex flex_direction_row align_items_center">
+    <div class="mid_box f f_d_r">
+      <ul class="item_list f f_d_r a_c">
         <li
-          class="item relative flex align_items_center justify_content_center"
+          class="item relative f a_c j_c_c"
           v-for="(item, index) in page_array"
           @click="page_handle(item)"
         >

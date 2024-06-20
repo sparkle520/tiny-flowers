@@ -80,7 +80,7 @@ const site_data = [
 ];
 </script>
 <template>
-  <div id="site_nav_main" class="flex">
+  <div id="site_nav_main" class="f">
     <!-- <div id="sky" class="absolute absolute_center">
     <div class="bird">
         <div class="wind"></div>
@@ -108,12 +108,12 @@ const site_data = [
 </div> -->
     <!-- <img src="https://pic.imgdb.cn/item/65b0127d871b83018a75ffc4.png" class="miku  fixed absolute_center" alt=""> -->
     <!-- <img src="https://pic.imgdb.cn/item/65afa1e5871b83018ae90cd9.png" class="flower  fixed absolute_center" alt=""> -->
-    <div class="site_content flex flex_direction_column">
+    <div class="site_content f f_d_c">
       <div class="site_item" v-for="item in site_data">
         <h1>{{ item.collect_name }}</h1>
-        <ul class="flex flex_direction_row">
+        <ul class="f f_d_r">
           <li v-for="item2 in item.site_list" @click="go_to(item2.url)">
-            <span class="relative">
+            <span class="r">
               {{ item2.name }}
             </span>
           </li>

@@ -74,8 +74,8 @@ const change_theme = (current_theme) => {
 </script>
 <template>
   <div id="topic_bottom_main">
-    <div class="topic_author_info_box flex">
-      <div class="topic_author_info_inner_box flex flex_direction_column">
+    <div class="topic_author_info_box f">
+      <div class="topic_author_info_inner_box f f_d_c">
         <div>文章作者:<span class="topic_author"></span></div>
         <div>文章链接:<span class="topic_link"></span></div>
       </div>

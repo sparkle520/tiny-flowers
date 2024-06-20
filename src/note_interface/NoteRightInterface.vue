@@ -54,33 +54,33 @@ const change_theme = (current_theme) => {
 <template>
   <div id="topic_right_main">
     <div
-      class="personal_item intro flex flex_direction_column align_items_center"
+      class="personal_item intro f f_d_c a_c"
     >
       <img :src="user_store.avatar" alt="" />
       <span class="personal_name" v-text="user_store.name"></span>
       <span class="personal_signature" v-text="user_store.signature"></span>
-      <div class="topic_class_box flex flex_direction_row">
+      <div class="topic_class_box f f_d_r">
         <div
-          class="topic_classification_total_box flex flex_direction_column align_items_center"
+          class="topic_classification_total_box f f_d_c a_c"
         >
           <h3>文章</h3>
           <span v-text="topic_store.length()"></span>
         </div>
         <div
-          class="topic_classification_total_box flex flex_direction_column align_items_center"
+          class="topic_classification_total_box f f_d_c a_c"
         >
           <h3>分类</h3>
           <span>3</span>
         </div>
         <div
-          class="topic_classification_total_box flex flex_direction_column align_items_center"
+          class="topic_classification_total_box f f_d_c a_c"
         >
           <h3>笔记</h3>
           <span>{{note_store.data.length}}</span>
         </div>
       </div>
     </div>
-    <Directory></Directory>
+    <Directory class="directory"></Directory>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -92,6 +92,8 @@ $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
 #topic_right_main {
   width: 284px;
+  min-height: 100vh;
+  
   .personal_item {
     width: inherit;
     background-color: $item_bg;

@@ -300,8 +300,8 @@ const search_focus_handle = () => {
 };
 </script>
 <template>
-  <div id="topic_list_main" class="flex flex_direction_column relative">
-    <div class="topic_search_box relative">
+  <div id="topic_list_main" class="f f_d_c r">
+    <div class="topic_search_box r">
       <input
         id="topic_search"
         class="topic_search"
@@ -312,7 +312,7 @@ const search_focus_handle = () => {
         type="text"
         placeholder="在此键入搜索"
       />
-      <label class="search_icon absolute" for="topic_search">
+      <label class="search_icon a" for="topic_search">
         <svg
           t="1709027338854"
           class="icon"
@@ -330,8 +330,8 @@ const search_focus_handle = () => {
           ></path>
         </svg>
       </label>
-      <div class="filter_search_box absolute" v-show="show_filter_search_box">
-        <ul class="flex flex_direction_column">
+      <div class="filter_search_box a" v-show="show_filter_search_box">
+        <ul class="f f_d_c">
           <li
             v-for="item in current_filter_list"
             :key="item"
@@ -345,14 +345,14 @@ const search_focus_handle = () => {
       </div>
     </div>
     <div
-      class="width_full flex flex_direction_row justify_content_center gap_16 z_index_10"
+      class="width_full f f_d_r justify_content_center gap_16 z_index_10"
     >
       <div class="topic_box">
         <div
-          class="layout_box flex flex_direction_row align_items_center relative"
+          class="layout_box f f_d_r a_c r"
         >
           <div
-            class="layout list_layout relative"
+            class="layout list_layout r"
             @click="config_store.change_g_list_layout(true)"
           >
             <svg
@@ -382,7 +382,7 @@ const search_focus_handle = () => {
             </svg>
           </div>
           <div
-            class="layout grid_layout relative"
+            class="layout f a_c j_c_c grid_layout r"
             @click="config_store.change_g_list_layout(false)"
           >
             <svg
@@ -408,9 +408,9 @@ const search_focus_handle = () => {
           v-for="(item, ) in current_data"
           :key="item"
 
-          class="topic_item flex flex_direction_column relative"
+          class="topic_item f f_d_c r"
         >
-          <div class="item_inner_box flex flex_direction_row">
+          <div class="item_inner_box f f_d_r">
             <img
               v-if="item.img != ''"
               class="item_img"
@@ -423,16 +423,16 @@ const search_focus_handle = () => {
               src="https://pic.imgdb.cn/item/65c5a15f9f345e8d03c1f6a4.jpg"
               alt=""
             />
-            <div class="item_content flex flex_direction_column">
+            <div class="item_content f f_d_c">
               <span
-                class="relative title flex flex_direction_row align_items_center"
-                ><span class="item_classification relative">{{
+                class="r title f f_d_r a_c"
+                ><span class="item_classification r">{{
                   item.classification
                 }}</span
                 >{{ item.title }}</span
               >
               <span class="short_msg" v-html="item.short_message"></span>
-              <div class="date flex flex_direction_row justify_content_center">
+              <div class="date f f_d_r justify_content_center">
                 {{ user_store.name }} /
                 {{ item.create_date.split("?")[1].replace(/^0+/, "") }}月{{
                   item.create_date.split("?")[2].replace(/^0+/, "")
@@ -441,24 +441,24 @@ const search_focus_handle = () => {
               </div>
             </div>
           </div>
-          <div class="absolute tag_box flex flex_direction_row">
+          <div class="a tag_box f f_d_r">
             <span class="tag" v-for="item in item.tags.split('?')" :key="item"
               >#{{ item }}</span
             >
           </div>
         </div>
-        <div class="topic_grid_box flex flex_direction_row">
+        <div class="topic_grid_box f f_d_r">
           <div
-            class="topic_grid_inner_box margin_0_auto flex flex_direction_row warp"
+            class="topic_grid_inner_box margin_0_auto f f_d_r warp"
           >
             <div
               v-show="!list_layout"
               @click="jump_to_topic(item.link)"
               v-for="item in current_data"
               :key="item"
-              class="topic_item_grid relative"
+              class="topic_item_grid r"
             >
-              <div class="img_box relative">
+              <div class="img_box r">
                 <img v-if="item.img != ''" :src="item.img" alt="" />
                 <img
                   v-else
@@ -466,12 +466,12 @@ const search_focus_handle = () => {
                   alt=""
                 />
               </div>
-              <div class="topic_item_inner_grid flex flex_direction_column">
-                <div class="flex flex_direction_row align_items_center">
+              <div class="topic_item_inner_grid f f_d_c">
+                <div class="f f_d_r a_c">
                   <span class="classification_box">{{
                     item.classification
                   }}</span>
-                  <span class="date relative flex flex_direction_row align_items_center"
+                  <span class="date r f f_d_r a_c"
                     >{{ item.create_date.split("?")[0] }}-{{
                       item.create_date.split("?")[1]
                     }}-{{ item.create_date.split("?")[2] }}</span
@@ -482,7 +482,7 @@ const search_focus_handle = () => {
                   class="topic_short_msg"
                   v-html="item.short_message"
                 ></span>
-                <div class="tags_box flex flex_direction_row">
+                <div class="tags_box f f_d_r">
                   <span
                     v-for="tag in item.tags.split('?')"
                     class="tag_item"
@@ -511,18 +511,18 @@ const search_focus_handle = () => {
       <!-- personal info -->
       <div
         v-show="show_personal_info"
-        class="personal_box flex flex_direction_column"
+        class="personal_box f f_d_c"
       >
         <div
-          class="personal_item intro flex relative flex_direction_column align_items_center"
+          class="personal_item intro f r f_d_c a_c"
         >
           <!-- <img
-            class="avatar_bg absolute"
+            class="avatar_bg a"
             src="https://pic.imgdb.cn/item/65a9840f871b83018a77d214.jpg"
             alt=""
           /> -->
           <div
-            class="avatar_bg absolute"
+            class="avatar_bg a"
           >
           </div>
           <img :src="user_store.avatar" class="z_index_10" alt="" />
@@ -531,15 +531,15 @@ const search_focus_handle = () => {
             v-text="user_store.name"
           ></span>
           <span class="personal_signature" v-text="user_store.signature"></span>
-          <div class="width_full flex flex_direction_row">
+          <div class="width_full f f_d_r">
             <div
-              class="topic_classification_total_box flex flex_direction_column align_items_center"
+              class="topic_classification_total_box f f_d_c a_c"
             >
               <h3>文章</h3>
               <span v-text="topic_store.length()"></span>
             </div>
             <div
-              class="topic_classification_total_box flex flex_direction_column align_items_center"
+              class="topic_classification_total_box f f_d_c a_c"
             >
               <h3>分类</h3>
               <span v-text="personal_info.classification_total"></span>
@@ -548,14 +548,14 @@ const search_focus_handle = () => {
         </div>
 
         <div
-          class="personal_item new_topic_box flex flex_direction_column align_items_center"
+          class="personal_item new_topic_box f f_d_c a_c"
         >
-          <h3 class="l_title relative">最新文章</h3>
-          <ul class="flex flex_direction_column">
+          <h3 class="l_title r">最新文章</h3>
+          <ul class="f f_d_c">
             <li
               @click="$router.push(item.link)"
               v-for="item in personal_info.new_topic"
-              class="flex flex_direction_column"
+              class="f f_d_c"
               :key="item.link"
             >
               <span> {{ item.title }} </span>
@@ -568,25 +568,25 @@ const search_focus_handle = () => {
           </ul>
         </div>
         <div
-          class="personal_item classification_box flex flex_direction_column align_items_center"
+          class="personal_item classification_box f f_d_c a_c"
         >
-          <h3 class="l_title relative">分类</h3>
-          <ul class="flex flex_direction_column">
+          <h3 class="l_title r">分类</h3>
+          <ul class="f f_d_c">
             <li
               v-for="classification in topic_store.classification"
               :key="classification"
               @click="classification_handle(classification)"
-              class="flex flex_direction_row"
+              class="f f_d_r"
             >
               <span>{{ classification }}</span>
             </li>
           </ul>
         </div>
         <div
-          class="personal_item site_info_box flex flex_direction_column align_items_center"
+          class="personal_item site_info_box f f_d_c a_c"
         >
-          <h3 class="l_title relative">网站信息</h3>
-          <ul class="flex flex_direction_column">
+          <h3 class="l_title r">网站信息</h3>
+          <ul class="f f_d_c">
             <li>
               <span>网站名称: Tiny Flowers</span>
             </li>
@@ -614,16 +614,16 @@ const search_focus_handle = () => {
   </div>
   <Utils></Utils>
   <div
-      class="topic_list_foot relative flex flex_direction_row align_items_center justify_content_center"
+      class="topic_list_foot r f f_d_r a_c justify_content_center"
     >
-      <div class="left_foot flex flex_direction_column  justify_content_center">
+      <div class="left_foot f f_d_c  justify_content_center">
         <span class="title_foot">人生格言</span>
         <span class="text_foot" v-html="user_store.aphorism"></span>
       </div>
-      <div class="mid_foot flex flex_direction_column">
+      <div class="mid_foot f f_d_c">
         <span class="title_foot"></span>
       </div>
-      <div class="right_foot flex flex_direction_column justify_content_center">
+      <div class="right_foot f f_d_c justify_content_center">
         <span class="title_foot">联系我</span>
         <span class="text_foot">邮箱: {{user_store.e_mail}}</span>
         <span class="text_foot">GitHub Account: {{user_store.github_account}}</span>
@@ -870,9 +870,7 @@ $layout_hover: var(--layout_hover, #f3acac);
         }
       }
       .layout {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        
         border-radius: 5px;
         &:hover {
           background: $layout_hover;

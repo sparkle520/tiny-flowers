@@ -286,12 +286,12 @@ const change_theme = (current_theme) => {
       :src="current_play.url"
       @timeupdate="update_time_handle"
     ></audio>
-    <div class="content flex flex_direction_row relative">
-      <!-- <img class="play_bg_img" src="https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" alt=""> -->
+    <div class="content f f_d_r r">
+      <!-- <img class="play_bg_img a" src="https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" alt=""> -->
 
       <div class="margin_4_percent">
         <div
-          class="record flex align_items_center justify_content_center relative"
+          class="record f a_c j_c_c r"
         >
           <img
             v-show="contain_music"
@@ -301,11 +301,11 @@ const change_theme = (current_theme) => {
           />
           <div
             v-show="!contain_music"
-            class="record_div flex align_items_center justify_content_center"
+            class="record_div f a_c j_c_c"
           >
             <label
               for="input_file"
-              class="file_label relative flex align_items_center justify_content_center"
+              class="file_label r f a_c j_c_c"
             >
               点我上传
               <input
@@ -319,19 +319,19 @@ const change_theme = (current_theme) => {
               />
             </label>
           </div>
-          <div class="circle absolute_center absolute"></div>
-          <div class="circle absolute_center absolute"></div>
-          <div class="circle absolute_center absolute"></div>
+          <div class="circle absolute_center a"></div>
+          <div class="circle absolute_center a"></div>
+          <div class="circle absolute_center a"></div>
         </div>
       </div>
       <div
-        class="music_play_box flex relative flex_direction_column margin_4_percent"
+        class="music_play_box f r f_d_c margin_4_percent"
       >
-        <div class="music_name relative">
-          <span class="absolute">{{ current_play.name }}</span>
+        <div class="music_name r">
+          <span class="a">{{ current_play.name }}</span>
         </div>
         <div
-          class="music_btn_box absolute flex flex_direction_row align_items_center"
+          class="music_btn_box a f f_d_r a_c"
         >
           <!-- left -->
           <svg
@@ -357,7 +357,7 @@ const change_theme = (current_theme) => {
             ></path>
           </svg>
           <div
-            class="play_pause_btn flex align_items_center justify_content_center"
+            class="play_pause_btn f a_c j_c_c"
             @click="play_music_handle"
           >
             <!-- play -->
@@ -421,7 +421,7 @@ const change_theme = (current_theme) => {
           </svg>
 
           <div
-            class="flex align_items_center justify_content_center"
+            class="f a_c j_c_c"
             @click="switch_play_mode"
           >
             <!--  list -->
@@ -444,10 +444,10 @@ const change_theme = (current_theme) => {
             </svg>
             <!--  single -->
             <div
-              class="relative single_btn flex align_items_center justify_content_center"
+              class="r single_btn f a_c j_c_c"
               v-show="current_play_mode === PLAY_MODE.SINGLE"
             >
-              <span class="absolute absolute_center">1</span>
+              <span class="a absolute_center">1</span>
               <svg
                 t="1704968029133"
                 class="icon"
@@ -517,16 +517,16 @@ const change_theme = (current_theme) => {
     </div>
     <!-- music list box -->
     <div
-      class="music_list_box flex flex_direction_column"
+      class="music_list_box f f_d_c"
       v-show="show_music_list"
     >
       <div class="margin_2_percent">
         <div
-          class="flex width_full justify_content_space_around flex_direction_row"
+          class="f width_full justify_content_space_around f_d_r"
         >
           <label
             for="input_file"
-            class="gap_0_2_em flex flex_direction_row align_items_center"
+            class="gap_0_2_em f f_d_r a_c"
           >
             <svg
               t="1705036717774"
@@ -548,7 +548,7 @@ const change_theme = (current_theme) => {
             添加更多
           </label>
           <div
-            class="gap_0_5_em flex flex_direction_row align_items_center"
+            class="gap_0_5_em f f_d_r a_c"
             @click="remove_all_music"
           >
             <svg
@@ -585,7 +585,7 @@ const change_theme = (current_theme) => {
           <div class="list_inner_box">
             <div
               v-for="(item, index) in music_list"
-              class="relative list_item flex flex_direction_row align_items_center"
+              class="r list_item f f_d_r a_c"
             >
               <div @click="switch_current_play(item, index)" class="item">
                 {{ item.name }}
@@ -593,7 +593,7 @@ const change_theme = (current_theme) => {
               <svg
                 @click="remove_music(index)"
                 t="1705038830083"
-                class="icon absolute"
+                class="icon a"
                 viewBox="0 0 1024 1024"
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -669,7 +669,6 @@ $music_player_main_box_shadow_color: var(
       width: 100%;
       height: calc(100% + 40px);
       transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
-      position: absolute;
       z-index: -1;
       object-fit: cover;
       opacity: 0.4;
@@ -847,7 +846,7 @@ $music_player_main_box_shadow_color: var(
           background: $list_item_active_color;
           content: "";
           position: absolute;
-          left: 4px;
+          left: -4px;
         }
         font-weight: bold;
       }

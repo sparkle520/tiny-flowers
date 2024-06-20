@@ -270,14 +270,14 @@ const change_theme = (current_theme) => {
 <template>
   <div id="about_main" class="">
     <div class="first_page relative">
-      <div class="word_box absolute flex flex_direction_column">
+      <div class="word_box a f f_d_c">
         <span class="common">TINY</span>
         <span class="common">FLOWERS</span>
       </div>
-      <div class="word_box_2 absolute">
+      <div class="word_box_2 a">
         <span class="common">PRIVATE BLOG<br /></span>
       </div>
-      <!-- <button class="u_w_m_btn absolute" @click="go_to_unknown_world_map">
+      <!-- <button class="u_w_m_btn a" @click="go_to_unknown_world_map">
         Unknown World Map
       </button> -->
 
@@ -288,7 +288,7 @@ const change_theme = (current_theme) => {
       /> -->
       <svg
         t="1706081571224"
-        class="icon absolute more"
+        class="icon a more"
         viewBox="0 0 1024 1024"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -302,33 +302,33 @@ const change_theme = (current_theme) => {
           p-id="14156"
         ></path>
       </svg>
-      <div class="first_page_cover absolute"></div>
+      <div class="first_page_cover a"></div>
     </div>
-    <div class="second_page relative">
+    <div class="second_page r">
       <div class="s_animation_box">
-        <!-- <div class="s_animation_box_bg_box absolute">
+        <!-- <div class="s_animation_box_bg_box a">
           <img
             src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
-            class="s_animation_box_bg_1 absolute"
+            class="s_animation_box_bg_1 a"
             alt=""
           />
-          <div class="s_animation_box_bg_2 absolute"></div>
+          <div class="s_animation_box_bg_2 a"></div>
         </div> -->
-        <span class="absolute">喜欢的作品</span>
-        <ul class="flex flex_direction_row absolute">
-          <li data-order="0" class="animation_item relative">
+        <span class="a">喜欢的作品</span>
+        <ul class="f flex_direction_row a">
+          <li data-order="0" class="animation_item r">
             <img
               src="https://pic.imgdb.cn/item/65b15382871b83018a4d9b0b.webp"
               alt=""
             />
           </li>
-          <li data-order="1" class="animation_item relative">
+          <li data-order="1" class="animation_item r">
             <img
               src="https://pic.imgdb.cn/item/65b152e5871b83018a4c46be.webp"
               alt=""
             />
           </li>
-          <li data-order="3" class="animation_item relative">
+          <li data-order="3" class="animation_item r">
             <img
               src="https://pic.imgdb.cn/item/65b96999871b83018aad93e5.webp"
               alt=""
@@ -337,58 +337,58 @@ const change_theme = (current_theme) => {
         </ul>
       </div>
     </div>
-    <div class="third_page relative">
+    <div class="third_page r">
       <div
-        class="t_animation_box relative flex justify_content_center align_items_center"
+        class="t_animation_box r f j_c_c a_c"
       >
-        <span class="t_future_instance absolute"></span>
-        <div class="t_circle_1 absolute"></div>
-        <div class="t_circle_2 absolute"></div>
+        <span class="t_future_instance a"></span>
+        <div class="t_circle_1 a"></div>
+        <div class="t_circle_2 a"></div>
       </div>
     </div>
-    <div class="fourth_page relative">
+    <div class="fourth_page r">
       <div
-        class="f_animation_box relative flex justify_content_center align_items_center"
+        class="f_animation_box r f j_c_c a_c"
       >
-        <div class="f_circle absolute"></div>
-        <div class="f_word_box absolute">
-          <div class="f_word_inner_box absolute flex flex_direction_column">
+        <div class="f_circle a"></div>
+        <div class="f_word_box a">
+          <div class="f_word_inner_box a f f_d_c">
             <span class="w_1">Searching</span>
             <span class="w_2"> all the world </span>
             <span class="w_3">For one thing</span>
           </div>
         </div>
-        <div class="card c_1 absolute">
+        <div class="card c_1 a">
           <img
             src="https://pic.imgdb.cn/item/65b3c514871b83018a87b510.png"
             alt=""
           />
         </div>
-        <div class="card c_2 absolute"></div>
+        <div class="card c_2 a"></div>
       </div>
     </div>
-    <div class="fifth_page relative">
-      <div class="latter_1 relative">
-        <span  class="absolute" v-for="item in user_store.name.split('')">{{
+    <div class="fifth_page r">
+      <div class="latter_1 r">
+        <span  class="a" v-for="item in user_store.name.split('')">{{
           item
         }}</span>
       </div>
-      <div class="latter_2 relative"> <span class="absolute"  v-for="item in 'Mozart'.split('')">{{
+      <div class="latter_2 r"> <span class="a"  v-for="item in 'Mozart'.split('')">{{
           item
         }}</span></div>
-      <div class="latter_3 relative"> <span class="absolute"  v-for="item in 'Schubert'.split('')">{{
+      <div class="latter_3 r"> <span class="a"  v-for="item in 'Schubert'.split('')">{{
           item
         }}</span></div>
-      <div class="latter_4 relative"> <span class="absolute"  v-for="item in 'Brahms'.split('')">{{
+      <div class="latter_4 r"> <span class="a"  v-for="item in 'Brahms'.split('')">{{
           item
         }}</span></div>
-      <div class="latter_5 relative"> <span class="absolute"  v-for="item in 'Chopin'.split('')">{{
+      <div class="latter_5 r"> <span class="a"  v-for="item in 'Chopin'.split('')">{{
           item
         }}</span></div>
-      <div class="latter_6 relative"> <span class="absolute"  v-for="item in 'Bach'.split('')">{{
+      <div class="latter_6 r"> <span class="a"  v-for="item in 'Bach'.split('')">{{
           item
         }}</span></div>
-      <div class="latter_7 relative"> <span class="absolute"  v-for="item in 'Mendelssohn'.split('')">{{
+      <div class="latter_7 r"> <span class="a"  v-for="item in 'Mendelssohn'.split('')">{{
           item
         }}</span></div>
     </div>

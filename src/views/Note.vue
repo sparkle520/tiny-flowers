@@ -150,23 +150,23 @@ const go_to = (id) => {
 };
 </script>
 <template>
-  <div id="note_main" class="relative flex flex_direction_column">
+  <div id="note_main" class="r f f_d_c">
     <div class="container">
-      <div class="top_box relative">
-        <div class="top_box_bg absolute"></div>
+      <div class="top_box r">
+        <div class="top_box_bg a"></div>
 
-        <div class="note_book_box flex flex_direction_column">
+        <div class="note_book_box f f_d_c">
           <span class="title">推荐笔记</span>
-          <ul class="note_book_ul flex flex_direction_row">
+          <ul class="note_book_ul f f_d_r">
             <li
               @click="go_to(item.id)"
               v-for="item in recommend_note_list"
               :key="item"
-              class="re_note_item relative"
+              class="re_note_item r"
             >
               <svg
                 t="1708067792440"
-                class="icon note_icon absolute"
+                class="icon note_icon a"
                 viewBox="0 0 1024 1024"
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -188,26 +188,26 @@ const go_to = (id) => {
               <div class="img_box">
                 <img :src="item.img" alt="" />
               </div>
-              <div class="text_area_box absolute flex align_items_center justify_content_center ">
+              <div class="text_area_box a f a_c j_c_c ">
                 <div class="circle_breath"></div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="absolute text_area_bg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 700 700" style="overflow: hidden; display: block;" width="700" height="700"><defs><linearGradient id="two-3" x1="350" y1="-350" x2="350" y2="350" spreadMethod="pad" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="hsl(1.4, 100%, 67%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(167, 52%, 78%)" stop-opacity="1"></stop></linearGradient></defs><g id="two-0" transform="matrix(1 0 0 1 0 0)" opacity="1"><path transform="matrix(1 0 0 1 350 350)" id="two-567" d="M 310.555355 128.63624 C 306.400805 171.137859 268.511154 212.04721 229.565653 229.565653 C 188.202424 248.171638 133.810286 204.555171 92.291539 222.811485 C 48.655877 241.998632 47.581261 331.059812 0 333.930552 C -45.05357 336.648788 -75.987926 278.570213 -99.404807 239.98443 C -118.884576 207.886128 -102.427118 155.426648 -130.552816 130.552815 C -164.108127 100.877133 -228.436691 135.965488 -264.673736 109.63145 C -297.477546 85.792399 -311.06588 39.513576 -320.180025 0 C -329.955891 -42.382412 -343.833519 -96.674588 -318.165284 -131.788376 C -289.49744 -171.005587 -225.212699 -164.921162 -178.600295 -178.600295 C -147.667467 -187.678013 -115.425805 -195.855944 -83.882995 -202.511464 C -56.408311 -208.308612 -28.047214 -215.442513 -0.000001 -216.791211 C 28.81017 -218.176597 58.407909 -208.356695 87.1747 -210.458346 C 140.591115 -214.360853 196.695758 -267.414196 245.619532 -245.619533 C 285.987457 -227.636346 310.860744 -173.210991 311.48933 -129.023106 C 312.174182 -80.8799 243.472953 -48.147958 243.36591 -0.000001 C 243.259437 47.891629 315.214585 80.971671 310.555355 128.63624 Z " fill="hsl(10, 75%, 40%)" stroke="undefined" stroke-width="1" stroke-opacity="1" fill-opacity="1" visibility="visible" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4"></path></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="a text_area_bg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 700 700" style="overflow: hidden; display: block;" width="700" height="700"><defs><linearGradient id="two-3" x1="350" y1="-350" x2="350" y2="350" spreadMethod="pad" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="hsl(1.4, 100%, 67%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(167, 52%, 78%)" stop-opacity="1"></stop></linearGradient></defs><g id="two-0" transform="matrix(1 0 0 1 0 0)" opacity="1"><path transform="matrix(1 0 0 1 350 350)" id="two-567" d="M 310.555355 128.63624 C 306.400805 171.137859 268.511154 212.04721 229.565653 229.565653 C 188.202424 248.171638 133.810286 204.555171 92.291539 222.811485 C 48.655877 241.998632 47.581261 331.059812 0 333.930552 C -45.05357 336.648788 -75.987926 278.570213 -99.404807 239.98443 C -118.884576 207.886128 -102.427118 155.426648 -130.552816 130.552815 C -164.108127 100.877133 -228.436691 135.965488 -264.673736 109.63145 C -297.477546 85.792399 -311.06588 39.513576 -320.180025 0 C -329.955891 -42.382412 -343.833519 -96.674588 -318.165284 -131.788376 C -289.49744 -171.005587 -225.212699 -164.921162 -178.600295 -178.600295 C -147.667467 -187.678013 -115.425805 -195.855944 -83.882995 -202.511464 C -56.408311 -208.308612 -28.047214 -215.442513 -0.000001 -216.791211 C 28.81017 -218.176597 58.407909 -208.356695 87.1747 -210.458346 C 140.591115 -214.360853 196.695758 -267.414196 245.619532 -245.619533 C 285.987457 -227.636346 310.860744 -173.210991 311.48933 -129.023106 C 312.174182 -80.8799 243.472953 -48.147958 243.36591 -0.000001 C 243.259437 47.891629 315.214585 80.971671 310.555355 128.63624 Z " fill="hsl(10, 75%, 40%)" stroke="undefined" stroke-width="1" stroke-opacity="1" fill-opacity="1" visibility="visible" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4"></path></g></svg>
               </div>
-              <div class="text_area flex absolute">
-                <span class="relative">{{ item.name }}</span>
+              <div class="text_area f a">
+                <span class="r">{{ item.name }}</span>
               </div>
             </li>
           </ul>
         </div>
-        <div class="top_right_box flex flex_direction_row">
+        <div class="top_right_box f f_d_r">
           <div class=""></div>
           <div></div>
         </div>
       </div>
-      <div class="note_box relative flex flex_direction_column">
-        <div class="search_box flex relative align_items_center">
+      <div class="note_box r f f_d_c">
+        <div class="search_box f r a_c">
           <svg
             t="1708088494282"
-            class="search_icon absolute"
+            class="search_icon a"
             viewBox="0 0 1024 1024"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -243,10 +243,10 @@ const go_to = (id) => {
             placeholder="在此键入搜索(书名或标签)"
           />
           <div
-            class="filter_search_box absolute"
+            class="filter_search_box a"
             v-show="show_filter_search_box"
           >
-            <ul class="flex flex_direction_column">
+            <ul class="f f_d_c">
               <li
                 v-for="item in current_filter_list"
                 :key="item"
@@ -259,16 +259,16 @@ const go_to = (id) => {
           </div>
         </div>
         <div
-          class="book_list_box relative flex flex_direction_column align_items_center"
+          class="book_list_box r f f_d_c a_c"
         >
-          <ul class="book_list_ul grid relative">
+          <ul class="book_list_ul grid r">
             <li
               @click="go_to(item.id)"
               v-for="item in data"
-              class="book_item relative"
+              class="book_item r"
               :key="item"
             >
-              <div class="book_item_inner flex flex_direction_row">
+              <div class="book_item_inner r f f_d_r">
                 <div class="book_img_box">
                   <img
                     @click="go_to(item.id)"
@@ -284,13 +284,13 @@ const go_to = (id) => {
                     alt=""
                   />
                 </div>
-                <div class="book_text_area flex flex_direction_column">
+                <div class="book_text_area f f_d_c">
                   <div class="book_name">
                     {{ item.name }}
                   </div>
                   <div class="short_message">{{ item.short_message }}</div>
                   <div
-                    class="book_item_bottom flex justify_content_space_between"
+                    class="book_item_bottom f justify_content_space_between"
                   >
                     <div
                       v-if="(item, update_date != '')"
@@ -323,16 +323,16 @@ const go_to = (id) => {
    
   </div>
   <div
-      class="note_foot relative flex flex_direction_row align_items_center justify_content_center"
+      class="note_foot r f f_d_r a_c j_c_c"
     >
-      <div class="left_foot flex flex_direction_column justify_content_center">
+      <div class="left_foot f f_d_c j_c_c">
         <span class="title_foot">人生格言</span>
         <span class="text_foot" v-html="user_store.aphorism"></span>
       </div>
-      <div class="mid_foot flex flex_direction_column">
+      <div class="mid_foot f f_d_c">
         <span class="title_foot"></span>
       </div>
-      <div class="right_foot flex flex_direction_column justify_content_center">
+      <div class="right_foot f f_d_c j_c_c">
         <span class="title_foot">联系我</span>
         <span class="text_foot">邮箱: {{ user_store.e_mail }}</span>
         <span class="text_foot"
@@ -688,7 +688,6 @@ $search_box_color: var(--search_box_color, #4d4949);
             background: $box_bg;
             .book_item_inner {
               margin: 8px;
-              position: relative;
               z-index: 11;
               gap: 16px;
               .book_img_box {

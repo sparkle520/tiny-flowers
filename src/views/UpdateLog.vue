@@ -42,7 +42,7 @@ const log = [
     date: "2024-06-18",
     content: [
       "1. 优化UI和交互体验",
-      "2. 新增看板娘功能",
+      "2. 移除看板娘功能",
       "3. 修复若干BUG",
     ],
   },
@@ -59,7 +59,7 @@ const log = [
 
 </script>
 <template>
-  <div id="update_log_main" class="flex flex_direction_column">
+  <div id="update_log_main" class="f f_d_c">
  
 
 
@@ -69,9 +69,9 @@ const log = [
       alt=""
     />
     <!-- <Carousel :data="carousel_data" class="carousel"></Carousel> -->
-    <div class="content flex margin_0_auto flex_direction_column">
+    <div class="content f margin_0_auto f_d_c">
       <div class="margin_0_auto">
-        <span class="striking_title_orange margin_0_auto relative"
+        <span class="striking_title_orange margin_0_auto r"
           >更新日志</span
         >
       </div>
@@ -81,7 +81,7 @@ const log = [
           }}<br />
           <span
             v-for="(item2, index2) in item.content"
-            class="text flex flex_direction_column"
+            class="text f f_d_c"
             v-html="item2"
           >
           </span>

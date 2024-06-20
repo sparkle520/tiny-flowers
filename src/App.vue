@@ -1,13 +1,13 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { useUserStore } from "/src/store/user";
+// import { useUserStore } from "/src/store/user";
 
-import { inject, onMounted, watch, ref, onUnmounted, nextTick ,onBeforeMount} from "vue";
+import { onMounted, onUnmounted ,onBeforeMount} from "vue";
 import { clickEffect } from "/src/assets/js/mouse.js";
-import emitter from "@/assets/config/mitt_bus.js";
-const user_store = useUserStore();
+// import emitter from "@/assets/config/mitt_bus.js";
+// const user_store = useUserStore();
 
-const route = useRoute();
+// const route = useRoute();
 // const change_current_index =(index) =>{
 //     g_current_index = index
 // }
@@ -46,10 +46,10 @@ const click_handle = (e) => {
 onUnmounted(() => {
   // emitter.all.clear()
 });
-const side_view_handle = () => {
-  current_side_view = !current_side_view;
-  // emitter.emit('new_side_view', {current_side_view:current_side_view})
-};
+// const side_view_handle = () => {
+//   current_side_view = !current_side_view;
+//   // emitter.emit('new_side_view', {current_side_view:current_side_view})
+// };
 // emitter.on('side_view_change', () => side_view_handle())
 
 clickEffect();
@@ -230,17 +230,17 @@ const music_handle = (status) => {
 </script>
 
 <template>
-  <div id="main" class="flex flex_direction_column">
-    <div class="pio-container right">
+  <div id="main" class="f f_d_c">
+    <!-- <div class="pio-container right">
     <div class="pio-action"></div>
     <canvas id="pio" width="900" height="900" style="width: 300px;height: 300px;"></canvas>
-</div>
-    <!-- <canvas  id="canvas" width="800" height="500" class="absolute"></canvas> -->
+</div> -->
+    <!-- <canvas  id="canvas" width="800" height="500" class="a"></canvas> -->
     <!-- <LeftNavBar @music_change="music_handle" class="nav"></LeftNavBar> -->
     <TopNavBar @music_change="music_handle" class="nav"></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view :key="$route.fullPath" class="router_view"></router-view>
-    <MusicPlayer class="music_player absolute"></MusicPlayer>
+    <MusicPlayer class="music_player a"></MusicPlayer>
   </div>
 </template>
 
@@ -250,7 +250,8 @@ $bg_color: var(--bg_color, #fdfbfb);
 #main {
   background: $bg_color;
   width: max(1440px,100vw);
-  overflow-x: hidden;
+ 
+ 
   .nav {
     z-index: 10000000000;
     transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -262,8 +263,7 @@ $bg_color: var(--bg_color, #fdfbfb);
     top: 0;
     background: transparent;
   }
-  .router_view {
-  }
+ 
   .music_player {
     width: 400px;
     right: 0;

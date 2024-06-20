@@ -225,11 +225,11 @@ const reset_clock = () => {
 };
 </script>
 <template>
-  <div class="math_details_main flex flex_direction_column relative">
+  <div class="math_details_main flex f_d_c relative">
     <!-- <div class="cover" v-if="show_question_bank"></div>
     <div class="question_bank_box fixed flex flex_direction_column">
       <div
-        class="question_bank_header flex flex_direction_row align_items_center"
+        class="question_bank_header flex flex_direction_row a_c"
       >
         <h1 class="question_bank_header_title">题库</h1>
       </div>
@@ -238,7 +238,7 @@ const reset_clock = () => {
           v-for="(item, index) in data"
           :key="index"
           @click="router.push(item.link)"
-          class="question_bank_li flex flex_direction_row align_items_center relative"
+          class="question_bank_li flex flex_direction_row a_c relative"
         >
         <div v-if="item.id == params.id" class="question_bank_li_active absolute"></div>
           {{ item.id }}.
@@ -249,10 +249,10 @@ const reset_clock = () => {
     </div> -->
 
     <div class="math_top_box grid">
-      <div class="math_top_left_box flex flex_direction_row align_items_center">
+      <div class="math_top_left_box flex flex_direction_row a_c">
         <!-- <button
           @click="show_question_bank = true"
-          class="question_bank_btn relative flex flex_direction_row align_items_center justify_content_center"
+          class="question_bank_btn relative flex flex_direction_row a_c j_c_c"
         >
           <svg
             t="1708953205767"
@@ -273,12 +273,12 @@ const reset_clock = () => {
         </button> -->
       </div>
       <div
-        class="math_top_mid_box flex flex_direction_row align_items_center justify_content_center"
+        class="math_top_mid_box flex flex_direction_row align_items_center j_c_c"
       >
         <button
           v-show="!show_clock"
           @click="show_clock = true"
-          class="clock_btn relative flex align_items_center justify_content_center"
+          class="clock_btn relative flex align_items_center j_c_c"
         >
           <svg
             t="1708949650732"
@@ -324,11 +324,11 @@ const reset_clock = () => {
         </button>
         <div
           v-show="show_clock"
-          class="clock_box flex flex_direction_row justify_content_center"
+          class="clock_box flex flex_direction_row j_c_c"
         >
           <button
             @click="show_clock = false"
-            class="hidden_btn relative flex align_items_center justify_content_center"
+            class="hidden_btn relative flex align_items_center j_c_c"
           >
             <svg
               t="1709109949694"
@@ -351,8 +351,8 @@ const reset_clock = () => {
             @click="start_clock = !start_clock"
             class="clock relative flex flex_direction_row align_items_center"
           >
-            <div v-show="start_clock" class="hint_text absolute  flex align_items_center justify_content_center">停止计时</div>
-            <div v-show="!start_clock" class="hint_text absolute flex align_items_center justify_content_center">开始计时</div>
+            <div v-show="start_clock" class="hint_text absolute  flex align_items_center j_c_c">停止计时</div>
+            <div v-show="!start_clock" class="hint_text absolute flex align_items_center j_c_c">开始计时</div>
 
             <svg
               v-show="!start_clock"
@@ -398,7 +398,7 @@ const reset_clock = () => {
           </div>
           <button
             @click="reset_clock"
-            class="reset_btn relative flex align_items_center justify_content_center"
+            class="reset_btn relative flex align_items_center j_c_c"
           >
             <svg
               t="1709110700155"
@@ -422,7 +422,7 @@ const reset_clock = () => {
       <div class="math_top_right_box"></div>
     </div>
     <div class="box flex flex_direction_row" ref="box">
-      <div class="left flex flex_direction_column">
+      <div class="left flex f_d_c">
         <div class="left_top_box flex flex_direction_row align_items_center">
           <span>题目描述区</span>
         </div>
@@ -438,7 +438,7 @@ const reset_clock = () => {
         <div class="right_top_box">
           <div
             v-if="!show_solution"
-            class="show_solution flex align_items_center justify_content_center"
+            class="show_solution flex align_items_center j_c_c"
           >
             <button class="show_solution_btn" @click="show_solution_click">
               查看答案解析
@@ -460,17 +460,17 @@ const reset_clock = () => {
           ></div>
         </div>
         <div title="上下侧边栏" class="move"></div>
-        <div class="right_bottom_box flex flex_direction_column">
+        <div class="right_bottom_box flex f_d_c">
           <div
             v-if="!show_comment"
-            class="show_comment flex align_items_center justify_content_center"
+            class="show_comment flex a_c j_c_c"
           >
             <button class="show_comment_btn" @click="show_comment_click">
               查看评论区(可能含有答案和解题思路)
             </button>
           </div>
           <div
-            class="right_bottom_top_box flex flex_direction_row align_items_center"
+            class="right_bottom_top_box flex flex_direction_row a_c"
             v-show="show_comment"
           >
             <span>评论区 (欢迎分享你的解题思路和答案)</span>

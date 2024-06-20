@@ -34,8 +34,8 @@ const change_theme = (current_theme) => {
   } else {
     c_c("--math_left_nav_main_color", "#757474");
     c_c("--left_nav_bg", "#ffff");
-    c_c("--left_nav_active_color", "#0bb890");
-    c_c("--left_nav_border", "#a5e3ba");
+    c_c("--left_nav_active_color", "#87ceeb");
+    c_c("--left_nav_border", "#87ceeb");
     
   }
 };

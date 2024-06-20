@@ -31,8 +31,8 @@ change_theme(config_store.theme);
 });
 </script>
 <template>
-  <div id="note_info_main" class="flex flex_direction_column">
-    <div class="note_top_box flex flex_direction_row relative">
+  <div id="note_info_main" class="f f_d_c">
+    <div class="note_top_box f f_d_r r">
       <!-- <img
         class="top_box_bg absolute"
         v-if="note_data.img != ''"
@@ -45,8 +45,8 @@ change_theme(config_store.theme);
         src="https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg"
         alt=""
       /> -->
-      <div class="note_top_inner_box flex flex_direction_row">
-        <div class="note_top_left_box relative">
+      <div class="note_top_inner_box f f_d_r">
+        <div class="note_top_left_box r">
           <img class="note_top_inner_box_img" v-if="note_data.img != ''" :src="note_data.img" alt="" />
           <img
             v-else
@@ -54,15 +54,15 @@ change_theme(config_store.theme);
             class="note_top_inner_box_img"
             alt=""
           />
-          <img class="note_top_inner_box_img_bg" v-if="note_data.img != ''" :src="note_data.img" alt="" />
+          <img class="note_top_inner_box_img_bg a" v-if="note_data.img != ''" :src="note_data.img" alt="" />
           <img
             v-else
             src="https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg" 
-            class="note_top_inner_box_img_bg"
+            class="note_top_inner_box_img_bg a"
             alt=""
           />
         </div>
-        <div class="note_top_mid_box flex flex_direction_column">
+        <div class="note_top_mid_box f f_d_c">
           <h1>{{ note_data.name }}</h1>
           <p>{{ note_data.short_message }}</p>
           <span>
@@ -92,7 +92,7 @@ change_theme(config_store.theme);
             ></span
           >
           <button
-            class="read_btn relative"
+            class="read_btn r"
             @click="router.push(`/note/book/${note_data.id}/1`)"
           >
             点击阅读
@@ -101,8 +101,8 @@ change_theme(config_store.theme);
        
       </div>
     </div>
-    <div class="note_directory_box flex flex_direction_column relative">
-      <h1 class="relative">目录</h1>
+    <div class="note_directory_box f f_d_c r">
+      <h1 class="r">目录</h1>
       <NoteDirectoryList
         :id="note_data.id"
         :data="note_data.directory_list"
@@ -112,16 +112,16 @@ change_theme(config_store.theme);
     </div>
   </div>
   <div
-      class="note_info_foot relative flex flex_direction_row align_items_center justify_content_center"
+      class="note_info_foot r f f_d_r a_c j_c_c"
     >
-      <div class="left_foot flex flex_direction_column justify_content_center">
+      <div class="left_foot f f_d_c j_c_c">
         <span class="title_foot">人生格言</span>
         <span class="text_foot" v-html="user_store.aphorism"></span>
       </div>
-      <div class="mid_foot flex flex_direction_column">
+      <div class="mid_foot f f_d_c">
         <span class="title_foot"></span>
       </div>
-      <div class="right_foot flex flex_direction_column justify_content_center">
+      <div class="right_foot f f_d_c j_c_c">
         <span class="title_foot">联系我</span>
         <span class="text_foot">邮箱: {{ user_store.e_mail }}</span>
         <span class="text_foot"
@@ -189,7 +189,6 @@ $foot_bg: var(--foot_bg, #e96969);
           animation: note_top_inner_box_img 1s;
         }
         .note_top_inner_box_img_bg{
-          position: absolute;
           width: 268px;
           height: 86%;
           top:16px;

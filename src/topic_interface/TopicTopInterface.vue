@@ -110,11 +110,11 @@ onMounted(() => {
 <template>
   <div
     id="topic_top_main"
-    class="relative flex align_items_center justify_content_center"
+    class="r f a_c j_c_c"
   >
-    <div class="flex flex_direction_column topic_info_box align_items_center justify_content_center">
+    <div class="f f_d_c topic_info_box a_c j_c_c">
       <span class="topic_title"></span>
-      <div class="flex flex_direction_row">
+      <div class="f f_d_r">
         <div class="topic_create_date"></div>
         <div class="topic_update_date"></div>
         <div class="topic_visit">访问<span id="busuanzi_value_site_pv"></span></div>
@@ -122,7 +122,7 @@ onMounted(() => {
         <span class="topic_classification"></span>
       </div>
       <div
-        class="topic_tag_box flex flex_direction_row justify_content_center"
+        class="topic_tag_box f f_d_r j_c_c"
       ></div>
     </div>
   </div>

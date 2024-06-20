@@ -43,7 +43,7 @@ const remove_rect_active = (dom_list, index) => {
 const change_position = (new_pos) => {
   position.value = new_pos;
 };
-const current_text = ref("");
+// const current_text = ref("");
 let position = ref(0);
 watch(position, (newVal, oldVal) => {
   let item = document.querySelector(".item");
@@ -84,23 +84,23 @@ const leave_handler = ()=>{
 
 </script>
 <template>
-  <div id="home_carousel_main" class="relative" @mouseenter="enter_handler" @mouseleave="leave_handler">
-    <div class="content relative">
-      <div class="item absolute flex flex_direction_row">
-        <div class="img_box relative" v-for="(item, index) in data">
+  <div id="home_carousel_main" class="r" @mouseenter="enter_handler" @mouseleave="leave_handler">
+    <div class="content r">
+      <div class="item a f f_d_r">
+        <div class="img_box r" v-for="(item, index) in data">
           <img :src="item.link" alt="" />
         </div>
       </div>
     </div>
     <div
-      class="absolute flex flex_direction_row rect_box "
+      class="a f f_d_r rect_box "
     >
       <div @click="change_position(0)" class="rect"></div>
       <div @click="change_position(width)" class="rect"></div>
       <div @click="change_position(width*2)" class="rect"></div>
       <div @click="change_position(width * 3)" class="rect"></div>
     </div>
-    <div class="absolute dyn_text" v-html="current_text"></div>
+    <!-- <div class="a dyn_text" v-html="current_text"></div> -->
   </div>
 </template>
 <style lang="scss" scoped>
@@ -179,14 +179,14 @@ const leave_handler = ()=>{
     }
   }
 }
-@keyframes text_out {
-  0% {
-    opacity: 0;
-    transform: scale(0.3) translate(-50%, -50%);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translate(-50%, -50%);
-  }
-}
+// @keyframes text_out {
+//   0% {
+//     opacity: 0;
+//     transform: scale(0.3) translate(-50%, -50%);
+//   }
+//   100% {
+//     opacity: 1;
+//     transform: scale(1) translate(-50%, -50%);
+//   }
+// }
 </style>

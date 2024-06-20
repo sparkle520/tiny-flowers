@@ -125,23 +125,23 @@ const play_dyn_text = () => {
 };
 </script>
 <template>
-  <div id="main" class="relative" @mouseenter="play_dyn_text">
-    <div class="content relative">
-      <div class="item absolute flex flex_direction_row">
-        <div class="img_box relative" v-for="(item, index) in data">
+  <div id="main" class="r" @mouseenter="play_dyn_text">
+    <div class="content r">
+      <div class="item a f f_d_r">
+        <div class="img_box r" v-for="(item, index) in data">
           <img :src="item.link" alt="" />
         </div>
       </div>
     </div>
     <div
-      class="absolute flex flex_direction_column rect_box justify_content_center"
+      class="a f f_d_c rect_box j_c_c"
     >
       <div @click="change_position(0)" class="rect"></div>
       <div @click="change_position(width)" class="rect"></div>
       <div @click="change_position(width*2)" class="rect"></div>
       <div @click="change_position(width * 3)" class="rect"></div>
     </div>
-    <div class="absolute dyn_text" v-html="current_text"></div>
+    <!-- <div class="a dyn_text" v-html="current_text"></div> -->
   </div>
 </template>
 <style lang="scss" scoped>
