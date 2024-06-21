@@ -47,16 +47,6 @@ onMounted(() => {
   });
 });
 
-// const enter_Children = (index, index2) => {
-//   document.getElementById(
-//     index.toString() + index2.toString()
-//   ).style.backgroundColor =  "#edf7fe";
-// };
-// const leave_Children = (index, index2) => {
-//   document.getElementById(
-//     index.toString() + index2.toString()
-//   ).style.backgroundColor = "#ffff";
-// };
 const show_children = (item) => {
   item.show_children = !item.show_children;
   item.active = !item.active;
@@ -99,11 +89,14 @@ const show_children = (item) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$math_left_nav_main_color: var(--math_left_nav_main_color, #757474);
+$math_left_nav_main_color: var(--math_left_nav_main_color, #393e46);
 $left_nav_bg: var(--left_nav_bg, #ffff);
 $left_nav_active_color: var(--left_nav_active_color, #0bb890);
 $left_nav_border: var(--left_nav_border, #a5e3ba);
-
+@font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
 #math_left_nav_main {
   width:180px;
   position: sticky;
@@ -113,7 +106,7 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
   border-radius: 5px;
   overflow: scroll;
   color: $math_left_nav_main_color;
-
+  font-family: 'misans';
   .left_nav {
     box-shadow: #0909090c 0px 0px 20px;
     background: $left_nav_bg;

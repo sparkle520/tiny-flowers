@@ -92,7 +92,6 @@ const change_layout = (flag) => {
 const scroll_handle = () => {
   for (let i = 0; i < item_list.length; i++) {
     let elem = item_list[i];
-    // console.log(elem.offsetTop,window.scrollY);
     if (elem.offsetTop - window.innerHeight <= window.scrollY) {
       elem.style.opacity = "1";
       elem.classList.add("item_animation");
@@ -136,19 +135,15 @@ const init_data = () => {
 };
 
 const data_handle = (array, page_num) => {
-  // console.log(page_num);
   if (page_num * per_page_count >= array.length) {
     current_data.value = array.slice(
       page_num * per_page_count - per_page_count
     );
-    // console.log(array.length);
-    // console.log(current_data.value);
   } else {
     current_data.value = array.slice(
       (page_num - 1) * per_page_count,
       (page_num - 1) * per_page_count + per_page_count
     );
-    // console.log(array.length);
   }
   page_data.value.total = array.length;
 };
@@ -166,13 +161,6 @@ const page_handle = (index) => {
 
 const classification_handle = (classification) => {
   router.push(`/article/list/${classification}/1`);
-
-  // params.classification = classification;
-  // nextTick(()=>{
-  //   router.go(0);
-
-  // })
-  // params.page = 1
 };
 const birthday_date = "2024-01-05 11:01:01";
 const current_run_time = ref("");
@@ -604,13 +592,6 @@ const search_focus_handle = () => {
         </div>
       </div>
     </div>
-    <!-- <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b90c7b871b83018ab53ec3.jpg" alt=""> -->
-    <!-- <img class="topic_list_main_bg" src="https://pic.imgdb.cn/item/65b9140d871b83018ad891c7.jpg" alt=""> -->
-    <!-- <img
-      class="topic_list_main_bg"
-      src="https://pic.imgdb.cn/item/65ba5060871b83018a46c69f.jpg"
-      alt=""
-    /> -->
   </div>
   <Utils></Utils>
   <div
@@ -651,7 +632,15 @@ $tag_item_color: var(--tag_item_color, #00cbff);
 $layout_hover: var(--layout_hover, #f3acac);
 
 #topic_list_main {
-  // background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png") repeat-y;
+  @font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+  background: linear-gradient($topic_bg_top 50%,$topic_bg_color);
+  font-family: "misans";
+  width: max(1440px,100vw);
+  min-height: 100vh;
+  color: $color;
   &::after {
     content: "";
     position: absolute;
@@ -665,11 +654,6 @@ $layout_hover: var(--layout_hover, #f3acac);
       repeat;
     background-size: contain;
   }
-  background: linear-gradient($topic_bg_top 50%,$topic_bg_color);
-
-  width: max(1440px,100vw);
-  min-height: 100vh;
-  color: $color;
   li {
     list-style: none;
     padding: 0 0;
@@ -1224,7 +1208,6 @@ $layout_hover: var(--layout_hover, #f3acac);
   width: max(1440px,100vw);
   background: $topic_bg_color;
     z-index: 10;
-    width: inherit;
     height: 200px;
     gap: 16px;
     .title_foot {
@@ -1293,12 +1276,5 @@ $layout_hover: var(--layout_hover, #f3acac);
     transform: scale(1);
   }
 }
-@keyframes topic_grid_box_animation {
-  0% {
-    transform: scale(2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+
 </style>

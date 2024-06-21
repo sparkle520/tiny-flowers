@@ -263,7 +263,7 @@ const change_theme = (current_theme) => {
     c_c("--home_color", "#e60000");
     c_c("--u_w_m_btn_color", "#ff80bf");
     c_c("--word_box_color", "#003153");
-    c_c("--f_word_box_color", "#0a0606");
+    c_c("--f_word_box_color", "#23263b");
   }
 };
 </script>
@@ -929,7 +929,6 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
           }
           .w_3 {
             font-size: 3.5em;
-            font-family: 900;
             color: #ff9d00;
             text-shadow: #ff4d00 0px 13px 10px;
           }

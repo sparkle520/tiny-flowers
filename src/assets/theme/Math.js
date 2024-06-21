@@ -38,26 +38,16 @@ const change_theme = (current_theme) => {
       c_c("--math_com_box_shadow", "#d0cfcf45");
       // c_c("--condition_box", "#a5e3ba");
       c_c("--condition_box", "#87ceeb");
-      // c_c("--tag_btn_color", "#146e57");
-      // c_c("--tag_btn_bg", "#d5e2e8");
-      // c_c("--tag_choose_box_border", "#6b6b6b");
-      // c_c("--tag_choose_box_bg", "#ffffffeb");
-      // c_c("--tag_item_bg", "#e3e9f0");
-      // c_c("--tag_item_hover_bg", "#8d88e5");
-      // c_c("--choose_top", "#a7a7a7");
+    
       c_c("--tag_sure_btn_color", "#87ceeb");
-      //c_c("--tag_sure_btn_color", "#0ebd7d");
       c_c("--tag_sure_btn_bg", "#fff");
       c_c("--math_color", "#87ceeb");
-      // c_c("--math_color", "#87ceeb");
       c_c("--subject_hover_name_color", "#a6e3e9");
-      //c_c("--subject_hover_name_color", "#36bf36");
       c_c("--subject_name_color", "#87ceeb");
-      //c_c("--subject_name_color", "#146e57");
       c_c("--content_item_box_hover", "#e3f5de");
-      c_c("--content_tag_item_bg", "#216eba");
+      c_c("--content_tag_item_bg", "#769fcd");
       c_c("--content_item_box_color", "#ffff");
-      c_c("--normal_color", "#4d4949");
+      c_c("--normal_color", "#393e46");
     }
   };
     export default change_theme

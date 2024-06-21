@@ -4,17 +4,12 @@
 
 <script setup>
 import {
-  reactive,
-  toRefs,
   onBeforeMount,
   onUnmounted,
   onMounted,
-  watch,
-  ref,
 } from "vue";
 import { useRouter } from "vue-router";
 import NoteDirectoryItem from "/src/component/NoteDirectoryItem.vue";
-import emitter from "@/assets/config/mitt_bus.js";
 import change_theme from "../assets/theme/NoteDirectoryItem";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
@@ -34,21 +29,6 @@ const props = defineProps({
   col: Number,
   id: Number,
 });
-// onMounted(() => {
-//   change_theme(theme.value);
-// });
-
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-// const change_theme = (current_theme) => {
-//   if (current_theme) {
-//     //night
-//     c_c("--directory_list_bg", "#2428376c");
-//   } else {
-//     c_c("--directory_list_bg", "#ffffff6c");
-//   }
-// };
 
 const get_col = () => {
   return `repeat(${props.col},1fr)`;
@@ -74,7 +54,11 @@ const get_col = () => {
 #directory_list_main {
   width: 860px;
   border-radius: 5px;
-  
+  @font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+font-family: 'misans';
   .Note_inner_directory_box {
     column-count: 3;
     width: 860px;

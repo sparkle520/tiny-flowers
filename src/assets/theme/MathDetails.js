@@ -37,7 +37,7 @@ const change_theme = (current_theme) => {
     c_c("--question_bank_box_bg", "#ffff");
     c_c("--question_bank_header_border", "#e5e5e5");
     c_c("--question_bank_li_border", "#e6e6e6");
-    c_c("--question_bank_li_color", "#4d4949");
+    c_c("--question_bank_li_color", "#393e46");
     c_c("--question_bank_li_active_bg", "#e7e7e7");
     c_c("--question_bank_li_hover_bg", "#e7e7e7b0");
     c_c("--btn_bg", "#ebebeb");
@@ -49,7 +49,7 @@ const change_theme = (current_theme) => {
     c_c("--resize_bg", "#999999");
     c_c("--right_bottom_top_box_bg", "#dcdddf");
     c_c("--right_top_top_box_bg", "#849bae");
-    c_c("--normal_color", "#4d4949");
+    c_c("--normal_color", "#393e46");
     c_c("--code_bg", "#f6f8fa");
     c_c("--h_color", "#ff7f50");
     c_c("--blockquote_color", "#ff7300");

@@ -6,7 +6,6 @@
 import {
   reactive,
   ref,
-  toRefs,
   onBeforeMount,
   onMounted,
   onUnmounted,
@@ -18,10 +17,8 @@ import change_theme from "../assets/theme/TopNavBar";
 import c_c from "@/assets/js/utils.js"
 const router = useRouter();
 import { useConfigStore } from "../store/config";
-import { useUserStore } from "../store/user";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const user_store = useUserStore();
 const { theme } = storeToRefs(store);
 store.$subscribe((mutation, state) => {
   change_theme(state.theme);
@@ -30,25 +27,16 @@ onBeforeMount(() => {});
 onMounted(() => {
   change_theme(theme.value);
   document.addEventListener("scroll", nav_handle);
-  document.addEventListener("click", click_handle);
   top_nav_main  = document.querySelector("#top_nav_main");
 
 });
 onUnmounted(() => {
-  document.removeEventListener("click", click_handle);
+  document.removeEventListener("scroll", nav_handle);
 });
-const click_handle = (e) => {
-  let music_player_main = document.querySelector("#music_player_main");
-  let music = document.querySelector("#top_nav_main .music");
-  if (!music_player_main.contains(e.target) && !music.contains(e.target)) {
-    music_active.value = false;
-  }
-};
+
 let top_nav_main;
 const nav_handle = () => {
   let wScrY = window.scrollY;
-  // const music_img = document.querySelector(".music img");
-  // music_img.style.transform = `rotate(${wScrY%360}deg)`;
   let sl=-Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
   top_nav_main.style.left=sl+'px';
   if(wScrY < 70){
@@ -178,7 +166,7 @@ const theme_change = () => {
             <li
               :key="item"
               class="nav_item nav_item_com f f_d_r a_c"
-              v-for="item in nav_list.slice(0, 4)"
+              v-for="item in nav_list"
               @click="link_to(item.path)"
             >
               {{ item.name }}
@@ -186,17 +174,7 @@ const theme_change = () => {
           </ul>
         </div>
 
-        <div class="f f_d_r">
-          <ul class="nav_list f f_d_r">
-            <li
-              :key="item"
-              class="nav_item nav_item_com f f_d_r a_c"
-              v-for="item in nav_list.slice(4)"
-              @click="link_to(item.path)"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+        <div class="f f_d_r">           
           <label class="switch r" for="theme">
             <input
               id="theme"
@@ -208,63 +186,7 @@ const theme_change = () => {
           </label>
         </div>
       </div>
-      <div class="music a" @click="active_music">
-        <img :src="user_store.avatar" alt="" />
-        <!-- <svg
-          v-if="!music_active"
-          t="1704963079198"
-          class="svg_1"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="13968"
-          width="48"
-          height="48"
-        >
-          <path
-            d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
-            fill="#123"
-            p-id="13969"
-          ></path>
-          <path
-            d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
-            fill="#ffff"
-            p-id="13970"
-          ></path>
-          <path
-            d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
-            fill="#ffff"
-            p-id="13971"
-          ></path>
-        </svg>
-        <svg
-          v-if="music_active"
-          t="1704963079198"
-          class="svg_2"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="13968"
-          width="48"
-          height="48"
-        >
-          <path
-            d="M1023.969343 511.946281A511.77753 511.77753 0 1 1 626.119623 12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014 512.329907 512.329907 0 0 1 314.993132 472.696839z"
-            fill="#EA5D5B"
-            p-id="13969"
-          ></path>
-          <path
-            d="M708.976211 39.249442v472.696839h-82.856588V12.873428a503.76806 503.76806 0 0 1 82.856588 26.376014z"
-            fill="#F5B4B5"
-            p-id="13970"
-          ></path>
-          <path
-            d="M511.915624 709.006868a197.060587 197.060587 0 1 1 197.060587-197.060587 197.198681 197.198681 0 0 1-197.060587 197.060587z m0-311.264585a114.203998 114.203998 0 1 0 114.203999 114.203998 114.342093 114.342093 0 0 0-114.203999-114.203998z"
-            fill="#FAD8D7"
-            p-id="13971"
-          ></path>
-        </svg> -->
-      </div>
+     
     </div>
   </div>
 </template>
@@ -280,10 +202,7 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
   font-family: "orbitron-black";
   src: url("/src/assets/font/orbitron-black.ttf");
 }
-@font-face {
-  font-family: "orbitron-light";
-  src: url("/src/assets/font/orbitron-light.ttf");
-}
+
 #top_nav_main {
   position: fixed;
   width: max(1440px,100vw);
@@ -297,7 +216,7 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
     z-index: 11;
     background: $nav_bg_color;
     height: inherit;
-    transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 10s cubic-bezier(0.075, 0.82, 0.165, 1);
    
     .nav_box {
       top: 50%;
@@ -305,7 +224,7 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
       width: 1200px;
       transform: translate(-50%,-50%);
       .logo {
-        font-family: "orbitron-light";
+        font-family: "orbitron-black";
         color: $nav_item_color;
         span {
           margin:0 16px;
@@ -386,52 +305,6 @@ $nav_item_hover_color: var(--nav_item_hover_color, #f76700);
         background: #303136;
         box-shadow: inset -3px -2px 5px -2px #8983f7,
           inset -10px -5px 0 0 #a3dafb;
-      }
-    }
-    .music {
-      left: 50%;
-      top: 8px;
-      transform: translateX(-50%);
-      &:hover {
-        &::after {
-          opacity: 1;
-          bottom: -30px;
-        }
-      }
-      &::after {
-        content: "播放本地音频";
-        position: absolute;
-        bottom: -20px;
-        opacity: 0;
-        background: #ffff;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 120%;
-        box-shadow: #3031361a 0 0 10px;
-        font-size: 11px;
-        border-radius: 15px;
-        color: #5e6d78;
-        padding: 8px 8px;
-        transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-      }
-      img {
-        width: 58px;
-        height: 58px;
-        margin: auto 0;
-        border-radius: 50%;
-        box-shadow: rgba(17, 34, 51, 0.189) 0 0 10px;
-        &:hover {
-          box-shadow: rgba(3, 27, 50, 0.763) 0 0 2px;
-        }
-      }
-
-      .svg_1 {
-        &:hover {
-        }
-      }
-      .svg_2 {
-        &:hover {
-        }
       }
     }
   }

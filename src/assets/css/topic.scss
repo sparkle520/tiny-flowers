@@ -5,11 +5,15 @@ $topic_content_box_shadpw: var(--topic_content_box_shadpw, #5656561b);
 $topic_text_linear_bg: var(--topic_text_linear_bg, #b5b5f450);
 
 @import url('markdown.scss');
+@font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
 #topic_main {
   width: max(1440px,100vw);
   background: $topic_bg;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+font-family: 'misans';
   min-height: 100vh;
   color: $normal_color;
   display: flex;
@@ -73,15 +77,7 @@ $topic_text_linear_bg: var(--topic_text_linear_bg, #b5b5f450);
       flex-direction: column;
     }
   }
-  // h1{
-  //   font-size: 1.5em;
-  //   font-weight: 900;
-  //   margin: 3vh 0;
-  // }
-  // img {
-  //   object-fit: cover;
-  //   width: 100%;
-  // }
+ 
 }
 
 

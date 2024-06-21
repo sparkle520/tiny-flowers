@@ -4,14 +4,12 @@
 
 <script setup>
 import {
-  reactive,
   toRefs,
   ref,
   onBeforeMount,
   onMounted,
   defineProps,
   watch,
-  nextTick,
 } from "vue";
 import { useRouter } from "vue-router";
 import { useConfigStore } from "../store/config";

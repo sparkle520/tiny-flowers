@@ -33,18 +33,7 @@ change_theme(config_store.theme);
 <template>
   <div id="note_info_main" class="f f_d_c">
     <div class="note_top_box f f_d_r r">
-      <!-- <img
-        class="top_box_bg absolute"
-        v-if="note_data.img != ''"
-        :src="note_data.img"
-        alt=""
-      />
-      <img
-        class="top_box_bg absolute"
-        v-else
-        src="https://pic.imgdb.cn/item/65cefd5f9f345e8d03620d1c.jpg"
-        alt=""
-      /> -->
+     
       <div class="note_top_inner_box f f_d_r">
         <div class="note_top_left_box r">
           <img class="note_top_inner_box_img" v-if="note_data.img != ''" :src="note_data.img" alt="" />
@@ -145,6 +134,11 @@ $foot_bg: var(--foot_bg, #e96969);
   width: max(1440px,100vw);
   min-height: 100vh;
   background: $note_info_main_bg;
+  @font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+font-family: 'misans';
   .note_top_box {
     width: inherit;
     height: 500px;

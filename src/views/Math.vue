@@ -28,9 +28,10 @@ const router = useRouter();
 const tags_list = ref([]);
 const modules = import.meta.glob("/src/math_data/*/*.md", { as: "raw" });
 
-// const current_subject = ref("");
-// const current_difficult = ref("");
-// const switch_tag_box = ref(false);
+const render_marked_latex = (dom,mod,callback)=>{
+  dom.innerHTML =  marked(mod,true)
+  callback(dom)
+}
 const math_store = useMathStore();
 const current_page = ref(params.page);
 const init_content =  () => {
@@ -45,22 +46,35 @@ const init_content =  () => {
     for (const path in modules) {
       if (path == solution_path) {
         modules[path]().then((mod) => {
-          subject_solution_context[i].innerHTML =  marked(mod,true)
-          nextTick(() => {
-            setTimeout(() => {
-              renderByMathjax(subject_solution_context[i]).catch(err=>{
-          });
-            },2000)
+          // subject_solution_context[i].innerHTML =  marked(mod,true)
+        //   nextTick(() => {
+        //       renderByMathjax(subject_solution_context[i]).catch(err=>{
+        //   }
+        // );
             
+        //   });
+        render_marked_latex(subject_solution_context[i],mod,(dom)=>{
+             nextTick(() => {
+              renderByMathjax(dom).catch(err=>{
+          }
+        ); 
           });
+        })
         });
       } else if (path == problem_path) {
         modules[path]().then((mod) => {
-          subject_list[i].innerHTML = marked(mod);
-          nextTick(() => {
-            renderByMathjax(subject_list[i]).catch(err=>{
-          });;
+          // subject_list[i].innerHTML = marked(mod);
+          // nextTick(() => {
+          //   renderByMathjax(subject_list[i]).catch(err=>{
+          // });;
+          // });
+          render_marked_latex(subject_list[i],mod,(dom)=>{
+             nextTick(() => {
+              renderByMathjax(dom).catch(err=>{
+          }
+        ); 
           });
+        })
         });
       }
     }
@@ -84,22 +98,6 @@ onMounted(() => {
 
   current_page.value = params.page;
 });
-// const show_tag_box = () => {
-//   switch_tag_box.value = true;
-//   cover.value = true;
-// };
-// const close_tag_box = () => {
-//   switch_tag_box.value = false;
-//   cover.value = false;
-// };
-// const deleteTagByIndex = (index) => {
-//   select_tag_list.value.push(tag_list.value[index]);
-//   tag_list.value.splice(index, 1);
-// };
-// const undo_tag_by_index = (index) => {
-//   tag_list.value.push(select_tag_list.value[index]);
-//   select_tag_list.value.splice(index, 1);
-// };
 
 const current_page_change = (current) => {
   let path_ = route.fullPath.split("/");
@@ -110,7 +108,6 @@ const current_page_change = (current) => {
 const page_num = ref(1);
 //  change scss var
 
-// const cover = ref(false);
 const show_all_tag = () => {
   const select_tag_ul = document.querySelector(".select_tag ul");
   select_tag_ul.style.height = "auto";
@@ -430,7 +427,11 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
   background: linear-gradient($math_bg_top 50%,$math_bg_color);
 
   gap: 16px;
- 
+  @font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+font-family: 'misans';
   .note_left_nav_bar {
     z-index: 10000;
   }
@@ -535,7 +536,6 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
           font-size: 1.2em;
           padding-left: 20px;
           border-radius: 10px;
-          font-family: "miscrsoft yahei";
           box-shadow: $condition_box 0 0 0 1px;
 
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);

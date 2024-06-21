@@ -69,6 +69,11 @@ onMounted(() => {
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 30px;
     margin-bottom: 20px;
+    @font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+font-family: 'misans';
   }
   .intro {
     .avatar_bg {

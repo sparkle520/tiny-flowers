@@ -9,7 +9,7 @@ const change_theme = (current_theme) => {
       c_c("--striking_title_orange_bg", "#f7f3f5");
     } else {
       c_c("--bg_color", "#fdfbfb");
-      c_c("--color", "#000000");
+      c_c("--color", "#23263b");
       c_c("--li", "#ffffff89");
       c_c("--li_shadow", "#f4f2f2");
       c_c("--striking_title_orange_color", "#f0681e");

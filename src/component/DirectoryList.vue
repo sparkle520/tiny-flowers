@@ -4,8 +4,6 @@
 
 <script setup>
 import {
-  reactive,
-  toRefs,
   onBeforeMount,
   onUnmounted,
   onMounted,
@@ -28,20 +26,7 @@ onUnmounted(() => {
   document.removeEventListener("scroll", handleScroll);
 });
 const handleScroll = () => {
-  // let directory_list_main = document.querySelector("#directory_list_main")
-  // const start =
-  // directory_list_main.getBoundingClientRect().top +
-  //   window.scrollY - document.querySelector("#top_nav_main").clientHeight;
-    // if (start < window.scrollY ) {
-    //   directory_list_main.style.position = "fixed";
-    //   directory_list_main.style.top = "70px";
-    //   directory_list_main.style.right = "6.5vw";
-    // }else{
-    //   directory_list_main.style.position = "relative";
-    //   directory_list_main.style.top = "0px";
-    //   directory_list_main.style.right = "0vw";
-    // }
-   
+  
   let visibleTitles = [];
 
   for (let i = current_titles.value.length - 1; i >= 0; i--) {
@@ -179,12 +164,7 @@ const change_theme = (current_theme) => {
   }
 };
 
-// window.addEventListener("scroll", function () {
-//   // progress.value =
-//   //   parseInt((window.scrollY / document.documentElement.scrollHeight) * 100) +
-//   //   "%";
-  
-// });
+
 
 // 设置子节点的可见性
 function setChildrenVisible(title, isVisible) {
@@ -213,7 +193,6 @@ function scrollToView(scrollTop) {
             <strong>目录🌻</strong>
           </div>
         </div>
-        <!-- <span class="progress">{{ progress }}</span> -->
       </div>
 
       <div class="catalog-content">
@@ -246,16 +225,13 @@ $normal_color: var(--normal_color, #216eba);
   background: $directory_list_bg;
   position: sticky;
   top: 80px;
-  // box-shadow: #5656561b 1px 1px 10px;
 
 }
 .catalog-card {
   background: transparent;
-  // border-radius: 5px;
   padding: 20px 24px;
   width: 100%;
   box-sizing: border-box;
-  // transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
 }
 

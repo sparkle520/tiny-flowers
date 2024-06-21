@@ -4,15 +4,11 @@
 
 <script setup>
 import {
-  reactive,
-  toRefs,
-  onBeforeMount,
   onUnmounted,
   onMounted,
   watch,
   ref,
 } from "vue";
-import { useRouter } from "vue-router";
 import emitter from "@/assets/config/mitt_bus.js";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
@@ -22,25 +18,11 @@ const { layout } = storeToRefs(store);
 store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
-onBeforeMount(() => {});
 onUnmounted(() => {
   emitter.off("note_data");
   document.removeEventListener("scroll", handleScroll);
 });
-const handleScroll = () => {
-  // let directory_list_main = document.querySelector("#directory_list_main")
-  // const start =
-  // directory_list_main.getBoundingClientRect().top +
-  //   window.scrollY - document.querySelector("#top_nav_main").clientHeight;
-    // if (start < window.scrollY ) {
-    //   directory_list_main.style.position = "fixed";
-    //   directory_list_main.style.top = "70px";
-    //   directory_list_main.style.right = "6.5vw";
-    // }else{
-    //   directory_list_main.style.position = "relative";
-    //   directory_list_main.style.top = "0px";
-    //   directory_list_main.style.right = "0vw";
-    // }
+const handleScroll = () => {  
     if (current_titles.value == undefined || current_titles.value == null) {
     return;
   }
@@ -161,10 +143,8 @@ function getTitles() {
     }
 
     serialNumbers[level] += 1;
-    // let serialNumber = serialNumbers.slice(0, level + 1).join(".");
 
     node.isVisible = node.parent == null;
-    // node.name = serialNumber + ". " + element.innerText; before
     node.name = element.innerText; //now
     titles.push(node);
   }
@@ -181,12 +161,7 @@ const change_theme = (current_theme) => {
   }
 };
 
-// window.addEventListener("scroll", function () {
-//   // progress.value =
-//   //   parseInt((window.scrollY / document.documentElement.scrollHeight) * 100) +
-//   //   "%";
-  
-// });
+
 
 // 设置子节点的可见性
 function setChildrenVisible(title, isVisible) {
@@ -214,7 +189,6 @@ function scrollToView(scrollTop) {
             <strong >目录🌼</strong>
           </div>
         </div>
-        <!-- <span class="progress">{{ progress }}</span> -->
       </div>
 
       <div class="catalog-content">
@@ -253,11 +227,9 @@ $directory_color: var(--directory_color, #8491a5);
 }
 .catalog-card {
   background: transparent;
-  // border-radius: 5px;
   padding: 20px 24px;
   width: 100%;
   box-sizing: border-box;
-  // transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
 }
 
@@ -322,7 +294,6 @@ $directory_color: var(--directory_color, #8491a5);
     left: -3px;
     top: 57%;
     transform: translateY(-50%) scale(.6);
-    // background: $directory_list_cover_bg;
   }
   &:hover {
     color:$directory_active_color;

@@ -15,7 +15,7 @@ export const change_theme = (current_theme) => {
     c_c("--directory_list_cover_bg", "#1e2433");
     c_c("--code_bg", "#fdfbfb");
     c_c("--pre_bg", "#123");
-    c_c("--code_color", "#4d4949");
+    c_c("--code_color", "#393e46");
 
     c_c("--h_color", "#c4c3d4");
     c_c("--blockquote_color", "#fdfbfb");
@@ -26,11 +26,11 @@ export const change_theme = (current_theme) => {
     c_c("--topic_bg", "#fdfbfb");
     c_c("--topic_content_box_shadpw", "#5656561b");
     c_c("--topic_text_linear_bg", "#b5b5f450");
-    c_c("--normal_color", "#4d4949");
+    c_c("--normal_color", "#393e46");
     c_c("--directory_list_cover_bg", "#fdfbfb");
     c_c("--code_bg", "#b399ff");
     c_c("--pre_bg", "#f6f8fa");
-    c_c("--code_color", "#b399ff");
+    c_c("--code_color", "#f6f8fa");
 
     c_c("--h_color", "#b399ff");
     c_c("--blockquote_color", "#5f526c");

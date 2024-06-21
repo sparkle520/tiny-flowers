@@ -42,7 +42,7 @@ const change_theme = (current_theme) =>{
       c_c("--finished_status_color", "#32cdcd");
       c_c("--foot_bg", "#fdfbfb");
       c_c("--img_shadow", "#d3010130");
-      c_c("--search_box_color", "#4d4949");
+      c_c("--search_box_color", "#393e46");
     }
   }
 

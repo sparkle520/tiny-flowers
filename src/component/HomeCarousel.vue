@@ -4,19 +4,13 @@
 
 <script setup>
 import {
-  reactive,
-  toRefs,
   ref,
   onUnmounted,
   onBeforeMount,
   watch,
   onMounted,
-  nextTick,
   defineProps,
 } from "vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
-onBeforeMount(() => {});
 onUnmounted(() => {
   clearInterval(cycle);
 });
@@ -43,7 +37,6 @@ const remove_rect_active = (dom_list, index) => {
 const change_position = (new_pos) => {
   position.value = new_pos;
 };
-// const current_text = ref("");
 let position = ref(0);
 watch(position, (newVal, oldVal) => {
   let item = document.querySelector(".item");
@@ -100,7 +93,6 @@ const leave_handler = ()=>{
       <div @click="change_position(width*2)" class="rect"></div>
       <div @click="change_position(width * 3)" class="rect"></div>
     </div>
-    <!-- <div class="a dyn_text" v-html="current_text"></div> -->
   </div>
 </template>
 <style lang="scss" scoped>
@@ -108,7 +100,6 @@ const leave_handler = ()=>{
   width: 720px;
   height: 226px;
   overflow: hidden;
-  // box-shadow: #e4b198 15px 16px 5px, #98cde4 -15px -16px 5px;
   border-radius: 10px;
 
   &::after {
@@ -132,7 +123,6 @@ const leave_handler = ()=>{
       width: 48px;
       height: 4px;
       transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-      // border: #ffffff70 1px solid;
       background: #ffffff55;
       border-radius: 10px;
       margin: 10px 0;
@@ -140,7 +130,6 @@ const leave_handler = ()=>{
     .rect_active {
       width: 32px;
       height: 4px;
-      // border: #0064fb51 1px solid;
       background: #fff4f4;
       border-radius: 10px;
       margin: 10px 0;
@@ -179,14 +168,5 @@ const leave_handler = ()=>{
     }
   }
 }
-// @keyframes text_out {
-//   0% {
-//     opacity: 0;
-//     transform: scale(0.3) translate(-50%, -50%);
-//   }
-//   100% {
-//     opacity: 1;
-//     transform: scale(1) translate(-50%, -50%);
-//   }
-// }
+
 </style>

@@ -4,13 +4,11 @@
 
 <script setup>
 import { reactive, toRefs, onBeforeMount, onMounted, watch } from "vue";
-import { useRouter } from "vue-router";
 import c_c from "@/assets/js/utils.js";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
 const { theme } = storeToRefs(store);
-const router = useRouter();
 store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
@@ -81,33 +79,7 @@ const site_data = [
 </script>
 <template>
   <div id="site_nav_main" class="f">
-    <!-- <div id="sky" class="absolute absolute_center">
-    <div class="bird">
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="wind"></div>
-        <div class="bird_body">
-            <div class="bird_head"></div>
-            <div class="bird_wing_left">
-                <div class="bird_wing_left_top"></div>
-            </div>
-            <div class="bird_wing_right">
-                <div class="bird_wing_right_top"></div>
-            </div>
-            <div class="bird_tail_left"></div>
-            <div class="bird_tail_right"></div>
-        </div>
-    </div>
-</div> -->
-    <!-- <img src="https://pic.imgdb.cn/item/65b0127d871b83018a75ffc4.png" class="miku  fixed absolute_center" alt=""> -->
-    <!-- <img src="https://pic.imgdb.cn/item/65afa1e5871b83018ae90cd9.png" class="flower  fixed absolute_center" alt=""> -->
+   
     <div class="site_content f f_d_c">
       <div class="site_item" v-for="item in site_data">
         <h1>{{ item.collect_name }}</h1>
@@ -135,6 +107,11 @@ $site_item_hover_color: var(--site_item_hover_color, #917979);
 
   overflow: hidden;
   color: $color;
+  @font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+font-family: 'misans';
   &::after {
     width: max(1440px,100vw);
     height: 100vh;
@@ -143,55 +120,16 @@ $site_item_hover_color: var(--site_item_hover_color, #917979);
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: 0.3;
+    opacity: 0.1;
     background: url("https://pic.imgdb.cn/item/65d765569f345e8d03dac4f9.png")
       repeat;
 
     background-size: 725px 707px;
   }
-  // -webkit-mask-image: url("/src/assets/imgs/svg/flower.svg");
-  // -webkit-mask-size: 10%;
-  // -webkit-mask-position: center;
-  // -webkit-mask-repeat: no-repeat;
-  // animation: scene-transition 4s linear forwards;
 
-  // @keyframes scene-transition {
-  //   100% {
-  //     -webkit-mask-size: 2000%;
-  //   }
-  // }
-  .miku {
-    opacity: 0.4;
-    z-index: 1;
-    width: 600px;
-    // filter:drop-shadow(10px 10px 4px rgb(52, 50, 50));
-    animation: miku 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-  .flower {
-    width: 1300px;
-    opacity: 0.4;
-    z-index: 0;
-    left: 54%;
-    top: 55%;
-    // filter:drop-shadow(10px 10px 4px rgb(52, 50, 50));
-    animation: flower 4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-  @keyframes miku {
-    0% {
-      transform: translate(-50%, -50%) scale(2);
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1);
-    }
-  }
-  @keyframes flower {
-    0% {
-      transform: translate(-50%, -50%) scale(0.4);
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1);
-    }
-  }
+ 
+  
+  
   .site_content {
     z-index: 2;
     width: 1100px;

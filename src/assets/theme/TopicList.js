@@ -22,10 +22,10 @@ const change_theme = (current_theme) =>{
       c_c("--topic_bg_color", "#fdfbfb");
       c_c("--topic_bg_top", "#fdfbfb");
       c_c("--topic_list_bg", "#e8f6f9");
-      c_c("--color", "#000000");
+      c_c("--color", "#393e46");
       c_c("--item_bg", "#ffffffc7");
       c_c("--item_shadow", "#1f2d3d26");
-      c_c("--title_color", "#4d4949");
+      c_c("--title_color", "#393e46");
       c_c("--title_af_bg", "#22113364");
       c_c("--tag_box_bg", "#e9696933");
       c_c("--tag_bg", "#e96969");

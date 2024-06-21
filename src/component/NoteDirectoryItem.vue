@@ -3,16 +3,10 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import {  ref, onBeforeMount, onMounted } from "vue";
 import { useConfigStore } from "../store/config";
-import change_theme_ from "../assets/theme/NoteDirectoryItem";
 
-import { storeToRefs } from "pinia";
-const config_store = useConfigStore();
-const { theme } = storeToRefs(config_store);
 
-const router = useRouter();
 onBeforeMount(() => {
   next_level.value = parseInt(props.level) + 1;
 });
@@ -60,7 +54,6 @@ $note_directory_item_main_hover_color: var(--note_directory_item_main_hover_colo
     }
   }
   .chapter_title {
-    font-weight: 900;
   }
 }
 </style>

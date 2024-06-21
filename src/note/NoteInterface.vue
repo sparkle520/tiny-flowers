@@ -124,4 +124,5 @@ const get_md_file = (id,index) => {
   <Utils></Utils>
 </template>
 <style lang="scss" scoped>
+
 </style>

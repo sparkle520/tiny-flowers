@@ -83,7 +83,6 @@ onMounted(() => {
   init();
 });
 const init = () => {
-  // init_book_list();
   init_re_note_book_list();
 };
 const current_page = ref(params.page);
@@ -97,22 +96,10 @@ const init_re_note_book_list = () => {
     }deg) translateZ(0)`;
     },(index+1)*200)
   
-    // setTimeout(() => {
-    //   element.style.transform = `rotate(0deg)`;
-    //   element.style.transitionDelay = `${Math.floor(Math.random()*3)}s`;
-    // }, 100);
+    
   });
 };
-// const init_book_list = () => {
-//   const book_item_list = document.querySelectorAll(".book_item");
-//   book_item_list.forEach((element) => {
-//     element.style.backgroundColor = `rgba(  ${Math.floor(
-//       Math.random() * 256
-//     )},  ${Math.floor(Math.random() * 256)},  ${Math.floor(
-//       Math.random() * 256
-//     )},.1)`;
-//   });
-// };
+
 const recommend_note_list = [
   {
     id: 3,
@@ -366,6 +353,11 @@ $search_box_color: var(--search_box_color, #4d4949);
   width: max(1440px,100vw);
   background: linear-gradient($note_bg_top, $foot_bg);
   min-height: 100vh;
+  @font-face {
+  font-family: "misans";
+  src: url("/src/assets/font/misans.ttf");
+}
+font-family: 'misans';
   ::selection {
     color: $book_name_color;
     background-color: $text_area_color;
@@ -392,12 +384,9 @@ $search_box_color: var(--search_box_color, #4d4949);
       height: 340px;
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-      // backdrop-filter: blur(6px);
       border-radius: 15px;
       -webkit-backdrop-filter: blur(6px);
-      // border: 0.727273px solid rgba(255, 255, 255, 0.18);
       box-shadow: #27262619 0px 6px 15px 0px;
-      // -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
       &::after {
         content: "";
         position: absolute;
@@ -563,7 +552,6 @@ $search_box_color: var(--search_box_color, #4d4949);
 
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       -webkit-backdrop-filter: blur(6px);
-      // border: 0.727273px solid rgba(255, 255, 255, 0.18);
       box-shadow: #27262619 0px 6px 15px 0px;
       .search_box {
         width: 550px;
@@ -627,7 +615,6 @@ $search_box_color: var(--search_box_color, #4d4949);
           border: none;
           font-size: 1.1em;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-          font-family: "miscrsoft yahei";
           box-shadow: $note_book_box_title_color 0 0 0 1px;
 
           &:hover {

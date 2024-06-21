@@ -20,17 +20,7 @@ onMounted(() => {
 
   window.scrollTo(0, 0);
 });
-//const carousel_data = ref([
-// {link:''},
-// { link: "https://pic.imgdb.cn/item/65a97eb8871b83018a6fc35c.jpg" },
-// { link: "https://pic.imgdb.cn/item/65a417d5871b83018a50a4c9.jpg" },
-// { link: "https://pic.imgdb.cn/item/65a4185f871b83018a5241a0.jpg" },
-// { link: "https://pic.imgdb.cn/item/65a616a9871b83018acf90af.jpg" },
-//   { link: "https://pic.imgdb.cn/item/65a3e576871b83018a7eeee4.jpg" },
-//   { link: "https://pic.imgdb.cn/item/65a3e577871b83018a7ef617.jpg" },
-//   { link: "https://pic.imgdb.cn/item/65a3e579871b83018a7efee6.jpg" },
-//   { link: "https://pic.imgdb.cn/item/65a3e57b871b83018a7f0821.jpg" },
-//]);
+
 const log = [
   //   {
   //     version: "1.0.0",
@@ -38,7 +28,16 @@ const log = [
   //     content: ["Features:", "Fixed:", "Changed:", "Refactored:", "Removed:"],
   //   },
   {
-    version: "1.0.0 (测试)",
+    version: "1.1.0",
+    date: "2024-06-21",
+    content: [
+      "1. 移除本地音乐播放功能",
+      "2. 修改导航栏样式",
+      "3. 修复若干BUG",
+    ],
+  },
+  {
+    version: "1.0.0",
     date: "2024-06-18",
     content: [
       "1. 优化UI和交互体验",
@@ -47,13 +46,6 @@ const log = [
     ],
   },
 ];
-
-
-
-// const particlesInit = async engine => {
-//     //await loadFull(engine);
-//     await loadSlim(engine);
-// };
 
 
 
@@ -68,7 +60,6 @@ const log = [
       class="absolute_center fixed w_w_y"
       alt=""
     />
-    <!-- <Carousel :data="carousel_data" class="carousel"></Carousel> -->
     <div class="content f margin_0_auto f_d_c">
       <div class="margin_0_auto">
         <span class="striking_title_orange margin_0_auto r"
@@ -105,6 +96,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
   li{
   list-style: none;
   padding: 0 0;
+  margin-bottom: 16px;
 }
   .w_w_y {
     width: 450px;
