@@ -4,7 +4,6 @@
 
 <script setup>
 import { reactive, toRefs, onBeforeMount, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { useUserStore } from "/src/store/user.js";
 import { useTopicStore } from "/src/store/topic.js";
 import { useNoteStore } from "/src/store/note.js";
@@ -15,7 +14,6 @@ const config_store = useConfigStore();
 const user_store = useUserStore();
 const topic_store = useTopicStore();
 const note_store = useNoteStore();
-const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   change_theme(config_store.theme);

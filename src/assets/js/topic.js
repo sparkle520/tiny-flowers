@@ -92,7 +92,7 @@ export const options = {
   interactivity: {
     events: {
       onClick: {
-        enable: true,
+        enable: false,
         mode: 'push',
       },
       onHover: {
@@ -141,7 +141,7 @@ export const options = {
         enable: true,
         area: 800,
       },
-      value: 80,
+      value: 30,
     },
     opacity: {
       value: 0.5,

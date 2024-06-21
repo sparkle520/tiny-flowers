@@ -13,7 +13,6 @@ clickEffect();
     <TopNavBar  class="nav"></TopNavBar>
     <div v-if="!$route.meta.screenFull" class="park"></div>
     <router-view :key="$route.fullPath" class="router_view"></router-view>
-    <MusicPlayer class="music_player a"></MusicPlayer>
   </div>
 </template>
 
@@ -37,16 +36,6 @@ $bg_color: var(--bg_color, #fdfbfb);
     background: transparent;
   }
  
-  .music_player {
-    width: 400px;
-    right: 0;
-    top: 100px;
-    height: 150px;
-    z-index: 1000000000;
-    position: fixed;
-    transform: translateX(100%);
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-  }
 }
 
 </style>

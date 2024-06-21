@@ -14,51 +14,57 @@ import { useConfigStore } from "../store/config";
 const config_store = useConfigStore();
 const user_store = useUserStore();
 const topic_store = useTopicStore();
-onBeforeMount(() => {});
+onBeforeMount(() => {
+  props.value = topic_store.data[topic_store.current_topic_index]
+});
 onUnmounted(() => {
-  emitter.off("topic_data");
 });
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
+topic_store.$subscribe((mutation, state) => {
+});
+const props =ref({
+  id: 2,
+  title: '未知错误',
+  link: '未知错误',
+  create_date: '未知错误',
+  img: 'https://pic.imgdb.cn/item/66746ba6d9c307b7e9af3651.png',
+  author: '',
+  tags: '未知错误',
+  classification: '未知错误',
+  short_message: '未知错误',
+  update_date: '未知错误',
+  is_visible: true
+})
 const data = ref();
 const link_pre = "https://sparkle520.github.io/TinyFlowers/#";
 onMounted(() => {
   change_theme(config_store.theme);
 
-  emitter.on("topic_data", (_data) => {
-    data.value = _data;
     const topic_author = document.querySelector(".topic_author");
     const topic_link = document.querySelector(".topic_link");
     if (
-      data.value.topic_data.author == undefined ||
-      data.value.topic_data.author == ""
+      props.value.author == ""
     ) {
       topic_author.innerHTML = user_store.name;
     } else {
-      topic_author.innerHTML = `${data.value.topic_data.author}`;
+      topic_author.innerHTML = `${props.value.author}`;
     }
-    if (
-      data.value.topic_data.link == undefined ||
-      data.value.topic_data.link == ""
-    ) {
-      topic_link.innerHTML = "未知错误";
-    } else {
-      topic_link.innerHTML = `${link_pre}${data.value.topic_data.link}`;
-    }
+      topic_link.innerHTML = `${link_pre}${props.value.link}`;
+    
     let gitalk = new Gitalk({
       clientID: "429076372c73a03552c6",
       clientSecret: "e10cf1b42cb0daf8cda1857f8f9a4ab411c4c91e",
       repo: "TinyFlowersComment",
       owner: "sparkle520",
       admin: ["sparkle520"],
-      id: data.value.topic_data.link, // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败
+      id: props.value.link, // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败
       language: "zh-CN",
       distractionFreeMode: false, // 专注模式
       proxy: "https://strong-caramel-969805.netlify.app/github_access_token",
     });
     gitalk.render("gitalk-container");
-  });
 });
 const change_theme = (current_theme) => {
   if (current_theme) {

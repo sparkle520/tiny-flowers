@@ -133,13 +133,8 @@ const link_to = (path) => {
 const go_github = () => {
   window.location.href = "https://github.com/sparkle520";
 };
-const active_music = () => {
-  music_active.value = !music_active.value;
-};
-const music_active = ref(false);
-watch(music_active, (newV, oldV) => {
-  emits("music_change", newV);
-});
+
+
 const current_theme = ref(false);
 const theme_change = () => {
   store.theme = !current_theme.value;

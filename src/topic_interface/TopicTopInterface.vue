@@ -3,144 +3,92 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, ref, onBeforeMount, onMounted, nextTick ,onUnmounted} from "vue";
-import { useRouter } from "vue-router";
-import emitter from "@/assets/config/mitt_bus.js";
+import {  ref, onBeforeMount, onMounted, nextTick ,onUnmounted, watch} from "vue";
+import { useTopicStore } from "../store/topic";
+const topic_store = useTopicStore();
 
-const router = useRouter();
-onBeforeMount(() => {});
-const data = ref();
+
+onBeforeMount(() => {
+  props.value = topic_store.data[topic_store.current_topic_index]
+});
 onUnmounted(()=>{
-    emitter.off("topic_data")
 })
 onMounted(() => {
-  emitter.on("topic_data", (_data) => {
-    data.value = _data;
-    const topic_top_main = document.querySelector("#topic_top_main");
-    const topic_title = document.querySelector(".topic_title");
-    const topic_create_date = document.querySelector(".topic_create_date");
-    const topic_update_date = document.querySelector(".topic_update_date");
-    const topic_time = document.querySelector(".topic_time");
-    const img_list = document.querySelectorAll(".topic_content img");
-    const topic_classification = document.querySelector(
-      ".topic_classification"
-    );
-    const topic_tag_box = document.querySelector(".topic_tag_box");
-    if (
-      data.value.topic_data.img == undefined ||
-      data.value.topic_data.img == ""
-    ) {
-        topic_top_main.style.backgroundImage = `url(https://pic.imgdb.cn/item/65a3e060871b83018a64b716.jpg)`;
-    } else {
-        topic_top_main.style.backgroundImage = `url(${data.value.topic_data.img})`;
-    }
-    if (
-      data.value.topic_data.title == undefined ||
-      data.value.topic_data.title == ""
-    ) {
-      topic_title.innerHTML = `未知错误`;
-    } else {
-      topic_title.innerHTML = data.value.topic_data.title;
-    }
-    if (
-      data.value.topic_data.create_date == undefined ||
-      data.value.topic_data.create_date == ""
-    ) {
-      topic_create_date.innerHTML = ''
-      topic_create_date.innerHTML = `未知错误`;
-    } else {
-      topic_create_date.innerHTML = ''
-      topic_create_date.innerHTML += `发表于${data.value.topic_data.create_date.split("?")[0]}-${
-        data.value.topic_data.create_date.split("?")[1]
-      }-${data.value.topic_data.create_date.split("?")[2]}`;
-    }
-    if (
-      data.value.topic_data.update_date == undefined ||
-      data.value.topic_data.update_date == ""
-    ) {
-      topic_update_date.style.display = "none";
-    } else {
-      topic_update_date.style.display = "block";
-      topic_update_date.innerHTML = ''
-      topic_update_date.innerHTML += `更新于${data.value.topic_data.create_date.split("?")[0]}-${
-        data.value.topic_data.create_date.split("?")[1]
-      }-${data.value.topic_data.create_date.split("?")[2]}`;
-    }
-    if (
-      data.value.topic_data.create_date == undefined ||
-      data.value.topic_data.create_date == ""
-    ) {
-        topic_time.innerHTML = ''
-      topic_time.innerHTML = `未知错误`;
-    } else {
-        topic_time.innerHTML  = ''
-      topic_time.innerHTML += `${data.value.topic_data.create_date.split("?")[3]}`;
-    }
-    if (
-      data.value.topic_data.classification == undefined ||
-      data.value.topic_data.classification == ""
-    ) {
-        topic_classification.innerHTML = ''
-      topic_classification.innerHTML = `未知错误`;
-    } else {
-        topic_classification.innerHTML = ''
-      topic_classification.innerHTML += `${data.value.topic_data.classification}`;
-    }
-    if (
-      data.value.topic_data.tags == undefined ||
-      data.value.topic_data.tags == ""
-    ) {
-        topic_tag_box.innerHTML = ''
-      topic_tag_box.innerHTML = `未知错误`;
-    } else {
-        topic_tag_box.innerHTML = ''
-      data.value.topic_data.tags.split("?").forEach((element) => {
-        topic_tag_box.innerHTML += `<span style=" font-size: 1em;
-      background: rgb(  ${Math.floor(Math.random() * 256)},  ${Math.floor(
-          Math.random() * 256
-        )},  ${Math.floor(Math.random() * 256)});
-      padding: 5px 6px;
-      border-radius: 5px;
-    ">#${element}</span>`;
-      });
-    }
-  });
+  
 });
+const props =ref({
+  id: 2,
+  title: '未知错误',
+  link: '未知错误',
+  create_date: '未知错误',
+  img: 'https://pic.imgdb.cn/item/66746ba6d9c307b7e9af3651.png',
+  author: '',
+  tags: '未知错误',
+  classification: '未知错误',
+  short_message: '未知错误',
+  update_date: '未知错误',
+  is_visible: true
+})
 </script>
 <template>
   <div
     id="topic_top_main"
     class="r f a_c j_c_c"
   >
+  <img  :src="props.img" class="a t_t_img" alt="">
+  <!-- <div class="topic_title r" v-html="props.title"></div> -->
+
     <div class="f f_d_c topic_info_box a_c j_c_c">
-      <span class="topic_title"></span>
-      <div class="f f_d_r">
+      <!-- <div class="f f_d_r">
         <div class="topic_create_date"></div>
         <div class="topic_update_date"></div>
         <div class="topic_visit">访问<span id="busuanzi_value_site_pv"></span></div>
         <span class="topic_time"></span>
         <span class="topic_classification"></span>
-      </div>
-      <div
+      </div> -->
+      <!-- <div
         class="topic_tag_box f f_d_r j_c_c"
-      ></div>
+      ></div> -->
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
-  $normal_color: var(--normal_color, #0f1828);
+  // $normal_color: var(--normal_color, #0f1828);
 
 #topic_top_main {
-  width: 80vw;
+  width: 1100px;
   margin: 0 auto;
-   height: 40vh;
+   height: 378px;
   border-radius: 10px;
-  background-size: cover;
-  background-repeat: no-repeat;
   margin-top: 90px;
-  background-position: center center;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  box-shadow:1px 2px 5px #5656561b;
+
+  .t_t_img{
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+  .topic_title{
+    font-size: 48px;
+    font-weight: 900;
+    padding: 16px 32px;
+    z-index: 10;
+    &::before{
+      content: '';
+      top: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      // background: rgb(231, 228, 228);
+      border-radius: 10px;
+      filter: blur(20px);
+    }
+  }
   @keyframes topic_top_bg {
     0% {
       opacity: 0;
@@ -149,72 +97,72 @@ onMounted(() => {
       opacity: 1;
     }
   }
-  .topic_info_box {
-    width: 86vw;
-    height: 40vh;
-    word-wrap: break-word;
-    animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-    z-index: 1;
-    color: #ffff;
+//   .topic_info_box {
+//     width: 1000px;
+//     height: 378px;
+//     word-wrap: break-word;
+//     animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+//     z-index: 1;
+//     color: #ffff;
 
-    .topic_title {
-      max-width: 80vw;
-      line-height: 1em;
-      text-align: center;
-      margin-top: 15vh;
-      font-size: 3em;
-      color: #ffffff;
-      text-shadow: #0f1828 2px 10px 10px;
-      width: 86vw;
-    }
-    .topic_create_date {
-      margin: 16px 0;
-      font-size: 1em;
-      background: #7b68ee;
-      padding: 5px 6px;
-      border-radius: 5px;
-      margin-right: 0.4vw;
-    }
-    .topic_update_date{
-      margin-top: 16px 0;
-      font-size: 1em;
+//     .topic_title {
+//       max-width: 900px;
+//       line-height: 1em;
+//       text-align: center;
+//       margin-top: 100px;
+//       font-size: 3em;
+//       color: #ffffff;
+//       text-shadow: #0f1828 2px 10px 10px;
+//       width: 86vw;
+//     }
+//     .topic_create_date {
+//       margin: 16px 0;
+//       font-size: 1em;
+//       background: #7b68ee;
+//       padding: 5px 6px;
+//       border-radius: 5px;
+//       margin-right: 0.4vw;
+//     }
+//     .topic_update_date{
+//       margin-top: 16px 0;
+//       font-size: 1em;
       
-      background: #12710d;
-      padding: 5px 6px;
-      border-radius: 5px;
-      margin-right: 0.4vw;
-    }
-    .topic_visit{
-      margin: 16px 0;
-      font-size: 1em;
-      background: #973011;
-      padding: 5px 6px;
-      border-radius: 5px;
-      margin-right: 0.4vw;
-    }
-    .topic_time {
-      margin: 16px 0;
-      font-size: 1em;
-      background: #993255;
-      padding: 5px 6px;
-      margin-right: 0.4vw;
-      border-radius: 5px;
-    }
-    .topic_classification {
-      margin: 16px 0;
-      font-size: 1em;
-      background: #ff6b00;
-      padding: 5px 6px;
-      border-radius: 5px;
-    }
-    .topic_tag_box {
-      width: 60vw;
-      margin-top: auto;
-      margin-bottom: 16px;
-      overflow: scroll;
-      flex-wrap: wrap;
-      gap: 0.4vw;
-          }
-  }
-}
+//       background: #12710d;
+//       padding: 5px 6px;
+//       border-radius: 5px;
+//       margin-right: 0.4vw;
+//     }
+//     .topic_visit{
+//       margin: 16px 0;
+//       font-size: 1em;
+//       background: #973011;
+//       padding: 5px 6px;
+//       border-radius: 5px;
+//       margin-right: 0.4vw;
+//     }
+//     .topic_time {
+//       margin: 16px 0;
+//       font-size: 1em;
+//       background: #993255;
+//       padding: 5px 6px;
+//       margin-right: 0.4vw;
+//       border-radius: 5px;
+//     }
+//     .topic_classification {
+//       margin: 16px 0;
+//       font-size: 1em;
+//       background: #ff6b00;
+//       padding: 5px 6px;
+//       border-radius: 5px;
+//     }
+//     .topic_tag_box {
+//       width: 600px;
+//       margin-top: auto;
+//       margin-bottom: 16px;
+//       overflow: scroll;
+//       flex-wrap: wrap;
+//       gap: 16px;
+//           }
+//   }
+ }
 </style>

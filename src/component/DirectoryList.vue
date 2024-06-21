@@ -20,9 +20,9 @@ const { layout } = storeToRefs(store);
 store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
+
 onBeforeMount(() => {});
 onUnmounted(() => {
-  emitter.off("topic_data");
   document.removeEventListener("scroll", handleScroll);
 });
 const handleScroll = () => {
@@ -59,22 +59,22 @@ const handleScroll = () => {
 };
 onMounted(() => {
   change_theme(theme.value);
-  emitter.on("topic_data", () => titles_list_handle());
   document.addEventListener("scroll", handleScroll);
-
+  setTimeout(()=>{
+    titles_list_handle()
+    let observe = new MutationObserver(m=>{
+    titles_list_handle()
+  })
+  let m_b = document.querySelector(".markdown-body");
+  observe.observe(m_b,{subtree:false,attributeFilter:['height']})
+  },2000)
+  
 });
 const titles_list_handle = () => {
   current_titles.value = getTitles();
 };
 
 const current_titles = ref([]);
-watch(current_titles, (newVal) => {
-  if(newVal.length>0){
-    document.querySelector('#directory_list_main').style.display = 'block';
-  }else{
-    document.querySelector('#directory_list_main').style.display = 'none';
-  }
-});
 let currentTitle = ref({});
 // 获取目录的标题
 function getTitles() {

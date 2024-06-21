@@ -957,7 +957,8 @@ $layout_hover: var(--layout_hover, #f3acac);
       .topic_grid_inner_box {
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         width: 100%;
-        gap: 2%;
+        gap: 16px;
+
       }
       .topic_item_grid {
         width: 32%;
@@ -1031,7 +1032,7 @@ $layout_hover: var(--layout_hover, #f3acac);
             margin-top: auto;
             gap: 0;
             height: 30px;
-            overflow: scroll;
+            overflow: hidden;
 
             .tag_item {
               font-size: 1em;

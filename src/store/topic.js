@@ -57,6 +57,7 @@ export const useTopicStore = defineStore('topic', {
 
         current_data: [],
         mems: new Set(),
+        current_topic_index:-1,
     }),
     actions: {
         length() {

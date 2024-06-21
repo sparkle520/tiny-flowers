@@ -21,7 +21,6 @@ const user_store = useUserStore();
 const topic_store = useTopicStore();
 onBeforeMount(() => {});
 onUnmounted(() => {
-  emitter.off("note_data");
 });
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
