@@ -6,10 +6,8 @@
 import {
   onUnmounted,
   onMounted,
-  watch,
   ref,
 } from "vue";
-import emitter from "@/assets/config/mitt_bus.js";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
@@ -19,7 +17,6 @@ store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
 onUnmounted(() => {
-  emitter.off("note_data");
   document.removeEventListener("scroll", handleScroll);
 });
 const handleScroll = () => {  
@@ -58,22 +55,22 @@ const handleScroll = () => {
 };
 onMounted(() => {
   change_theme(theme.value);
-  emitter.on("note_data", () => titles_list_handle());
   document.addEventListener("scroll", handleScroll);
-
+  setTimeout(()=>{
+    titles_list_handle()
+    let observe = new MutationObserver(m=>{
+    titles_list_handle()
+  })
+  let m_b = document.querySelector(".markdown-body");
+  observe.observe(m_b,{subtree:false,attributeFilter:['height']})
+  },2000)
 });
 const titles_list_handle = () => {
   current_titles.value = getTitles();
 };
 
 const current_titles = ref([]);
-watch(current_titles, (newVal) => {
-  if(newVal.length>0){
-    document.querySelector('#directory_list_main').style.display = 'block';
-  }else{
-    document.querySelector('#directory_list_main').style.display = 'none';
-  }
-});
+
 let currentTitle = ref({});
 // 获取目录的标题
 function getTitles() {
@@ -223,7 +220,15 @@ $directory_color: var(--directory_color, #8491a5);
   position: sticky;
   top: 80px;
   border-radius: 5px;
-
+  scrollbar-width: thin;
+    *::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+    background: hsl(0deg 0% 90%);
+    border-radius: 3px;
+}
 }
 .catalog-card {
   background: transparent;

@@ -37,7 +37,6 @@ const props =ref({
   update_date: '未知错误',
   is_visible: true
 })
-const data = ref();
 const link_pre = "https://sparkle520.github.io/TinyFlowers/#";
 onMounted(() => {
   change_theme(config_store.theme);

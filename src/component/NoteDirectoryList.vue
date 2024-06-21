@@ -62,7 +62,7 @@ font-family: 'misans';
   .Note_inner_directory_box {
     column-count: 3;
     width: 860px;
-   
+   font-weight: 900;
     column-gap: 8px;
   }
 }

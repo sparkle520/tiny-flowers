@@ -3,30 +3,28 @@
 <!-- @Description:  -->
 
 <script setup>
-import { onBeforeMount, ref, onMounted, nextTick, onUnmounted } from "vue";
-import { useUserStore } from "/src/store/user.js";
-import { useTopicStore } from "/src/store/topic.js";
+import { onBeforeMount, ref, onMounted, onUnmounted } from "vue";
+import { useNoteStore } from "/src/store/note.js";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 
 import c_c from "@/assets/js/utils.js";
-import emitter from "@/assets/config/mitt_bus.js";
 import Gitalk from "gitalk";
 const { params } = useRoute();
 const router = useRouter();
 
 import { useConfigStore } from "../store/config";
 const config_store = useConfigStore();
-const user_store = useUserStore();
-const topic_store = useTopicStore();
-onBeforeMount(() => {});
+const note_store = useNoteStore();
+const data = ref({});
+onBeforeMount(() => {
+  data.value = note_store.get_note_by_id(params.id)
+});
 onUnmounted(() => {
 });
 config_store.$subscribe((mutation, state) => {
   change_theme(state.theme);
 });
-const data = ref();
-const link_pre = "https://sparkle520.github.io/TinyFlowers/#";
 const pre = ref();
 const next = ref();
 const init_pre_next = () => {
@@ -45,8 +43,6 @@ const init_pre_next = () => {
 onMounted(() => {
   change_theme(config_store.theme);
 
-  emitter.on("note_data", (_data) => {
-    data.value = _data;
     init_pre_next();
     let gitalk = new Gitalk({
       clientID: "429076372c73a03552c6",
@@ -60,7 +56,6 @@ onMounted(() => {
       proxy: "https://strong-caramel-969805.netlify.app/github_access_token",
     });
     gitalk.render("gitalk-container");
-  });
 });
 const change_theme = (current_theme) => {
   if (current_theme) {
