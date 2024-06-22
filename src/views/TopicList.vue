@@ -38,7 +38,21 @@ onBeforeMount(() => {});
 onMounted(() => {
   init();
   document.addEventListener("click", click_handle);
+  document.addEventListener("scroll", scroll_handle);
+
 });
+const r_o_a_i = (d)=>{
+  if(d.classList.contains('fade_out')){
+    d.classList.remove('fade_out')
+    d.classList.add('fade_in')
+  }
+}
+const r_i_a_o = (d)=>{
+  if(d.classList.contains('fade_in')){
+    d.classList.remove('fade_in')
+    d.classList.add('fade_out')
+  }
+}
 const change_list_layout = (v) => {
   const layout_list = document.querySelectorAll(".layout");
   const topic_grid_box = document.querySelector(".topic_grid_box");
@@ -65,14 +79,8 @@ const init = () => {
   change_layout(layout.value);
   change_theme(theme.value);
   change_list_layout(list_layout.value);
-  item_list = Array.from(document.querySelectorAll(".topic_item"));
-  document.addEventListener("scroll", scroll_handle);
   scroll_handle();
   run_time(birthday_date);
-};
-let item_list = [];
-const side_view_handle = (v) => {
-  change_layout(v.current_side_view);
 };
 const change_layout = (flag) => {
   const topic_box = document.querySelector(".topic_box");
@@ -88,23 +96,21 @@ const change_layout = (flag) => {
     topic_grid_inner_box.style.width = "1100px";
   }
 };
-
+let item_list;
 const scroll_handle = () => {
+  if(item_list == null){
+      item_list = document.querySelectorAll(".topic_item")
+  }
   for (let i = 0; i < item_list.length; i++) {
-    let elem = item_list[i];
-    if (elem.offsetTop - window.innerHeight <= window.scrollY) {
-      elem.style.opacity = "1";
-      elem.classList.add("item_animation");
+    if ( window.scrollY >=
+    item_list[i].offsetTop - window.innerHeight / 1.2) {
+      r_o_a_i(item_list[i])
+    }else{
+      r_i_a_o(item_list[i])
     }
   }
 };
-const remove_all_animation = () => {
-  for (let i = 0; i < item_list.length; i++) {
-    let elem = item_list[i];
-    elem.style.opacity = "0";
-    elem.classList.remove("item_animation");
-  }
-};
+
 onUnmounted(() => {
   document.removeEventListener("scroll", scroll_handle);
   clearInterval(interval_run_time);
@@ -124,14 +130,9 @@ const page_data = ref({
 });
 const init_data = () => {
   topic_store.select_all_from_classification(params.classification);
-  remove_all_animation();
   current_data.value = topic_store.current_data;
   data_handle(current_data.value, params.page);
-  nextTick(() => {
-    item_list = Array.from(document.querySelectorAll(".topic_item"));
-    document.addEventListener("scroll", scroll_handle);
-    scroll_handle();
-  });
+  
 };
 
 const data_handle = (array, page_num) => {
@@ -396,7 +397,7 @@ const search_focus_handle = () => {
           v-for="(item, ) in current_data"
           :key="item"
 
-          class="topic_item f f_d_c r"
+          class="topic_item  fade_out f f_d_c r"
         >
           <div class="item_inner_box f f_d_r">
             <img
@@ -444,7 +445,7 @@ const search_focus_handle = () => {
               @click="jump_to_topic(item.link)"
               v-for="item in current_data"
               :key="item"
-              class="topic_item_grid r"
+              class="topic_item_grid  r"
             >
               <div class="img_box r">
                 <img v-if="item.img != ''" :src="item.img" alt="" />
@@ -871,15 +872,12 @@ $layout_hover: var(--layout_hover, #f3acac);
       width: 100%;
       height: 200px;
       background: $item_bg;
-      transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       margin: 0 0 16px 0;
-      opacity: 0;
       border-radius: 10px;
       box-shadow: 0px 13px 15px $item_shadow;
       overflow-y: hidden;
-      &:active {
-        animation: jelly 0.5s;
-      }
+     
       &:hover {
         transform: translateY(-8px);
         box-shadow: 0 3px 5px #1f2d3d33;
@@ -1246,20 +1244,6 @@ $layout_hover: var(--layout_hover, #f3acac);
     transform: translateX(0px) scale(1);
   }
 }
-@keyframes jelly {
-  0%,
-  100% {
-    transform: scale(1, 1);
-  }
-
-  33% {
-    transform: scale(0.9, 1.1);
-  }
-
-  66% {
-    transform: scale(1.1, 0.9);
-  }
-}
 @keyframes fade_in {
   0% {
     transform: translateY(100px);
@@ -1277,5 +1261,12 @@ $layout_hover: var(--layout_hover, #f3acac);
     transform: scale(1);
   }
 }
-
+.fade_in{
+  opacity: 1;
+  transform: translate(0);
+}
+.fade_out{
+  opacity: 0;
+  transform: translateY(48px);
+}
 </style>

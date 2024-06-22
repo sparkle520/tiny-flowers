@@ -390,8 +390,6 @@ const init_data = () => {
     </div>
 </template>
 <style lang="scss" scoped>
-@import url("/src/assets/css/math.scss");
-
 $math_bg_color: var(--math_bg_color, #fdfbfb);
 $math_bg_opacity: var(--math_bg_opacity, 1);
 $math_bg_top: var(--math_bg_top, #fdfbfb);
@@ -443,9 +441,11 @@ font-family: 'misans';
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: 0.05;
-    background: url("https://pic.imgdb.cn/item/65dc38fc9f345e8d03e7728a.png")
-      repeat;
+    opacity: .4;
+  background-image: radial-gradient(circle, rgb(203 213 225) 2px, transparent 2px);
+  background-size: 20px 20px;
+  background-position: center center;
+
   }
   
 

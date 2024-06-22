@@ -25,7 +25,7 @@ const change_theme = (current_theme) => {
       c_c("--subject_name_color", "#ffff");
       c_c("--content_item_box_hover", "#1e2433");
       c_c("--content_tag_item_bg", "#8c66cb");
-      c_c("--content_item_box_color", "#242b3dc7");
+      c_c("--content_item_box_color", "#242b3d");
       c_c("--normal_color", "#ffff");
     } else {
       c_c("--math_bg_color", "#fdfbfb");

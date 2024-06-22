@@ -24,6 +24,7 @@ store.$subscribe((mutation, state) => {
 onBeforeMount(() => {});
 onUnmounted(() => {
   document.removeEventListener("scroll", handleScroll);
+  observe.disconnect()
 });
 const handleScroll = () => {
   
@@ -57,12 +58,13 @@ const handleScroll = () => {
     }
   }
 };
+let observe = null
 onMounted(() => {
   change_theme(theme.value);
   document.addEventListener("scroll", handleScroll);
   setTimeout(()=>{
     titles_list_handle()
-    let observe = new MutationObserver(m=>{
+    observe = new MutationObserver(m=>{
     titles_list_handle()
   })
   let m_b = document.querySelector(".markdown-body");

@@ -90,7 +90,9 @@ const change_theme = (current_theme) => {
     c_c("--rect_item_color", "#393e46");
   }
 };
-
+let new_fade_item_list = null
+let recommend_fade_item_list = null
+let re_note_item = null
 const go_to_next_page = () => {
   window.scrollTo({ top: window.innerHeight - 80, behavior: "smooth" });
 };
@@ -98,18 +100,28 @@ const page_two_handle = () => {
   let scroll_y = window.scrollY;
   let page_2_header = document.querySelector(".page_2_header");
   let page_2_nav_item = document.querySelectorAll(".page_2_nav_item");
-  let re_note_item = document.querySelectorAll(".re_note_item");
   let home_nav_item = document.querySelectorAll(".home_nav_item");
   let home_carousel = document.querySelector(".page_content .home_carousel");
   let rect_list = document.querySelectorAll(
     ".page_top_box .rect_box .rect_item"
   );
-  let recommend_fade_item_list = document.querySelectorAll(
+  if(re_note_item == null){
+    re_note_item = document.querySelectorAll(
+    ".re_note_item"
+  );
+  }
+  if(recommend_fade_item_list == null){
+     recommend_fade_item_list = document.querySelectorAll(
     ".re_item"
   );
-  let new_fade_item_list = document.querySelectorAll(
+  }
+  
+  if(new_fade_item_list == null){
+    new_fade_item_list = document.querySelectorAll(
     ".new_item_box .fade_item"
   );
+  }
+  
   if (
     scroll_y >=
     window.innerHeight + page_2_header.offsetTop - window.innerHeight / 1.2
