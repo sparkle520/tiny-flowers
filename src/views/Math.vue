@@ -16,11 +16,9 @@ import "/src/assets/css/markdown.scss";
 import MathLeftNavBar from "../component/MathLeftNavBar.vue";
 import MathJax, { initMathJax, renderByMathjax } from "mathjax-vue3";
 import { marked, parse } from "marked";
-import change_theme from "../assets/theme/Math";
 import { storeToRefs } from "pinia";
 const config_store = useConfigStore();
 const user_store = useUserStore();
-const { theme } = storeToRefs(config_store);
 const { params } = useRoute();
 const search_text = ref("");
 const route = useRoute();
@@ -81,9 +79,6 @@ const init_content =  () => {
   }
 };
 
-config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
 onBeforeMount(() => {
   tags_list.value = math_store.get_tags();
 });
@@ -91,7 +86,6 @@ onUnmounted(() => {
   document.removeEventListener("click", click_handle);
 });
 onMounted(() => {
-  change_theme(theme.value);
   init_data();
   window.scrollTo(0, 0);
   document.addEventListener("click", click_handle);
@@ -390,24 +384,6 @@ const init_data = () => {
     </div>
 </template>
 <style lang="scss" scoped>
-$math_bg_color: var(--math_bg_color, #fdfbfb);
-$math_bg_opacity: var(--math_bg_opacity, 1);
-$math_bg_top: var(--math_bg_top, #fdfbfb);
-$math_li_bg: var(--math_li_bg, #f5f1ec);
-$math_li_color: var(--math_li_color, #fdffff);
-$math_com_box_bg: var(--math_com_box_bg, #ffff);
-$math_com_box_shadow: var(--math_com_box_shadow, #d0cfcf45);
-$condition_box: var(--condition_box, #464879);
-$tag_sure_btn_color: var(--tag_sure_btn_color, #3cd500);
-$tag_sure_btn_bg: var(--tag_sure_btn_bg, #f4fff9);
-$math_color: var(--math_color, #282525);
-$subject_hover_name_color: var(--subject_hover_name_color, #002661);
-$subject_name_color: var(--subject_name_color, #806262);
-$content_item_box_hover: var(--content_item_box_hover, #d9c9c3);
-$content_tag_item_bg: var(--content_tag_item_bg, #6235a1);
-$content_tag_item_color: var(--content_tag_item_color, #d9c9c3);
-$content_item_box_color: var(--content_item_box_color, #fbfdfd);
-$normal_color: var(--normal_color, #fbfdfd);
 $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
 ::-webkit-scrollbar {
   width: 0 !important;
@@ -421,12 +397,12 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
 #math_main {
   width: max(1440px,100vw);
   min-height: 100vh;
-  color: $math_color;
-  background: $math_bg_color;
+  color: $text;
+  background: $fill_body;
   &::before{
     width: 100vw;
     height: 100vh;
-    background: $math_bg_color;
+    background: $fill_body;
     content: '';
     position: fixed;
   }
@@ -448,7 +424,7 @@ font-family: 'misans';
     position: fixed;
     z-index: 0;
     opacity: .4;
-  background-image: radial-gradient(circle, #9966ff99 2px, transparent 2px);
+  background-image: radial-gradient(circle, $primary_mix_3 2px, transparent 2px);
   background-size: 20px 20px;
   background-position: center center;
 
@@ -458,24 +434,25 @@ font-family: 'misans';
   .select_tag {
     width: 968px;
     justify-items: flex-start;
-    border-top: $condition_box 2px solid;
+    border-top: $primary_mix_4 2px solid;
     padding-top: 16px;
+    color: $primary;
     .show_all_tag {
       right: 0;
       user-select: none;
       font-size: 14px;
       height: 40px;
       border-radius: 15px;
-      color: $subject_name_color;
+      color: $primary;
       padding: 0 8px;
-      background: linear-gradient(90deg, transparent 0%, $math_com_box_bg 10%);
+      background: linear-gradient(90deg, transparent 0%, $fill 10%);
       z-index: 11;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     }
     .close_all_tag {
       width: 100%;
       user-select: none;
-      color: $subject_name_color;
+      color: $primary;
       font-size: 14px;
       justify-content: flex-end;
       svg {
@@ -496,19 +473,19 @@ font-family: 'misans';
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       li {
         user-select: none;
-        background: $math_li_bg;
+        background: $primary_mix_3;
         padding: 10px;
         font-weight: 900;
         border-radius: 10px;
-        color: $math_li_color;
+        color: $fill_primary;
         transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
         .count {
           font-size: 12px;
           font-weight: 400;
         }
         &:hover {
-          background: $math_li_color;
-          color: $math_li_bg;
+          background: $fill_primary;
+          color: $primary_mix_3;
         }
       }
     }
@@ -516,8 +493,8 @@ font-family: 'misans';
 
   .com_box {
     border-radius: 10px;
-    box-shadow: #2825250c 0px 0px 20px;
-    background: $math_com_box_bg;
+    box-shadow: $fill_shadow 0px 0px 20px;
+    background: $fill;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     .top_top_box {
@@ -525,7 +502,7 @@ font-family: 'misans';
       height: 38px;
       margin: 0 0;
       font-weight: 600;
-      color: $condition_box;
+      color: $primary;
       padding: 16px;
 
       .search_box {
@@ -536,25 +513,25 @@ font-family: 'misans';
           height: 36px;
 
           width: 500px;
-          color: $subject_name_color;
+          color: $primary;
           background: transparent;
           border: none;
           font-size: 1.2em;
           padding-left: 20px;
           border-radius: 10px;
-          box-shadow: $condition_box 0 0 0 1px;
+          box-shadow: $primary 0 0 0 1px;
 
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           &:focus {
-            box-shadow: $condition_box 0px 4px 5px;
+            box-shadow: $primary 0px 4px 5px;
 
             outline: none;
           }
           &:hover {
-            box-shadow: $condition_box 0px 4px 5px;
+            box-shadow: $primary 0px 4px 5px;
           }
           &::placeholder {
-            color: rgb(138, 148, 148);
+            color: $text_placeholder;
             font-size: 0.9em;
           }
         }
@@ -565,33 +542,33 @@ font-family: 'misans';
           transform: rotate(10deg) translateZ(0);
           svg {
             path:nth-child(1) {
-              fill: $subject_hover_name_color;
+              fill: $primary_mix_6;
             }
             path:nth-child(2) {
-              fill: $subject_hover_name_color;
+              fill: $primary;
             }
             path:nth-child(3) {
-              fill: $condition_box;
+              fill: $primary;
             }
             path:nth-child(4) {
-              fill: $subject_hover_name_color;
+              fill: $primary_mix_2;
             }
           }
         }
         .filter_search_box {
           width: 100%;
           max-height: 30vh;
-          background: $math_com_box_bg;
+          background: $fill;
           bottom: 0;
           z-index: 10000;
           transform: translateY(120%);
-          box-shadow: #8787872f 2px 3px 10px;
+          box-shadow: $fill_shadow 2px 3px 10px;
           border-radius: 10px;
           overflow-y: scroll;
           .query_time {
             margin-left: 16px;
             margin-bottom: 8px;
-            color: $math_color;
+            color: $primary;
             font-size: 0.7em;
           }
           ul {
@@ -601,11 +578,11 @@ font-family: 'misans';
             gap: 4px;
             li {
               word-wrap: break-word;
-              color: $math_color;
+              color: $text_secondary;
               user-select: none;
               font-size: 1.1em;
               &:hover {
-                color: $subject_hover_name_color;
+                color: $primary;
               }
             }
           }
@@ -639,41 +616,40 @@ font-family: 'misans';
         min-height: 60px;
         z-index: 100;
         border-radius: 5px;
-        background: $content_item_box_color;
+        background: $fill;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        box-shadow: #2825250c 0px 0px 20px;
+        box-shadow: $fill_shadow 0px 0px 20px;
 
         .content_item_top_box {
           width: 968px;
-          background: $math_li_bg;
+          background:$primary;
           padding: 8px 16px;
-          color: $math_li_color;
+          color: $fill_primary;
           border-top-left-radius: 5px;
           border-top-right-radius: 5px;
         }
         .content_item_bottom_box {
           width: 968px;
-          background: $content_item_box_color;
+          background: fill;
           padding: 8px 16px;
-          color: $math_li_color;
           justify-content: flex-end;
           border-bottom-right-radius: 5px;
           border-bottom-left-radius: 5px;
           .content_item_bottom_btn {
-            background: $content_item_box_color;
-            border: 1px solid $math_li_bg;
+            background:$fill_primary;
+            border: 1px solid $primary;
             font-size: 12px;
             padding: 4px 16px;
-            color: $math_color;
+            color: $primary;
             transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
             &:hover {
-              background: $math_color;
-              color: $content_item_box_color;
+              background: $primary;
+              color: $fill_primary;
             }
           }
         }
         &:hover {
-          box-shadow: $content_tag_item_bg 0px 0px 0px 4px;
+          box-shadow:$primary 0px 0px 0px 4px;
         }
 
        
@@ -682,7 +658,6 @@ font-family: 'misans';
         .subject_context {
           width: 968px !important;
           padding: 8px 16px;
-          color: $normal_color;
         }
         .subject_solution_context {
           width: 936px !important;
@@ -690,12 +665,11 @@ font-family: 'misans';
           border-radius: 5px;
           margin: 8px 16px;
           padding:  16px;
-          color: $normal_color;
           background-color: $subject_solution_context_bg !important;
         }
         .content_tag_box {
           flex-wrap: wrap;
-          border-bottom: $tag_sure_btn_color 1px solid;
+          border-bottom: $primary_mix_4 1px solid;
           .content_tag_item {
             width: auto;
             padding: 0 5px;
@@ -703,10 +677,10 @@ font-family: 'misans';
             align-self: start;
             margin: 5px 0px 3px 3px;
             border-radius: 5px;
-            color: $tag_sure_btn_bg;
+            color: $fill_primary;
             font-size: 12px;
             font-weight: 700;
-            background: $content_tag_item_bg;
+            background: $primary;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           }
         }
@@ -723,19 +697,19 @@ font-family: 'misans';
 }
 .math_foot {
   width: max(1440px,100vw);
-  background: $math_bg_color;
+  background: $fill_body;
     z-index: 10;
     width: inherit;
     height: 200px;
     gap: 16px;
     .title_foot {
       font-size: 16px;
-      color: $condition_box;
+      color: $primary;
     }
     .text_foot {
       font-size: 14px;
       font-weight: 700;
-      color: $condition_box;
+      color: $primary;
     }
     .left_foot {
       width: 300px;

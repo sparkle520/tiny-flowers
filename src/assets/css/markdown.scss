@@ -1,18 +1,6 @@
-$code_bg: var(--code_bg, #6261a3a8);
 $pre_bg: var(--pre_bg, #f6f8fa);
-$h1_color: var(--h1_color, #686870);
-$h_color: var(--h_color, #a574d2);
-$h2_color: var(--h2_color, #ff7f50);
-$h3_color: var(--h3_color, #ff7f50);
-$h4_color: var(--h4_color, #ff7f50);
-$h5_color: var(--h5_color, #ff7f50);
-$h6_color: var(--h6_color, #ff7f50);
-$normal_color: var(--normal_color, #4d4949);
-$code_color: var(--code_color, #ffffff);
 
-$blockquote_bg: var(--blockquote_bg, #e3e3f3a8);
-$blockquote_border: var(--blockquote_border, #6261a3);
-$blockquote_color: var(--blockquote_color, #ff7300); 
+
 .markdown-body *{
   font-style: normal !important;
 }
@@ -29,7 +17,7 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   background: transparent !important;
   font-family: 'misans' !important;
   font-size: 18px !important;
-  color: $normal_color !important;
+  color: $text !important;
   width: 100% !important;
   overflow-x:visible !important;
   z-index: 10 !important;
@@ -37,7 +25,7 @@ $blockquote_color: var(--blockquote_color, #ff7300);
   line-height: 1.9em !important;
 
   a{
-    color: #ff7300 !important;
+    color: $text_link !important;
     text-decoration: underline !important;
   }
  
@@ -52,10 +40,10 @@ table{
   border:none  !important;
   border-collapse:collapse !important;
   background: transparent !important;
-  color: $normal_color !important;
+  color: $text !important;
   thead th {
     background-color: transparent !important;
-    color: $normal_color !important;
+    color: $text !important;
     border-bottom-width: 0 !important;
     border: none !important;
     }
@@ -65,8 +53,8 @@ table{
       background: transparent !important;
       border:none !important;
       
-      border-bottom:1px $h_color solid  !important;
-      border-top:1px $h_color solid  !important;
+      border-bottom:1px $primary solid  !important;
+      border-top:1px $primary solid  !important;
       text-align: center !important;
       vertical-align:middle !important;
       /* font-size: 15px; */
@@ -85,46 +73,46 @@ table{
 
 
   ::selection {
-    color:$pre_bg !important;
-    background-color: $h_color !important;
+    color:$fill_primary !important;
+    background-color: $primary !important;
   }
   strong{
-    color: $h_color !important;
+    color: $primary !important;
   }
   h1 {
     font-size: 24px !important;
     font-weight: 600 !important;
-    color: $h_color !important;
+    color: $primary !important;
   
   }
   h2 {
     font-size: 22px !important;
     font-weight: 600 !important;
-    color: $h_color !important;
+    color: $primary !important;
     
   }
   h3 {
     font-size: 20px !important;
     font-weight: 600 !important;
-    color: $h_color !important;
+    color: $primary !important;
     
   }
   h4 {
     font-size: 18px !important;
     font-weight: 600 !important;
-    color: $h_color !important;
+    color: $primary !important;
    
   }
   h5 {
     font-size: 16px !important;
     font-weight: 600 !important;
-    color: $h_color !important;
+    color: $primary !important;
     
   }
   h6 {
     font-size: 15px !important;
     font-weight: 600 !important;
-    color: $h_color !important;
+    color: $primary !important;
    
   }
   h1,
@@ -145,24 +133,25 @@ table{
       border-radius: 0 .3em .3em 0 !important;
             left: calc(-16px) !important;
       height: 1em !important;
-      background: $h_color !important;
+      background: $primary !important;
     }
   }
   code {
-    background:$code_bg;
-    color: $code_color !important;
+    background:$primary !important;
+    color: $fill_primary !important;
     font-family: 'yahei' !important;
   }
   pre>code{
-    color: $normal_color !important; 
+    color: $text !important; 
+    background:transparent !important;
   }
   
   p {
   }
   blockquote {
     background-color:transparent !important;
-    color: $blockquote_color !important;
-    border-left: 0.15em solid $blockquote_border !important;
+    color: $text !important;
+    border-left: 0.15em solid $primary_mix_1 !important;
     padding: 8px 16px !important;
 
   }

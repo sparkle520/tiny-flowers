@@ -4,7 +4,6 @@
 
 <script setup>
 import {  ref, onBeforeMount, onMounted } from "vue";
-import { useConfigStore } from "../store/config";
 
 
 onBeforeMount(() => {
@@ -37,20 +36,18 @@ const props = defineProps({
   </div>
 </template>
 <style lang="scss" scoped>
-$note_directory_item_main_color: var(--note_directory_item_main_color, #4d4949);
-$note_directory_item_main_hover_color: var(--note_directory_item_main_hover_color, #e96969);
 
 #note_directory_item_main {
   break-inside: avoid;
   span {
     display: block;
     margin-bottom: 16px;
-    color: $note_directory_item_main_color;
+    color: $text_subtitle;
    user-select: none;
   }
   .span_hover{
     &:hover{
-        color: $note_directory_item_main_hover_color;
+        color: $primary;
     }
   }
   .chapter_title {

@@ -52,42 +52,9 @@ const change_theme = (current_theme) => {
   if (current_theme) {
     document.querySelector('.page_1_bg_cover').style.opacity='1'
     document.querySelector('.page_1_circle').style.opacity='.8'
-    c_c("--home_bg", "#0b0e14");
-    c_c("--home_bg_opacity", "0");
-    c_c("--home_bg_top", "#0d1c2b");
-    c_c("--home_color", "#fff");
-    c_c("--index_title_color", "#33383a");
-    c_c("--text_color", "#fdfbfb");
-    c_c("--box_bg", "#242b3dc7");
-    c_c("--recommend_item_bg", "#242b3dc7");
-    c_c("--home_main_color", "#b5b9d6");
-    c_c("--page_1_title_color", "#242b3dc7");
-    c_c("--content_box_color", "#ffff");
-    c_c("--title_color", "#fdfbfb");
-    c_c("--short_msg_color", "#fdfbfb");
-    c_c("--title_hover", "#b5b9d6");
-    c_c("--home_nav_item_box_shadow", "#b5b9d6");
-    c_c("--rect_item_color", "#fdfbfb");
-
   } else {
     document.querySelector('.page_1_bg_cover').style.opacity='0'
     document.querySelector('.page_1_circle').style.opacity='1'
-    c_c("--home_bg", "#fdfbfb");
-    c_c("--home_bg_opacity", ".05");
-    c_c("--home_bg_top", "#fdfbfb");
-    c_c("--home_color", "#393e46");
-    c_c("--index_title_color", "#393e46");
-    c_c("--text_color", "#ffff");
-    c_c("--box_bg", "#ffff");
-    c_c("--recommend_item_bg", "#ffff");
-    c_c("--home_main_color", "#9966ff");
-    c_c("--page_1_title_color", "#9966ff");
-    c_c("--content_box_color", "#747576");
-    c_c("--title_color", "#393e46");
-    c_c("--short_msg_color", "#747576");
-    c_c("--title_hover", "#9966ff");
-    c_c("--home_nav_item_box_shadow", "#9966ff");
-    c_c("--rect_item_color", "#393e46");
   }
 };
 let new_fade_item_list = null
@@ -788,22 +755,6 @@ const leave_new_topic = (index) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$home_bg: var(--home_bg, #384f89);
-$home_bg_opacity: var(--home_bg_opacity, 1);
-$home_bg_top: var(--home_bg_top, #0d1c2b);
-$home_color: var(--home_color, #4d4949);
-$index_title_color: var(--index_title_color, #33383a);
-$home_main_color: var(--home_main_color, #a5e3ba);
-$content_box_color: var(--content_box_color, #747576);
-$title_color: var(--title_color, #4d4949);
-$short_msg_color: var(--short_msg_color, #747576);
-$title_hover: var(--title_hover, #0ebd7d);
-$home_nav_item_box_shadow: var(--home_nav_item_box_shadow, #99edb5);
-$page_1_title_color: var(--page_1_title_color, #c6ebbd);
-$rect_item_color: var(--rect_item_color, #7D9773);
-$text_color: var(--text_color, #fff);
-$recommend_item_bg: var(--recommend_item_bg, #fff);
-$box_bg: var(--box_bg, #fff);
 
 
 
@@ -827,9 +778,8 @@ $box_bg: var(--box_bg, #fff);
   width: max(1440px,100vw);
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
-  background: linear-gradient($home_bg_top 50%, $home_bg);
 
-  color: $home_color;
+  color: $text;
   .bg_shape {
       top: 0;
       
@@ -837,7 +787,7 @@ $box_bg: var(--box_bg, #fff);
       transform: scale(3);
       filter: blur(10px);
       path{
-        fill: $page_1_title_color;
+        fill: $primary;
       }
       
     }
@@ -849,26 +799,15 @@ $box_bg: var(--box_bg, #fff);
       filter: blur(10px);
 
       path{
-        fill: $page_1_title_color;
+        fill: $primary;
       }
     }
   ::selection {
-    color: $text_color;
-    background-color: $home_main_color;
+    color: $fill_primary;
+    background-color: $primary;
   }
   overflow: hidden;
-  &::after {
-    width: max(1440px,100vw);
-    height: 100vh;
-    content: "";
-    left: 0;
-    top: 0;
-    position: fixed;
-    z-index: 0;
-    opacity: $home_bg_opacity;
-    background: url("https://pic.imgdb.cn/item/65dc38fc9f345e8d03e7728a.png")
-      repeat;
-  }
+ 
 
   li {
     list-style: none;
@@ -880,15 +819,13 @@ $box_bg: var(--box_bg, #fff);
     margin-bottom: 24px;
     height: 42px;
     font-weight: lighter;
-    color: $index_title_color;
-    color: #0ebd7d;
-    border-bottom: $home_main_color 1px solid;
+    color: $fill_primary;
+    border-bottom: $primary_mix_4 1px solid;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     span {
-      background: $home_main_color;
-      box-shadow: $home_nav_item_box_shadow 0 10px 10px;
+      background: $primary_mix_2;
+      box-shadow: $fill_shadow 0 10px 10px;
       border-radius: 1000px;
-      color: $text_color;
       padding: 8px 16px;
     }
   }
@@ -925,20 +862,10 @@ $box_bg: var(--box_bg, #fff);
       font-size: 1.2em;
       top: 50%;
       left: 50%;
-      color: #fff;
       border-radius: 26px;
       transform: translate(-50%, -50%);
-      span{
-        font-family: "MonsieurLaDoulaise-Regular-2";
-        font-size:32px;
-      }     
-      .icon{
-        path{
-            fill: $title_hover;
-        }
-      }
+     
       .title_1 {
-        color: $title_color;
         font-weight: 900;
                 animation: title 1s cubic-bezier(0.165, 0.84, 0.44, 1);
                 .avatar{
@@ -976,7 +903,7 @@ $box_bg: var(--box_bg, #fff);
       animation: more 2s infinite linear both;
       z-index: 10000000;
       path {
-        fill: $page_1_title_color;
+        fill: $primary;
       }
     }
     @keyframes more {
@@ -1005,14 +932,14 @@ $box_bg: var(--box_bg, #fff);
         .notice {
           width: 1084px;
           margin: 16px auto;
-          background: $box_bg;
+          background: $fill;
           padding: 8px;
           border-radius: 10px;
-          box-shadow: 0 4px 10px rgba(26, 27, 28, 0.112);
+          box-shadow: 0 4px 10px $fill_shadow;
 
           .notice_text {
             margin-left: 16px;
-            color: $rect_item_color;
+            color: $text;
           }
         }
       }
@@ -1029,7 +956,7 @@ $box_bg: var(--box_bg, #fff);
             margin-bottom: 16px;
             .home_carousel {
               transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-              box-shadow: 0 2px 5px rgba(31, 45, 61, 0.15);
+              box-shadow: 0 2px 5px $fill_shadow;
             }
             .rect_box {
               width: 364px;
@@ -1056,7 +983,7 @@ $box_bg: var(--box_bg, #fff);
               }
               .rect_item {
                 border-radius: 10px;
-                background: $box_bg;
+                background: $fill;
                 user-select: none;
                 overflow: hidden;
                 gap: 8px;
@@ -1064,15 +991,15 @@ $box_bg: var(--box_bg, #fff);
                 font-family: "orbitron-light";
                 font-weight: 900;
                 letter-spacing: 2px;
-                color: $rect_item_color;
-                box-shadow: 0 2px 5px rgba(31, 45, 61, 0.15);
+                box-shadow: 0 2px 5px $fill_shadow;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                cursor: pointer;
                 &:hover {
-                  color: #8b8079;
+                  color: $primary;
                 }
 
                 &:hover {
-                  box-shadow: 0 1px 2px rgba(31, 45, 61, 0.15);
+                  box-shadow: 0 1px 2px $fill_shadow;
                   transition: box-shadow 0.5s
                       cubic-bezier(0.075, 0.82, 0.165, 1),
                     transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1094,14 +1021,14 @@ $box_bg: var(--box_bg, #fff);
               height: 36px;
               gap: 4px;
               user-select: none;
-              background: $box_bg;
-              box-shadow: 0 4px 5px rgba(26, 27, 28, 0.112);
+              background: $fill;
+              box-shadow: 0 4px 5px $fill_shadow;
               border-radius: 10px;
               font-size: 14px;
               font-weight: lighter;
-              color: $rect_item_color;
+              color: $text;
               will-change: transform, opacity;
-
+              cursor: pointer;
               transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
                 opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -1125,13 +1052,13 @@ $box_bg: var(--box_bg, #fff);
                 border-radius: 10px;
                 width: 356px;
                 height: 300px;
-                color: $short_msg_color;
-                background: $box_bg;
+                color: $text_subtitle;
+                background: $fill;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-                box-shadow: 0 13px 10px rgba(31, 45, 61, 0.15);
+                box-shadow: 0 13px 10px $fill_shadow;
 
                 &:hover {
-                  box-shadow: 0 3px 5px rgba(31, 45, 61, 0.2);
+                  box-shadow: 0 3px 5px $fill_shadow;
                 }
                 &:active {
                   animation: jump 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1152,7 +1079,7 @@ $box_bg: var(--box_bg, #fff);
                     width: inherit;
                     height: 128px;
                     pointer-events: none;
-                    background: linear-gradient(to top, #dfdfdf71, transparent);
+                    background: linear-gradient(to top, $primary_mix_9, transparent);
                   }
 
                   .img {
@@ -1170,7 +1097,7 @@ $box_bg: var(--box_bg, #fff);
                   align-self: flex-start;
                   height: 12px;
                   font-size: 0.7em;
-                  color: #979797;
+                  color: $text_secondary;
                 }
                 .topic_item_content {
                   margin: 16px;
@@ -1180,23 +1107,24 @@ $box_bg: var(--box_bg, #fff);
                     white-space: nowrap;
                     font-size: 0.6em;
                     padding:0 0.4em;
-                    background: $title_hover;
+                    background: $primary_mix_2;
                     border-radius: 0.4em;
                     margin-right: 8px;
-                    color: #fff;
+                    color: $fill_primary;
                   }
                   .title {
                     font-size: 1em;
                     font-weight: 700;
                     height: 20px;
-                    color: $title_color;
+                    color: $text_title;
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
-                                        user-select: none;
+                    user-select: none;
+                    cursor: pointer;
                     &:hover {
-                      color: $title_hover;
+                      color: $primary;
                     }
                   }
                   .short_meg {
@@ -1216,8 +1144,8 @@ $box_bg: var(--box_bg, #fff);
             width: inherit;
             border-radius: 10px;
             margin-bottom: 32px;
-            background: $box_bg;
-            box-shadow: 0 4px 10px rgba(26, 27, 28, 0.112);
+            background: $fill;
+            box-shadow: 0 4px 10px $fill_shadow;
 
             .recommend_item_box {
               width: inherit;
@@ -1231,9 +1159,9 @@ $box_bg: var(--box_bg, #fff);
                 height: 136px;
                 border-radius: 10px;
                 margin: 0 auto;
-                background: $recommend_item_bg;
+                background: $fill;
                 transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-                box-shadow: 0 0px 5px #1f2d3d26;
+                box-shadow: 0 0px 5px $fill_shadow;
                 &:last-child {
                   margin-bottom: 32px;
                 }
@@ -1247,12 +1175,12 @@ $box_bg: var(--box_bg, #fff);
                   pointer-events: none;
                   background: linear-gradient(
                     to left,
-                    $box_bg 20%,
+                    $fill 20%,
                     transparent
                   );
                 }
                 &:hover {
-                  box-shadow: 0 0 0 1px $title_hover;
+                  box-shadow: 0 0 0 3px $primary;
                                 }
                 &:active {
                   animation: jump 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1270,7 +1198,7 @@ $box_bg: var(--box_bg, #fff);
                     height: inherit;
                     background: linear-gradient(
                       to right,
-                      $box_bg 20%,
+                      $fill 20%,
                       transparent
                     );
                   }
@@ -1305,7 +1233,7 @@ $box_bg: var(--box_bg, #fff);
                   height: 104px;
                   order: 2;
                   margin: 16px;
-                  color: $content_box_color;
+                  color: $text_subtitle;
                   .content_bottom_box {
                     margin-top: auto;
                   }
@@ -1314,11 +1242,11 @@ $box_bg: var(--box_bg, #fff);
                     padding:0 0.4em;
                     flex-shrink: 0;
                     height: 20px;
-                    background: $title_hover;
+                    background: $primary_mix_3;
                     border-radius: 0.4em;
                     white-space: nowrap;
                     margin-right: 8px;
-                    color: $text_color;
+                    color: $fill_primary;
                   }
                   .title {
                     font-size: 1em;
@@ -1329,16 +1257,17 @@ $box_bg: var(--box_bg, #fff);
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
-                    color: $title_color;
+                    color: $text_title;
+                    cursor: pointer;
                     &:hover {
-                      color: $title_hover;
+                      color:$primary;
                     }
                   }
                   
                   .short_meg {
                     margin: 16px 0;
                     height: 16px;
-                    color: $short_msg_color;
+                    color: $text_subtitle;
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
@@ -1356,13 +1285,13 @@ $box_bg: var(--box_bg, #fff);
                     height: 30px;
                     border-radius: 50%;
                     margin-right: 8px;
-                    box-shadow: #b3b3b3a0 0 0 2px;
+                    box-shadow: $fill_shadow 0 0 2px;
                   }
                   .date {
                     justify-self: flex-end;
                     letter-spacing: 0.1em;
                     font-size: 0.7em;
-                    color: #8b8f92;
+                    color: $text_secondary;
                   }
                 }
               }
@@ -1371,9 +1300,9 @@ $box_bg: var(--box_bg, #fff);
           .re_note_box {
             width: 1100px;
             border-radius: 10px;
-            background: $box_bg;
+            background: $fill;
 
-            box-shadow: 0 4px 10px rgba(26, 27, 28, 0.112);
+            box-shadow: 0 4px 10px $fill_shadow;
             margin-bottom: 32px;
             .re_note_item_box {
               margin: 0 auto;
@@ -1386,7 +1315,7 @@ $box_bg: var(--box_bg, #fff);
               .re_note_item {
                 width: 255px;
                 height: inherit;
-                background: $recommend_item_bg;
+                background: $fill;
                 border-radius: 10px;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 .re_note_img_box {
@@ -1407,9 +1336,9 @@ $box_bg: var(--box_bg, #fff);
                     border-radius: inherit;
                     background: linear-gradient(
                       45deg,
-                      #d2d2cef3,
+                      $primary_mix_9,
                       transparent,
-                      #d2d2cea2
+                      $primary_mix_9
                     );
                     opacity: 0;
                     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1427,7 +1356,7 @@ $box_bg: var(--box_bg, #fff);
                   border-radius: inherit;
                   object-fit: cover;
                   background: #fff;
-                  box-shadow: #94969748 0px 5px 10px;
+                  box-shadow: $fill_shadow 0px 5px 10px;
                 }
                 .note_info_box {
                   left: 0;
@@ -1439,14 +1368,16 @@ $box_bg: var(--box_bg, #fff);
                   overflow: hidden;
                   font-size: 16px;
                   font-weight: 900;
-                  color: $short_msg_color;
+                  color: $text_subtitle;
 
                   div:first-child {
                     user-select: none;
-                    color: $title_color;
+                    color: $text_title;
                     height: 20px;
+                    cursor: pointer;
+                  
                     &:hover {
-                      color: $title_hover;
+                      color:$primary;
                     }
                   }
                   .note_short_message {
@@ -1476,15 +1407,14 @@ $box_bg: var(--box_bg, #fff);
   height: 200px;
   gap:16px;
   z-index: 1;
-  background: $home_bg;
+  color: $primary;
+  background: $fill_body;
   .title_foot {
     font-size: 16px;
-    color: $title_hover;
   }
   .text_foot {
     font-size: 14px;
     font-weight: 700;
-    color: $title_hover;
   }
   .left_foot {
     width: 300px;

@@ -17,20 +17,16 @@ import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import { useTopicStore } from "/src/store/topic.js";
 import { useUserStore } from "/src/store/user.js";
-import emitter from "@/assets/config/mitt_bus.js";
-import change_theme from "@/assets/theme/TopicList.js";
 const { params } = useRoute();
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const config_store = useConfigStore();
 const topic_store = useTopicStore();
 const user_store = useUserStore();
-const { theme } = storeToRefs(config_store);
 const { layout } = storeToRefs(config_store);
 const { list_layout } = storeToRefs(config_store);
 const router = useRouter();
 config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
   change_layout(state.layout);
   change_list_layout(state.list_layout);
 });
@@ -80,7 +76,6 @@ const click_handle = (e) => {
 const init = () => {
   window.scrollTo(0, 0);
   change_layout(layout.value);
-  change_theme(theme.value);
   change_list_layout(list_layout.value);
   scroll_handle();
   run_time(birthday_date);
@@ -619,34 +614,17 @@ const search_focus_handle = () => {
     </div>
 </template>
 <style lang="scss" scoped>
-$topic_bg_color: var(--topic_bg_color, #fdfbfb);
-$topic_bg_top: var(--topic_bg_top, #fdfbfb);
-$topic_list_bg: var(--topic_list_bg, #f7f3f5);
-$color: var(--color, #000000);
-$item_bg: var(--item_bg, #ffffffa2);
-$item_shadow: var(--item_shadow, #1f2d3d26);
-$title_color: var(--title_color, #173e6c);
-$title_af_bg: var(--title_af_bg, #22113364);
-$tag_box_bg: var(--tag_box_bg, #dae6e7);
-$tag_bg: var(--tag_bg, #41a8a8);
-$topic_classification_color: var(--topic_classification_color, #41a8a8);
-$topic_classification_num_color: var(--topic_classification_num_color, #e06530);
-$item_classification_bg: var(--item_classification_bg, #9966ff);
-$filter_search_box_bg: var(--filter_search_box_bg, #ffffff);
-$tag_item_bg: var(--tag_item_bg, #a5e3ba);
-$tag_item_color: var(--tag_item_color, #9966ff);
-$layout_hover: var(--layout_hover, #f3acac);
 
 #topic_list_main {
   @font-face {
   font-family: "misans";
   src: url("/src/assets/font/misans.ttf");
 }
-  background: linear-gradient($topic_bg_top 50%,$topic_bg_color);
+  background: $fill_body;
   font-family: "misans";
   width: max(1440px,100vw);
   min-height: 100vh;
-  color: $color;
+  color: $text;
   &::after {
     content: "";
     position: absolute;
@@ -668,13 +646,13 @@ $layout_hover: var(--layout_hover, #f3acac);
     font-size: 1em;
     align-self: flex-start;
     margin-left: 18px;
-    color: $tag_bg;
+    color: $primary_mix_1;
     &::after {
       content: "";
       position: absolute;
       width: 4px;
       height: 100%;
-      background: $tag_bg;
+      background: $primary_mix_3;
       left: -8px;
       bottom: 0;
       opacity: 0.6;
@@ -728,16 +706,16 @@ $layout_hover: var(--layout_hover, #f3acac);
       width: 550px;
       max-height: 226px;
 
-      background: $filter_search_box_bg;
+      background: $fill;
       bottom: 0;
       transform: translateY(120%);
-      box-shadow: $item_shadow 2px 3px 10px;
+      box-shadow: $fill_shadow 2px 3px 10px;
       border-radius: 10px;
       overflow-y: scroll;
       .query_time {
         margin-left: 32px;
         margin-bottom: 16px;
-        color: $color;
+        color: $primary;
         font-size: 0.7em;
       }
       ul {
@@ -746,10 +724,10 @@ $layout_hover: var(--layout_hover, #f3acac);
         gap: 16px;
         li {
           word-wrap: break-word;
-          color: $title_color;
+          color: $text_secondary;
           font-size: 1.1em;
           &:hover {
-            color: $topic_classification_num_color;
+            color: $primary;
           }
         }
       }
@@ -763,7 +741,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       transform: translateX(48px) rotate(15deg);
       svg {
         path {
-          fill: $tag_bg;
+          fill: $primary_mix_3;
         }
       }
     }
@@ -772,21 +750,24 @@ $layout_hover: var(--layout_hover, #f3acac);
       height: inherit;
       
       border-radius: 10px;
-      background: $item_bg;
+      background: $fill;
       padding-left: 16px;
       border: none;
       outline: none;
-      color: $color;
+      color: $primary;
       font-size: 1.1em;
-      box-shadow: $tag_bg 0 0 0 1px;
+      box-shadow: $primary 0 0 0 1px;
 
-      caret-color: $color;
+      caret-color: $primary;
       transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
       &:hover {
-        box-shadow: $tag_bg 0px 6px 5px;
+        box-shadow: $primary 0px 6px 5px;
       }
       &:focus {
-        box-shadow: $tag_bg 0px 6px 5px;
+        box-shadow: $primary 0px 6px 5px;
+      }
+      &::placeholder{
+        color: $text_placeholder;
       }
     }
   }
@@ -802,7 +783,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       .list_layout {
         svg {
           path {
-            fill: $tag_bg;
+            fill: $primary_mix_6;
           }
         }
         &:hover {
@@ -823,7 +804,7 @@ $layout_hover: var(--layout_hover, #f3acac);
 
           font-size: 11px;
           background: #ffff;
-          box-shadow: #86848466 2px 1px 5px;
+          box-shadow: $fill_shadow 2px 1px 5px;
           border-radius: 5px;
           padding: 8px 4px;
           transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -832,7 +813,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       .grid_layout {
         svg {
           path {
-            fill: $tag_bg;
+            fill: $primary_mix_6;
           }
         }
         &:hover {
@@ -863,22 +844,22 @@ $layout_hover: var(--layout_hover, #f3acac);
         
         border-radius: 5px;
         &:hover {
-          background: $layout_hover;
+          background: $primary_mix_9;
         }
       }
     }
     .layout_active {
-      background: $layout_hover;
+      background: $primary_mix_9;
     }
    
     .topic_item {
       width: 100%;
       height: 200px;
-      background: $item_bg;
+      background: $fill;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       margin: 0 0 16px 0;
       border-radius: 10px;
-      box-shadow: 0px 13px 15px $item_shadow;
+      box-shadow: 0px 13px 15px $fill_shadow;
       overflow-y: hidden;
      
       &:hover {
@@ -906,8 +887,8 @@ $layout_hover: var(--layout_hover, #f3acac);
             padding: 4px 4px;
             border-radius: 5px;
             margin-right: 8px;
-            color: #ffff;
-            background: $item_classification_bg;
+            color: $fill_primary;
+            background: $primary_mix_2;
           }
         }
       }
@@ -915,7 +896,11 @@ $layout_hover: var(--layout_hover, #f3acac);
         font-size: 1.2em;
         font-weight: 600;
         margin-top: 10px;
-        color: $title_color;
+        color: $text_title;
+        cursor: pointer;
+        &:hover{
+          color: $primary;
+        }
       }
       .short_msg {
         margin-top: 20px;
@@ -937,14 +922,14 @@ $layout_hover: var(--layout_hover, #f3acac);
         opacity: 0;
         transform: translateY(100%);
         width: 100%;
-        background: $tag_box_bg;
+        background: $primary_mix_8;
         flex-wrap: wrap;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         .tag {
           margin: 4px;
-          color: #ffff;
+          color: $fill_primary;
           padding: 10px;
-          background: $tag_bg;
+          background: $primary;
           border-radius: 5px;
         }
       }
@@ -965,7 +950,7 @@ $layout_hover: var(--layout_hover, #f3acac);
         width: 32%;
         border-radius: 10px;
         height: 370px;
-        background: $filter_search_box_bg;
+        background: $fill;
         box-shadow: 0 13px 15px rgba(31, 45, 61, 0.15);
         transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -990,9 +975,9 @@ $layout_hover: var(--layout_hover, #f3acac);
           height: 128px;
           margin: 16px;
           .classification_box {
-            background: $item_classification_bg;
+            background: $primary_mix_2;
             font-size: 0.6em;
-            color: #fff;
+            color: $fill_primary;
             padding: 5px 7px;
             font-weight: bold;
             border-radius: 10px;
@@ -1007,7 +992,7 @@ $layout_hover: var(--layout_hover, #f3acac);
               position: absolute;
               width: 2px;
               height: 16px;
-              background: $item_classification_bg;
+              background: $primary_mix_4;
               top: 4px;
               left: -8px;
             }
@@ -1018,8 +1003,10 @@ $layout_hover: var(--layout_hover, #f3acac);
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
+                    color: $text_title;
+                    cursor: pointer;
             &:hover {
-              color: $item_classification_bg;
+              color: $primary;
             }
           }
           .topic_short_msg {
@@ -1028,6 +1015,7 @@ $layout_hover: var(--layout_hover, #f3acac);
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            color: $text_subtitle;
           }
           .tags_box {
             margin-top: auto;
@@ -1040,14 +1028,14 @@ $layout_hover: var(--layout_hover, #f3acac);
               transform: scale(0.8);
               flex-shrink: 0;
 
-              background: $tag_item_bg;
-              color: $tag_item_color;
+              background: $primary_mix_9;
+              color: $primary;
               padding: 4px 8px;
 
               border-radius: 100px;
               &:hover {
-                color: #fff;
-                background: #9966ff;
+                color: $fill_primary;
+                background: $primary;
               }
             }
           }
@@ -1067,10 +1055,10 @@ $layout_hover: var(--layout_hover, #f3acac);
   width: 288px;
   .personal_item {
     width: 288px;
-    background-color: $item_bg;
+    background-color: $fill;
     animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     border-radius: 10px;
-    box-shadow: $item_shadow 2px 3px 10px;
+    box-shadow: $fill_shadow 2px 3px 10px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 32px;
     margin-bottom: 16px;
@@ -1081,7 +1069,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       margin: 0;
       object-fit: cover;
       border-radius: 10px;
-      background:linear-gradient( $layout_hover,$item_bg);
+      background:linear-gradient( $primary_mix_8,$fill);
       z-index: 0;
       width: 288px;
       height: 152px;
@@ -1094,7 +1082,7 @@ $layout_hover: var(--layout_hover, #f3acac);
       height: 118px;
       border-radius: 50%;
       margin: 74px auto 0 16px;
-      border: $item_shadow 1px solid;
+      border: $fill_shadow 1px solid;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       &:hover {
@@ -1105,7 +1093,7 @@ $layout_hover: var(--layout_hover, #f3acac);
     .personal_name {
       font-size: 1.4em;
       font-weight: 900;
-      color: $title_color;
+      color: $text;
       transform: translateY(-32px);
       margin-left: auto;
       margin-right: 32px;
@@ -1113,17 +1101,17 @@ $layout_hover: var(--layout_hover, #f3acac);
     .personal_signature {
       margin: 0 0 32px 0;
       font-size: 0.9em;
-      color: $title_color;
+      color: $text;
     }
     .topic_classification_total_box {
       width: 50%;
       h3 {
-        color: $topic_classification_color;
+        color: $primary;
         margin: 0;
         font-size: 1.2em;
       }
       span {
-        color: $title_color;
+        color: $text;
 
         font-size: 1.2em;
         margin-top: 16px;
@@ -1138,15 +1126,16 @@ $layout_hover: var(--layout_hover, #f3acac);
       margin: 0;
 
       gap: 8px;
-      color: $title_color;
+      color: $text_subtitle;
       li {
         span {
           margin: 4px;
           font-size: 0.9em;
           font-weight: 900;
+          cursor: pointer;
         }
         &:hover {
-          color: $topic_classification_num_color;
+          color: $primary;
         }
       }
     }
@@ -1167,19 +1156,18 @@ $layout_hover: var(--layout_hover, #f3acac);
           padding: 8px;
           padding-left: 4px;
           font-weight: 900;
-          color: $title_color;
-
+          color: $text_subtitle;
           // &:last-child {
           //   margin-left: auto;
           // }
           transition: margin 2s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         &:hover {
-          background: $topic_classification_num_color;
+          background: $primary_mix_2;
           border-radius: 5px;
           span {
             margin-left: 16px;
-            color: #ffff;
+            color: $fill_primary;
 
           
           }
@@ -1200,7 +1188,7 @@ $layout_hover: var(--layout_hover, #f3acac);
           font-size: 0.9em;
           font-weight: 900;
           letter-spacing: 0.1em;
-          color: $title_color;
+          color: $text_title;
         }
       }
     }
@@ -1208,18 +1196,17 @@ $layout_hover: var(--layout_hover, #f3acac);
 }
 .topic_list_foot {
   width: max(1440px,100vw);
-  background: $topic_bg_color;
+  background: $fill_body;
+  color: $primary;
     z-index: 10;
     height: 200px;
     gap: 16px;
     .title_foot {
       font-size: 16px;
-      color: $tag_bg;
     }
     .text_foot {
       font-size: 14px;
       font-weight: 700;
-      color: $tag_bg;
     }
     .left_foot {
       width: 300px;

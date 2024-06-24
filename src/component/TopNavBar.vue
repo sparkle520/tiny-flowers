@@ -13,21 +13,15 @@ import {
   nextTick,
 } from "vue";
 import { useRouter } from "vue-router";
-import change_theme from "../assets/theme/TopNavBar";
-import c_c from "@/assets/js/utils.js"
 const router = useRouter();
 import { useConfigStore } from "../store/config";
-import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const { theme } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+
 onBeforeMount(() => {});
 onMounted(() => {
-  change_theme(theme.value);
   document.addEventListener("scroll", nav_handle);
   top_nav_main  = document.querySelector("#top_nav_main");
+  content_bg  = document.querySelector(".content_bg");
 
 });
 onUnmounted(() => {
@@ -35,17 +29,17 @@ onUnmounted(() => {
 });
 
 let top_nav_main;
+let content_bg;
 const nav_handle = () => {
   let wScrY = window.scrollY;
   let sl=-Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
   top_nav_main.style.left=sl+'px';
   if(wScrY < 70){
-    c_c("--nav_bg_color", "transparent")
+    content_bg.style.opacity = 0;
   }else{
-    change_theme(theme.value);
+    content_bg.style.opacity = .8;
   }
 };
-const emits = defineEmits(["music_change"]);
 
 const nav_list = [
   {
@@ -143,6 +137,7 @@ const theme_change = () => {
 <template>
   <div id="top_nav_main" class="nav_main f a_c j_c_c">
     <div class="content f f_d_r r">
+      <div class="content_bg a"></div>
     <div class="a stave f f_d_c">
       <div v-for="item in 5" :key="item" class="stave_line"></div>
     </div>
@@ -185,10 +180,6 @@ const theme_change = () => {
   </div>
 </template>
 <style lang="scss" scoped>
-$nav_bg_color: var(--nav_bg_color, #0ebd7d);
-$nav_fixed_shadow: var(--nav_fixed_shadow, #8e8e8e30);
-$nav_item_color: var(--nav_item_color, #5e6d78);
-$nav_item_active_color: var(--nav_item_active_color, #f67d61);
 
 #top_nav_main {
   position: fixed;
@@ -200,10 +191,17 @@ $nav_item_active_color: var(--nav_item_active_color, #f67d61);
   .content {
     width: max(1100px,60vw);
     z-index: 11;
-    background: $nav_bg_color;
     height: inherit;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
    border-radius: 60px;
+   .content_bg{
+    background: $fill;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    opacity: 0;
+    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+   }
     .nav_box {
       top: 50%;
       left:50%;
@@ -219,7 +217,7 @@ $nav_item_active_color: var(--nav_item_active_color, #f67d61);
         user-select: none;
         .nav_item_active {
           font-size: 14px;
-          color: $nav_item_active_color;
+          color: $primary;
           margin: 0 10px;
           font-weight: 900;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -228,13 +226,13 @@ $nav_item_active_color: var(--nav_item_active_color, #f67d61);
             height: 4px;
             content: '';
             position: absolute;
-            background:$nav_item_active_color;
+            background:$primary;
             top: -22px;
           }
         }
         .nav_item {
           font-size: 14px;
-          color: $nav_item_color;
+          color: $text_subtitle;
           font-weight: 900;
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);

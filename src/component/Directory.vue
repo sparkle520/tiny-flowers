@@ -11,11 +11,8 @@ import {
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const { theme } = storeToRefs(store);
 const { layout } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+
 onUnmounted(() => {
   document.removeEventListener("scroll", handleScroll);
 });
@@ -55,7 +52,6 @@ const handleScroll = () => {
 };
 let observe = null
 onMounted(() => {
-  change_theme(theme.value);
   document.addEventListener("scroll", handleScroll);
   setTimeout(()=>{
     titles_list_handle()
@@ -149,18 +145,6 @@ function getTitles() {
   return titles;
 }
 
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    //night
-  } else {
-  }
-};
-
-
-
 // 设置子节点的可见性
 function setChildrenVisible(title, isVisible) {
   for (const child of title.children) {
@@ -209,15 +193,12 @@ function scrollToView(scrollTop) {
   </div>
 </template>
 <style lang="scss" scoped>
-$directory_list_cover_bg: var(--directory_list_cover_bg, #ffffff);
-$directory_active_color: var(--directory_active_color, #9966ff);
 
-$directory_color: var(--directory_color, #8491a5);
 
 #directory_list_main {
   width: 286px;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-  background: $directory_list_cover_bg;
+  background: $fill_body;
   position: sticky;
   top: 80px;
   border-radius: 5px;
@@ -236,26 +217,23 @@ $directory_color: var(--directory_color, #8491a5);
   padding: 20px 24px;
   width: 100%;
   box-sizing: border-box;
+  color: $text_title;
 
 }
 
 .catalog-card-header {
   text-align: left !important;
   padding-bottom: 15px;
-  border-bottom: #8491a5 1px solid;
+  border-bottom: $primary_mix_4 1px solid;
   justify-content: space-between;
   align-items: center;
 }
 
-.catalog-icon {
-  font-size: 18px;
-  margin-right: 10px;
-  color: dodgerblue;
-}
+
 
 .catalog-card-header div > span {
   font-size: 17px;
-  color: $directory_active_color;
+  color: $text_title;
 }
 
 
@@ -268,7 +246,7 @@ $directory_color: var(--directory_color, #8491a5);
 }
 
 .catalog-item {
-  color: $directory_color;
+  color:$text_secondary;
   margin: 5px 0;
   transition: color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -291,10 +269,7 @@ $directory_color: var(--directory_color, #8491a5);
 
 .active {
   position: relative;
-  color: $directory_active_color;
+  color: $primary;
   font-weight: 900;
-  &:hover {
-    color:$directory_active_color;
-  }
 }
 </style>

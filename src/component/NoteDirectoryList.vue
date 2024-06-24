@@ -10,18 +10,11 @@ import {
 } from "vue";
 import { useRouter } from "vue-router";
 import NoteDirectoryItem from "/src/component/NoteDirectoryItem.vue";
-import change_theme from "../assets/theme/NoteDirectoryItem";
 import { useConfigStore } from "../store/config";
-import { storeToRefs } from "pinia";
 const store = useConfigStore();
 const router = useRouter();
-const { theme } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
-onMounted(() => {
-  change_theme(theme.value);
-});
+
+
 onBeforeMount(() => {});
 onUnmounted(() => {});
 const props = defineProps({

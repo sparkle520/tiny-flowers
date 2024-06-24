@@ -7,19 +7,12 @@ import {
   onBeforeMount,
   onUnmounted,
   onMounted,
-  watch,
   ref,
 } from "vue";
-import { useRouter } from "vue-router";
-import emitter from "@/assets/config/mitt_bus.js";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const { theme } = storeToRefs(store);
 const { layout } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
 
 onBeforeMount(() => {});
 onUnmounted(() => {
@@ -59,7 +52,6 @@ const handleScroll = () => {
 };
 let observe = null
 onMounted(() => {
-  change_theme(theme.value);
   document.addEventListener("scroll", handleScroll);
   setTimeout(()=>{
     titles_list_handle()
@@ -153,17 +145,7 @@ function getTitles() {
   return titles;
 }
 
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    //night
-    c_c("--directory_list_bg", "#1e2433");
-  } else {
-    c_c("--directory_list_bg", "#fdfbfb");
-  }
-};
+
 
 
 
@@ -216,14 +198,11 @@ function scrollToView(scrollTop) {
   </div>
 </template>
 <style lang="scss" scoped>
-$directory_list_bg: var(--directory_list_bg, #ffff);
-$directory_list_cover_bg: var(--directory_list_cover_bg, #9584d0);
-$normal_color: var(--normal_color, #9966ff);
 
 #directory_list_main {
   width: 286px;
   border-radius: 5px;
-  background: $directory_list_bg;
+  background: $fill_body;
   position: sticky;
   top: 80px;
 
@@ -233,13 +212,13 @@ $normal_color: var(--normal_color, #9966ff);
   padding: 20px 24px;
   width: 100%;
   box-sizing: border-box;
-
+color: $text_title;
 }
 
 .catalog-card-header {
   text-align: left !important;
   padding-bottom: 15px;
-  border-bottom: #8491a5 1px solid;
+  border-bottom: $primary_mix_4 1px solid;
   justify-content: space-between;
   align-items: center;
 }
@@ -247,19 +226,14 @@ $normal_color: var(--normal_color, #9966ff);
 .catalog-icon {
   font-size: 18px;
   margin-right: 10px;
-  color: dodgerblue;
 }
 
 .catalog-card-header div > span {
   font-size: 17px;
-  color: $normal_color;
+  color: $text_title;
 }
 
-.progress {
-  color: $normal_color;
-  font-style: italic;
-  font-size: 140%;
-}
+
 
 .catalog-content {
   max-height: calc(100vh - 120px);
@@ -269,7 +243,7 @@ $normal_color: var(--normal_color, #9966ff);
 }
 
 .catalog-item {
-  color: #8491a5;
+  color: $text_secondary;
   margin: 5px 0;
   transition: color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -292,12 +266,7 @@ $normal_color: var(--normal_color, #9966ff);
 
 .active {
   position: relative;
-  color: #9966ff;
-  background: $directory_list_cover_bg;
+  color: $primary_mix_1;
   font-weight: 900;
- 
-  &:hover {
-    color:#9966ff;
-  }
 }
 </style>

@@ -1,8 +1,3 @@
-$topic_content_bg: var(--topic_content_bg, #ffff);
-$topic_bg: var(--topic_bg, #fdfbfb);
-$normal_color: var(--normal_color, #4d4949);
-$topic_content_box_shadpw: var(--topic_content_box_shadpw, #5656561b);
-$topic_text_linear_bg: var(--topic_text_linear_bg, #b5b5f450);
 
 @import url('markdown.scss');
 @font-face {
@@ -11,26 +6,26 @@ $topic_text_linear_bg: var(--topic_text_linear_bg, #b5b5f450);
 }
 #topic_main {
   width: max(1440px,100vw);
-  background: $topic_bg;
+  background: $fill_body;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 font-family: 'misans';
   min-height: 100vh;
-  color: $normal_color;
+  color: $text;
   display: flex;
   flex-direction: column;
   
   .gt-header-textarea {
-    background: $topic_bg;
+    background: $fill;
   }
   .gt-comment-content{
-    background: $topic_bg;
+    background: $fill;
     &:hover{
       box-shadow: none;
     }
   }
   .gt-comment{
     p{
-      color: $normal_color;
+      color: $text;
     }
   }
   .topic_bg {
@@ -43,8 +38,8 @@ font-family: 'misans';
     width: 800px;
     min-height: 500px;
     border-radius: 4px;
-    background: $topic_content_bg;
-    box-shadow: $topic_content_box_shadpw 1px 2px 5px;
+    background: $fill;
+    box-shadow: $fill_shadow 1px 2px 5px;
     display: flex;
     flex-direction: column;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -61,8 +56,8 @@ font-family: 'misans';
       margin: 32px auto;
       position: relative;
       background:
-      -webkit-linear-gradient(top, transparent 39px, $topic_text_linear_bg 40px),
-      -webkit-linear-gradient(left, transparent 39px, $topic_text_linear_bg 40px);
+      -webkit-linear-gradient(top, transparent 39px, $primary_mix_8 40px),
+      -webkit-linear-gradient(left, transparent 39px, $primary_mix_8 40px);
       background-size: 40px 40px;
 
       &::after{

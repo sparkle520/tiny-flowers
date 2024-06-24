@@ -1,0 +1,26 @@
+$primary: var(--primary, #9966ff); //主题色 
+$fill_primary: var(--fill_primary, #fff); //主题色文字的背景填充色 
+$primary_mix_1: var(--primary_mix_1, color-mix(in srgb ,$primary,#fff 10%)); 
+$primary_mix_2: var(--primary_mix_2, color-mix(in srgb ,$primary,#fff 20%)); 
+$primary_mix_3: var(--primary_mix_3, color-mix(in srgb ,$primary,#fff 30%)); 
+$primary_mix_4: var(--primary_mix_4, color-mix(in srgb ,$primary,#fff 40%)); 
+$primary_mix_5: var(--primary_mix_5, color-mix(in srgb ,$primary,#fff 50%)); 
+$primary_mix_6: var(--primary_mix_6, color-mix(in srgb ,$primary,#fff 60%)); 
+$primary_mix_7: var(--primary_mix_7, color-mix(in srgb ,$primary,#fff 70%)); 
+$primary_mix_8: var(--primary_mix_8, color-mix(in srgb ,$primary,#fff 80%)); 
+$primary_mix_9: var(--primary_mix_9, color-mix(in srgb ,$primary,#fff 90%)); 
+
+$text: var(--text, #4a5a6a);
+$text_title: var(--text_title, #3a4a5a);
+$text_placeholder: var(--text_placeholder, #9966ff);
+$text_subtitle: var(--text_subtitle, #5a6a7a);
+$text_secondary: var(--text_secondary, #8491a5);
+$text_link: var(--text_link, #9966ff);
+
+$fill_scroll: var(--fill_scroll, #9966ff);
+$fill_scroll_hover: var(--fill_scroll_hover, #9966ff);
+$fill_scroll_active: var(--fill_scroll_active, #9966ff);
+
+$fill: var(--fill, #fff);
+$fill_body: var(--fill_body, #fff);
+$fill_shadow: var(--fill_shadow, #5656561b);

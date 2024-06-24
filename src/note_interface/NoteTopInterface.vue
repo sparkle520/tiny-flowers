@@ -20,7 +20,7 @@
   height: 378px;
   margin-top: 90px;
   border-radius: 5px;
-  box-shadow: #1815151c 0px 4px 10px;
+  box-shadow: $fill_shadow 0px 4px 10px;
 
    animation: note_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   &::after{
@@ -28,7 +28,7 @@
     position: absolute;
     width: 100%;
     height: 80%;
-    background: linear-gradient(to bottom,transparent,rgba(34, 23, 23, 0.139));
+    background: linear-gradient(to bottom,transparent,$fill_shadow);
     bottom: 0;
     left: 0;
   }

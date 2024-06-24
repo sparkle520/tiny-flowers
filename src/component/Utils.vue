@@ -4,30 +4,17 @@
 
 <script setup>
 import {
-  reactive,
-  toRefs,
-  ref,
-  watch,
-  onBeforeMount,
+
   onUnmounted,
   onMounted,
 } from "vue";
-import { useRouter } from "vue-router";
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const {theme}  = storeToRefs(store);
 const {layout}  = storeToRefs(store);
-store.$subscribe((mutation,state)=>{
-  change_theme(state.theme)
-})
 
-const router = useRouter();
-onBeforeMount(() => {});
-import "/src/assets/css/utils.scss";
+
 onMounted(() => {
-  change_theme(theme.value);
-
   window.scrollTo(0, 0);
   document.addEventListener("scroll", scroll_handle);
 });
@@ -56,21 +43,6 @@ const view_change = () => {
 };
 
 
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    //night
-    c_c("--to_top_btn_fill", "#94709b");
-    c_c("--to_top_btn_bg", "#2d3041");
-    c_c("--to_top_btn_hover_bg", "#9fa3bc");
-  } else {
-    c_c("--to_top_btn_fill", "#c0c0c0");
-    c_c("--to_top_btn_bg", "#ffffff");
-    c_c("--to_top_btn_hover_bg", "#e2e2e2");
-  }
-};
 </script>
 <template>
   <div class="fixed utils_box f f_d_c">
@@ -90,16 +62,19 @@ const change_theme = (current_theme) => {
           height="16"
         >
           <path
+          class="utils_path_1"
             d="M586.159273 127.429895m18.243364 0l255.40709 0q18.243364 0 18.243364 18.243364l0 741.592731q0 18.243364-18.243364 18.243363l-255.40709 0q-18.243364 0-18.243364-18.243363l0-741.592731q0-18.243364 18.243364-18.243364Z"
             fill="#747474"
             p-id="35606"
           ></path>
           <path
+          class="utils_path_2"
             d="M859.809727 923.6615h-255.40709a36.486727 36.486727 0 0 1-36.486728-36.486727V145.946909a36.486727 36.486727 0 0 1 36.486728-36.486727h255.40709a36.486727 36.486727 0 0 1 36.486728 36.486727v741.227864a36.486727 36.486727 0 0 1-36.486728 36.486727z m0-36.486727zM604.493854 145.946909v741.227864h255.40709V145.946909z"
             fill="#5E5E5E"
             p-id="35607"
           ></path>
           <path
+          class="utils_path_2"
             d="M859.809727 923.6615H118.581864a36.486727 36.486727 0 0 1-36.486728-36.486727V145.946909a36.486727 36.486727 0 0 1 36.486728-36.486727h741.227863a36.486727 36.486727 0 0 1 36.486728 36.486727v741.227864a36.486727 36.486727 0 0 1-36.486728 36.486727z m0-36.486727zM118.581864 145.946909v741.227864h741.136647V145.946909z"
             fill="#5E5E5E"
             p-id="35608"
@@ -138,10 +113,35 @@ const change_theme = (current_theme) => {
   bottom: 60px;
   gap: 10px;
   z-index:100;
-
+.utils_path_1{
+  fill: $primary;
+}
+.utils_path_2{
+  fill: $primary_mix_5;
+}
 }
 .to_top_box {
   transform: translateX(100px);
   transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  .to_top_path{
+    fill: $primary;
+  }
 }
+
+.to_top_btn {
+   
+   width: 35px;
+   height: 35px;
+   background: $fill;
+   border-radius: 5px;
+   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+   z-index: 100;
+  
+   
+
+   &:hover {
+     background-color: $primary_mix_9;
+   }
+ }
 </style>

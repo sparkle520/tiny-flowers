@@ -14,20 +14,16 @@ import {
 } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
-import change_theme from "../assets/theme/Note";
 import { useConfigStore } from "../store/config";
 import { useUserStore } from "../store/user";
 import { useNoteStore } from "../store/note";
 import { storeToRefs } from "pinia";
 const config_store = useConfigStore();
 const user_store = useUserStore();
-config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+
 const store = useConfigStore();
 const { params } = useRoute();
 const note_store = useNoteStore();
-const { theme } = storeToRefs(store);
 const { data } = storeToRefs(note_store);
 const show_filter_search_box = ref(false);
 const current_filter_list = ref([]);
@@ -71,14 +67,11 @@ const search_focus_handle = () => {
   if (search_text.value.length == 0) return;
   show_filter_search_box.value = true;
 };
-store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+
 const router = useRouter();
 onBeforeMount(() => {});
 onMounted(() => {
   window.scrollTo(0, 0);
-  change_theme(theme.value);
   document.addEventListener("click", click_handle);
   init();
 });
@@ -330,28 +323,13 @@ const go_to = (id) => {
     </div>
 </template>
 <style lang="scss" scoped>
-$note_bg_color: var(--note_bg_color, #fdfbfb);
-$note_bg_opacity: var(--note_bg_opacity, 1);
-$note_bg_top: var(--note_bg_top, #fdfbfb);
-$box_bg: var(--box_bg, #ffff);
-$note_book_box_title_color: var(--note_book_box_title_color, #e96969);
-$re_note_item_bg: var(--re_note_item_bg, #e55656);
-$text_area_color: var(--text_area_color, #ffffe2);
-$text_area_bg: var(--text_area_bg, #ffb3c5);
-$filter_search_box_color: var(--filter_search_box_color, #a0a0a0);
-$filter_search_box_hover_color: var(--filter_search_box_hover_color, #fa2121);
-$book_name_color: var(--book_name_color, #ffb3c5);
-$book_name_hover_color: var(--book_name_hover_color, #d5b3ff);
-$short_message_color: var(--short_message_color, #cca3cc);
-$book_update_time_color: var(--book_update_time_color, #a09090);
 $load_status_color: var(--load_status_color, #0ebd7d);
 $finished_status_color: var(--finished_status_color, #32cdcd);
-$foot_bg: var(--foot_bg, #ffc0cb);
 $img_shadow: var(--img_shadow, #d3010130);
 $search_box_color: var(--search_box_color, #4d4949);
 #note_main {
   width: max(1440px,100vw);
-  background:  $foot_bg;
+  background:  $fill_body;
   min-height: 100vh;
   @font-face {
   font-family: "misans";
@@ -360,20 +338,10 @@ $search_box_color: var(--search_box_color, #4d4949);
 }
 font-family: 'misans';
   ::selection {
-    color: $book_name_color;
-    background-color: $text_area_color;
+    color: $fill_primary;
+    background-color: $primary;
   }
-  &::after {
-    content: "";
-    position: fixed;
-    width: max(1440px,100vw);
-    height: 100vh;
-    top: 0;
-    left: 0;
-    opacity: $note_bg_opacity;
-    background: url("https://pic.imgdb.cn/item/65d0a5589f345e8d035d9d4b.png")
-      repeat;
-  }
+ 
   .container {
     width: 1100px;
     align-self: center;
@@ -397,7 +365,7 @@ font-family: 'misans';
         bottom: 0;
         opacity: .5;
         border-radius: 50%;
-        background: $re_note_item_bg;
+        background: $fill_body;
         filter: blur(58px);
       }
       &::before {
@@ -408,7 +376,7 @@ font-family: 'misans';
         right: 58px;
         bottom: 58px;
         border-radius: 50%;
-        background: $text_area_bg;
+        background: $primary;
         z-index: 1;
         filter: blur(86px);
       }
@@ -416,7 +384,7 @@ font-family: 'misans';
         width: 1100px;
         z-index: -1;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        background: $box_bg;
+        background: $fill;
 
         height: 340px;
         border-radius: inherit;
@@ -427,7 +395,7 @@ font-family: 'misans';
         .title {
           font-size: 1.5em;
           font-weight: 900;
-          color: $note_book_box_title_color;
+          color: $primary;
           margin: 16px;
           height: 30px;
         }
@@ -445,7 +413,7 @@ font-family: 'misans';
             z-index: 10;
             background: #ffff;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-            box-shadow: #27262619 0px 6px 15px 0px;
+            box-shadow: $fill_shadow 0px 6px 15px 0px;
            
             &:hover{
               .text_area{
@@ -466,6 +434,7 @@ font-family: 'misans';
                 width: 208px;
               height: 276px;
               object-fit: cover;
+              border-radius: 10px;
               }
             }
             .text_area_box{
@@ -483,8 +452,7 @@ font-family: 'misans';
               .circle_breath {
                 opacity: 0;
 
-            background: $book_name_color;
-            box-shadow: 0 0 0 0 $book_name_color;
+            box-shadow: 0 0 0 0 $primary_mix_3;
             height:32px;
             width: 32px;
             
@@ -492,23 +460,7 @@ font-family: 'misans';
             animation: circle_breath 2.4s infinite;
         }
 
-        @keyframes circle_breath {
-            0% {
-                transform: scale(0.60);
-                /* 注意rgba中的a的设置 */
-                box-shadow: 0 0 0 0 $text_area_bg;
-            }
-
-            60% {
-                transform: scale(1);
-                box-shadow: 0 0 0 32px #cc499800;
-            }
-
-            100% {
-                transform: scale(0.60);
-                box-shadow: 0 0 0 0 #cc499800;
-            }
-        }
+      
               .text_area_bg{
                 bottom: -350px;
                 transform: scale(.4);
@@ -516,7 +468,7 @@ font-family: 'misans';
                 pointer-events: none;
                 filter: blur(40px);
                 path{
-                  fill: $note_book_box_title_color;
+                  fill: $primary_mix_4;
                 }
               }
             }
@@ -532,7 +484,7 @@ font-family: 'misans';
               transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 
               bottom: 0;
-              color: $text_area_color;
+              color: $fill_primary;
               left: 0;
               border-bottom-left-radius: 10px;
               border-bottom-right-radius: 10px;
@@ -549,12 +501,12 @@ font-family: 'misans';
       width: 1100px;
       border-radius: 15px;
       margin-top: 32px;
-      background: $box_bg;
+      background: $fill;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       -webkit-backdrop-filter: blur(6px);
-      box-shadow: #27262619 0px 6px 15px 0px;
+      box-shadow:$fill_shadow 0px 6px 15px 0px;
       .search_box {
         width: 550px;
         height: 38px;
@@ -563,17 +515,17 @@ font-family: 'misans';
         .filter_search_box {
           width: 100%;
           max-height: 226px;
-          background: $box_bg;
+          background: $fill;
           bottom: 0;
           z-index: 100;
           transform: translateY(120%);
-          box-shadow: #8787872f 2px 3px 10px;
+          box-shadow: $fill_shadow 2px 3px 10px;
           border-radius: 10px;
           overflow-y: scroll;
           .query_time {
             margin-left: 16px;
             margin-bottom: 8px;
-            color: $note_book_box_title_color;
+            color: $primary;
             font-size: 0.7em;
           }
           ul {
@@ -583,10 +535,10 @@ font-family: 'misans';
             gap: 8px;
             li {
               word-wrap: break-word;
-              color: $filter_search_box_color;
+              color: $text_secondary;
               font-size: 1.1em;
               &:hover {
-                color: $filter_search_box_hover_color;
+                color: $primary;
               }
             }
           }
@@ -596,7 +548,7 @@ font-family: 'misans';
           top: 50%;
           transform: translateY(-50%);
           path {
-            fill: $book_name_color;
+            fill: $primary;
           }
         }
         &:hover {
@@ -611,21 +563,24 @@ font-family: 'misans';
           border-radius: 10px;
           outline: none;
           padding: 0 32px;
-          background: $box_bg;
+          background: $fill;
           color: $search_box_color;
 
           border: none;
           font-size: 1.1em;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-          box-shadow: $note_book_box_title_color 0 0 0 1px;
+          box-shadow: $primary 0 0 0 1px;
 
           &:hover {
-            background: $box_bg;
-            box-shadow: $note_book_box_title_color 0px 4px 5px;
+            background: $fill;
+            box-shadow: $primary 0px 4px 5px;
           }
           &:focus {
-            background: $box_bg;
-            box-shadow: $note_book_box_title_color 0px 4px 5px;
+            background: $fill;
+            box-shadow: $primary 0px 4px 5px;
+          }
+          &::placeholder{
+            color: $text_placeholder;
           }
         }
       }
@@ -642,7 +597,7 @@ font-family: 'misans';
           height: 100%;
           padding: 0;
           padding-top: 16px;
-          border-top: $book_name_color 2px solid;
+          border-top: $primary_mix_4 2px solid;
           grid-template-columns: repeat(3, 1fr);
           flex-wrap: wrap;
           gap: 16px;
@@ -650,7 +605,7 @@ font-family: 'misans';
           .book_item {
             list-style: none;
             border-radius: 10px;
-            box-shadow: #27262619 0px 6px 15px 0px;
+            box-shadow: $fill_shadow 0px 6px 15px 0px;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
             &::before {
               content: "";
@@ -663,7 +618,7 @@ font-family: 'misans';
               z-index: -2;
             }
             &:hover {
-              box-shadow: #27262619 0px 3px 10px 0px;
+              box-shadow: $fill_shadow 0px 3px 10px 0px;
               transform: scale(0.96);
               &::before {
               }
@@ -674,7 +629,7 @@ font-family: 'misans';
               }
             }
             height: 150px;
-            background: $box_bg;
+            background: $fill;
             .book_item_inner {
               margin: 8px;
               z-index: 11;
@@ -691,7 +646,7 @@ font-family: 'misans';
                   height: inherit;
                   border-radius: inherit;
                   object-fit: cover;
-                  box-shadow: $img_shadow 0px 6px 15px 0px;
+                  box-shadow: $primary_mix_6 3px 5px 10px 0px;
                 }
               }
               .book_text_area {
@@ -702,9 +657,9 @@ font-family: 'misans';
                   font-size: 1.2em;
                   font-weight: 600;
                   user-select: none;
-                  color: $book_name_color;
+                  color: $text_title;
                   &:hover {
-                    color: $book_name_hover_color;
+                    color: $primary;
                   }
                 }
                 .short_message {
@@ -716,13 +671,13 @@ font-family: 'misans';
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
                   overflow: hidden;
-                  color: $short_message_color;
+                  color: $text_subtitle;
                 }
                 .book_item_bottom {
                   margin-top: auto;
                   .book_update_time {
                     font-size: 0.8em;
-                    color: $book_update_time_color;
+                    color: $text_secondary;
                   }
                   .load_status {
                     font-size: 0.8em;
@@ -751,19 +706,19 @@ font-family: 'misans';
 }
 .note_foot {
   width: max(1440px,100vw);
-  background: $foot_bg;
+  background: $fill_body;
     z-index: 10;
     width: inherit;
     height: 200px;
     gap:16px;
     .title_foot {
       font-size: 16px;
-      color: $short_message_color;
+      color: $primary;
     }
     .text_foot {
       font-size: 14px;
       font-weight: 700;
-      color: $short_message_color;
+      color: $primary;
     }
     .left_foot {
       width: 300px;

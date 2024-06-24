@@ -134,17 +134,6 @@ $foot_bg: var(--foot_bg, #e96969);
   width: max(1440px,100vw);
   min-height: 100vh;
   background: $note_info_main_bg;
- 
-      // &::after{
-      //   content: '';
-      //   position: fixed;
-      //   width: 100vw;
-      //   height: 100vh;
-      //   background:
-      // -webkit-linear-gradient(left, transparent 39px, $note_top_mid_box_h1_color 40px);
-      // background-size: 40px 40px;
-      // z-index: 0;
-      // }
   @font-face {
   font-family: "misans";
   src: url("/src/assets/font/misans.ttf");

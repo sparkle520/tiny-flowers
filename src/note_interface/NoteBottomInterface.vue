@@ -8,7 +8,6 @@ import { useNoteStore } from "/src/store/note.js";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 
-import c_c from "@/assets/js/utils.js";
 import Gitalk from "gitalk";
 const { params } = useRoute();
 const router = useRouter();
@@ -22,9 +21,7 @@ onBeforeMount(() => {
 });
 onUnmounted(() => {
 });
-config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+
 const pre = ref();
 const next = ref();
 const init_pre_next = () => {
@@ -41,8 +38,6 @@ const init_pre_next = () => {
   }
 };
 onMounted(() => {
-  change_theme(config_store.theme);
-
     init_pre_next();
     let gitalk = new Gitalk({
       clientID: "429076372c73a03552c6",
@@ -57,17 +52,7 @@ onMounted(() => {
     });
     gitalk.render("gitalk-container");
 });
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    c_c("--topic_author_info_box_color", "#788086");
-    c_c("--topic_author_info_box_bg", "#1e2433");
-    c_c("--topic_author_info_inner_box_color", "#f5f5f5");
-  } else {
-    c_c("--topic_author_info_box_color", "#b0c4de");
-    c_c("--topic_author_info_box_bg", "#f8f8ff");
-    c_c("--topic_author_info_inner_box_color", "#78c1f8");
-  }
-};
+
 </script>
 <template>
   <div id="topic_bottom_main">
@@ -107,13 +92,7 @@ const change_theme = (current_theme) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$topic_author_info_box_color: var(--topic_author_info_box_color, #b0c4de);
-$topic_author_info_box_bg: var(--topic_author_info_box_bg, #f8f8ff);
-$normal_color: var(--normal_color, #f8f8ff);
-$topic_author_info_inner_box_color: var(
-  --topic_author_info_inner_box_color,
-  #1e2433
-);
+
 
 #topic_bottom_main {
   width: 100%;
@@ -126,26 +105,26 @@ $topic_author_info_inner_box_color: var(
     margin: 0 auto;
     border-radius: 10px;
     height: 12vh;
-    box-shadow: #5a5a5a27 0px 3px 10px;
+    box-shadow: $fill_shadow 0px 3px 10px;
     .note_switch_item {
       width: 50%;
       height: inherit;
       div {
-        margin-left: 10vh;
-        margin-bottom: 1vh;
+        margin-left: 32px;
         transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
         &:first-child {
           font-weight: 900;
           user-select: none;
+          margin-bottom: 8px;
         }
         &:last-child {
-          color: $normal_color;
+          color: $text_subtitle;
           font-size: 14px;
           user-select: none;
           font-weight: 900;
           &:hover {
-            color: #00cbff;
+            color: $primary;
           }
         }
       }
@@ -163,22 +142,6 @@ $topic_author_info_inner_box_color: var(
     width: 90%;
     margin: 0 auto;
   }
-  .topic_author_info_box {
-    width: 90%;
-    background: $topic_author_info_box_bg;
-    border-radius: 5px;
-    box-shadow: 0 0 5px $topic_author_info_box_color;
-    font-weight: 900;
-    margin: 2vh auto;
-    color: $topic_author_info_box_color;
-    .topic_author_info_inner_box {
-      margin: 1.5vw;
-      gap: 1vh;
-    }
-    span {
-      color: $topic_author_info_inner_box_color;
-      margin-left: 0.5vw;
-    }
-  }
+  
 }
 </style>

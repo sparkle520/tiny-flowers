@@ -62,7 +62,7 @@ onMounted(() => {
     width: 100%;
     .personal_item {
     width: 100%;
-    background-color: $item_bg;
+    background-color: red;
     animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     border-radius: 5px;
     box-shadow: $item_shadow 2px 3px 10px;

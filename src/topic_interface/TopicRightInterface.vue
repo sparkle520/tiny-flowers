@@ -3,11 +3,10 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, onBeforeMount, onMounted } from "vue";
+import {  onBeforeMount, onMounted } from "vue";
 import { useUserStore } from "/src/store/user.js";
 import { useTopicStore } from "/src/store/topic.js";
 import { useNoteStore } from "/src/store/note.js";
-import c_c from "@/assets/js/utils.js";
 
 import { useConfigStore } from "../store/config";
 const config_store = useConfigStore();
@@ -16,11 +15,9 @@ const topic_store = useTopicStore();
 const note_store = useNoteStore();
 onBeforeMount(() => {});
 onMounted(() => {
-  change_theme(config_store.theme);
   change_layout(config_store.layout);
 });
 config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
   change_layout(state.layout);
 });
 const change_layout = (current_layout) => {
@@ -31,25 +28,7 @@ const change_layout = (current_layout) => {
     topic_right_main.style.display = "none";
   }
 };
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    c_c("--bg_color", "#0b0e14");
-    c_c("--color", "#f7f7f7");
-    c_c("--personal_item_shadow", "transparent");
-    c_c("--item_bg", "#242b3d");
-    c_c("--item_shadow", "#242b34");
-    c_c("--topic_classification_color", "#5e6d78");
-    c_c("--topic_classification_num_color", "#b5b9d6");
-  } else {
-    c_c("--bg_color", "#f7f3f5");
-    c_c("--color", "#4d4949");
-    c_c("--personal_item_shadow", "#5656561b");
-    c_c("--item_bg", "#fff");
-    c_c("--item_shadow", "#cacaca4f");
-    c_c("--topic_classification_color", "#216eba");
-    c_c("--topic_classification_num_color", "#4d4949");
-  }
-};
+
 </script>
 <template>
   <div id="topic_right_main">
@@ -84,20 +63,14 @@ const change_theme = (current_theme) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$bg_color: var(--bg_color, #fdfbfb);
-$color: var(--color, #4d4949);
-$item_bg: var(--item_bg, #ffff);
-$item_shadow: var(--item_shadow, #cacaca4f);
-$personal_item_shadow: var(--personal_item_shadow, #5656561b);
-$topic_classification_color: var(--topic_classification_color, #41a8a8);
-$topic_classification_num_color: var(--topic_classification_num_color, #e06530);
+
 #topic_right_main {
   width: 284px;
   .personal_item {
     width: inherit;
-    background-color: $item_bg;
+    background-color: $fill;
     border-radius: 10px;
-    box-shadow: $personal_item_shadow 1px 2px 5px;
+    box-shadow: $fill_shadow 1px 2px 5px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 30px;
     margin-bottom: 20px;
@@ -111,7 +84,7 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
       border-radius: 50%;
       margin: 16px 0;
       box-shadow: none;
-      border: $item_shadow 2px solid;
+      border: $fill_shadow 2px solid;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       &:hover {
@@ -122,11 +95,11 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     .personal_name {
       font-size: 1.5em;
       font-weight: 900;
-      color: $color;
+      color: $text;
     }
     .personal_signature {
       margin: 20px 0;
-      color: $color;
+      color: $text;
       font-size: .9em;
     }
     .topic_class_box{
@@ -135,12 +108,12 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     .topic_classification_total_box {
       width: 33.333%;
       h3 {
-        color: $topic_classification_color;
+        color: $primary;
         margin: 0;
         font-size: 17px;
       }
       span {
-        color: $topic_classification_num_color;
+        color: $text;
 
         font-size: 14px;
         margin-top: 20px;

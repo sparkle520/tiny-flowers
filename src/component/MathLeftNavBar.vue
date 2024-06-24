@@ -6,41 +6,18 @@
  * @version 1.0
 -->
 <script setup>
-import { onMounted, toRef, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { defineEmits } from "vue";
 import { useMathDirectoryStore } from "/src/store/MathDirectory.js";
-import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
-import { useConfigStore } from "../store/config";
-const store = useConfigStore();
-const { theme } = storeToRefs(store);
-store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+
 const router = useRouter();
 const math_directory_store = useMathDirectoryStore();
 const emit = defineEmits(["book-text"]);
 
 const data = ref(math_directory_store.data);
-const c_c = (mut_val, color) => {
-  document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
-};
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    c_c("--math_left_nav_main_color", "#fff");
-    c_c("--left_nav_bg", "#242b3d");
-    c_c("--left_nav_active_color", "#b5b9d6");
-    c_c("--left_nav_border", "#b5b9d6");
-  } else {
-    c_c("--math_left_nav_main_color", "#757474");
-    c_c("--left_nav_bg", "#ffff");
-    c_c("--left_nav_active_color", "#9966ff");
-    c_c("--left_nav_border", "#9966ff");
-    
-  }
-};
+
 onMounted(() => {
-  change_theme(theme.value);
   data.value.forEach((item, index) => {
     Object.assign(item, { show_children: ref(false) });
     Object.assign(item, { active: ref(false) });
@@ -89,10 +66,6 @@ const show_children = (item) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$math_left_nav_main_color: var(--math_left_nav_main_color, #393e46);
-$left_nav_bg: var(--left_nav_bg, #ffff);
-$left_nav_active_color: var(--left_nav_active_color, #0bb890);
-$left_nav_border: var(--left_nav_border, #a5e3ba);
 @font-face {
   font-family: "misans";
   src: url("/src/assets/font/misans.ttf");
@@ -105,24 +78,25 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
   margin-left: 16px;
   border-radius: 5px;
   overflow: scroll;
-  color: $math_left_nav_main_color;
+  color: $text;
   font-family: 'misans';
   .left_nav {
-    box-shadow: #0909090c 0px 0px 20px;
-    background: $left_nav_bg;
+    box-shadow: $fill_shadow 0px 0px 20px;
+    background: $fill;
     border-radius: 5px;
     padding: 16px 0;
     padding-top: 0;
     h3{
       margin: 0;
       padding:12px 16px ;
+      color: $primary;
       font-size: 14px;
       height: 38px;
       padding: 16px;
       line-height: 38px;
     }
     .left_nav_ul{
-      border-top: $left_nav_border 2px solid;
+      border-top: $primary_mix_4 2px solid;
       margin-top:0 ;
     }
 
@@ -130,7 +104,7 @@ $left_nav_border: var(--left_nav_border, #a5e3ba);
 }
 
 .active {
-  color: $left_nav_active_color;
+  color: $primary;
 }
 .nav_item {
   margin-bottom: 2px;
@@ -171,7 +145,7 @@ transform-origin: bottom left;
     position: relative;
     &::after{
     content: '';
-    background: $math_left_nav_main_color;
+    background: $text_secondary;
     position: absolute;
     max-width: 148px;
     width: 100%;
@@ -200,7 +174,7 @@ transform-origin: bottom left;
 }
 
 a {
-  color: $math_left_nav_main_color;
+  color: $text_secondary;
   text-decoration: none;
 }
 

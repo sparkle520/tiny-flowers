@@ -6,8 +6,6 @@
 import { onBeforeMount, ref, onMounted, nextTick, onUnmounted } from "vue";
 import { useUserStore } from "/src/store/user.js";
 import { useTopicStore } from "/src/store/topic.js";
-import c_c from "@/assets/js/utils.js";
-import emitter from "@/assets/config/mitt_bus.js";
 import Gitalk from "gitalk";
 
 import { useConfigStore } from "../store/config";
@@ -19,9 +17,7 @@ onBeforeMount(() => {
 });
 onUnmounted(() => {
 });
-config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+
 topic_store.$subscribe((mutation, state) => {
 });
 const props =ref({
@@ -39,7 +35,6 @@ const props =ref({
 })
 const link_pre = "https://sparkle520.github.io/TinyFlowers/#";
 onMounted(() => {
-  change_theme(config_store.theme);
 
     const topic_author = document.querySelector(".topic_author");
     const topic_link = document.querySelector(".topic_link");
@@ -65,17 +60,7 @@ onMounted(() => {
     });
     gitalk.render("gitalk-container");
 });
-const change_theme = (current_theme) => {
-  if (current_theme) {
-    c_c("--topic_author_info_box_color", "#788086");
-    c_c("--topic_author_info_box_bg", "#1e2433");
-    c_c("--topic_author_info_inner_box_color", "#f5f5f5");
-  } else {
-    c_c("--topic_author_info_box_color", "#b0c4de");
-    c_c("--topic_author_info_box_bg", "#f8f8ff");
-    c_c("--topic_author_info_inner_box_color", "#78c1f8");
-  }
-};
+
 </script>
 <template>
   <div id="topic_bottom_main">
@@ -89,12 +74,7 @@ const change_theme = (current_theme) => {
   </div>
 </template>
 <style lang="scss" scoped>
-$topic_author_info_box_color: var(--topic_author_info_box_color, #b0c4de);
-$topic_author_info_box_bg: var(--topic_author_info_box_bg, #f8f8ff);
-$topic_author_info_inner_box_color: var(
-  --topic_author_info_inner_box_color,
-  #1e2433
-);
+
 
 #topic_bottom_main {
   width: 100%;
@@ -107,18 +87,18 @@ $topic_author_info_inner_box_color: var(
   }
   .topic_author_info_box {
     width: 90%;
-    background: $topic_author_info_box_bg;
+    background: $fill;
     border-radius: 5px;
-    box-shadow: 0 0 5px $topic_author_info_box_color;
+    box-shadow: 0 0 5px $fill_shadow;
     font-weight: 900;
     margin: 2vh auto;
-    color: $topic_author_info_box_color;
+    color: $primary;
     .topic_author_info_inner_box {
       margin: 1.5vw;
       gap: 1vh;
     }
     span {
-      color: $topic_author_info_inner_box_color;
+      color: $text_link;
       margin-left: 0.5vw;
     }
     .topic_link {
