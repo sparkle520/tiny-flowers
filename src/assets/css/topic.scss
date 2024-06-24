@@ -41,13 +41,21 @@ font-family: 'misans';
   }
   .topic_content {
     width: 800px;
+    min-height: 500px;
     border-radius: 4px;
     background: $topic_content_bg;
     box-shadow: $topic_content_box_shadpw 1px 2px 5px;
     display: flex;
     flex-direction: column;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    
+    animation: topic_content 5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    @keyframes topic_content {
+      0%{
+        opacity: 0;
+      }100%{
+        opacity: 1;
+      }
+    }
     .topic_text {
       width: 96%;
       margin: 32px auto;

@@ -54,7 +54,7 @@ const change_theme = (current_theme) => {
     c_c("--page_item_box_shadow", "transparent");
   } else {
     c_c("--page_item_active_color", "#ffff");
-    c_c("--page_item_active_bg", "#b7d4d8");
+    c_c("--page_item_active_bg", "#9966ff");
     c_c("--page_item_color", "#5e5e5e");
     c_c("--page_item_bg", "#ffff");
     c_c("--page_item_box_shadow", "#dcdcdc49");

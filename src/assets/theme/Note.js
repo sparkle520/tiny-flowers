@@ -26,22 +26,22 @@ const change_theme = (current_theme) =>{
 
       c_c("--note_bg_color", "#fdfbfb");
       c_c("--note_bg_opacity", ".05");
-      c_c("--note_bg_top", "#fdfbfb");
+      c_c("--note_bg_top", "#ffb3c5");
       c_c("--box_bg", "#ffff");
-      c_c("--note_book_box_title_color", "#e96969");
-      c_c("--re_note_item_bg", "#d3010130");
+      c_c("--note_book_box_title_color", "#ae80ff");
+      c_c("--re_note_item_bg", "#c199ff");
       c_c("--text_area_color", "#ffffe2");
-      c_c("--text_area_bg", "#ff7b5a");
+      c_c("--text_area_bg", "#9966ff");
       c_c("--filter_search_box_color", "#a0a0a0");
-      c_c("--filter_search_box_hover_color", "#fa2121");
-      c_c("--book_name_color", "#ffb3c5");
-      c_c("--book_name_hover_color", "#d5b3ff");
-      c_c("--short_message_color", "#cca3cc");
-      c_c("--book_update_time_color", "#a09090");
+      c_c("--filter_search_box_hover_color", "#9966ff");
+      c_c("--book_name_color", "#9966ff");
+      c_c("--book_name_hover_color", "#9966ff");
+      c_c("--short_message_color", "#7a8a9a");
+      c_c("--book_update_time_color", "#aaaaaa");
       c_c("--load_status_color", "#0ebd7d");
       c_c("--finished_status_color", "#32cdcd");
       c_c("--foot_bg", "#fdfbfb");
-      c_c("--img_shadow", "#d3010130");
+      c_c("--img_shadow", "#e2cbff");
       c_c("--search_box_color", "#393e46");
     }
   }

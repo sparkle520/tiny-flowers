@@ -50,7 +50,7 @@ const emits = defineEmits(["music_change"]);
 const nav_list = [
   {
     index: 0,
-    name: "首页",
+    name: "主页",
     e_name: "home",
     path: "/home",
   },
@@ -141,7 +141,7 @@ const theme_change = () => {
 };
 </script>
 <template>
-  <div id="top_nav_main" class="nav_main">
+  <div id="top_nav_main" class="nav_main f a_c j_c_c">
     <div class="content f f_d_r r">
     <div class="a stave f f_d_c">
       <div v-for="item in 5" :key="item" class="stave_line"></div>
@@ -153,14 +153,13 @@ const theme_change = () => {
           <div class="logo f a_c j_c_c"
           @click="link_to(nav_list[0].path)"
           >
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 200 200" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"><path fill="url(&quot;#SvgjsLinearGradient1232&quot;)" fill-rule="evenodd" d="M99.994 183.711C106.781 191.856 113.567 200 127.14 200c31.244 0 40.269-41.556 40.281-72.844 0-13.572 8.144-20.358 16.289-27.144C191.855 93.225 200 86.439 200 72.868c0-31.254-41.616-40.29-72.849-40.29-13.572 0-20.359-8.145-27.145-16.29C93.219 8.145 86.433 0 72.86 0 41.605 0 32.568 41.614 32.568 72.844c0 13.573-8.142 20.359-16.284 27.145C8.142 106.775 0 113.56 0 127.132c0 31.253 41.605 40.29 72.849 40.29 13.572 0 20.359 8.144 27.145 16.288ZM100 137c20.435 0 37-16.565 37-37 0-20.434-16.565-37-37-37-20.434 0-37 16.566-37 37 0 20.435 16.566 37 37 37Z" clip-rule="evenodd"></path><defs><linearGradient gradientTransform="rotate(0 0.5 0.5)" id="SvgjsLinearGradient1232"><stop stop-opacity=" 1" stop-color="rgba(105, 234, 203)" offset="0"></stop><stop stop-opacity=" 1" stop-color="rgba(234, 204, 248)" offset="0.48"></stop><stop stop-opacity=" 1" stop-color="rgba(249, 249, 249)" offset="1"></stop></linearGradient></defs></svg>
-            <span> Tiny Flowers </span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 200 200" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"><path fill="url(&quot;#SvgjsLinearGradient1232&quot;)" fill-rule="evenodd" d="M99.994 183.711C106.781 191.856 113.567 200 127.14 200c31.244 0 40.269-41.556 40.281-72.844 0-13.572 8.144-20.358 16.289-27.144C191.855 93.225 200 86.439 200 72.868c0-31.254-41.616-40.29-72.849-40.29-13.572 0-20.359-8.145-27.145-16.29C93.219 8.145 86.433 0 72.86 0 41.605 0 32.568 41.614 32.568 72.844c0 13.573-8.142 20.359-16.284 27.145C8.142 106.775 0 113.56 0 127.132c0 31.253 41.605 40.29 72.849 40.29 13.572 0 20.359 8.144 27.145 16.288ZM100 137c20.435 0 37-16.565 37-37 0-20.434-16.565-37-37-37-20.434 0-37 16.566-37 37 0 20.435 16.566 37 37 37Z" clip-rule="evenodd"></path><defs><linearGradient gradientTransform="rotate(0 0.5 0.5)" id="SvgjsLinearGradient1232"><stop stop-opacity=" 1" stop-color="rgba(105, 234, 203)" offset="0"></stop><stop stop-opacity=" 1" stop-color="rgba(234, 204, 248)" offset="0.48"></stop><stop stop-opacity=" 1" stop-color="rgba(249, 249, 249)" offset="1"></stop></linearGradient></defs></svg>
           </div>
 
           <ul class="nav_list f f_d_r">
             <li
               :key="item"
-              class="nav_item nav_item_com f f_d_r a_c"
+              class="nav_item nav_item_com f r f_d_r a_c"
               v-for="item in nav_list"
               @click="link_to(item.path)"
             >
@@ -190,73 +189,64 @@ $nav_bg_color: var(--nav_bg_color, #0ebd7d);
 $nav_fixed_shadow: var(--nav_fixed_shadow, #8e8e8e30);
 $nav_item_color: var(--nav_item_color, #5e6d78);
 $nav_item_active_color: var(--nav_item_active_color, #f67d61);
-$nav_item_hover_color: var(--nav_item_hover_color, #f76700);
-
-
-@font-face {
-  font-family: "orbitron-black";
-  src: url("/src/assets/font/orbitron-black.ttf");
-}
 
 #top_nav_main {
   position: fixed;
   width: max(1440px,100vw);
   // box-shadow: #30313617 2px 0px 10px;
-  transition: all 10s cubic-bezier(0.075, 0.82, 0.165, 1);
-  font-family: "orbitron-black";
-  height: 80px;
-  top: 0;
+  transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  height: 60px;
+  top: 16px;
   .content {
-    width: max(1440px,100vw);
+    width: max(1100px,60vw);
     z-index: 11;
     background: $nav_bg_color;
     height: inherit;
-    transition: all 10s cubic-bezier(0.075, 0.82, 0.165, 1);
-   
+    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+   border-radius: 60px;
     .nav_box {
       top: 50%;
       left:50%;
-      width: 1200px;
+      width: max(1036px,60vw);
       transform: translate(-50%,-50%);
       .logo {
-        font-family: "orbitron-black";
-        color: $nav_item_color;
-        span {
-          margin:0 16px;
-          user-select: none;
-        }
         .icon{
-          path{
-            fill: $nav_item_active_color;
-          }
+        transform: scale(.6);
         }
       }
       .nav_list {
         padding: 0;
         user-select: none;
         .nav_item_active {
-          font-size: 15px;
+          font-size: 14px;
           color: $nav_item_active_color;
-          font-weight: 900;
           margin: 0 10px;
+          font-weight: 900;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+          &::after{
+            width: 100%;
+            height: 4px;
+            content: '';
+            position: absolute;
+            background:$nav_item_active_color;
+            top: -22px;
+          }
         }
         .nav_item {
-          font-size: 15px;
+          font-size: 14px;
           color: $nav_item_color;
           font-weight: 900;
-
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
           &:hover {
-            color: $nav_item_hover_color;
+            opacity: .5;
           }
         }
       }
 
       .switch {
-        font-size: 17px;
+        font-size: 14px;
         margin: auto 0;
         margin-left: 128px;
 

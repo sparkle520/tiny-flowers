@@ -30,22 +30,22 @@ const change_theme = (current_theme) => {
     } else {
       c_c("--math_bg_color", "#fdfbfb");
       c_c("--math_bg_opacity", "1");
-      c_c("--math_bg_top", "#fdfbfb");
+      c_c("--math_bg_top", "#9966ff99");
       // c_c("--math_li_bg", "#a5e3ba");
-       c_c("--math_li_bg", "#87ceeb");
+       c_c("--math_li_bg", "#9966ff");
       c_c("--math_li_color", "#ffff");
       c_c("--math_com_box_bg", "#ffff");
       c_c("--math_com_box_shadow", "#d0cfcf45");
       // c_c("--condition_box", "#a5e3ba");
-      c_c("--condition_box", "#87ceeb");
+      c_c("--condition_box", "#9966ff");
     
-      c_c("--tag_sure_btn_color", "#87ceeb");
+      c_c("--tag_sure_btn_color", "#9966ff");
       c_c("--tag_sure_btn_bg", "#fff");
-      c_c("--math_color", "#87ceeb");
-      c_c("--subject_hover_name_color", "#a6e3e9");
-      c_c("--subject_name_color", "#87ceeb");
+      c_c("--math_color", "#9966ff");
+      c_c("--subject_hover_name_color", "#ae80ff");
+      c_c("--subject_name_color", "#9966ff");
       c_c("--content_item_box_hover", "#e3f5de");
-      c_c("--content_tag_item_bg", "#769fcd");
+      c_c("--content_tag_item_bg", "#7c4de3");
       c_c("--content_item_box_color", "#ffff");
       c_c("--normal_color", "#393e46");
     }

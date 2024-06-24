@@ -25,15 +25,15 @@ const change_theme = (current_theme) =>{
       c_c("--color", "#393e46");
       c_c("--item_bg", "#ffffffc7");
       c_c("--item_shadow", "#1f2d3d26");
-      c_c("--title_color", "#393e46");
+      c_c("--title_color", "#3a4a5a");
       c_c("--title_af_bg", "#22113364");
-      c_c("--tag_box_bg", "#e9696933");
-      c_c("--tag_bg", "#e96969");
-      c_c("--topic_classification_color", "#e96969");
-      c_c("--topic_classification_num_color", "#e96969");
+      c_c("--tag_box_bg", "#9966ff33");
+      c_c("--tag_bg", "#9966ff");
+      c_c("--topic_classification_color", "#ff6666");
+      c_c("--topic_classification_num_color", "#9966ff");
       c_c("--filter_search_box_bg", "#ffff");
       c_c("--tag_item_bg", "#f5f5f5");
-      c_c("--layout_hover", "#F3ACAC");
+      c_c("--layout_hover", "#f1e5ff");
     }
   }
 

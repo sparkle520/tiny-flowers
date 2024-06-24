@@ -10,11 +10,11 @@ const change_theme = (current_theme) =>{
     } else {
 
       c_c("--note_info_main_bg", "#fdfbfb");
-      c_c("--note_top_mid_box_h1_color", "#2d3041");
-      c_c("--note_top_mid_box_color", "#363333b5");
-      c_c("--read_btn_color", "#ec3755");
+      c_c("--note_top_mid_box_h1_color", "#9966ff");
+      c_c("--note_top_mid_box_color", "#aaaaaa");
+      c_c("--read_btn_color", "#9966ff");
       c_c("--read_btn_bg", "#ffff");
-      c_c("--foot_bg", "#e96969");
+      c_c("--foot_bg", "#9966ff");
      
     }
   }

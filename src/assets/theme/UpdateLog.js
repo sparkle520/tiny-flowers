@@ -12,8 +12,8 @@ const change_theme = (current_theme) => {
       c_c("--color", "#23263b");
       c_c("--li", "#ffffff89");
       c_c("--li_shadow", "#f4f2f2");
-      c_c("--striking_title_orange_color", "#f0681e");
-      c_c("--striking_title_orange_bg", "#ff7b005b");
+      c_c("--striking_title_orange_color", "#9966ff");
+      c_c("--striking_title_orange_bg", "#d2b2ff");
     }
   }
 

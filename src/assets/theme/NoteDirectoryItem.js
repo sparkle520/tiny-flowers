@@ -5,8 +5,8 @@ const change_theme = (current_theme) => {
       c_c("--note_directory_item_main_hover_color", "#9fa3bc");
      
     } else {
-      c_c("--note_directory_item_main_color", "#546E7A");
-      c_c("--note_directory_item_main_hover_color", "#e96969");
+      c_c("--note_directory_item_main_color", "#4a5a6a");
+      c_c("--note_directory_item_main_hover_color", "#9966ff");
     
     }
   };

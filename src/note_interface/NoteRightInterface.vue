@@ -100,6 +100,8 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 30px;
     margin-bottom: 20px;
+    animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
   }
   .intro {
     img {
@@ -146,5 +148,13 @@ $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
     }
   }
 
+}
+@keyframes move_left {
+  0% {
+    transform: translateX(100px) scale(1);
+  }
+  100% {
+    transform: translateX(0px) scale(1);
+  }
 }
 </style>

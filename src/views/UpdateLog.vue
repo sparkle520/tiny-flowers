@@ -17,7 +17,6 @@ store.$subscribe((mutation, state) => {
 onBeforeMount(() => {});
 onMounted(() => {
   change_theme(theme.value);
-
   window.scrollTo(0, 0);
 });
 
@@ -86,8 +85,8 @@ $bg_color: var(--bg_color, #f7f3f5);
 $color: var(--color, #000000);
 $li: var(--li, #242b3d12);
 $li_shadow: var(--li_shadow, #f4f2f2);
-$striking_title_orange_color: var(--striking_title_orange_color, #f0681e);
-$striking_title_orange_bg: var(--striking_title_orange_bg, #ff7b005b);
+$striking_title_orange_color: var(--striking_title_orange_color, #d2b2ff);
+$striking_title_orange_bg: var(--striking_title_orange_bg, #d2b2ffcc);
 #update_log_main {
   width: max(1440px,100vw);
   color: $color;

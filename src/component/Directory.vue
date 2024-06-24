@@ -18,7 +18,6 @@ store.$subscribe((mutation, state) => {
 });
 onUnmounted(() => {
   document.removeEventListener("scroll", handleScroll);
-  observe.disconnect()
 });
 const handleScroll = () => {  
     if (current_titles.value == undefined || current_titles.value == null) {
@@ -211,7 +210,7 @@ function scrollToView(scrollTop) {
 </template>
 <style lang="scss" scoped>
 $directory_list_cover_bg: var(--directory_list_cover_bg, #ffffff);
-$directory_active_color: var(--directory_active_color, #1772f6);
+$directory_active_color: var(--directory_active_color, #9966ff);
 
 $directory_color: var(--directory_color, #8491a5);
 
@@ -294,14 +293,6 @@ $directory_color: var(--directory_color, #8491a5);
   position: relative;
   color: $directory_active_color;
   font-weight: 900;
-  &::after{
-    content: url('/src/assets/imgs/svg/flower.svg');
-    position: absolute;
-   
-    left: -3px;
-    top: 57%;
-    transform: translateY(-50%) scale(.6);
-  }
   &:hover {
     color:$directory_active_color;
   }

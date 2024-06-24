@@ -24,7 +24,6 @@ store.$subscribe((mutation, state) => {
 onBeforeMount(() => {});
 onUnmounted(() => {
   document.removeEventListener("scroll", handleScroll);
-  observe.disconnect()
 });
 const handleScroll = () => {
   
@@ -219,7 +218,7 @@ function scrollToView(scrollTop) {
 <style lang="scss" scoped>
 $directory_list_bg: var(--directory_list_bg, #ffff);
 $directory_list_cover_bg: var(--directory_list_cover_bg, #9584d0);
-$normal_color: var(--normal_color, #216eba);
+$normal_color: var(--normal_color, #9966ff);
 
 #directory_list_main {
   width: 286px;
@@ -293,12 +292,12 @@ $normal_color: var(--normal_color, #216eba);
 
 .active {
   position: relative;
-  color: #1772f6;
+  color: #9966ff;
   background: $directory_list_cover_bg;
   font-weight: 900;
  
   &:hover {
-    color:#1772f6;
+    color:#9966ff;
   }
 }
 </style>

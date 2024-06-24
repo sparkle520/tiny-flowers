@@ -422,8 +422,14 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
   width: max(1440px,100vw);
   min-height: 100vh;
   color: $math_color;
-  background: linear-gradient($math_bg_top 50%,$math_bg_color);
-
+  background: $math_bg_color;
+  &::before{
+    width: 100vw;
+    height: 100vh;
+    background: $math_bg_color;
+    content: '';
+    position: fixed;
+  }
   gap: 16px;
   @font-face {
   font-family: "misans";
@@ -442,7 +448,7 @@ font-family: 'misans';
     position: fixed;
     z-index: 0;
     opacity: .4;
-  background-image: radial-gradient(circle, rgb(203 213 225) 2px, transparent 2px);
+  background-image: radial-gradient(circle, #9966ff99 2px, transparent 2px);
   background-size: 20px 20px;
   background-position: center center;
 

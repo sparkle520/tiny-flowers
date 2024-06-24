@@ -5,14 +5,12 @@ const change_theme = (current_theme) => {
         c_c("--nav_fixed_shadow", "transparent")
         c_c("--nav_item_color", "#ffff")
         c_c("--nav_item_active_color", "#e96969")
-        c_c("--nav_item_hover_color", "#e96969")
 
     } else {
-        c_c("--nav_bg_color", "#ffffffeb")
+        c_c("--nav_bg_color", "#ffffffe6")
         c_c("--nav_fixed_shadow", "transparent")
-        c_c("--nav_item_color", "#696161")
-        c_c("--nav_item_active_color", "#b399ff")
-        c_c("--nav_item_hover_color", "#c8b7f9")
+        c_c("--nav_item_color", "#aaaaaa")
+        c_c("--nav_item_active_color", "#9966ff")
     }
     let wScrY = window.scrollY;
     if(wScrY < 70){

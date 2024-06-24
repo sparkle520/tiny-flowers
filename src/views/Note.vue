@@ -351,11 +351,12 @@ $img_shadow: var(--img_shadow, #d3010130);
 $search_box_color: var(--search_box_color, #4d4949);
 #note_main {
   width: max(1440px,100vw);
-  background: linear-gradient($note_bg_top, $foot_bg);
+  background:  $foot_bg;
   min-height: 100vh;
   @font-face {
   font-family: "misans";
   src: url("/src/assets/font/misans.ttf");
+ 
 }
 font-family: 'misans';
   ::selection {
@@ -394,6 +395,7 @@ font-family: 'misans';
         height: 288px;
         left: 0;
         bottom: 0;
+        opacity: .5;
         border-radius: 50%;
         background: $re_note_item_bg;
         filter: blur(58px);

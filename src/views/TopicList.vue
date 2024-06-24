@@ -56,16 +56,19 @@ const r_i_a_o = (d)=>{
 const change_list_layout = (v) => {
   const layout_list = document.querySelectorAll(".layout");
   const topic_grid_box = document.querySelector(".topic_grid_box");
+  const topic_list_box = document.querySelector(".topic_list_box");
   if (v) {
     layout_list[0].classList.add("layout_active");
     layout_list[1].classList.remove("layout_active");
-    topic_grid_box.style.transform = "translateY(-128px)";
+    topic_grid_box.style.transform = "translateY(-36px)";
     topic_grid_box.style.opacity = 0.5;
+    topic_list_box.style.opacity = 1;
   } else {
     layout_list[1].classList.add("layout_active");
     layout_list[0].classList.remove("layout_active");
     topic_grid_box.style.transform = " translateY(0)";
     topic_grid_box.style.opacity = 1;
+    topic_list_box.style.opacity = 0;
   }
 };
 const click_handle = (e) => {
@@ -391,6 +394,7 @@ const search_focus_handle = () => {
             </svg>
           </div>
         </div>
+       <div class="topic_list_box">
         <div
           v-show="list_layout"
           @click="jump_to_topic(item.link)"
@@ -436,6 +440,7 @@ const search_focus_handle = () => {
             >
           </div>
         </div>
+       </div>
         <div class="topic_grid_box f f_d_r">
           <div
             class="topic_grid_inner_box margin_0_auto f f_d_r warp"
@@ -626,10 +631,10 @@ $tag_box_bg: var(--tag_box_bg, #dae6e7);
 $tag_bg: var(--tag_bg, #41a8a8);
 $topic_classification_color: var(--topic_classification_color, #41a8a8);
 $topic_classification_num_color: var(--topic_classification_num_color, #e06530);
-$item_classification_bg: var(--item_classification_bg, #00cbff);
+$item_classification_bg: var(--item_classification_bg, #9966ff);
 $filter_search_box_bg: var(--filter_search_box_bg, #ffffff);
 $tag_item_bg: var(--tag_item_bg, #a5e3ba);
-$tag_item_color: var(--tag_item_color, #00cbff);
+$tag_item_color: var(--tag_item_color, #9966ff);
 $layout_hover: var(--layout_hover, #f3acac);
 
 #topic_list_main {
@@ -651,7 +656,7 @@ $layout_hover: var(--layout_hover, #f3acac);
     top: 0;
     height: 100%;
 
-    background: url("https://pic.imgdb.cn/item/65d0a7e89f345e8d0368e174.png")
+    background: url("https://pic.imgdb.cn/item/65d765569f345e8d03dac4f9.png")
       repeat;
     background-size: contain;
   }
@@ -865,9 +870,7 @@ $layout_hover: var(--layout_hover, #f3acac);
     .layout_active {
       background: $layout_hover;
     }
-    .item_animation {
-      animation: fade_in 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
+   
     .topic_item {
       width: 100%;
       height: 200px;
@@ -1044,7 +1047,7 @@ $layout_hover: var(--layout_hover, #f3acac);
               border-radius: 100px;
               &:hover {
                 color: #fff;
-                background: #00cbff;
+                background: #9966ff;
               }
             }
           }
@@ -1235,6 +1238,10 @@ $layout_hover: var(--layout_hover, #f3acac);
       line-height: 22px;
 
     }
+  }
+  .topic_list_box{
+    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
   }
 @keyframes move_left {
   0% {

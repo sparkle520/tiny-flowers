@@ -80,13 +80,13 @@ const change_theme = (current_theme) => {
     c_c("--text_color", "#ffff");
     c_c("--box_bg", "#ffff");
     c_c("--recommend_item_bg", "#ffff");
-    c_c("--home_main_color", "#a393eb");
-    c_c("--page_1_title_color", "#a393eb");
+    c_c("--home_main_color", "#9966ff");
+    c_c("--page_1_title_color", "#9966ff");
     c_c("--content_box_color", "#747576");
     c_c("--title_color", "#393e46");
     c_c("--short_msg_color", "#747576");
-    c_c("--title_hover", "#a393eb");
-    c_c("--home_nav_item_box_shadow", "#a393eb");
+    c_c("--title_hover", "#9966ff");
+    c_c("--home_nav_item_box_shadow", "#9966ff");
     c_c("--rect_item_color", "#393e46");
   }
 };
@@ -801,11 +801,12 @@ $title_hover: var(--title_hover, #0ebd7d);
 $home_nav_item_box_shadow: var(--home_nav_item_box_shadow, #99edb5);
 $page_1_title_color: var(--page_1_title_color, #c6ebbd);
 $rect_item_color: var(--rect_item_color, #7D9773);
-
-
 $text_color: var(--text_color, #fff);
 $recommend_item_bg: var(--recommend_item_bg, #fff);
 $box_bg: var(--box_bg, #fff);
+
+
+
 .shape_icon {
   animation: shape 5s infinite linear both;
   z-index: 100;

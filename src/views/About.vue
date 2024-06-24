@@ -102,16 +102,7 @@ const update_f_animation = () => {
     f_word_inner_box.style.transform = "scale(0)";
   }
 };
-// const carousel_data = ref([
-//   {link:''},
-//   {link:''},
-//   {link:''},
-//   {link:'https://pic.imgdb.cn/item/65b0ff67871b83018adff204.jpg'},
-//   // { link: "https://pic.imgdb.cn/item/659c09de871b83018ad377cb.png" },
-//   // { link: "https://pic.imgdb.cn/item/65b0e41d871b83018a7822bf.webp" },
-//   // { link: "https://pic.imgdb.cn/item/659c0a3a871b83018ad5736f.png" },
-//   // { link: "https://pic.imgdb.cn/item/659bfd7e871b83018a917e4b.png" },
-// ]);
+
 const future_instance = [
   "あぁ　答えがある問いばかりを　教わってきたよ　だけど明日からは<br /><span>啊 一直以来 我们掌握的都是那些有解的问题</span>",
   "僕だけの正解をいざ　探しにゆくんだ　また逢う日まで<br><span>但从明日开始 我将追寻 属于我的答案 直至再度重逢</span>",
@@ -202,7 +193,6 @@ const get_s_dom_animation = (start, end, dom) => {
 };
 const update_s_animation_map_style = () => {
   const scroll_y = window.scrollY;
-  const more = document.querySelector(".more");
   const first_page = document.querySelector(".first_page");
   // const s_animation_box_bg_2 = document.querySelector(".s_animation_box_bg_2");
   const start =
@@ -214,18 +204,9 @@ const update_s_animation_map_style = () => {
     window.innerHeight;
   first_page.style.opacity =
     first_page.getBoundingClientRect().bottom / first_page.clientHeight;
-  // s_animation_box_bg_2.style.webkitMaskPosition = `${create_animation(
-  //   start,
-  //   end,
-  //   0,
-  //   100
-  // )(scroll_y)}% ${create_animation(start, end, 100, 0)(scroll_y)}%`;
+  
 
-  if (scroll_y > 0) {
-    more.style.opacity = 0;
-  } else {
-    more.style.opacity = 1;
-  }
+ 
   for (const [dom, animations] of s_animation_map) {
     for (const prop in animations) {
       const v = animations[prop](scroll_y);
@@ -262,8 +243,8 @@ const change_theme = (current_theme) => {
     c_c("--first_page_cover_bg", "transparent");
     c_c("--home_color", "#e60000");
     c_c("--u_w_m_btn_color", "#ff80bf");
-    c_c("--word_box_color", "#003153");
-    c_c("--f_word_box_color", "#23263b");
+    c_c("--word_box_color", "#9966ff");
+    c_c("--f_word_box_color", "#9966ff");
   }
 };
 </script>
@@ -277,43 +258,13 @@ const change_theme = (current_theme) => {
       <div class="word_box_2 a">
         <span class="common">PRIVATE BLOG<br /></span>
       </div>
-      <!-- <button class="u_w_m_btn a" @click="go_to_unknown_world_map">
-        Unknown World Map
-      </button> -->
-
-      <!-- <img
-        class="f_bg"
-        src="https://pic.imgdb.cn/item/65b0f614871b83018ab94e81.png"
-        alt=""
-      /> -->
-      <svg
-        t="1706081571224"
-        class="icon a more"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="14155"
-        width="52"
-        height="52"
-      >
-        <path
-          d="M500.408996 544.70045c3.684558 3.684558 8.674063 5.757121 13.893853 5.757121 5.21979 0 10.209295-2.072564 13.893853-5.757121L717.567616 355.406297c7.676162-7.676162 7.676162-20.111544 0-27.787706-7.676162-7.676162-20.111544-7.676162-27.787706 0L514.302849 503.018891 333.682759 322.398801c-7.676162-7.676162-20.111544-7.676162-27.787707 0-7.676162 7.676162-7.676162 20.111544 0 27.787706l194.513944 194.513943z m189.370914-59.874063L514.302849 660.303448 333.682759 479.606597c-7.676162-7.676162-20.111544-7.676162-27.787707 0-7.676162 7.676162-7.676162 20.111544 0 27.787706l194.513944 194.513943c3.684558 3.684558 8.674063 5.757121 13.893853 5.757121 5.21979 0 10.209295-2.072564 13.893853-5.757121l189.370914-189.370915c4.989505-4.989505 6.908546-12.205097 5.066267-18.96012-1.842279-6.755022-7.138831-12.051574-13.893853-13.893853-6.755022-1.765517-13.970615 0.153523-18.96012 5.143029z m0 0"
-          fill="#cdcdcd"
-          p-id="14156"
-        ></path>
-      </svg>
+     
+     
       <div class="first_page_cover a"></div>
     </div>
     <div class="second_page r">
       <div class="s_animation_box">
-        <!-- <div class="s_animation_box_bg_box a">
-          <img
-            src="https://pic.imgdb.cn/item/659d3a51871b83018a5b5766.jpg"
-            class="s_animation_box_bg_1 a"
-            alt=""
-          />
-          <div class="s_animation_box_bg_2 a"></div>
-        </div> -->
+        
         <span class="a">喜欢的作品</span>
         <ul class="f flex_direction_row a">
           <li data-order="0" class="animation_item r">
@@ -401,6 +352,11 @@ $first_page_cover_bg: var(--first_page_cover_bg, #1e243398);
 $u_w_m_btn_color: var(--u_w_m_btn_color, #ff80bf);
 $word_box_color: var(--word_box_color, #003153);
 $f_word_box_color: var(--f_word_box_color, #0a0606);
+@font-face {
+  font-family: "break";
+  src: url("/src/assets/font/break.ttf");
+}
+
 #about_main {
   width: max(1440px,100vw);
   height: 100vh;
@@ -411,33 +367,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     height: 100vh;
     background: $home_bg_color;
     z-index: 100;
-    &::after {
-      width: 40vw;
-      height: 30vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 70%;
-      content: "";
-      left: 5vw;
-      position: absolute;
-      transform: translateY(-50%);
-
-      background: #a900ff;
-    }
-    &::before {
-      right: 10vw;
-      content: "";
-      position: absolute;
-      z-index: 1;
-      background: #ffac86;
-      width: 20vw;
-      height: 20vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 20%;
-
-      transform: translateY(-50%);
-    }
+     
     // scroll-snap-align: start;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     // animation: first_page 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -466,18 +396,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
       border-radius: 6px;
       font-weight: 500;
       color: $u_w_m_btn_color;
-      &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        background: $u_w_m_btn_color;
-        height: 150px;
-        width: 200px;
-        border-radius: 50%;
-        top: 100%;
-        left: 100%;
-        transition: all 0.7s;
-      }
+      
       &:hover {
         color: #ffff;
         &::before {
@@ -524,6 +443,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
         font-weight: 900;
         line-height: 1em;
         color: $word_box_color;
+        font-family:'break' ;
         z-index: 100;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         // animation: word_1 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -552,6 +472,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
       top: 54%;
       color: $word_box_color;
       z-index: 1;
+      font-family: "break";
 
       animation: to_left 5s cubic-bezier(0.075, 0.82, 0.165, 1);
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -603,28 +524,8 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     }
   }
 
-  .more {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: more 2s infinite linear both;
-    z-index: 20;
-    path {
-      fill: #a7a7eb;
-    }
-  }
-  @keyframes more {
-    0% {
-      transform: translateY(0);
-    }
-    90% {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
+  
+ 
   .second_page {
     width: max(1440px,100vw);
     height: 400vh;
@@ -640,33 +541,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
       top: 0;
       color: $word_box_color;
       background: transparent;
-      &::after {
-        width: 40vw;
-        height: 30vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 70%;
-        content: "";
-        left: 5vw;
-        position: absolute;
-        transform: translateY(-50%);
-
-        background: #00aaff;
-      }
-      &::before {
-        right: 10vw;
-        content: "";
-        position: absolute;
-        z-index: 1;
-        background: #22c32e;
-        width: 20vw;
-        height: 10vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 40%;
-
-        transform: translateY(-50%);
-      }
+     
       // &::after {
       //   content: "";
       //   position: absolute;
@@ -814,29 +689,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
         color: $f_word_box_color;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       }
-      .t_circle_1 {
-        width: 20vw;
-        height: 20vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 50%;
-
-        transform: translateY(-50%);
-
-        left: 5em;
-        background: #ff5232;
-      }
-      .t_circle_2 {
-        right: 5em;
-        background: #f7ff00;
-        width: 20vw;
-        height: 20vw;
-        border-radius: 50%;
-        filter: blur(110px);
-        top: 50%;
-
-        transform: translateY(-50%);
-      }
+     
     }
     // scroll-snap-align: start;
   }
@@ -847,34 +700,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     // border-bottom:3px #11223318 solid ;
     // border-top:3px #11223318 solid ;
     // scroll-snap-align: start;
-    &::after {
-      width: 50vw;
-      height: 30vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 50%;
-      content: "";
-      left: 5vw;
-      position: absolute;
-      transform: translateY(-50%);
-
-      z-index: 10;
-      background: #ffd9e6;
-    }
-    &::before {
-      right: 5em;
-      content: "";
-      position: absolute;
-      z-index: 1;
-      background: #ff80bf;
-      width: 20vw;
-      height: 20vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 70%;
-
-      transform: translateY(-50%);
-    }
+    
     .f_animation_box {
       background: $home_bg_color;
       width: inherit;
@@ -973,33 +799,7 @@ $f_word_box_color: var(--f_word_box_color, #0a0606);
     //  scroll-snap-align: start;
 
     background: $home_bg_color;
-    &::after {
-      width: 40vw;
-      height: 30vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 70%;
-      content: "";
-      left: 5vw;
-      position: absolute;
-      transform: translateY(-50%);
-
-      background: #ff9d00;
-    }
-    &::before {
-      right: 10vw;
-      content: "";
-      position: absolute;
-      z-index: 1;
-      background: #00ff93;
-      width: 20vw;
-      height: 20vw;
-      border-radius: 50%;
-      filter: blur(110px);
-      top: 20%;
-
-      transform: translateY(-50%);
-    }
+    
     .latter_1 {
       
       z-index: 100;

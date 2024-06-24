@@ -31,7 +31,7 @@ change_theme(config_store.theme);
 });
 </script>
 <template>
-  <div id="note_info_main" class="f f_d_c">
+  <div id="note_info_main" class="r f f_d_c">
     <div class="note_top_box f f_d_r r">
      
       <div class="note_top_inner_box f f_d_r">
@@ -134,32 +134,33 @@ $foot_bg: var(--foot_bg, #e96969);
   width: max(1440px,100vw);
   min-height: 100vh;
   background: $note_info_main_bg;
+ 
+      // &::after{
+      //   content: '';
+      //   position: fixed;
+      //   width: 100vw;
+      //   height: 100vh;
+      //   background:
+      // -webkit-linear-gradient(left, transparent 39px, $note_top_mid_box_h1_color 40px);
+      // background-size: 40px 40px;
+      // z-index: 0;
+      // }
   @font-face {
   font-family: "misans";
   src: url("/src/assets/font/misans.ttf");
 }
 font-family: 'misans';
   .note_top_box {
-    width: inherit;
-    height: 500px;
+    width: 1100px;
     overflow: hidden;
-   
-    .top_box_bg {
-      width: 130%;
-      height: 130%;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      filter: blur(30px);
-    }
+margin: 70px auto 32px auto;
+border-radius: 10px;
     .note_top_inner_box {
       z-index: 2;
       margin: 0 auto;
-      margin-top: 70px;
      gap: 32px;
       width: 1000px;
-
+     
       height: calc(100% - 70px);
       .note_top_left_box {
         width: 268px;
@@ -167,10 +168,12 @@ font-family: 'misans';
 
         .note_top_inner_box_img {
           width: 268px;
-          height: 86%;
+          height: 362px;
           --n:4;
           --r:0deg;
           --d:0%;
+          box-shadow: #0b090918 0px 3px 10px;
+
           -webkit-mask:
     linear-gradient(var(--r), transparent var(--d), red 0 calc(100% - var(--d)), transparent 0),
     linear-gradient(calc(var(--r) + 90deg), transparent var(--d), red 0 calc(100% - var(--d)), transparent 0);
@@ -236,64 +239,7 @@ font-family: 'misans';
           margin-bottom: 8%;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           animation: shrink 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-          .button::before{
-  position: absolute;
-  content: '';
-  left: -2em;
-  right: -2em;
-  top: -2em;
-  bottom: -2em;
-  pointer-events: none;
-  transition: ease-in-out .5s;
-  background-repeat: no-repeat;
-  background-image: radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%),
-  /*  */
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%),
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%), 
-  radial-gradient(circle, #ff0081 20%, transparent 20%);
-  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%,
-  15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
-  background-position: 18% 40%, 20% 31%, 30% 30%, 40% 30%, 50% 30%, 57% 30%, 65% 30%, 80% 32%, 15% 60%,
-  83% 60%, 18% 70%, 25% 70%, 41% 70%, 50% 70%, 64% 70%, 80% 71%;
-  animation: bubbles ease-in-out .75s forwards;
-}
-
-.button:active {
-  transform: scale(0.95);
-  background-color: #f3037c;
-  box-shadow: 0 2px 25px rgba(233, 30, 99, 0.5);
-}
-.button:active::before {
-  animation: none;
-  background-size: 0;
-}
-@keyframes bubbles {
-  0% {
-    background-position: 18% 40%, 20% 31%, 30% 30%, 40% 30%, 50% 30%, 57% 30%, 65% 30%, 80% 32%, 15% 60%,
-  83% 60%, 18% 70%, 25% 70%, 41% 70%, 50% 70%, 64% 70%, 80% 71%;
-  }
-  50% {
-    background-position: 10% 44%, 0% 20%, 15% 5%, 30% 0%, 42% 0%, 62% -2%, 75% 0%, 95% -2%, 0% 80%,
-  95% 55%, 7% 100%, 24% 100%, 41% 100%, 55% 95%, 68% 96%, 95% 100%;
-  }
-  100% {
-    background-position: 5% 44%, -5% 20%, 7% 5%, 23% 0%, 37% 0, 58% -2%, 80% 0%, 100% -2%, -5% 80%,
-  100% 55%, 2% 100%, 23% 100%, 42% 100%, 60% 95%, 70% 96%, 100% 100%;
-    background-size: 0% 0%;
-  }
-}
+         
 
           &:hover {
             color: $read_btn_bg;
@@ -323,8 +269,11 @@ font-family: 'misans';
   }
 
   .note_directory_box {
-    width: max(1440px,100vw);
-    background: transparent;
+    width: 1100px;
+    margin: 0 auto;
+    margin-bottom: 32px;
+    border-radius: 10px;
+    z-index: 1;
     .note_directory {
       background: transparent;
       margin: 36px auto;
