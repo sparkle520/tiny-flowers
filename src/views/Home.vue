@@ -10,20 +10,18 @@ import {
   onUnmounted,
 } from "vue";
 import { useRouter } from "vue-router";
-import { useConfigStore } from "../store/config";
-import { storeToRefs } from "pinia";
 import { useUserStore } from "../store/user";
 import { useTopicStore } from "../store/topic";
 import HomeCarousel from "@/component/HomeCarousel.vue";
+import { useThemeStore } from "../store/theme";
 
 
 
-const config_store = useConfigStore();
+const theme_sotre = useThemeStore();
 const topic_store = useTopicStore();
-const { theme } = storeToRefs(config_store);
 const user_store = useUserStore();
-config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
+theme_sotre.$subscribe((mutation, state) => {
+  change_theme(state.current_theme);
 });
 const router = useRouter();
 onBeforeMount(() => {});
@@ -32,7 +30,7 @@ onUnmounted(() => {
   clearInterval(notice_interval);
 });
 onMounted(() => {
-  change_theme(theme.value);
+  change_theme(theme_sotre.current_theme);
   window.scrollTo({ top: 0, behavior: "auto" });
   scroll_handle();
   document.addEventListener("scroll", scroll_handle);
@@ -49,7 +47,7 @@ const c_c = (mut_val, color) => {
   document.getElementsByTagName("body")[0].style.setProperty(mut_val, color);
 };
 const change_theme = (current_theme) => {
-  if (current_theme) {
+  if (current_theme.slice('?')[0] == '1') {
     document.querySelector('.page_1_bg_cover').style.opacity='1'
     document.querySelector('.page_1_circle').style.opacity='.8'
   } else {
@@ -290,9 +288,9 @@ const leave_new_topic = (index) => {
       <div class="page_1_bg_cover"></div>
      <img class="a page_1_bg"  src="https://pic.imgdb.cn/item/66748335d9c307b7e9cbb1f1.png" alt=""> 
      <svg class="page_1_circle a" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 1422 800"><defs><radialGradient id="cccircular-grad" r="50%" cx="50%" cy="50%">
-       <stop offset="0%" stop-color="##a393eb" stop-opacity="0.5"></stop>
-       <stop offset="50%" stop-color="#a393ebb3" stop-opacity="0"></stop>
-        <stop offset="100%" stop-color="#f9fff0" stop-opacity="0.5"></stop>
+       <stop class="page_1_circle_path_1" offset="0%" stop-color="##a393eb" stop-opacity="0.5"></stop>
+       <stop class="page_1_circle_path_2" offset="50%" stop-color="#a393ebb3" stop-opacity="0"></stop>
+        <stop class="page_1_circle_path_3" offset="100%" stop-color="#f9fff0" stop-opacity="0.5"></stop>
       </radialGradient></defs><g fill="url(#cccircular-grad)"><circle r="352" cx="711" cy="400"></circle><circle r="320" cx="711" cy="400"></circle><circle r="288" cx="711" cy="400"></circle><circle r="256" cx="711" cy="400"></circle><circle r="224" cx="711" cy="400"></circle><circle r="192" cx="711" cy="400"></circle><circle r="160" cx="711" cy="400"></circle><circle r="128" cx="711" cy="400"></circle><circle r="96" cx="711" cy="400"></circle><circle r="64" cx="711" cy="400"></circle></g></svg>
       <div
         class="page_1_title flex a f_d_c a_c j_c_c"
@@ -500,16 +498,22 @@ const leave_new_topic = (index) => {
                     p-id="12145"
                   ></path>
                   <path
+                  class="primary_mix_6_path"
+
                     d="M661.504 362.496c0-65.536 53.248-120.832 120.832-120.832 65.536 0 120.832 53.248 120.832 120.832v481.28c0 32.768-26.624 59.392-59.392 59.392h-180.224V362.496h-2.048z"
                     fill="#7dace4"
                     p-id="12146"
                   ></path>
                   <path
+                  class="primary_path"
+
                     d="M120.832 782.336c0 65.536 53.248 120.832 120.832 120.832h600.064c-32.768 0-59.392-26.624-59.392-59.392V241.664c0-65.536-53.248-120.832-120.832-120.832H241.664c-65.536 0-120.832 53.248-120.832 120.832v540.672z"
                     fill="#8971d0"
                     p-id="12147"
                   ></path>
                   <path
+                  class="fill_primary_path"
+
                     d="M227.328 301.056c0-24.576 20.48-45.056 45.056-45.056h59.392c24.576 0 45.056 20.48 45.056 45.056 0 24.576-20.48 45.056-45.056 45.056h-59.392c-24.576 0-45.056-20.48-45.056-45.056zM227.328 481.28c0-24.576 20.48-45.056 45.056-45.056h360.448c24.576 0 45.056 20.48 45.056 45.056 0 24.576-20.48 45.056-45.056 45.056H272.384c-24.576 0-45.056-20.48-45.056-45.056zM272.384 616.448c-24.576 0-45.056 20.48-45.056 45.056 0 24.576 20.48 45.056 45.056 45.056h180.224c24.576 0 45.056-20.48 45.056-45.056 0-24.576-20.48-45.056-45.056-45.056h-180.224z"
                     fill="#ffff"
                     p-id="12148"
@@ -531,51 +535,70 @@ const leave_new_topic = (index) => {
                   height="32"
                 >
                   <path
+                  class="primary_path"
+
                     d="M242.688 311.936m-99.968 0a99.968 99.968 0 1 0 199.936 0 99.968 99.968 0 1 0-199.936 0Z"
                     fill="#8971d0"
                     p-id="21521"
                   ></path>
                   <path
+                  class="primary_path"
+
                     d="M242.688 512m-99.968 0a99.968 99.968 0 1 0 199.936 0 99.968 99.968 0 1 0-199.936 0Z"
                     fill="#8971d0"
                     p-id="21522"
                   ></path>
                   <path
+                  class="primary_path"
+
                     d="M242.688 712.064m-99.968 0a99.968 99.968 0 1 0 199.936 0 99.968 99.968 0 1 0-199.936 0Z"
                     fill="#8971d0"
                     p-id="21523"
                   ></path>
                   <path
+                  class="fill_primary_path"
+
                     d="M247.808 311.936m-66.688 0a66.688 66.688 0 1 0 133.376 0 66.688 66.688 0 1 0-133.376 0Z"
                     fill="#FFFFFF"
                     p-id="21524"
                   ></path>
                   <path
+                  class="fill_primary_path"
+
                     d="M247.808 512m-66.688 0a66.688 66.688 0 1 0 133.376 0 66.688 66.688 0 1 0-133.376 0Z"
                     fill="#FFFFFF"
                     p-id="21525"
                   ></path>
                   <path
+                  class="fill_primary_path"
+
                     d="M247.808 712.064m-66.688 0a66.688 66.688 0 1 0 133.376 0 66.688 66.688 0 1 0-133.376 0Z"
                     fill="#FFFFFF"
                     p-id="21526"
                   ></path>
                   <path
+                  class="primary_path"
+
                     d="M281.216 111.872h533.504c36.864 0 66.688 29.824 66.688 66.688v666.88c0 36.864-29.824 66.688-66.688 66.688H281.216c-36.864 0-66.688-29.824-66.688-66.688v-666.88c0-36.736 29.824-66.688 66.688-66.688z"
                     fill="#8971d0"
                     p-id="21527"
                   ></path>
                   <path
+                  class="primary_path"
+
                     d="M814.592 678.656h66.688v166.656c0 36.864-29.824 66.688-66.688 66.688H581.248c0-128.768 104.448-233.344 233.344-233.344z"
                     fill="#8971d0"
                     p-id="21528"
                   ></path>
                   <path
+                  class="fill_primary_path"
                     d="M409.472 278.656h333.44c18.432 0 33.28 14.976 33.28 33.28 0 18.432-14.976 33.28-33.28 33.28H409.472c-18.432 0-33.28-14.976-33.28-33.28-0.128-18.432 14.848-33.28 33.28-33.28zM409.472 478.72h333.44c18.432 0 33.28 14.976 33.28 33.28 0 18.432-14.976 33.28-33.28 33.28H409.472c-18.432 0-33.28-14.976-33.28-33.28-0.128-18.432 14.848-33.28 33.28-33.28zM409.472 678.656h166.656c18.432 0 33.28 14.976 33.28 33.28 0 18.432-14.976 33.28-33.28 33.28H409.472c-18.432 0-33.28-14.976-33.28-33.28-0.128-18.304 14.848-33.28 33.28-33.28z"
                     fill="#FFFFFF"
                     p-id="21529"
                   ></path>
                   <path
+                  class="primary_path"
+
                     d="M848 745.344h33.28v99.968c0 36.864-29.824 66.688-66.688 66.688H681.216c0-92.032 74.624-166.656 166.784-166.656z"
                     fill="#8971d0"
                     p-id="21530"
@@ -598,6 +621,7 @@ const leave_new_topic = (index) => {
                   height="32"
                 >
                   <path
+                  class="primary_path"
                     d="M493.4656 529.1008l-20.6336-51.2512c-15.0016-36.1984-23.1936-55.808-24.5248-58.7776L416.4608 352.256c-22.528-47.872-44.2368-71.8848-65.024-71.8848-31.488 0-56.2176 27.7504-74.3424 83.1488-13.312-4.608-19.968-11.264-19.968-20.0704 0-25.7536 15.9232-55.3472 47.6672-88.6784C336.64 221.44 365.2096 204.8 390.4512 204.8c49.408 0 100.608 67.072 153.7536 201.216l13.568 33.0752 15.3088-23.04C667.2896 275.2 746.7008 204.8 811.3152 204.8c16.7936 0 36.5056 4.608 59.0848 13.7216l-80.384 79.36a101.12 101.12 0 0 0-22.6304-4.352c-48.64 0-106.7008 52.736-173.9776 158.1056l-19.2512 30.4128 15.2064 38.3488c58.2144 151.296 105.984 226.8672 143.872 226.8672 34.7136 0 61.184-23.3472 79.4112-69.9904 12.3904 7.5264 18.5856 15.2064 18.5856 23.1424 0 20.8896-17.664 45.8752-53.0944 75.008-35.4304 29.184-65.8944 43.776-91.5968 43.776-51.3536 0-103.7312-68.096-157.2864-204.3392l-18.5856-46.336-19.2 31.9488C401.2032 746.2912 314.8288 819.2 232.5504 819.2c-30.9248 0-57.2416-7.2704-78.9504-21.7088l76.9536-70.8096c13.312 12.4928 28.7744 18.7392 46.4896 18.7392 49.9712 0 106.24-47.616 168.5504-142.9504l34.56-52.5824 13.312-20.7872z"
                     fill="#5e63b6"
                     p-id="33540"
@@ -778,7 +802,7 @@ const leave_new_topic = (index) => {
   width: max(1440px,100vw);
   min-height: 100vh;
   // scroll-snap-type: y mandatory;
-
+  background: $fill_body;
   color: $text;
   .bg_shape {
       top: 0;
@@ -802,10 +826,7 @@ const leave_new_topic = (index) => {
         fill: $primary;
       }
     }
-  ::selection {
-    color: $fill_primary;
-    background-color: $primary;
-  }
+ 
   overflow: hidden;
  
 
@@ -836,7 +857,15 @@ const leave_new_topic = (index) => {
     left:50%;
 
     transform: translate(-50%,-50%) scale(1.4);
-    
+    .page_1_circle_path_1{
+      stop-color: $primary;
+    }
+    .page_1_circle_path_2{
+      stop-color: $primary_mix_6;
+    }
+    .page_1_circle_path_3{
+      stop-color: $fill_primary;
+    }
   }
   .page_1 {
     z-index: 10;
@@ -1401,7 +1430,15 @@ const leave_new_topic = (index) => {
     }
   }
 }
-
+.primary_path{
+  fill: $primary;
+}
+.primary_mix_6_path{
+  fill: $primary_mix_6;
+}
+.fill_primary_path{
+  fill: $fill_primary;
+}
 .home_foot {
   width: max(1440px,100vw);
   height: 200px;

@@ -22,7 +22,10 @@ $bg_color: var(--bg_color, #fdfbfb);
 #main {
   background: $bg_color;
   width: max(1440px,100vw);
- 
+  ::selection {
+    color:$fill_primary !important;
+    background-color: $primary !important;
+  }
  
   .nav {
     z-index: 10000000000;

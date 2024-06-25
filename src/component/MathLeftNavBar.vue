@@ -78,7 +78,7 @@ const show_children = (item) => {
   margin-left: 16px;
   border-radius: 5px;
   overflow: scroll;
-  color: $text;
+  color: $text_title;
   font-family: 'misans';
   .left_nav {
     box-shadow: $fill_shadow 0px 0px 20px;

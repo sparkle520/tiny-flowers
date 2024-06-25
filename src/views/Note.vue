@@ -337,10 +337,7 @@ $search_box_color: var(--search_box_color, #4d4949);
  
 }
 font-family: 'misans';
-  ::selection {
-    color: $fill_primary;
-    background-color: $primary;
-  }
+
  
   .container {
     width: 1100px;

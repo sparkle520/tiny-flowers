@@ -13,16 +13,17 @@ import {
   nextTick,
 } from "vue";
 import { useRouter } from "vue-router";
+import { storeToRefs } from 'pinia'
 const router = useRouter();
-import { useConfigStore } from "../store/config";
-const store = useConfigStore();
+import { useThemeStore } from "../store/theme";
+const theme_store = useThemeStore();
 
+const {current_theme} = storeToRefs(theme_store)
 onBeforeMount(() => {});
 onMounted(() => {
   document.addEventListener("scroll", nav_handle);
   top_nav_main  = document.querySelector("#top_nav_main");
   content_bg  = document.querySelector(".content_bg");
-
 });
 onUnmounted(() => {
   document.removeEventListener("scroll", nav_handle);
@@ -87,7 +88,7 @@ const nav_list = [
 ];
 const active_item = ref();
 const pre_active_item = ref(-1);
-const switch_nav_item = (index) => {
+const theme_btn_nav_item = (index) => {
   const nav_list_item = document.querySelectorAll(".nav_item_com");
   nav_list_item[index].classList.add("nav_item_active");
   if (nav_list_item[index].classList.contains("nav_item")) {
@@ -95,7 +96,7 @@ const switch_nav_item = (index) => {
   }
   pre_active_item.value = index;
 };
-const switch_nav_active = () => {
+const theme_btn_nav_active = () => {
   const nav_list_item = document.querySelectorAll(".nav_item_com");
   if (pre_active_item.value != -1) {
     nav_list_item[pre_active_item.value].classList.remove("nav_item_active");
@@ -104,7 +105,7 @@ const switch_nav_active = () => {
   nextTick(() => {
     for (const item of nav_list) {
       if (active_item.value == item.e_name) {
-        switch_nav_item(item.index);
+        theme_btn_nav_item(item.index);
         break;
       }
     }
@@ -117,25 +118,89 @@ watch(
       to.split("/")[1] != null && to.split("/")[1] != undefined
         ? to.split("/")[1]
         : "home";
-    switch_nav_active();
+    theme_btn_nav_active();
   },
   { immediate: true, deep: true }
 );
 const link_to = (path) => {
   router.push(path);
 };
-const go_github = () => {
-  window.location.href = "https://github.com/sparkle520";
-};
 
 
-const current_theme = ref(false);
+const temp_theme = ref();
 const theme_change = () => {
-  store.theme = !current_theme.value;
+  temp_theme.value = theme_store.current_theme;
+  const t_d  = document.querySelector('.t_d')
+  if(t_d.classList.contains('t_d_o')){
+    t_d.classList.remove('t_d_o')
+    t_d.classList.add('t_d_i')
+  }else{
+    t_d.classList.add('t_d_i')
+  }
 };
+const colose_theme_dialog = ()=>{
+  theme_store.current_theme = temp_theme.value
+  theme_store.change_theme(parseInt(theme_store.current_theme.slice('?')[0]),parseInt(theme_store.current_theme.slice('?')[2]))
+  const t_d  = document.querySelector('.t_d')
+  if(t_d.classList.contains('t_d_i')){
+    t_d.classList.remove('t_d_i')
+    t_d.classList.add('t_d_o')
+  }else{
+    t_d.classList.add('t_d_o')
+  }
+}
+const gradientBackground = (c1,c2)=> {
+      return `linear-gradient(to right,${c1} 50%, ${c2} 50%)`;
+    }
+const change_color = (model,index)=>{
+  current_theme.value = `${model}?${index}`
+  theme_store.change_theme(model,index)
+}
+const enture_btn = ()=>{
+  const t_d  = document.querySelector('.t_d')
+  if(t_d.classList.contains('t_d_i')){
+    t_d.classList.remove('t_d_i')
+    t_d.classList.add('t_d_o')
+  }else{
+    t_d.classList.add('t_d_o')
+  }
+}
 </script>
 <template>
   <div id="top_nav_main" class="nav_main f a_c j_c_c">
+    <div class="t_d f a_c j_c_c">
+      <svg @click="colose_theme_dialog" t="1719266118700" class="close_icon a" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5087" width="48" height="48"><path d="M589.704 501.674L998.27 93.107c20.652-20.653 20.652-54.556 0-75.209l-2.237-2.237c-20.652-20.652-54.556-20.652-75.208 0L512.258 424.745 103.691 15.489c-20.652-20.652-54.556-20.652-75.208 0l-2.238 2.237c-21.168 20.652-21.168 54.556 0 75.208l408.568 408.74L26.245 910.24c-20.652 20.652-20.652 54.556 0 75.208l2.238 2.238c20.652 20.652 54.556 20.652 75.208 0l408.567-408.568 408.568 408.568c20.652 20.652 54.556 20.652 75.208 0l2.237-2.238c20.652-20.652 20.652-54.556 0-75.208L589.704 501.674z" fill="#2C2C2C" p-id="5088"></path></svg>
+      <div class="theme_box f f_d_c">
+        <h3>主题</h3>
+        <h4>light:</h4>
+        <div class="light_box f f_d_r">
+          <div v-for="(item,index) in theme_store.light" class="color_item  f a_c f_d_c">
+            <div 
+            @click="change_color(0,index)"
+            :style="{background:gradientBackground(item.color_dict.get('primary'),item.color_dict.get('fill_body'))}"
+            :class="['color','r',current_theme == `0?${index}` ? 'active_color':'']" 
+             >
+            </div>
+            <div >{{ item.theme_name }}</div>
+          </div>
+        </div>
+        <h4>dark:</h4>
+        <div class="dark_box f f_d_r">
+          <div v-for="(item,index) in theme_store.dark" class="color_item  f a_c f_d_c">
+            <div 
+            @click="change_color(1,index)"
+            :style="{background:gradientBackground(item.color_dict.get('primary'),item.color_dict.get('fill_body'))}"
+            :class="['color','r',current_theme == `1?${index}` ? 'active_color':'']" 
+             >
+            </div>
+            <div >{{ item.theme_name }}</div>
+          </div>
+        </div>
+        <button 
+        @click="enture_btn"
+        class="ensure_theme_btn">更换主题</button>
+      </div>
+    </div>
     <div class="content f f_d_r r">
       <div class="content_bg a"></div>
     <div class="a stave f f_d_c">
@@ -164,14 +229,13 @@ const theme_change = () => {
         </div>
 
         <div class="f f_d_r">           
-          <label class="switch r" for="theme">
+          <label class="theme_btn r" for="theme">
             <input
               id="theme"
               type="checkbox"
               @click="theme_change"
-              v-model="current_theme"
             />
-            <span class="slider a"></span>
+            <span class="ex_circle a"></span>
           </label>
         </div>
       </div>
@@ -188,6 +252,110 @@ const theme_change = () => {
   transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
   height: 60px;
   top: 16px;
+  .t_d{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $primary;
+    z-index: 1000000000000;
+    clip-path: circle(0);
+    .theme_box{
+      width: 300px;
+      min-height: 600px;
+      background: $fill;
+      border-radius: 10px;
+      padding: 0 16px;
+      color: $text;
+      .color_item{
+        
+        .color{
+          width: 62px;
+          height: 62px;
+          box-shadow: $fill_shadow 1px 2px 3px;
+          background: rgb(255, 255, 255);
+          margin-bottom: 8px;
+          border-radius: 10px;
+        }
+        .active_color{
+          &::after{
+            content: '当前';
+            text-align: center;
+            line-height: 62px;
+            font-weight: 900;
+            color: $text;
+            position: absolute;
+            width: 62px;
+            height: 62px;
+            top: 0;
+            left: 0;
+          }
+        }
+        font-size: 14px;
+      }
+      .light_box{
+        width: 284px;
+        padding: 8px;
+        border-radius: 10px;
+        box-shadow: $fill_shadow 0 0 5px;
+        gap: 12px;
+      }
+      .dark_box{
+        width: 284px;
+        padding: 8px;
+        border-radius: 10px;
+        box-shadow: $fill_shadow 0 0 5px;
+
+      }
+      .ensure_theme_btn{
+        margin-top: auto;
+        margin-bottom: 16px;
+        border-radius: 10px;
+        border: $primary 2px solid;
+        background: $fill_primary;
+        color: $primary;
+        height: 48px;
+        transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+        &:hover,&:focus{
+          color: $fill_primary;
+          outline: 0;
+          box-shadow: 0 0 40px 40px $primary inset;
+        }
+      }
+    }
+    .close_icon{
+      right: 48px;
+      top: 48px;
+      path{
+        fill: $fill_primary;
+      }
+    }
+   
+  }
+  .t_d_o{
+    animation: 2.5s cubic-bezier(.25, 1, .30, 1) t_d_o both;
+
+  }
+  .t_d_i{
+    animation: 2.5s cubic-bezier(.25, 1, .30, 1) t_d_i both;
+  }
+  @keyframes t_d_i {
+  from {
+    clip-path: circle(0% at 1000px);
+  }
+  to {
+    clip-path: circle(150% at top right);
+  }
+}
+  @keyframes t_d_o {
+  from {
+    clip-path: circle(125%);
+  }
+  to {
+    clip-path: circle(0% at top right);
+  }
+}
   .content {
     width: max(1100px,60vw);
     z-index: 11;
@@ -200,6 +368,7 @@ const theme_change = () => {
     height: inherit;
     border-radius: inherit;
     opacity: 0;
+    box-shadow: $fill_shadow 0 0 5px;
     transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
    }
     .nav_box {
@@ -243,52 +412,45 @@ const theme_change = () => {
         }
       }
 
-      .switch {
+      .theme_btn {
         font-size: 14px;
         margin: auto 0;
         margin-left: 128px;
 
-        width: 3.5em;
-        height: 2em;
+        width: 3em;
+        height: 3em;
       }
 
-      .switch input {
+      .theme_btn input {
         opacity: 0;
         width: 0;
         height: 0;
       }
 
-      .slider {
+      .ex_circle {
         cursor: pointer;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #f4f4f5;
+        background-color: #fff;
         transition: 0.4s;
         border-radius: 30px;
         &::before {
           position: absolute;
           content: "";
-          height: 1.4em;
-          width: 1.4em;
+          height: 2.4em;
+          width: 2.4em;
           border-radius: 20px;
           left: 0.3em;
           bottom: 0.3em;
-          background: linear-gradient(40deg, #ff0080, #ff8c00 70%);
+          background: linear-gradient(to left,$primary 50%, $primary_mix_7 50%);
           transition: 0.4s;
         }
       }
 
-      input:checked + .slider {
-        background-color: #303136;
-      }
-      input:checked + .slider:before {
-        transform: translateX(1.5em);
-        background: #303136;
-        box-shadow: inset -3px -2px 5px -2px #8983f7,
-          inset -10px -5px 0 0 #a3dafb;
-      }
+     
+     
     }
   }
 }
