@@ -66,10 +66,7 @@ const show_children = (item) => {
   </div>
 </template>
 <style lang="scss" scoped>
-@font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
-}
+
 #math_left_nav_main {
   width:180px;
   position: sticky;

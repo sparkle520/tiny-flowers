@@ -252,6 +252,7 @@ const enture_btn = ()=>{
   transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
   height: 60px;
   top: 16px;
+  font-family: "misans";
   .t_d{
     position: fixed;
     top: 0;

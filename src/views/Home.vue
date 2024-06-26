@@ -804,6 +804,7 @@ const leave_new_topic = (index) => {
   // scroll-snap-type: y mandatory;
   background: $fill_body;
   color: $text;
+  font-family: "misans";
   .bg_shape {
       top: 0;
       

@@ -203,6 +203,7 @@ function scrollToView(scrollTop) {
   top: 80px;
   border-radius: 5px;
   scrollbar-width: thin;
+  font-family: "misans";
     *::-webkit-scrollbar {
     width: 5px;
     height: 10px;

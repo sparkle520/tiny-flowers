@@ -617,10 +617,7 @@ const search_focus_handle = () => {
 <style lang="scss" scoped>
 
 #topic_list_main {
-  @font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
-}
+
   background: $fill_body;
   font-family: "misans";
   width: max(1440px,100vw);

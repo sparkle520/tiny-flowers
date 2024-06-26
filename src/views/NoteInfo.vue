@@ -118,10 +118,7 @@ onMounted(() => {
   width: max(1440px,100vw);
   min-height: 100vh;
   background: $fill_body;
-  @font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
-}
+ 
 font-family: 'misans';
 .note_info_main_bg{
   width: 100vw;

@@ -267,6 +267,7 @@ const create_animation = (start, end, s_v, e_v) => {
 #about_main {
   width: max(1440px,100vw);
   height: 100vh;
+  font-family: "misans";
   // scroll-snap-type: y mandatory;
   background: $primary;
   color: $fill_primary;

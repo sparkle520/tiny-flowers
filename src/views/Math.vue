@@ -430,10 +430,7 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf45);
      
   }
  
-  @font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
-}
+ 
 font-family: 'misans';
   .note_left_nav_bar {
     z-index: 10000;

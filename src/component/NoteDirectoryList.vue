@@ -47,10 +47,7 @@ const get_col = () => {
 #directory_list_main {
   width: 860px;
   border-radius: 5px;
-  @font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
-}
+
 font-family: 'misans';
   .Note_inner_directory_box {
     column-count: 3;

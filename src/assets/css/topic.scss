@@ -1,9 +1,6 @@
 
 @import url('markdown.scss');
-@font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
-}
+
 #topic_main {
   width: max(1440px,100vw);
   background: $fill_body;

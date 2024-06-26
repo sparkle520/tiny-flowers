@@ -332,11 +332,7 @@ $search_box_color: var(--search_box_color, #4d4949);
   width: max(1440px,100vw);
   background:  $fill_body;
   min-height: 100vh;
-  @font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
  
-}
 font-family: 'misans';
 
  .note_bg{

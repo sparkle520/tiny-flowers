@@ -75,10 +75,7 @@ const site_data = [
 
   overflow: hidden;
   color: $text;
-  @font-face {
-  font-family: "misans";
-  src: url("/src/assets/font/misans.ttf");
-}
+  
 font-family: 'misans';
  
  

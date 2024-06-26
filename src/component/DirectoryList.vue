@@ -205,6 +205,7 @@ function scrollToView(scrollTop) {
   background: $fill_body;
   position: sticky;
   top: 80px;
+  font-family: "misans";
 
 }
 .catalog-card {
