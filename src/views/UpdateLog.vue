@@ -3,20 +3,10 @@
 <!-- @Description:  -->
 
 <script setup>
-import { reactive, toRefs, onBeforeMount, ref, onMounted, watch } from "vue";
-import { useRouter } from "vue-router";
-import change_theme from "../assets/theme/UpdateLog";
-import { useConfigStore } from "../store/config";
-import { storeToRefs } from "pinia";
-const store = useConfigStore();
-const { theme } = storeToRefs(store);
-const router = useRouter();
-store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
-});
+import {  onBeforeMount,  onMounted } from "vue";
+
 onBeforeMount(() => {});
 onMounted(() => {
-  change_theme(theme.value);
   window.scrollTo(0, 0);
 });
 
@@ -26,6 +16,15 @@ const log = [
   //     date: "2024-01-04",
   //     content: ["Features:", "Fixed:", "Changed:", "Refactored:", "Removed:"],
   //   },
+  {
+    version: "1.2.0",
+    date: "2024-06-26",
+    content: [
+      "1. 现已支持换肤功能(导航栏内)",
+      "2. 优化UI和交互体验",
+      "3. 修复若干BUG",
+    ],
+  },
   {
     version: "1.1.0",
     date: "2024-06-21",
@@ -81,16 +80,10 @@ const log = [
   </div>
 </template>
 <style lang="scss" scoped>
-$bg_color: var(--bg_color, #f7f3f5);
-$color: var(--color, #000000);
-$li: var(--li, #242b3d12);
-$li_shadow: var(--li_shadow, #f4f2f2);
-$striking_title_orange_color: var(--striking_title_orange_color, #d2b2ff);
-$striking_title_orange_bg: var(--striking_title_orange_bg, #d2b2ffcc);
 #update_log_main {
   width: max(1440px,100vw);
-  color: $color;
-  background: $bg_color;
+  color: $text;
+  background: $fill_body;
   min-height: 100vh;
   li{
   list-style: none;
@@ -103,11 +96,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #d2b2ffcc);
     z-index: 0;
     // filter:drop-shadow(3px 3px 4px rgba(97, 85, 79, 0.731));
   }
-  .carousel {
-    width: 90vw;
-    margin: 0 auto;
-    animation: move_bottom 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-  }
+ 
   .content {
     width: 1100px;
     margin: 80px auto;
@@ -125,15 +114,15 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #d2b2ffcc);
         width: 1068px;
         padding: 16px;
         border-radius: 5px;
-        background: $li;
+        background: $fill;
 
-        box-shadow: 0 0 10px $li_shadow;
+        box-shadow: 0 0 5px $fill_shadow;
       }
     }
     .striking_title_orange {
       font-size: 30px;
       font-weight: 600;
-      color: $striking_title_orange_color;
+      color: $primary;
       &::after {
         z-index: 100;
         content: "";
@@ -141,7 +130,7 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #d2b2ffcc);
         width: 120%;
         height: 20%;
         border-radius: 5px;
-        background: $striking_title_orange_bg;
+        background: $primary_mix_7;
         left: 50%;
         bottom: -10px;
         transform: translateX(-50%);
@@ -150,21 +139,14 @@ $striking_title_orange_bg: var(--striking_title_orange_bg, #d2b2ffcc);
   }
 }
 .text {
-  color: $color;
+  color: $text;
   margin-top: 8px;
 }
 
-@keyframes move_bottom {
-  0% {
-    transform: translateY(-100vh);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+
 @keyframes move_top {
   0% {
-    transform: translateY(100vh);
+    transform: translateY(48px);
   }
   100% {
     transform: translateY(0);

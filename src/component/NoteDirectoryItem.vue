@@ -48,6 +48,7 @@ const props = defineProps({
   .span_hover{
     &:hover{
         color: $primary;
+        cursor: pointer;
     }
   }
   .chapter_title {

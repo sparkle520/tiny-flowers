@@ -13,11 +13,11 @@ $primary_mix_8: var(--primary_mix_8, color-mix(in srgb ,$primary,$fill_body 80%)
 $primary_mix_9: var(--primary_mix_9, color-mix(in srgb ,$primary,$fill_body 90%)); 
 
 $text: var(--text, #4a5a6a);
-$text_title: var(--text_title, #3a4a5a);
-$text_placeholder: var(--text_placeholder, #9966ff);
-$text_subtitle: var(--text_subtitle, #5a6a7a);
-$text_secondary: var(--text_secondary, #8491a5);
-$text_link: var(--text_link, #9966ff);
+$text_title: var(--text_title, #8076a3);
+$text_placeholder: var(--text_placeholder, #beb8d0);
+$text_subtitle: var(--text_subtitle, #958bb2);
+$text_secondary: var(--text_secondary, #a9a2c1);
+$text_link: var(--text_link, #a174f3);
 
 $fill_scroll: var(--fill_scroll, #9966ff);
 $fill_scroll_hover: var(--fill_scroll_hover, #9966ff);

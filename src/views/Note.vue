@@ -131,6 +131,7 @@ const go_to = (id) => {
 </script>
 <template>
   <div id="note_main" class="r f f_d_c">
+    <svg class="fixed note_bg" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 800 800" opacity="1"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="vvvortex-grad"><stop stop-color="hsl(1.4, 100%, 67%)" stop-opacity="1" offset="0%"></stop><stop stop-color="hsl(167, 52%, 78%)" stop-opacity="1" offset="100%"></stop></linearGradient></defs><g stroke="url(#vvvortex-grad)" fill="none" stroke-linecap="square"><circle r="883.5" cx="400" cy="400" stroke-width="13" stroke-dasharray="29 21" stroke-dashoffset="25" transform="rotate(239, 400, 400)" opacity="0.05"></circle><circle r="837" cx="400" cy="400" stroke-width="12" stroke-dasharray="26 40" stroke-dashoffset="25" transform="rotate(295, 400, 400)" opacity="0.10"></circle><circle r="790.5" cx="400" cy="400" stroke-width="12" stroke-dasharray="29 20" stroke-dashoffset="25" transform="rotate(31, 400, 400)" opacity="0.16"></circle><circle r="744" cx="400" cy="400" stroke-width="12" stroke-dasharray="18 35" stroke-dashoffset="25" transform="rotate(18, 400, 400)" opacity="0.21"></circle><circle r="697.5" cx="400" cy="400" stroke-width="11" stroke-dasharray="20 27" stroke-dashoffset="25" transform="rotate(323, 400, 400)" opacity="0.26"></circle><circle r="651" cx="400" cy="400" stroke-width="11" stroke-dasharray="25 18" stroke-dashoffset="25" transform="rotate(293, 400, 400)" opacity="0.31"></circle><circle r="604.5" cx="400" cy="400" stroke-width="11" stroke-dasharray="49 55" stroke-dashoffset="25" transform="rotate(17, 400, 400)" opacity="0.37"></circle><circle r="558" cx="400" cy="400" stroke-width="10" stroke-dasharray="41 48" stroke-dashoffset="25" transform="rotate(302, 400, 400)" opacity="0.42"></circle><circle r="511.5" cx="400" cy="400" stroke-width="10" stroke-dasharray="18 19" stroke-dashoffset="25" transform="rotate(59, 400, 400)" opacity="0.47"></circle><circle r="465" cx="400" cy="400" stroke-width="10" stroke-dasharray="30 13" stroke-dashoffset="25" transform="rotate(289, 400, 400)" opacity="0.53"></circle><circle r="418.5" cx="400" cy="400" stroke-width="9" stroke-dasharray="22 46" stroke-dashoffset="25" transform="rotate(125, 400, 400)" opacity="0.58"></circle><circle r="372" cx="400" cy="400" stroke-width="9" stroke-dasharray="13 49" stroke-dashoffset="25" transform="rotate(89, 400, 400)" opacity="0.63"></circle><circle r="325.5" cx="400" cy="400" stroke-width="9" stroke-dasharray="15 21" stroke-dashoffset="25" transform="rotate(274, 400, 400)" opacity="0.68"></circle><circle r="279" cx="400" cy="400" stroke-width="8" stroke-dasharray="42 43" stroke-dashoffset="25" transform="rotate(230, 400, 400)" opacity="0.74"></circle><circle r="232.5" cx="400" cy="400" stroke-width="8" stroke-dasharray="39 25" stroke-dashoffset="25" transform="rotate(265, 400, 400)" opacity="0.79"></circle><circle r="186" cx="400" cy="400" stroke-width="8" stroke-dasharray="11 22" stroke-dashoffset="25" transform="rotate(279, 400, 400)" opacity="0.84"></circle><circle r="139.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="23 17" stroke-dashoffset="25" transform="rotate(206, 400, 400)" opacity="0.89"></circle><circle r="93" cx="400" cy="400" stroke-width="7" stroke-dasharray="22 25" stroke-dashoffset="25" transform="rotate(70, 400, 400)" opacity="0.95"></circle><circle r="46.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="36 16" stroke-dashoffset="25" transform="rotate(142, 400, 400)" opacity="1.00"></circle></g></svg>
     <div class="container">
       <div class="top_box r">
         <div class="top_box_bg a"></div>
@@ -338,7 +339,17 @@ $search_box_color: var(--search_box_color, #4d4949);
 }
 font-family: 'misans';
 
- 
+ .note_bg{
+  width: 100vw;
+  height: 100vh;
+  opacity: .2;
+  stop:first-child{
+    stop-color: $primary;
+  }
+  stop:last-child{
+    stop-color: $primary_mix_6;
+  }
+ }
   .container {
     width: 1100px;
     align-self: center;
@@ -534,6 +545,7 @@ font-family: 'misans';
               word-wrap: break-word;
               color: $text_secondary;
               font-size: 1.1em;
+              cursor: pointer;
               &:hover {
                 color: $primary;
               }
@@ -650,6 +662,7 @@ font-family: 'misans';
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
                 .book_name {
+                  cursor: pointer;
                   margin: 8px 0;
                   font-size: 1.2em;
                   font-weight: 600;
@@ -668,7 +681,7 @@ font-family: 'misans';
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
                   overflow: hidden;
-                  color: $text_subtitle;
+                  color: $text;
                 }
                 .book_item_bottom {
                   margin-top: auto;

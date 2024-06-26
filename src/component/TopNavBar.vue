@@ -300,13 +300,15 @@ const enture_btn = ()=>{
         border-radius: 10px;
         box-shadow: $fill_shadow 0 0 5px;
         gap: 12px;
+        flex-wrap: wrap;
       }
       .dark_box{
         width: 284px;
         padding: 8px;
         border-radius: 10px;
         box-shadow: $fill_shadow 0 0 5px;
-
+        flex-wrap: wrap;
+        gap: 12px;
       }
       .ensure_theme_btn{
         margin-top: auto;
@@ -335,7 +337,6 @@ const enture_btn = ()=>{
   }
   .t_d_o{
     animation: 2.5s cubic-bezier(.25, 1, .30, 1) t_d_o both;
-
   }
   .t_d_i{
     animation: 2.5s cubic-bezier(.25, 1, .30, 1) t_d_i both;

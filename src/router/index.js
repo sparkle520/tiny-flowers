@@ -10,6 +10,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
+            index:0
         }
     },
     {
@@ -18,7 +19,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-
+            index:4
         }
     },
     {
@@ -27,7 +28,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-
+            index:2
         }
     },
     {
@@ -36,7 +37,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-
+            index:5
         }
     },
     {
@@ -45,7 +46,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-
+            index:1
         }
     },
     {
@@ -53,8 +54,8 @@ const routes = [
         component: () => import("/src/views/NoteInfo.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: true,
-
+            screenFull: true,            
+            index:2
         }
     },
     {
@@ -62,7 +63,8 @@ const routes = [
         component: () => import("/src/views/TopicList.vue"),
         meta: {
             isRouterAuth: false,
-            screenFull: true,
+            screenFull: true,            
+            index:3
 
         }
     },
@@ -72,6 +74,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
+            index:4
         }
     },
     {
@@ -80,6 +83,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
+            index:3
         }
     },
     
@@ -91,7 +95,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-
+            index:5
         }
     },
 
@@ -102,6 +106,7 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
+            index:6
         }
     },
 ]
@@ -112,36 +117,5 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes,
 })
-
-router.beforeEach((to, from, next) => {
-    if (to.meta.isRouterAuth) {
-        // if (getCookie('token')) {
-        //     next()
-        // } else {
-            next()
-        // }
-    } else {
-        next()
-    }
-})
-//  const create_routes = async ()=> {
-//     const modules = import.meta.glob('../topic/*.vue')
-//         const components = import.meta.globEager('../topic/*.vue')
-      
-
-//         for(let i = 1;i <= length();++i){
-//             router.addRoute({
-//                 path: `/unknownWorldMap/topic/${i}`,
-//                 meta: {
-//                     isRouterAuth: false,
-//                     screenFull: true,
-//                 },
-//                 component: defineAsyncComponent(modules[`/src/topic/Topic_${i}.vue`])
-//             })
-//         }
-        
-// }
-// create_routes()
-
 
 export default router

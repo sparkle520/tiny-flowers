@@ -112,7 +112,7 @@ onMounted(() => {
       div {
         margin-left: 32px;
         transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+        cursor: pointer;
         &:first-child {
           font-weight: 900;
           user-select: none;

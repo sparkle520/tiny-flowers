@@ -16,8 +16,6 @@ import "/src/assets/css/markdown.scss";
 import MathLeftNavBar from "../component/MathLeftNavBar.vue";
 import MathJax, { initMathJax, renderByMathjax } from "mathjax-vue3";
 import { marked, parse } from "marked";
-import { storeToRefs } from "pinia";
-const config_store = useConfigStore();
 const user_store = useUserStore();
 const { params } = useRoute();
 const search_text = ref("");
@@ -44,13 +42,7 @@ const init_content =  () => {
     for (const path in modules) {
       if (path == solution_path) {
         modules[path]().then((mod) => {
-          // subject_solution_context[i].innerHTML =  marked(mod,true)
-        //   nextTick(() => {
-        //       renderByMathjax(subject_solution_context[i]).catch(err=>{
-        //   }
-        // );
-            
-        //   });
+      
         render_marked_latex(subject_solution_context[i],mod,(dom)=>{
              nextTick(() => {
               renderByMathjax(dom).catch(err=>{
@@ -61,11 +53,7 @@ const init_content =  () => {
         });
       } else if (path == problem_path) {
         modules[path]().then((mod) => {
-          // subject_list[i].innerHTML = marked(mod);
-          // nextTick(() => {
-          //   renderByMathjax(subject_list[i]).catch(err=>{
-          // });;
-          // });
+  
           render_marked_latex(subject_list[i],mod,(dom)=>{
              nextTick(() => {
               renderByMathjax(dom).catch(err=>{
@@ -84,15 +72,42 @@ onBeforeMount(() => {
 });
 onUnmounted(() => {
   document.removeEventListener("click", click_handle);
+  document.removeEventListener("scroll", scroll_handle);
 });
+let item_list = null;
+const scroll_handle = ()=>{
+  if(item_list == null){
+      item_list = document.querySelectorAll(".content_item_box")
+  }
+  for (let i = 0; i < item_list.length; i++) {
+    if ( window.scrollY >=
+    item_list[i].offsetTop - window.innerHeight / 1.2) {
+      r_o_a_i(item_list[i])
+    }else{
+      r_i_a_o(item_list[i])
+    }
+  }
+}
 onMounted(() => {
   init_data();
   window.scrollTo(0, 0);
   document.addEventListener("click", click_handle);
-
+  document.addEventListener("scroll", scroll_handle);
   current_page.value = params.page;
 });
 
+const r_o_a_i = (d)=>{
+  if(d.classList.contains('fade_out')){
+    d.classList.remove('fade_out')
+    d.classList.add('fade_in')
+  }
+}
+const r_i_a_o = (d)=>{
+  if(d.classList.contains('fade_in')){
+    d.classList.remove('fade_in')
+    d.classList.add('fade_out')
+  }
+}
 const current_page_change = (current) => {
   let path_ = route.fullPath.split("/");
   const query = route.query;
@@ -169,6 +184,7 @@ const init_data = () => {
   });
   nextTick(() => {
     init_content();
+    scroll_handle()
   });
 };
 
@@ -315,7 +331,7 @@ const init_data = () => {
           <li
             v-for="item in current_data.slice(0, 10)"
             :key="item"
-            class="content_item_box f f_d_c"
+            class="content_item_box fade_out f f_d_c"
           >
             <div class="f f_d_r content_item_top_box">
               ID:{{ item.id }}
@@ -324,12 +340,10 @@ const init_data = () => {
             <div
               @click="item.show_solution = !item.show_solution"
               class="subject_context markdown-body"
-              v-highlight
             ></div>
             <div
               v-show="item.show_solution"
               class="subject_solution_context markdown-body"
-              v-highlight
             ></div>
             <div class="content_tag_box f a_c">
               <div
@@ -577,6 +591,7 @@ font-family: 'misans';
               color: $text_secondary;
               user-select: none;
               font-size: 1.1em;
+              cursor: pointer;
               &:hover {
                 color: $primary;
               }
@@ -609,6 +624,7 @@ font-family: 'misans';
       border-bottom-left-radius: inherit;
       gap: 16px;
       .content_item_box {
+        width: 100%;
         min-height: 60px;
         z-index: 100;
         border-radius: 5px;
@@ -742,5 +758,12 @@ font-family: 'misans';
     transform: scale(1);
   }
 }
+.fade_in{
+  opacity: 1;
+  transform: translate(0);
+}
+.fade_out{
+  opacity: 0;
+  transform: translateY(48px);
+}
 </style>
-../component/MathLeftNavBar.vue

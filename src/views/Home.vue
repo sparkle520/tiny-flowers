@@ -931,6 +931,7 @@ const leave_new_topic = (index) => {
       transform: translateX(-50%);
       animation: more 2s infinite linear both;
       z-index: 10000000;
+      cursor: pointer;
       path {
         fill: $primary;
       }
@@ -1081,7 +1082,7 @@ const leave_new_topic = (index) => {
                 border-radius: 10px;
                 width: 356px;
                 height: 300px;
-                color: $text_subtitle;
+                color: $text;
                 background: $fill;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 box-shadow: 0 13px 10px $fill_shadow;
@@ -1296,7 +1297,7 @@ const leave_new_topic = (index) => {
                   .short_meg {
                     margin: 16px 0;
                     height: 16px;
-                    color: $text_subtitle;
+                    color: $text;
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
@@ -1397,7 +1398,7 @@ const leave_new_topic = (index) => {
                   overflow: hidden;
                   font-size: 16px;
                   font-weight: 900;
-                  color: $text_subtitle;
+                  color: $text;
 
                   div:first-child {
                     user-select: none;
