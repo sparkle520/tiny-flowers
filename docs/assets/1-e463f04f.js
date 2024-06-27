@@ -3,7 +3,7 @@ const n=`# 第一章 函数与极限  \r
 > [引言]  \r
 > 本章节不提供详细的知识点  \r
 \r
-## 关于函数的奇偶性 \r
+## 函数的奇偶性 \r
 \r
 1. 奇$×$奇$=$偶\r
 2. 奇$×$偶$=$奇  \r
@@ -18,7 +18,7 @@ $$\r
 f(x)=\\frac{1}{2}[f(x)-f(-x)]+\\frac{1}{2}[f(x)+f(-x)].\r
 $$\r
 \r
-## 关于函数极限与无穷小关系  \r
+## 函数极限与无穷小关系  \r
 \r
 $$\r
 \\lim_{x \\to x_0}f(x)=A\\quad\\\\iff\\quad f(x)=A+\\alpha(x)\\quad(其中A为常数,\\alpha(x)为无穷小).\r
@@ -44,7 +44,7 @@ $$ \r
 \r
 则$\\displaystyle\\lim_{x\\to a}\\frac{f(x)}{x-a}=\\displaystyle\\lim_{x\\to a}\\frac{f(x)-f(a)}{x-a}=k$  得证.\r
 \r
-## 关于极限的保号性 \r
+## 极限的保号性 \r
 \r
 设$\\displaystyle\\lim_{x\\to x_0}f(x)=A$，且$A≠0$，则存在一个$x_0$的去心领域，使得在该领域内，$f(x)$的符号与$A$相同.  \r
 \r
@@ -74,7 +74,7 @@ $$ \r
 $\\displaystyle\\lim_{x\\to 0}\\frac{f'(x)}{x}=\\displaystyle\\lim_{x\\to 0}\\frac{f(x)-f(0)}{x^2}$，\r
 由于$x^2>0$，再由极限的保号性可知，存在$0$点处的一个去心领域，有$f(x)-f(0)>1>0$，即$f(x)>f(x_0)$，由极值点定义可知，$x=0$为极小值点.\r
 \r
-## 关于常见的无穷大比较 \r
+## 常见的无穷大比较 \r
 \r
 当$n\\to \\infty$时 \r
 \r
@@ -82,7 +82,7 @@ $$\r
 {ln^{\\alpha}n}<<n^{\\beta}<<a^n<<n!<<n^n\\quad(其中\\alpha>0,\\beta>0,a>1).\r
 $$ \r
 \r
-## 关于常用的无穷小代换 \r
+## 常用的无穷小代换 \r
 \r
 当$x\\to 0$时 \r
 \r
@@ -98,7 +98,7 @@ $arcsinx-x\\sim \\displaystyle\\frac{1}{6}x^3\\quad x-arctanx\\sim \\displaystyl
 \r
 > [注] 对$x-sinx\\sim \\displaystyle\\frac{1}{6}x^3$中的$x$令其为$arcsint$不难得出$arcsinx-x\\sim \\displaystyle\\frac{1}{6}x^3$，同理可得$x-arctanx$.\r
 \r
-## 关于加减时等价无穷小替换原则  \r
+## 加减时等价无穷小替换原则  \r
 \r
 当$x\\to x_0$时，若$\\alpha\\sim\\alpha_1,\\beta\\sim \\beta_1$ 且 $\\displaystyle\\lim_{x\\to  x_0}\\frac{\\alpha}{\\beta}$存在，则有 \r
 \r
@@ -130,7 +130,7 @@ $arcsinx-x\\sim \\displaystyle\\frac{1}{6}x^3\\quad x-arctanx\\sim \\displaystyl
 \r
 > [注] 极限存在是可以拆开的. \r
 \r
-## 关于极限运算定理  \r
+## 极限运算定理  \r
 \r
 对于两个极限都存在的情形不在此说明\r
 \r
@@ -147,7 +147,7 @@ $arcsinx-x\\sim \\displaystyle\\frac{1}{6}x^3\\quad x-arctanx\\sim \\displaystyl
 > \r
 > 由此也可知，两个函数和差的极限存在，推导不出来两个函数极限分别存在.例如$g(x)=x,f(x)=-x$,当$x\\to \\infty$时，两个函数极限都不存在，但$f(x)+g(x)$极限存在.\r
 \r
-## 关于极限常见的计算问题 \r
+## 极限常见的计算问题 \r
 \r
 对于极限的计算方法很多，如等价无穷小代换，泰勒展开，洛必达，倒代换，有理化，拉格朗日中值定理，积分中值定理，夹逼准则，定积分定义等.做题时应灵活选取，且保证其应用正确性.\r
 \r
@@ -393,7 +393,7 @@ $$\r
 \r
 **<例题15>** \r
 \r
-$\\displaystyle\\lim_{x\\to +\\infty}\\frac{\\int_{0}^{x}\\sqrt{t}cost dt}{x}$. \r
+$\\displaystyle\\lim_{x\\to +\\infty}\\frac{\\displaystyle\\int_{0}^{x}\\sqrt{t}cost dt}{x}$. \r
 \r
 **[分析]** 上来就洛必达就是经典的错误，标准的零分.这是由于分子分母求导后所得极限是不存在的，故不满足洛必达使用条件.相应的还有如果函数$f(x)n$阶**可导**，那么洛必达至多可使用$n-1$次.这是由于$f(x)n$阶可导推不出$n$阶导函数连续，也就是说$f(x)n$阶**连续可导**才能用$n$次洛必达.  \r
 \r

@@ -5,7 +5,7 @@ export const useUserStore = defineStore('user', {
 
         name: 'refrain',
         signature: "人一旦失去重要的东西，就很难再获得了",
-        avatar:'https://pic.imgdb.cn/item/65f271609f345e8d03f68b71.jpg',
+        avatar:'https://sparkle-1317157616.cos.ap-beijing.myqcloud.com/b91665cd60c32bbcc133b95ea611cb65_1.jpg',
         aphorism:'Personality is to a man what perfume is to a flower.<br>(个性之于人恰如芳香之于花。)',
         e_mail:'1427702848@qq.com',  
         github_account:'sparkle520',

@@ -407,7 +407,7 @@ const enture_btn = ()=>{
           font-weight: 900;
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+          cursor: pointer;
           &:hover {
             opacity: .5;
           }
