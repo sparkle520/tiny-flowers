@@ -602,7 +602,7 @@ font-family: 'misans';
   #top_box {
     margin-top: 90px;
     width: 1000px;
-    z-index: 100000000;
+    z-index: 10000;
   }
 
   #content_box {
