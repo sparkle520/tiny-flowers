@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
-  base:'/TinyFlowers/',
+  base:'/',
   build:{
     outDir:'docs'
   },
