@@ -125,7 +125,10 @@ watch(
 const link_to = (path) => {
   router.push(path);
 };
-
+const mobile_link_to = (path)=>{
+  router.push(path);
+  switch_nav_list()
+}
 
 const temp_theme = ref();
 const theme_change = () => {
@@ -165,9 +168,34 @@ const enture_btn = ()=>{
     t_d.classList.add('t_d_o')
   }
 }
+
+const show_nav_list_flag = ref(false)
+const switch_nav_list = ()=>{
+  show_nav_list_flag.value = !show_nav_list_flag.value
+  let nav_icon = document.querySelector('#nav_icon')
+  let nav_list_box = document.querySelector('.nav_list_box')
+  if(show_nav_list_flag.value){
+    nav_icon.classList.add('open')
+    if(nav_list_box.classList.contains('w_o')){
+      nav_list_box.classList.remove('w_o')
+      nav_list_box.classList.add('w_i')
+  }else{
+    nav_list_box.classList.add('w_i')
+  }  
+  }else{
+     nav_icon.classList.remove('open')
+    if(nav_list_box.classList.contains('w_i')){
+      nav_list_box.classList.remove('w_i')
+      nav_list_box.classList.add('w_o')
+  }else{
+    nav_list_box.classList.add('w_o')
+  }
+  }
+}
 </script>
 <template>
-  <div id="top_nav_main" class="nav_main f a_c j_c_c">
+  <div id="top_nav_main">
+  <div class="pc f a_c j_c_c">
     <div class="t_d f a_c j_c_c">
       <svg @click="colose_theme_dialog" t="1719266118700" class="close_icon a" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5087" width="48" height="48"><path d="M589.704 501.674L998.27 93.107c20.652-20.653 20.652-54.556 0-75.209l-2.237-2.237c-20.652-20.652-54.556-20.652-75.208 0L512.258 424.745 103.691 15.489c-20.652-20.652-54.556-20.652-75.208 0l-2.238 2.237c-21.168 20.652-21.168 54.556 0 75.208l408.568 408.74L26.245 910.24c-20.652 20.652-20.652 54.556 0 75.208l2.238 2.238c20.652 20.652 54.556 20.652 75.208 0l408.567-408.568 408.568 408.568c20.652 20.652 54.556 20.652 75.208 0l2.237-2.238c20.652-20.652 20.652-54.556 0-75.208L589.704 501.674z" fill="#2C2C2C" p-id="5088"></path></svg>
       <div class="theme_box f f_d_c">
@@ -242,17 +270,39 @@ const enture_btn = ()=>{
      
     </div>
   </div>
+   <div class="mobile a_c">
+    <div id="nav_icon" @click="switch_nav_list">
+  <span></span>
+  <span></span>
+  <span></span>
+    </div>
+    <div class="fixed nav_list_box">
+      <ul class="f f_d_c j_c_c">
+        <li v-for="item in nav_list"
+        @click="mobile_link_to(item.path)">
+        {{ item.name }}
+        </li>
+      </ul>
+    </div>
+    
+   </div>
+  </div>
 </template>
 <style lang="scss" scoped>
+$nav_item_len:7;
 
 #top_nav_main {
-  position: fixed;
-  width: max(1440px,100vw);
-  // box-shadow: #30313617 2px 0px 10px;
-  transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
-  height: 60px;
-  top: 16px;
   font-family: "misans";
+  .mobile{
+    display: none;
+  }
+  .pc{
+    top: 16px;
+    width: max(1440px,100vw);
+    height: 60px;
+    transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    position: fixed;
+  }
   .t_d{
     position: fixed;
     top: 0;
@@ -450,10 +500,151 @@ const enture_btn = ()=>{
           transition: 0.4s;
         }
       }
-
-     
-     
     }
   }
 }
+@media (max-width: 600px) {
+  #top_nav_main{
+    .pc{
+    display: none;
+}
+.mobile{
+  width: 100vw;
+  height: 44px;
+  display: flex;
+  padding: 0 10px;
+  position: fixed;
+  top: 0;
+  background: $fill_primary;
+}
+#nav_icon{
+  width: 36px;
+  height: 24px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+  span{
+    display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: $primary;
+  border-radius: 3px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+  &:nth-child(1){
+    top: 0px;
+  }
+  &:nth-child(2){
+    top: 8px;
+  }
+  &:nth-child(3){
+    top: 16px;
+  }
+  }
+
+}
+
+  }
+  .open{
+  span{
+    &:nth-child(1){
+      top: 8px !important;
+  -webkit-transform: rotate(135deg) !important;
+  -moz-transform: rotate(135deg) !important;
+  -o-transform: rotate(135deg) !important;
+  transform: rotate(135deg) !important;
+    }
+    &:nth-child(2){
+      opacity: 0 !important;
+      left: -60px !important;
+    }
+    &:nth-child(3){
+      top: 8px !important;
+  -webkit-transform: rotate(-135deg) !important;
+  -moz-transform: rotate(-135deg) !important;
+  -o-transform: rotate(-135deg) !important;
+  transform: rotate(-135deg) !important;
+    }
+  }
+}
+.nav_list_box{
+  width: 100vw;
+  height: calc(100vh - 44px);
+  background: $primary;
+  top: 44px;
+  left: 0;
+  clip-path: circle(0% at top left);
+
+  ul{
+    z-index: 11;
+    margin:0;
+    padding: 0;
+    list-style: none;
+    margin-left: 16px;
+    gap: 16px;
+    margin-top: 16px;
+    li{
+      cursor: pointer;
+      color: $fill_primary;
+      // @for $i from 1 to ($nav_item_len +1){
+      //   &:nth-child(#{$i}){
+      //     animation: to_top_fade_in 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+      //     animation-delay: #{$i/10}s;
+      //   }
+      // }
+    }
+  }
+}
+.w_i{
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) w_i both;
+}
+.w_o{
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) w_o both;
+
+}
+}
+@keyframes to_top_fade_in {
+  0%{
+    opacity: 0;
+    transform: translateY(32px);
+  }100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes w_i {
+  from {
+    clip-path: circle(0% at top left);
+  }
+  to {
+    clip-path: circle(125%);
+  }
+}
+
+@keyframes w_o{
+  from {
+    clip-path: circle(125%);
+  }
+  to {
+    clip-path: circle(0% at top left);
+  }
+
+}
+
+
 </style>
