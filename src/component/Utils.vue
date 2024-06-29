@@ -48,9 +48,9 @@ const view_change = () => {
   <div class="fixed utils_box f f_d_c">
     <div
       @click="view_change"
-      class="to_top_btn f f_d_c a_c j_c_c"
+      class="to_top_btn f f_d_c a_c j_c_c full"
     >
-      <div class="">
+      <div >
         <svg
           t="1705472090600"
           class="icon"
@@ -143,5 +143,10 @@ const view_change = () => {
    &:hover {
      background-color: $primary_mix_9;
    }
+ }
+ @media (max-width: 600px) {
+  .full{
+    display: none;
+  }
  }
 </style>

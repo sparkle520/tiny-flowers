@@ -173,3 +173,169 @@ table{
 }
 
 
+@media (max-width: 600px) {
+  .markdown-body {
+    background: transparent !important;
+    font-family: 'misans' !important;
+    font-size: 12px !important;
+    color: $text !important;
+    width: 100% !important;
+    overflow-x:visible !important;
+    z-index: 10 !important;
+    letter-spacing: 2px !important;
+    line-height: 1.9em !important;
+  
+    a{
+      color: $text_link !important;
+      text-decoration: underline !important;
+    }
+   
+    // 对于表格的美化
+  table{
+    border-collapse:collapse !important;
+    table-layout:auto !important;
+    width: 80% !important;
+    border-radius:5px !important;
+    overflow:hidden !important;
+    margin: 16px auto !important;
+    border:none  !important;
+    border-collapse:collapse !important;
+    background: transparent !important;
+    color: $text !important;
+    thead th {
+      background-color: transparent !important;
+      color: $text !important;
+      border-bottom-width: 0 !important;
+      border: none !important;
+      }
+      td,tr{
+        /* padding: 5px;
+        width: 33%; */
+        background: transparent !important;
+        border:none !important;
+        
+        border-bottom:1px $primary solid  !important;
+        border-top:1px $primary solid  !important;
+        text-align: center !important;
+        vertical-align:middle !important;
+        /* font-size: 15px; */
+      
+        &:nth-child(odd){
+          background-color: transparent !important; ;
+        }
+        &:nth-child(even){
+          background-color: transparent !important;
+        
+        }
+      }
+    }
+    
+    
+  
+  
+   
+    strong{
+      color: $primary !important;
+    }
+    h1 {
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      color: $primary !important;
+    
+    }
+    h2 {
+      font-size: 18px !important;
+      font-weight: 600 !important;
+      color: $primary !important;
+      
+    }
+    h3 {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: $primary !important;
+      
+    }
+    h4 {
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      color: $primary !important;
+     
+    }
+    h5 {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: $primary !important;
+      
+    }
+    h6 {
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: $primary !important;
+     
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      border-bottom: none !important;
+      position: relative !important;
+      padding: 0 !important;
+      &::after{
+        content: '';
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(calc(-50%)) !important;
+        width: .3em !important;
+        border-radius: 0 .3em .3em 0 !important;
+              left: calc(-16px) !important;
+        height: 1em !important;
+        background: $primary !important;
+      }
+    }
+    code {
+      background:$primary !important;
+      color: $fill_primary !important;
+      font-family: 'yahei' !important;
+    }
+    pre>code{
+      color: $text !important; 
+      background:transparent !important;
+    }
+    
+    p {
+    }
+    blockquote {
+      background-color:transparent !important;
+      color: $text !important;
+      border-left: 0.15em solid $primary_mix_1 !important;
+      padding: 8px 8px !important;
+  
+    }
+    pre {
+      font-family: "monaco" !important;
+      position: relative !important;
+      padding-top: 32px !important;
+      background: $fill !important;
+      box-shadow: $fill_shadow 0 0 5px;
+      &::after {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        width: 12px;
+        height: 12px;
+        overflow: visible;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 12px;
+        white-space: nowrap;
+        text-indent: 75px;
+        background-color: #fc625d;
+        border-radius: 16px;
+        box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+        content: attr(codetype);
+      }
+    }
+  }
+}

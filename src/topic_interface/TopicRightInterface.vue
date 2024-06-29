@@ -59,7 +59,7 @@ const change_layout = (current_layout) => {
         </div>
       </div>
     </div>
-    <DirectoryList></DirectoryList>
+    <DirectoryList class="dir"></DirectoryList>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -129,6 +129,18 @@ const change_layout = (current_layout) => {
   }
   100% {
     transform: translateX(0px) scale(1);
+  }
+}
+@media (max-width: 600px) {
+  #topic_right_main {
+    display: none;
+    width: 0;
+  }
+  .dir{
+    display: none;
+  }
+  .personal_item{
+    display: none;
   }
 }
 </style>

@@ -1329,7 +1329,7 @@ li {
   width: calc(100vw - 20px);
   height: 38px;
   margin: 16px auto;
-  margin-top: 52px;
+  margin-top: 90px;
   .filter_search_box {
     width: calc(100vw - 40px);
     max-height: 226px;

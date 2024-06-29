@@ -56,4 +56,20 @@ font-family: 'misans';
     column-gap: 8px;
   }
 }
+@media (max-width: 600px) {
+  #directory_list_main {
+  width: calc(100vw - 20px);
+  border-radius: 5px;
+
+font-family: 'misans';
+  .Note_inner_directory_box {
+    column-count: 2;
+    width: calc(100vw - 28px);
+    font-weight: 900;
+    padding: 0 4px;
+    font-size: 12px;
+    column-gap: 4px;
+  }
+}
+}
 </style>

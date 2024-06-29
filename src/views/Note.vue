@@ -774,7 +774,7 @@ font-family: 'misans';
     width: calc(100vw - 20px);
     align-self: center;
     z-index: 1;
-    margin-top: 44px;
+    margin-top: 90px;
     margin-bottom: 36px;
     .top_box {
       display: none;
@@ -929,10 +929,9 @@ font-family: 'misans';
     .note_box {
       width: calc(100vw - 20px);
       border-radius: 15px;
-      margin-top: 8px;
       background: $fill;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+      margin-top: 0;
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       -webkit-backdrop-filter: blur(6px);
       box-shadow:$fill_shadow 0px 6px 15px 0px;
@@ -1084,6 +1083,7 @@ font-family: 'misans';
                 }
               }
               .book_text_area {
+                width: 100%;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
                 .book_name {

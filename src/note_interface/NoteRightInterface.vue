@@ -133,4 +133,16 @@ const change_layout = (current_layout) => {
     transform: translateX(0px) scale(1);
   }
 }
+@media (max-width: 600px) {
+  #topic_right_main{
+    display: none;
+    width: 0;
+  }
+  .directory{
+    display: none;
+  }
+  .personal_item{
+    display: none;
+  }
+}
 </style>

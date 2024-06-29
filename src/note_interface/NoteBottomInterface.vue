@@ -144,4 +144,57 @@ onMounted(() => {
   }
   
 }
+@media (max-width: 600px) {
+  #topic_bottom_main {
+  width: 100%;
+  
+  img {
+    box-shadow: none;
+  }
+  .note_context_switch_box {
+    width: 96%;
+    margin: 0 auto;
+    border-radius: 10px;
+    height: 12vh;
+    box-shadow: $fill_shadow 0px 3px 10px;
+    .note_switch_item {
+      width: 50%;
+      height: inherit;
+      div {
+        margin-left: 32px;
+        transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        cursor: pointer;
+        &:first-child {
+          font-weight: 900;
+          font-size: 14px;
+          user-select: none;
+          margin-bottom: 8px;
+        }
+        &:last-child {
+          color: $text_subtitle;
+          font-size: 12px;
+          user-select: none;
+          font-weight: 900;
+          &:hover {
+            color: $primary;
+          }
+        }
+      }
+      &:first-child {
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+      }
+      &:last-child {
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+    }
+  }
+  #gitalk-container {
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+}
+}
 </style>

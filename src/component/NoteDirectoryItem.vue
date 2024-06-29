@@ -54,4 +54,15 @@ const props = defineProps({
   .chapter_title {
   }
 }
+@media (max-width: 600px) {
+  #note_directory_item_main {
+
+  span {
+    display: block;
+    margin-bottom: 8px;
+    color: $text_subtitle;
+   user-select: none;
+  }
+}
+}
 </style>

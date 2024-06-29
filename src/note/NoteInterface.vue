@@ -48,8 +48,11 @@ const render_marked_latex = (dom,mod,callback)=>{
   callback(dom)
 }
 onMounted(() => {
+  if(window.innerWidth >= 600){
+    change_layout(layout.value);
+
+  }
   change_theme(theme.value);
-  change_layout(layout.value);
   initContent();
 });
 

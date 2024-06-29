@@ -99,4 +99,50 @@ const props =ref({
   }
 
  }
+ @media (max-width: 600px) {
+  #topic_top_main {
+  width: 100vw;
+  margin: 0 auto;
+   height: 208px;
+  border-radius: 10px;
+  margin-top: 90px;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  box-shadow:1px 2px 5px #5656561b;
+
+  .t_t_img{
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+  .topic_title{
+    font-size: 48px;
+    font-weight: 900;
+    padding: 16px 32px;
+    z-index: 10;
+    &::before{
+      content: '';
+      top: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      // background: rgb(231, 228, 228);
+      border-radius: 10px;
+      filter: blur(20px);
+    }
+  }
+  @keyframes topic_top_bg {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+ }
+ }
 </style>

@@ -52,8 +52,10 @@ const config = {
   id: params.index,
 };
 onMounted(() => {
+  if(window.innerWidth >= 600){
+    change_layout(layout.value);
+  }
   change_theme(theme.value);
-  change_layout(layout.value);
   init_content();
 
 });

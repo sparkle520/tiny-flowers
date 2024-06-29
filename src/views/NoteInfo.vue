@@ -359,4 +359,211 @@ box-shadow: $fill_shadow  0 0 5px;
     --d: 20%
   }
 }
+@media (max-width: 600px) {
+  #note_info_main {
+  width: 100vw;
+  min-height: 100vh;
+  background: $fill_body;
+ 
+font-family: 'misans';
+.note_info_main_bg{
+  width: 100vw;
+    height: 100vh;
+    opacity: .2;
+    transform: scale(2);
+  stop:first-child{
+    stop-color: $primary;
+  }
+  stop:last-child{
+    stop-color: $primary_mix_6;
+  }
+}
+  .note_top_box {
+    width: calc(100vw - 20px);
+    overflow: hidden;
+margin: 90px auto 16px auto;
+border-radius: 10px;
+background: $fill;
+box-shadow: $fill_shadow  0 0 5px;
+    .note_top_inner_box {
+      z-index: 2;
+      margin: 0 auto;
+     gap: 8px;
+     width: calc(100vw - 28px);
+     padding: 0 4px;
+      height: calc(100% - 70px);
+      .note_top_left_box {
+        width: 30vw;
+        height: calc(30vw * 1.6);
+        box-shadow: $fill_shadow 0px 0px 5px;
+        margin: auto 0;
+        border-radius: 10px;
+        transform: translateY(-10px);
+        .note_top_inner_box_img {
+          top: 0;
+          width: 30vw;
+          height: calc(30vw * 1.6);
+          --n:4;
+          --r:0deg;
+          --d:0%;
+          -webkit-mask:
+    linear-gradient(var(--r), transparent var(--d), red 0 calc(100% - var(--d)), transparent 0),
+    linear-gradient(calc(var(--r) + 90deg), transparent var(--d), red 0 calc(100% - var(--d)), transparent 0);
+  -webkit-mask-size: calc(100%/var(--n)) calc(100%/var(--n));
+  -webkit-mask-composite: source-in;
+          margin: 7% 0;
+          background: #ffff;
+          border-radius: 10px;
+          object-fit: cover;
+          animation: note_top_inner_box_img 1s;
+        }
+        .note_top_inner_box_img_bg{
+          width: 268px;
+          height: 342px;
+          filter:blur(20px) ;
+
+        }
+      }
+      .note_top_mid_box {
+        width: 600px;
+        height: 100%;
+        gap: 4px;
+        h1 {
+          color: $primary;
+          margin: 0;
+          font-size: 16px;
+          margin-top: 5%;
+          animation: to_top 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        p {
+          margin: 0;
+          font-size: 14px;
+          margin-bottom: 16px;
+          color: $text;
+          animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        span {
+          color: $text;
+          font-size: 12px;
+          animation: to_top 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        .load_status {
+          font-weight: bold;
+          color: green;
+        }
+        .finished_status {
+          font-weight: bold;
+          color: blue;
+        }
+        .read_btn {
+          height: 30px;
+          width: 100%;
+          border: none;
+          border-radius: 20px;
+          cursor: pointer;
+          overflow: hidden;
+          z-index: 1;
+          font-size: 14px;
+          font-weight: 900;
+          color: $primary;
+          background: $fill_primary;
+          box-shadow: $fill_shadow 0px 3px 10px;
+          margin: 0;
+          margin: 8px 0;
+          transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+          animation: shrink 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+         
+
+          &:hover {
+            color: $fill_primary;
+            box-shadow: $primary 0px 3px 2px;
+
+            &::after {
+              transform: skewX(-45deg) scale(1);
+              transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+            }
+          }
+          &::after {
+            content: "";
+            background: $primary;
+            position: absolute;
+            z-index: -1;
+            left: -20%;
+            right: -20%;
+            top: 0;
+            bottom: 0;
+            transform: skewX(-45deg) scale(0, 1);
+            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+          }
+        }
+      }
+       
+    }
+  }
+
+  .note_directory_box {
+    width: calc(100vw - 20px);
+    margin: 0 auto;
+    margin-bottom: 32px;
+    border-radius: 10px;
+    z-index: 1;
+    background: $fill;
+    box-shadow: $fill_shadow 0 0 5px;
+    .note_directory {
+      background: transparent;
+      margin: 16px auto;
+      margin-top: 0;
+    }
+    h1 {
+      width: calc(100vw - 28px);
+      margin: 16px auto;
+      font-size: 16px;
+      color: $primary;
+      &::after{
+        content: '';
+        position: absolute;
+        width: 3px;
+        height: 80%;
+        background:$primary ;
+        left: -4px;
+        top: 55%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+  
+}
+.note_info_foot {
+  width: calc(100vw - 20px);
+  padding: 0 10px;
+  height: 130px;
+  gap:8px;
+  z-index: 1;
+  color: $primary;
+  background: $fill_body;
+  .title_foot {
+    font-size: 12px;
+  }
+  .text_foot {
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .left_foot {
+    width: calc((100vw - 24px)/2);
+    height: auto;
+    gap: 4px;
+    line-height: 15px;
+  }
+  .mid_foot {
+    width: 0;
+    height: 152px;
+  }
+  .right_foot {
+    width: calc((100vw - 24px)/2);
+    height: auto;
+    gap: 4px;
+    line-height: 15px;
+  }
+}
+}
 </style>
