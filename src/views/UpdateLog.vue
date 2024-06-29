@@ -152,4 +152,70 @@ const log = [
     transform: translateY(0);
   }
 }
+
+@media (max-width: 600px) {
+  #update_log_main {
+  width: 100vw;
+  color: $text;
+  background: $fill_body;
+  min-height: 100vh;
+  li{
+  list-style: none;
+  padding: 0 0;
+  margin-bottom: 8px;
+}
+  .w_w_y {
+    width: 450px;
+    opacity: 0.8;
+    z-index: 0;
+    // filter:drop-shadow(3px 3px 4px rgba(97, 85, 79, 0.731));
+  }
+ 
+  .content {
+    width: calc(100vw - 20px );
+    margin: 60px auto;
+    z-index: 1;
+    animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    ul {
+      padding: 0;
+      .version {
+        font-size: 19px;
+        font-weight: 900;
+      }
+      li {
+        line-height: 25px;
+        width: calc(100vw - 36px );
+        padding: 8px;
+        border-radius: 5px;
+        background: $fill;
+
+        box-shadow: 0 0 5px $fill_shadow;
+      }
+    }
+    .striking_title_orange {
+      font-size: 22px;
+      font-weight: 600;
+      color: $primary;
+      &::after {
+        z-index: 100;
+        content: "";
+        position: absolute;
+        width: 120%;
+        height: 20%;
+        border-radius: 5px;
+        background: $primary_mix_7;
+        left: 50%;
+        bottom: -10px;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}
+.text {
+  color: $text;
+  margin-top: 0px;
+  font-size: 12px;
+}
+}
 </style>
