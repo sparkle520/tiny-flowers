@@ -76,6 +76,7 @@ const text = ref(true)
     color:$fill_primary !important;
     background-color: $primary !important;
   }
+  
  
   .nav {
     z-index: 100000000;
@@ -87,5 +88,9 @@ const text = ref(true)
   
  
 }
-
+@media (max-width: 600px) {
+    #main{
+      width: 100vw;
+    }
+  }
 </style>

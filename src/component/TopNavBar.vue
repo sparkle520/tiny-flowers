@@ -516,9 +516,10 @@ $nav_item_len:7;
   position: fixed;
   top: 0;
   background: $fill_primary;
+  box-shadow: $fill_shadow 0 0 5px;
 }
 #nav_icon{
-  width: 36px;
+  width: 24px;
   height: 24px;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);

@@ -24,12 +24,15 @@ theme_sotre.$subscribe((mutation, state) => {
   change_theme(state.current_theme);
 });
 const router = useRouter();
-onBeforeMount(() => {});
+onBeforeMount(() => {
+  
+});
 onUnmounted(() => {
   document.removeEventListener("scroll", scroll_handle);
   clearInterval(notice_interval);
 });
 onMounted(() => {
+  
   change_theme(theme_sotre.current_theme);
   window.scrollTo({ top: 0, behavior: "auto" });
   scroll_handle();
@@ -1866,7 +1869,7 @@ const leave_new_topic = (index) => {
                   .title {
                     font-size: 14px;
                     font-weight: 700;
-                    height: 18px;
+                    height: 16px;
                     color: $text_title;
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
@@ -2075,7 +2078,7 @@ const leave_new_topic = (index) => {
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 .re_note_img_box {
                   width: inherit;
-                  height: 200px;
+                  height: calc((100vw - 24px)/1.6);
                   border-radius: inherit;
                   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
                   margin-bottom: 16px;
