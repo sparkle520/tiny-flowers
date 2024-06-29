@@ -138,4 +138,82 @@ font-family: 'misans';
     }
   }
 }
+@media (max-width: 600px) {
+  #site_nav_main {
+  width: 100vw;
+  min-height: 100vh;
+  background: $fill_body;   
+
+  overflow: hidden;
+  color: $text;
+  
+font-family: 'misans';
+ 
+ 
+  .site_nav_main_bg{
+    width: 100vw;
+    height: 100vh;
+    opacity: .2;
+    transform: scale(2);
+  stop{
+    stop-color: $primary;
+  }
+  stop:last-child{
+    stop-color: $primary_mix_6;
+  }
+  }
+  
+  .site_content {
+    z-index: 2;
+    width: calc(100vw - 20px);
+    overflow: hidden;
+    margin: 0px auto;
+    color: $primary;
+    .site_item {
+      margin: 8px 0;
+      h1{
+            font-size: 16px;
+          }
+      &:last-child {
+        margin-bottom: 200px;
+      }
+      margin-left: 20px;
+      ul {
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+        gap: 8px;
+        li {
+          width: 100%;
+          font-size: 12px;
+          color: $text_link;
+          font-weight: 700;
+          cursor: pointer;
+         
+          span {
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: 0;
+              width: 100%;
+              height: 2px;
+              background: $text_link;
+              left: 0;
+            }
+            &:hover {
+              color: $primary;
+              &::after {
+                background: $primary;
+              }
+            }
+          }
+        }
+      }
+      &:first-child {
+        margin-top: 100px;
+      }
+    }
+  }
+}
+}
 </style>

@@ -1404,6 +1404,7 @@ li {
 .topic_box {
   width: calc(100vw - 20px);
   padding-bottom: 8px;
+  
   background: $fill;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   .layout_box {
@@ -1582,7 +1583,7 @@ li {
     .topic_item_grid {
       width: calc((100vw - 28px)/2);
       border-radius: 10px;
-      height: 370px;
+      height: 300px;
       background: $fill;
       box-shadow: 0 13px 15px $fill_shadow;
       transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1593,7 +1594,7 @@ li {
       }
       .img_box {
         width: 100%;
-        height: 210px;
+        height: 170px;
 
         img {
           width: inherit;
@@ -1605,7 +1606,7 @@ li {
       }
       .topic_item_inner_grid {
         width: calc(100% - 16px);
-        height: 128px;
+        height: 114px;
         margin: 8px;
         .classification_box {
           background: $primary_mix_2;
@@ -1653,18 +1654,18 @@ li {
         }
         .tags_box {
           margin-top: auto;
-          gap: 0;
+          gap: 2px;
           height: 30px;
           overflow: scroll;
 
           .tag_item {
-            font-size: 1em;
-            transform: scale(0.8);
+            font-size: 12px;
+            transform: scale(1);
             flex-shrink: 0;
-
+            line-height: 19px;
             background: $primary_mix_9;
             color: $primary;
-            padding: 4px 8px;
+            padding: 2px 4px;
 
             border-radius: 100px;
             &:hover {

@@ -957,7 +957,7 @@ font-family: 'misans';
             margin-left: 16px;
             margin-bottom: 8px;
             color: $primary;
-            font-size: 0.7em;
+            font-size: 12px;
           }
           ul {
             list-style: none;
@@ -967,7 +967,7 @@ font-family: 'misans';
             li {
               word-wrap: break-word;
               color: $text_secondary;
-              font-size: 1.1em;
+              font-size: 12px;
               cursor: pointer;
               &:hover {
                 color: $primary;
@@ -1000,7 +1000,7 @@ font-family: 'misans';
           color: $search_box_color;
           margin-left: 10px;
           border: none;
-          font-size: 1.1em;
+          font-size: 14px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           box-shadow: $primary 0 0 0 1px;
 
@@ -1089,7 +1089,7 @@ font-family: 'misans';
                 .book_name {
                   cursor: pointer;
                   margin: 8px 0;
-                  font-size: 1.2em;
+                  font-size: 14px;
                   font-weight: 600;
                   user-select: none;
                   color: $text_title;
@@ -1100,7 +1100,7 @@ font-family: 'misans';
                 .short_message {
                   height: 48px;
                   width: 100%;
-                  font-size: 0.9em;
+                  font-size: 12px;
                   overflow-y: scroll;
                   display: -webkit-box;
                   -webkit-line-clamp: 3;
@@ -1111,17 +1111,17 @@ font-family: 'misans';
                 .book_item_bottom {
                   margin-top: auto;
                   .book_update_time {
-                    font-size: 0.8em;
+                    font-size: 12px;
                     color: $text_secondary;
                   }
                   .load_status {
-                    font-size: 0.8em;
+                    font-size: 12px;
                     color: $load_status_color;
                     font-weight: 900;
                     margin-right: 10px;
                   }
                   .finished_status {
-                    font-size: 0.8em;
+                    font-size: 12px;
                     color: $finished_status_color;
                     font-weight: 900;
                     margin-right: 10px;

@@ -124,7 +124,12 @@ const show_all_tag = () => {
 };
 const close_all_tag = () => {
   const select_tag_ul = document.querySelector(".select_tag ul");
-  select_tag_ul.style.height = "39px";
+  if(window.innerWidth < 600){
+    select_tag_ul.style.height = "30px";
+
+  }else{
+    select_tag_ul.style.height = "39px";
+  }
   show_all_tag_flag.value = false;
 };
 const show_all_tag_flag = ref(false);
@@ -833,10 +838,10 @@ font-family: 'misans';
 
     ul {
       flex-wrap: wrap;
-      gap: 4px;
+      gap: 2px;
       padding: 0;
       margin-left: 4px;
-      height: 38px;
+      height: 30px;
       overflow: hidden;
       list-style: none;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -846,6 +851,7 @@ font-family: 'misans';
         padding: 8px;
         font-weight: 900;
         border-radius: 10px;
+        font-size: 12px;
         color: $fill_primary;
         transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
         .count {
@@ -880,7 +886,6 @@ font-family: 'misans';
 
         .search {
           height: 36px;
-
           width: calc(100vw - 56px);
           color: $primary;
           background: transparent;
@@ -969,10 +974,10 @@ font-family: 'misans';
   }
 
   #content_box {
-    margin-top: 30px;
+    margin-top: 16px;
     width: calc(100vw - 20px);
     z-index: 1;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     .content_mid_box {
       width: calc(100vw - 20px);
       height: auto;

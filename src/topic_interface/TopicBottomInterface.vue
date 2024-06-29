@@ -106,4 +106,37 @@ onMounted(() => {
     }
   }
 }
+@media (max-width: 600px) {
+  #topic_bottom_main {
+  width: calc(100vw - 20px);
+  img {
+    box-shadow: none;
+  }
+  #gitalk-container {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .topic_author_info_box {
+    width: calc(100vw - 28px);
+    background: $fill;
+    border-radius: 5px;
+    box-shadow: 0 0 5px $fill_shadow;
+    font-weight: 900;
+    margin: 8px auto;
+    color: $primary;
+    .topic_author_info_inner_box {
+      margin: 8px;
+      gap: 4px;
+    }
+    span {
+      color: $text_link;
+      word-break: break-all;
+      margin-left: 4px;
+    }
+    .topic_link {
+      text-decoration: underline;
+    }
+  }
+}
+}
 </style>

@@ -310,7 +310,7 @@ $$\\varepsilon_{1}=\\begin{bmatrix}1\\\\\\0\\\\\\0\\\\\\\\:\\\\\\0\\\\\\0\\end{b
 \r
 &emsp;&emsp;&emsp;&emsp;列向量组$\\alpha_1,\\cdots,\\alpha_s,(s\\geqslant1)$**线性无关**\r
 \r
-&emsp;&emsp;&emsp;&emsp;$\\Longleftrightarrow$齐次线性方程组$x_1\\alpha_1+\\cdots+x_s\\alpha_s=0$**只非零解**.\r
+&emsp;&emsp;&emsp;&emsp;$\\Longleftrightarrow$齐次线性方程组$x_1\\alpha_1+\\cdots+x_s\\alpha_s=0$**只有零解**.\r
 \r
 ### 从行列式看:  \r
 \r

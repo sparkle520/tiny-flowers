@@ -102,7 +102,9 @@ const log = [
     margin: 80px auto;
     z-index: 1;
     animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+    div:first-child{
+      margin-bottom: 16px;
+    }
     ul {
       padding: 0;
       .version {
@@ -176,7 +178,9 @@ const log = [
     margin: 60px auto;
     z-index: 1;
     animation: move_top 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+    div:first-child{
+      margin-bottom: 16px;
+    }
     ul {
       padding: 0;
       .version {

@@ -9,9 +9,7 @@ import {
   onMounted,
 } from "vue";
 import { useConfigStore } from "../store/config";
-import { storeToRefs } from "pinia";
 const store = useConfigStore();
-const {layout}  = storeToRefs(store);
 
 
 onMounted(() => {
@@ -145,8 +143,10 @@ const view_change = () => {
    }
  }
  @media (max-width: 600px) {
-  .full{
+  .utils_box{
     display: none;
+    width: 0;
+    overflow: hidden;
   }
  }
 </style>
