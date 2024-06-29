@@ -1698,7 +1698,7 @@ const leave_new_topic = (index) => {
           .page_top_box {
             gap: 4px;
             width: inherit;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
             .home_carousel {
               display: none;
               transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -2072,7 +2072,7 @@ const leave_new_topic = (index) => {
               flex-wrap: wrap;
               .re_note_item {
                 width: calc((100vw - 24px)/2);
-                height: 280px;
+                height: calc((100vw - 24px)/1.6 + 80px);
                 background: $fill;
                 border-radius: 10px;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -2110,15 +2110,14 @@ const leave_new_topic = (index) => {
 
                 img {
                   width: inherit;
-                  height: inherit;
+                  height: calc((100vw - 24px)/1.6);
                   border-radius: inherit;
                   object-fit: cover;
                   background: #fff;
                   box-shadow: $fill_shadow 0px 5px 10px;
                 }
                 .note_info_box {
-                  left: 0;
-                  bottom: 0;
+                 
                   width: calc((100vw - 24px)/2 - 16px);
                   padding: 0 8px;
                   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
