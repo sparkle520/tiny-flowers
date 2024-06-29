@@ -59,7 +59,7 @@ const nav_list = [
     index: 2,
     name: "数学",
     e_name: "math",
-    path: "/math/1",
+    path: "/math/all/1",
   },
   {
     index: 3,
@@ -535,7 +535,7 @@ $nav_item_len:7;
   position: absolute;
   height: 3px;
   width: 100%;
-  background: $primary;
+  background: $primary_mix_4;
   border-radius: 3px;
   opacity: 1;
   left: 0;
@@ -586,7 +586,7 @@ $nav_item_len:7;
 .nav_list_box{
   width: 100vw;
   height: calc(100vh - 44px);
-  background: $primary;
+  background: $primary_mix_4;
   top: 44px;
   left: 0;
   clip-path: circle(0% at top left);

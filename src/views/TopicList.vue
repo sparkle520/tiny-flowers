@@ -18,6 +18,7 @@ import { useRoute } from "vue-router";
 import { useTopicStore } from "/src/store/topic.js";
 import { useUserStore } from "/src/store/user.js";
 const { params } = useRoute();
+const { query } = useRoute();
 import { useConfigStore } from "../store/config";
 import { storeToRefs } from "pinia";
 const config_store = useConfigStore();
@@ -130,7 +131,7 @@ const page_data = ref({
   current_index: params.page,
 });
 const init_data = () => {
-  topic_store.select_all_from_classification(params.classification);
+  topic_store.select_all(params.classification,query.search);
   current_data.value = topic_store.current_data;
   data_handle(current_data.value, params.page);
   
@@ -154,7 +155,11 @@ const jump_to_topic = (path) => {
 };
 
 const page_handle = (index) => {
-  router.push(`/article/list/${params.classification}/` + index);
+  if(query.search == null || query.search == ''){
+    router.push(`/article/list/${params.classification}/` + index);
+  }else{
+    router.push(`/article/list/${params.classification}/` + index+`?search=${query.search}`);
+  }
   nextTick(() => {
     window.scrollTo(0, 0);
     page_data.value.current_index = index;
@@ -244,8 +249,7 @@ const personal_info = {
 const topic_search_handle = (e) => {
   let key_code = window.event ? e.keyCode : e.which;
   if (key_code == 13) {
-    // search_text.value = "";
-    // router.push({ path: "/unknownWorldMap/list", query: { search_text: search_text.value } });
+    router.push({ path: "/article/list/all/1", query: { search: search_text.value } });
   }
 };
 const current_filter_list = ref([]);
@@ -1336,7 +1340,7 @@ li {
     color: $text_secondary;
     background: $fill;
     bottom: 0;
-    transform: translateY(120%);
+    transform: translate(10px,120%);
     box-shadow: $fill_shadow 2px 3px 10px;
     border-radius: 10px;
     overflow-y: scroll;
@@ -1662,7 +1666,7 @@ li {
             font-size: 12px;
             transform: scale(1);
             flex-shrink: 0;
-            line-height: 19px;
+            line-height: 23.6px;
             background: $primary_mix_9;
             color: $primary;
             padding: 2px 4px;

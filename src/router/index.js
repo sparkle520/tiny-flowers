@@ -23,12 +23,11 @@ const routes = [
         }
     },
     {
-        path: '/math/:page',
+        path: '/math/:tag/:page',
         component: () => import("/src/views/Math.vue"),
         meta: {
             isRouterAuth: false,
             screenFull: true,
-            index:2
         }
     },
     {
@@ -37,7 +36,6 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-            index:5
         }
     },
     {
@@ -46,7 +44,6 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-            index:1
         }
     },
     {
@@ -55,7 +52,6 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,            
-            index:2
         }
     },
     {
@@ -64,8 +60,6 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,            
-            index:3
-
         }
     },
     {
@@ -74,7 +68,6 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-            index:4
         }
     },
     {
@@ -83,7 +76,6 @@ const routes = [
         meta: {
             isRouterAuth: false,
             screenFull: true,
-            index:3
         }
     },
     

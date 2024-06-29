@@ -7,74 +7,87 @@ export const useMathStore = defineStore('math', {
             {
                 id: 11,
                 tags: '曲线积分',
-                classification: '概率论与数理统计',
-                link: '/math/details/11'
+                sort: '概率论与数理统计',
+                link: '/math/details/11',
+                from:''
             },
             {
                 id: 10,
                 tags: '几何概型',
-                classification: '3?1',
-                link: '/math/details/10'
+                sort: '3?1',
+                link: '/math/details/10',
+                from:''
             },
             {
                 id: 9,
                 tags: '无穷级数?幂级数',
-                classification: '高等数学',
-                link: '/math/details/9'
+                sort: '高等数学',
+                link: '/math/details/9',
+                from:''
             },
             {
                 id: 8,
                 tags: '二次型',
-                classification: '概率论与数理统计',
-                link: '/math/details/7'
+                sort: '概率论与数理统计',
+                link: '/math/details/7',
+                from:''
             },
             {
                 id: 7,
                 tags: '随机变量与分布',
-                classification: '概率论与数理统计',
-                link: '/math/details/7'
+                sort: '概率论与数理统计',
+                link: '/math/details/7',
+                from:''
             },
             {
                 id: 6,
                 tags: '期望?方差?随机变量与分布',
-                classification: '概率论与数理统计',
-                link: '/math/details/6'
+                sort: '概率论与数理统计',
+                link: '/math/details/6',
+                from:''
             },
             {
                 id: 5,
                 tags: '条件概率',
-                classification: '概率论与数理统计',
-                link: '/math/details/5'
+                sort: '概率论与数理统计',
+                link: '/math/details/5',
+                from:''
+
             },
             {
                 id: 4,
                 tags: '条件概率?全概率公式',
-                classification: '概率论与数理统计',
-                link: '/math/details/4'
+                sort: '概率论与数理统计',
+                link: '/math/details/4',
+                from:''
             },
             {
                 id: 3,
                 tags: '偏导数',
-                classification: '高等数学',
-                link: '/math/details/3'
+                sort: '高等数学',
+                link: '/math/details/3',
+                from:''
             },
             {
                 id: 2,
                 tags: '无穷级数?幂级数',
-                classification: '高等数学',
-                link: '/math/details/2'
+                sort: '高等数学',
+                link: '/math/details/2',
+                from:''
             },
             {
                 id: 1,
                 tags: '导数?泰勒公式',
-                classification: '[]',
-                link: '/math/details/1'
+                sort: '[]',
+                link: '/math/details/1',
+                from:''
             },
 
 
         ],
         current_data: {
             tag:'',
+            search:'',
             data:[]
         }
     }),
@@ -93,18 +106,48 @@ export const useMathStore = defineStore('math', {
             }
             return [...tags_map].map((el) => el)
         },
-        get_data(route) {
-            const tag = route.query.tag;
-            const page = route.params.page;
-            if(this.current_data.tag!=tag){
-                this.current_data.data = this.data.filter((el) => {
-                    if(tag!= null && tag!=''&&tag!='undefined'){
-                        return el.tags.split('?').includes(tag)
+        select_all(tag,search,page) {
+            this.current_data = []
+            if(this.current_data.tag!=tag || this.current_data.search!=search){
+                if(tag == 'all'){
+                    if(search == null || search == ''){
+                    this.current_data.data = this.data
                     }else{
-                        return true
+                        this.current_data.data = this.data.filter((el) => {
+                                if(!el.tags.includes(tag)){
+                                    return false
+                                }else{
+                                    if(el.id == search || el.from.includes(search)){
+                                        return true
+                                    }else{
+    
+                                        return false
+                                    }
+                                }
+                          })
                     }
-                })
+                }else{
+                    this.current_data.data = this.data.filter((el) => {
+                        if(search == null || search == ''){
+                            return el.tags.includes(tag)
+                        }else{
+                            if(!el.tags.includes(tag)){
+                                return false
+                            }else{
+                                if(el.id == search || el.from.includes(search)){
+                                    return true
+                                }else{
+
+                                    return false
+                                }
+                            }
+                            
+                        }
+                      })
+                }
+              
                 this.current_data.tag = tag
+                this.current_data.search = search
             }
             return this.current_data.data.slice((page - 1) * 10, page * 10)
         }

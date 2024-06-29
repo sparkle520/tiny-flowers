@@ -21,6 +21,162 @@ export const useTopicStore = defineStore('topic', {
                 is_visible: true
             },
             {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 5,
+                title: '从n维向量空间到线性无关和线性相关',
+                link: '/article/topic/5',
+                create_date: '2024?06?23?15:20',
+                img: 'https://pic.imgdb.cn/item/6677ef4ad9c307b7e9c1e371.png',
+                author: '',
+                tags: 'math?向量空间?线性无关?线性相关',
+                classification: '学习笔记',
+                short_message: '本章节先研究数域K上n维向量及其子空间的结构和性质，再研究线性相关与线性无关的向量组.',
+                update_date: '',
+                is_visible: true
+            },
+            {
                 id: 4,
                 title: '绝对值不等式',
                 link: '/article/topic/4',
@@ -84,15 +240,39 @@ export const useTopicStore = defineStore('topic', {
         get_all() {
             return this.data
         },
-        select_all_from_classification(classification) {
+        select_all(classification,search) {
+            this.current_data = []
             if (classification === 'all') {
-                this.current_data = this.data
-            } else {
+                for (let index = 0; index < this.data.length; index++) {
+                    const element = this.data[index];
+                if(search == null || search == ''){
+                    this.current_data.push(element)
+                }else{
+                    if(element.tags.includes(search)){
+                        this.current_data.push(element)
+                    }else if(element.title.includes(search)){
+                        this.current_data.push(element)
+                    }else if(element.short_message.includes(search)){
+                        this.current_data.push(element)
+                    }
+                }        
+            }
+             } else {
                 this.current_data = []
                for (let index = 0; index < this.data.length; index++) {
                 const element = this.data[index];
                 if(element.classification === classification){
-                    this.current_data.push(element)
+                    if(search == null || search == ''){
+                        this.current_data.push(element)
+                    }else{
+                        if(element.tags.includes(search)){
+                            this.current_data.push(element)
+                        }else if(element.title.includes(search)){
+                            this.current_data.push(element)
+                        }else if(element.short_message.includes(search)){
+                            this.current_data.push(element)
+                        }
+                    }        
                 }
                 
                }

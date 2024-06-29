@@ -18,6 +18,7 @@ import MathJax, { initMathJax, renderByMathjax } from "mathjax-vue3";
 import { marked, parse } from "marked";
 const user_store = useUserStore();
 const { params } = useRoute();
+const { query } = useRoute();
 const search_text = ref("");
 const route = useRoute();
 const router = useRouter();
@@ -183,7 +184,7 @@ const click_handle = (e) => {
 };
 const current_data = ref([]);
 const init_data = () => {
-  current_data.value = math_store.get_data(route);
+  current_data.value = math_store.select_all(params.tag,query.search_text,params.page);
   current_data.value.forEach((item) => {
     Object.assign(item, { show_solution: ref(false) });
   });
@@ -192,7 +193,13 @@ const init_data = () => {
     scroll_handle()
   });
 };
-
+const math_search_handle = (e) =>{
+  let key_code = window.event ? e.keyCode : e.which;
+  if (key_code == 13) {
+    // search_text.value = "";
+    router.push({ path: `/math/${params.tag}/1`, query: { search: search_text.value } });
+  }
+}
 </script>
 <template>
   <div id="math_main" class="f  r j_c_c">
@@ -211,7 +218,7 @@ const init_data = () => {
               v-model="search_text"
               @focus="search_focus_handle"
               @input="filter_search_handle"
-              @keyup.enter="topic_search_handle"
+              @keyup.enter="math_search_handle"
               id="math_search"
               type="text"
               class="search"
@@ -294,7 +301,7 @@ const init_data = () => {
               </svg>
             </div>
             <li
-              @click="router.push(`/math/1?tag=${item[0]}`)"
+              @click="router.push(`/math/${item[0]}/1`)"
               v-for="item in tags_list"
               :key="item"
               class="r"

@@ -17,6 +17,14 @@ const log = [
   //     content: ["Features:", "Fixed:", "Changed:", "Refactored:", "Removed:"],
   //   },
   {
+    version: "1.3.0",
+    date: "2024-06-30",
+    content: [
+      "1. 现已适配移动端(仅支持基本功能)",
+      "2. 修复若干BUG",
+    ],
+  },
+  {
     version: "1.2.0",
     date: "2024-06-26",
     content: [

@@ -33,7 +33,7 @@ const props =ref({
   update_date: '未知错误',
   is_visible: true
 })
-const link_pre = "https://sparkle520.github.io/TinyFlowers/#";
+const link_pre = "https://sparkle520.top/#";
 onMounted(() => {
 
     const topic_author = document.querySelector(".topic_author");
@@ -119,6 +119,7 @@ onMounted(() => {
   .topic_author_info_box {
     width: calc(100vw - 28px);
     background: $fill;
+    font-size: 14px;
     border-radius: 5px;
     box-shadow: 0 0 5px $fill_shadow;
     font-weight: 900;
@@ -131,6 +132,7 @@ onMounted(() => {
     span {
       color: $text_link;
       word-break: break-all;
+      font-size: 12px;
       margin-left: 4px;
     }
     .topic_link {
