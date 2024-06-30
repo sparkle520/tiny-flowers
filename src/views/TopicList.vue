@@ -155,11 +155,9 @@ const jump_to_topic = (path) => {
 };
 
 const page_handle = (index) => {
-  if(query.search == null || query.search == ''){
-    router.push(`/article/list/${params.classification}/` + index);
-  }else{
-    router.push(`/article/list/${params.classification}/` + index+`?search=${query.search}`);
-  }
+    router.push({path:`/article/list/${params.classification}/${index}`,query:{
+      search:query.search
+    }});
   nextTick(() => {
     window.scrollTo(0, 0);
     page_data.value.current_index = index;
@@ -541,6 +539,7 @@ const search_focus_handle = () => {
               <h3>分类</h3>
               <span v-text="personal_info.classification_total"></span>
             </div>
+            
           </div>
         </div>
 
@@ -646,7 +645,7 @@ const search_focus_handle = () => {
     padding: 0 0;
   }
   .l_title {
-    font-size: 1em;
+    font-size: 16px;
     align-self: flex-start;
     margin-left: 18px;
     color: $primary_mix_1;
@@ -711,7 +710,7 @@ const search_focus_handle = () => {
         margin-left: 32px;
         margin-bottom: 16px;
         color: $primary;
-        font-size: 0.7em;
+        font-size: 12px;
       }
       ul {
         margin-left: 32px;
@@ -720,7 +719,7 @@ const search_focus_handle = () => {
         li {
           word-wrap: break-word;
           color: $text_secondary;
-          font-size: 1.1em;
+          font-size: 16px;
           cursor: pointer;
           &:hover {
             color: $primary;
@@ -751,7 +750,7 @@ const search_focus_handle = () => {
       border: none;
       outline: none;
       color: $primary;
-      font-size: 1.1em;
+      font-size: 16px;
       box-shadow: $primary 0 0 0 1px;
 
       caret-color: $primary;
@@ -889,7 +888,7 @@ const search_focus_handle = () => {
         }
       }
       .title {
-        font-size: 1.2em;
+        font-size: 18px;
         font-weight: 600;
         margin-top: 10px;
         color: $text_title;
@@ -901,15 +900,15 @@ const search_focus_handle = () => {
       .short_msg {
         margin-top: 20px;
         line-height: 25px;
-        font-size: 0.9em;
+        font-size: 16px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
       .date {
-        font-size: 0.6em;
-        letter-spacing: 0.1em;
+        font-size: 12px;
+        letter-spacing: 1px;
         margin-top: auto;
         align-self: flex-start;
       }
@@ -972,7 +971,7 @@ const search_focus_handle = () => {
           margin: 16px;
           .classification_box {
             background: $primary_mix_2;
-            font-size: 0.6em;
+            font-size: 14px;
             color: $fill_primary;
             padding: 5px 7px;
             font-weight: bold;
@@ -980,7 +979,7 @@ const search_focus_handle = () => {
           }
           .date {
             height: 24px;
-            font-size: 0.7em;
+            font-size: 12px;
             font-weight: 500;
             margin-left: 16px;
             &::after {
@@ -995,6 +994,7 @@ const search_focus_handle = () => {
           }
           .topic_title {
             margin: 8px 0;
+            font-weight: 900;
             display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
@@ -1006,7 +1006,7 @@ const search_focus_handle = () => {
             }
           }
           .topic_short_msg {
-            font-size: 0.8em;
+            font-size: 12px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -1015,18 +1015,19 @@ const search_focus_handle = () => {
           }
           .tags_box {
             margin-top: auto;
-            gap: 0;
-            height: 30px;
+            gap: 2px;
+            height: 22px;
             overflow: hidden;
 
             .tag_item {
-              font-size: 1em;
-              transform: scale(0.8);
+              font-size: 12px;
+              transform: scale(1);
               flex-shrink: 0;
-
+              line-height: 18px;
+              cursor: pointer;
               background: $primary_mix_9;
               color: $primary;
-              padding: 4px 8px;
+              padding: 2px 8px;
 
               border-radius: 100px;
               &:hover {
@@ -1087,7 +1088,7 @@ const search_focus_handle = () => {
       }
     }
     .personal_name {
-      font-size: 1.4em;
+      font-size: 22px;
       font-weight: 900;
       color: $text;
       transform: translateY(-32px);
@@ -1096,7 +1097,7 @@ const search_focus_handle = () => {
     }
     .personal_signature {
       margin: 0 0 32px 0;
-      font-size: 0.9em;
+      font-size: 14px;
       color: $text;
     }
     .topic_classification_total_box {
@@ -1104,12 +1105,12 @@ const search_focus_handle = () => {
       h3 {
         color: $primary;
         margin: 0;
-        font-size: 1.2em;
+        font-size: 18px;
       }
       span {
         color: $text;
 
-        font-size: 1.2em;
+        font-size: 18px;
         margin-top: 16px;
         font-weight: 900;
       }
@@ -1126,7 +1127,7 @@ const search_focus_handle = () => {
       li {
         span {
           margin: 4px;
-          font-size: 0.9em;
+          font-size: 14px;
           font-weight: 900;
           cursor: pointer;
         }
@@ -1136,7 +1137,7 @@ const search_focus_handle = () => {
       }
     }
     .new_topic_date {
-      font-size: 0.5em;
+      font-size: 12px;
       color: #959596;
     }
   }
@@ -1148,7 +1149,7 @@ const search_focus_handle = () => {
       li {
         width: 100%;
         span {
-          font-size: 0.9em;
+          font-size: 14px;
           padding: 8px;
           padding-left: 4px;
           font-weight: 900;
@@ -1182,9 +1183,9 @@ const search_focus_handle = () => {
       li {
         span {
           margin: 4px 0;
-          font-size: 0.9em;
+          font-size: 14px;
           font-weight: 900;
-          letter-spacing: 0.1em;
+          letter-spacing: 2px;
           color: $text_title;
         }
       }
@@ -1826,7 +1827,6 @@ width: 288px;
     li {
       span {
         margin: 4px 0;
-        font-size: 0.9em;
         font-weight: 900;
         letter-spacing: 0.1em;
         color: $text_title;

@@ -80,7 +80,7 @@ const scroll_handle = ()=>{
   if(item_list == null){
       item_list = document.querySelectorAll(".content_item_box")
   }
-  for (let i = 0; i < item_list.length; i++) {
+  for (let i = 0,len = item_list.length; i < len; i++) {
     if ( window.scrollY >=
     item_list[i].offsetTop - window.innerHeight / 1.2) {
       r_o_a_i(item_list[i])
@@ -110,10 +110,7 @@ const r_i_a_o = (d)=>{
   }
 }
 const current_page_change = (current) => {
-  let path_ = route.fullPath.split("/");
-  const query = route.query;
-  path_[2] = current;
-  router.push({ path: path_.join("/"), query: query });
+  router.push({path:`/math/${params.tag}/${current}`,query:{search:query.search,sort:query.sort}});
 };
 const page_num = ref(1);
 //  change scss var
@@ -184,7 +181,7 @@ const click_handle = (e) => {
 };
 const current_data = ref([]);
 const init_data = () => {
-  current_data.value = math_store.select_all(params.tag,query.search_text,params.page);
+  current_data.value = math_store.select_all(params.tag,query.search,params.page,query.sort);
   current_data.value.forEach((item) => {
     Object.assign(item, { show_solution: ref(false) });
   });
@@ -197,7 +194,7 @@ const math_search_handle = (e) =>{
   let key_code = window.event ? e.keyCode : e.which;
   if (key_code == 13) {
     // search_text.value = "";
-    router.push({ path: `/math/${params.tag}/1`, query: { search: search_text.value } });
+    router.push({ path: `/math/all/1`, query: { search: search_text.value } });
   }
 }
 </script>
