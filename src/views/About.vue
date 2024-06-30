@@ -89,8 +89,8 @@ const future_instance = [
 ];
 const update_t_future_instance = () => {
   const t_future_instance = document.querySelector(".t_future_instance");
-  const third_page = document.querySelector(".third_page");
-  const rect = third_page.getBoundingClientRect();
+  const page_4 = document.querySelector(".page_4");
+  const rect = page_4.getBoundingClientRect();
   const start = rect.top + window.scrollY;
   const end = rect.bottom + window.scrollY - window.innerHeight;
   const scroll_y = window.scrollY;
@@ -127,10 +127,10 @@ const s_animation_map = new Map();
 const init_s_animation_map = () => {
   const animation_item = document.querySelectorAll(".animation_item");
   const start =
-    document.querySelector(".second_page").getBoundingClientRect().top +
+    document.querySelector(".page_3").getBoundingClientRect().top +
     window.scrollY;
   const end =
-    document.querySelector(".second_page").getBoundingClientRect().bottom +
+    document.querySelector(".page_3").getBoundingClientRect().bottom +
     window.scrollY -
     window.innerHeight;
   for (const item of animation_item) {
@@ -168,13 +168,13 @@ const update_s_animation_map_style = () => {
   const scroll_y = window.scrollY;
   const first_page = document.querySelector(".first_page");
   // const s_animation_box_bg_2 = document.querySelector(".s_animation_box_bg_2");
-  const start =
-    document.querySelector(".second_page").getBoundingClientRect().top +
-    window.scrollY;
-  const end =
-    document.querySelector(".second_page").getBoundingClientRect().bottom +
-    window.scrollY -
-    window.innerHeight;
+  // const start =
+  //   document.querySelector(".page_3").getBoundingClientRect().top +
+  //   window.scrollY;
+  // const end =
+  //   document.querySelector(".page_3").getBoundingClientRect().bottom +
+  //   window.scrollY -
+  //   window.innerHeight;
   // first_page.style.opacity =
   //   first_page.getBoundingClientRect().bottom / first_page.clientHeight;
   
@@ -218,7 +218,8 @@ const create_animation = (start, end, s_v, e_v) => {
      
       <div class="first_page_cover a"></div>
     </div>
-    <div class="second_page r">
+    <div class=""></div>
+    <div class="page_3 r">
       <div class="s_animation_box">
         
         <span class="a">喜欢的作品</span>
@@ -244,7 +245,7 @@ const create_animation = (start, end, s_v, e_v) => {
         </ul>
       </div>
     </div>
-    <div class="third_page r">
+    <div class="page_4 r">
       <div
         class="t_animation_box r f j_c_c a_c"
       >
@@ -339,7 +340,7 @@ const create_animation = (start, end, s_v, e_v) => {
 
   
  
-  .second_page {
+  .page_3 {
     width: max(1440px,100vw);
     height: 400vh;
     z-index: 21;
@@ -413,7 +414,7 @@ const create_animation = (start, end, s_v, e_v) => {
       }
     }
   }
-  .third_page {
+  .page_4 {
     width: max(1440px,100vw);
     height: 300vh;
     // scroll-snap-align: start;

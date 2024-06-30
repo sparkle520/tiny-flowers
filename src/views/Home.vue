@@ -1188,7 +1188,7 @@ const leave_new_topic = (index) => {
             width: inherit;
             border-radius: 10px;
             margin-bottom: 32px;
-            background: $fill;
+            background: $fill_body;
             box-shadow: 0 4px 10px $fill_shadow;
 
             .recommend_item_box {
@@ -1345,7 +1345,7 @@ const leave_new_topic = (index) => {
           .re_note_box {
             width: 1100px;
             border-radius: 10px;
-            background: $fill;
+            background: $fill_body;
 
             box-shadow: 0 4px 10px $fill_shadow;
             margin-bottom: 32px;

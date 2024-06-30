@@ -359,7 +359,7 @@ font-family: 'misans';
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       border-radius: 15px;
       -webkit-backdrop-filter: blur(6px);
-      box-shadow: #27262619 0px 6px 15px 0px;
+      box-shadow: $fill_shadow 0 0 5px;
       &::after {
         content: "";
         position: absolute;
@@ -388,7 +388,7 @@ font-family: 'misans';
         width: 1100px;
         z-index: -1;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        background: $fill;
+        background: $fill_body;
 
         height: 340px;
         border-radius: inherit;
@@ -505,12 +505,12 @@ font-family: 'misans';
       width: 1100px;
       border-radius: 15px;
       margin-top: 32px;
-      background: $fill;
+      background: $fill_body;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
       animation: content_box 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
       -webkit-backdrop-filter: blur(6px);
-      box-shadow:$fill_shadow 0px 6px 15px 0px;
+      box-shadow:$fill_shadow 0 0 5px;
       .search_box {
         width: 550px;
         height: 38px;
@@ -530,7 +530,7 @@ font-family: 'misans';
             margin-left: 16px;
             margin-bottom: 8px;
             color: $primary;
-            font-size: 0.7em;
+            font-size: 12px;
           }
           ul {
             list-style: none;
@@ -540,7 +540,7 @@ font-family: 'misans';
             li {
               word-wrap: break-word;
               color: $text_secondary;
-              font-size: 1.1em;
+              font-size: 14px;
               cursor: pointer;
               &:hover {
                 color: $primary;

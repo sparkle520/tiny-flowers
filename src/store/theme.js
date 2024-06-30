@@ -33,6 +33,21 @@ export const useThemeStore = defineStore('theme', {
                     ['fill_body','#0f1423'],
                 ])
             },
+            {
+                theme_name:'柏林爱乐',
+                color_dict:new Map([
+                    ['primary','#ffcc00'],
+                    ['fill_primary','#ffff'],
+                    ['text','#fffefa'],
+                    ['text_title','#ffff'],
+                    ['text_subtitle','#ffff'],
+                    ['text_secondary','#ffff'],
+                    ['text_placeholder','#ffff'],
+                    ['text_link','#ebbf33'],
+                    ['fill','#0c0c0c'],
+                    ['fill_body','#1f1f1f'],
+                ])
+            },
         ],
         light:[
             {
@@ -77,7 +92,7 @@ export const useThemeStore = defineStore('theme', {
                     ['text_placeholder','#f29896'],
                     ['text_link','#bf3553'],
                     ['fill','#ffff'],
-                    ['fill_body','#f7f4ed'],
+                    ['fill_body','#f5f5f5'],
                 ])
             },
             {
@@ -92,7 +107,7 @@ export const useThemeStore = defineStore('theme', {
                     ['text_placeholder','#f0ac8b'],
                     ['text_link','#ed5126'],
                     ['fill','#ffff'],
-                    ['fill_body','#f7f4ed'],
+                    ['fill_body','#fff5ee'],
                 ])
             },
             {
@@ -170,6 +185,7 @@ export const useThemeStore = defineStore('theme', {
                     ['fill_body','#F8F8F8'],
                 ])
             },
+           
         ],
         current_theme:'0?0'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
     }),

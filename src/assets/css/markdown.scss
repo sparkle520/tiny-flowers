@@ -10,7 +10,7 @@
 .markdown-body {
   background: transparent !important;
   font-family: 'misans' !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   color: $text !important;
   width: 100% !important;
   overflow-x:visible !important;
@@ -128,7 +128,7 @@ table{
     }
   }
   code {
-    background:$primary !important;
+    background:$primary_mix_4 !important;
     color: $fill_primary !important;
     font-family: 'yahei' !important;
   }
@@ -295,7 +295,7 @@ table{
       }
     }
     code {
-      background:$primary !important;
+      background:$primary_mix_4 !important;
       color: $fill_primary !important;
       font-family: 'yahei' !important;
     }
