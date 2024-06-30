@@ -37,7 +37,7 @@ export const useMathStore = defineStore('math', {
                 tags: '随机变量与分布',
                 sort: '3?2',
                 link: '/math/details/7',
-                from:''
+                from:'24数一'
             },
             {
                 id: 6,

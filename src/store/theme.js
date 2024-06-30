@@ -140,6 +140,36 @@ export const useThemeStore = defineStore('theme', {
                     ['fill_body','#fffef8'],
                 ])
             },
+            {
+                theme_name:'莫兰迪-1',
+                color_dict:new Map([
+                    ['primary','#75809C'],
+                    ['fill_primary','#F8F8F8'],
+                    ['text','#82898D'],
+                    ['text_title','#8E9AAB'],
+                    ['text_subtitle','#a0aab9'],
+                    ['text_secondary','#b3bbc6'],
+                    ['text_placeholder','#c5cbd4'],
+                    ['text_link','#b3b2d2'],
+                    ['fill','#ffff'],
+                    ['fill_body','#F8F8F8'],
+                ])
+            },
+            {
+                theme_name:'莫兰迪-2',
+                color_dict:new Map([
+                    ['primary','#FD9270'],
+                    ['fill_primary','#F8F8F8'],
+                    ['text','#72626C'],
+                    ['text_title','#E1AA8D'],
+                    ['text_subtitle','#e7b89f'],
+                    ['text_secondary','#edc6b2'],
+                    ['text_placeholder','#f2d4c5'],
+                    ['text_link','#DEA592'],
+                    ['fill','#ffff'],
+                    ['fill_body','#F8F8F8'],
+                ])
+            },
         ],
         current_theme:'0?0'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
     }),

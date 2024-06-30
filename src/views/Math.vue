@@ -72,7 +72,6 @@ onBeforeMount(() => {
   tags_list.value = math_store.get_tags();
 });
 onUnmounted(() => {
-  document.removeEventListener("click", click_handle);
   document.removeEventListener("scroll", scroll_handle);
 });
 let item_list = null;
@@ -92,7 +91,6 @@ const scroll_handle = ()=>{
 onMounted(() => {
   init_data();
   window.scrollTo(0, 0);
-  document.addEventListener("click", click_handle);
   document.addEventListener("scroll", scroll_handle);
   current_page.value = params.page;
 });
@@ -112,9 +110,6 @@ const r_i_a_o = (d)=>{
 const current_page_change = (current) => {
   router.push({path:`/math/${params.tag}/${current}`,query:{search:query.search,sort:query.sort}});
 };
-const page_num = ref(1);
-//  change scss var
-
 const show_all_tag = () => {
   const select_tag_ul = document.querySelector(".select_tag ul");
   select_tag_ul.style.height = "auto";
@@ -131,54 +126,7 @@ const close_all_tag = () => {
   show_all_tag_flag.value = false;
 };
 const show_all_tag_flag = ref(false);
-const show_filter_search_box = ref(false);
-const current_filter_list = ref([]);
-const search_focus_handle = () => {
-  if (search_text.value.length == 0) return;
-  show_filter_search_box.value = true;
-};
-const loop = (arr, current_index, search_text) => {
-  if (current_index > arr.length - 1) return;
-  search_text.toLowerCase();
-  let per_num = Math.min(10, arr.length - current_index);
-  window.requestAnimationFrame(() => {
-    for (let i = 0; i < per_num; i++) {
-      if (
-        arr[current_index + i].id
-          .toString()
-          .slice(0, 0)
-          .concat("m", arr[current_index + i].id)
-          .indexOf(search_text) == -1 &&
-        arr[current_index + i].tags.toLowerCase().indexOf(search_text) == -1
-      )
-        continue;
-      current_filter_list.value.push(arr[current_index + i]);
-    }
-    loop(arr, current_index + per_num, search_text);
-  });
-};
-watch(search_text, (new_val, old_val) => {
-  if (new_val == "") {
-    current_filter_list.value = [];
-    show_filter_search_box.value = false;
-    return;
-  }
-  show_filter_search_box.value = true;
-  current_filter_list.value = [];
-  const query_start = performance.now();
-  loop(math_store.data, 0, new_val);
 
-  const query_end = performance.now();
-  const query_text = document.querySelector(".query_text");
-  const query_diff = query_end - query_start;
-  query_text.innerHTML = "查询耗时: " + query_diff + "ms";
-});
-const click_handle = (e) => {
-  let search_box = document.querySelector(".search_box");
-  if (!search_box.contains(e.target)) {
-    show_filter_search_box.value = false;
-  }
-};
 const current_data = ref([]);
 const init_data = () => {
   current_data.value = math_store.select_all(params.tag,query.search,params.page,query.sort);
@@ -213,7 +161,6 @@ const math_search_handle = (e) =>{
           <div class="search_box r">
             <input
               v-model="search_text"
-              @focus="search_focus_handle"
               @input="filter_search_handle"
               @keyup.enter="math_search_handle"
               id="math_search"
@@ -222,22 +169,7 @@ const math_search_handle = (e) =>{
               placeholder="在此键入搜索"
             />
 
-            <div
-              class="filter_search_box a"
-              v-show="show_filter_search_box"
-            >
-              <ul class="f f_d_c">
-                <li
-                  v-for="item in current_filter_list"
-                  :key="item"
-                  @click="router.push(`/math/details/${item.id}`)"
-                >
-                  M{{ item.id }}
-                  <div class="search_result_text"></div>
-                </li>
-              </ul>
-              <div class="query_time"><span class="query_text"></span></div>
-            </div>
+           
             <label class="search_icon a" for="math_search"
               ><svg
                 t="1708934777476"
@@ -343,7 +275,7 @@ const math_search_handle = (e) =>{
             class="content_item_box fade_out f f_d_c"
           >
             <div class="f f_d_r content_item_top_box">
-              ID:{{ item.id }}
+              ID:{{ item.id }}<span>{{ item.from }}</span>
             </div>
 
             <div
@@ -500,8 +432,8 @@ font-family: 'misans';
           font-weight: 400;
         }
         &:hover {
-          background: $fill_primary;
-          color: $primary_mix_3;
+          background: $primary_mix_9;
+          color: $primary;
         }
       }
     }
@@ -571,39 +503,7 @@ font-family: 'misans';
             }
           }
         }
-        .filter_search_box {
-          width: 100%;
-          max-height: 30vh;
-          background: $fill;
-          bottom: 0;
-          z-index: 10000;
-          transform: translateY(120%);
-          box-shadow: $fill_shadow 2px 3px 10px;
-          border-radius: 10px;
-          overflow-y: scroll;
-          .query_time {
-            margin-left: 16px;
-            margin-bottom: 8px;
-            color: $primary;
-            font-size: 0.7em;
-          }
-          ul {
-            list-style: none;
-            margin: 16px;
-            padding: 0;
-            gap: 4px;
-            li {
-              word-wrap: break-word;
-              color: $text_secondary;
-              user-select: none;
-              font-size: 1.1em;
-              cursor: pointer;
-              &:hover {
-                color: $primary;
-              }
-            }
-          }
-        }
+        
       }
     }
   }
@@ -641,6 +541,7 @@ font-family: 'misans';
         .content_item_top_box {
           width: 968px;
           background:$primary;
+          justify-content:space-between;
           padding: 8px 16px;
           color: $fill_primary;
           border-top-left-radius: 5px;
