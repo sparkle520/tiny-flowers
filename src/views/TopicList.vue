@@ -398,7 +398,6 @@ const search_focus_handle = () => {
        <div class="topic_list_box">
         <div
           v-show="list_layout"
-          @click="jump_to_topic(item.link)"
           v-for="(item, ) in current_data"
           :key="item"
 
@@ -419,6 +418,7 @@ const search_focus_handle = () => {
             />
             <div class="item_content f f_d_c">
               <span
+              @click="jump_to_topic(item.link)"
                 class="r title f f_d_r a_c"
                 ><span class="item_classification r">{{
                   item.classification
@@ -436,8 +436,10 @@ const search_focus_handle = () => {
             </div>
           </div>
           <div class="a tag_box f f_d_r">
-            <span class="tag" v-for="item in item.tags.split('?')" :key="item"
-              >#{{ item }}</span
+            <span 
+            @click="router.push(`/article/list/all/1?search=${tag}`)"
+            class="tag" v-for="tag in item.tags.split('?')" :key="item"
+              >#{{ tag }}</span
             >
           </div>
         </div>
@@ -448,7 +450,6 @@ const search_focus_handle = () => {
           >
             <div
               v-show="!list_layout"
-              @click="jump_to_topic(item.link)"
               v-for="item in current_data"
               :key="item"
               class="topic_item_grid  r"
@@ -472,7 +473,8 @@ const search_focus_handle = () => {
                     }}-{{ item.create_date.split("?")[2] }}</span
                   >
                 </div>
-                <span class="topic_title">{{ item.title }}</span>
+                <span               @click="jump_to_topic(item.link)"
+                class="topic_title">{{ item.title }}</span>
                 <span
                   class="topic_short_msg"
                   v-html="item.short_message"
@@ -481,6 +483,7 @@ const search_focus_handle = () => {
                   <span
                     v-for="tag in item.tags.split('?')"
                     class="tag_item"
+                    @click="router.push(`/article/list/all/1?search=${tag}`)"
                     :key="tag"
                     >#{{ tag }}</span
                   >
@@ -878,7 +881,7 @@ const search_focus_handle = () => {
         }
         .item_content {
           .item_classification {
-            font-size: 14px;
+            font-size: 12px;
             padding: 4px 4px;
             border-radius: 5px;
             margin-right: 8px;
@@ -926,6 +929,12 @@ const search_focus_handle = () => {
           padding: 10px;
           background: $primary;
           border-radius: 5px;
+          cursor: pointer;
+          &:hover{
+            color: $fill_primary;
+            background: $primary_mix_2;
+
+          }
         }
       }
     }
@@ -971,9 +980,9 @@ const search_focus_handle = () => {
           margin: 16px;
           .classification_box {
             background: $primary_mix_2;
-            font-size: 14px;
+            font-size: 12px;
             color: $fill_primary;
-            padding: 5px 7px;
+            padding: 4px 7px;
             font-weight: bold;
             border-radius: 10px;
           }
@@ -1017,8 +1026,10 @@ const search_focus_handle = () => {
             margin-top: auto;
             gap: 2px;
             height: 22px;
-            overflow: hidden;
-
+            overflow: scroll;
+            &::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
             .tag_item {
               font-size: 12px;
               transform: scale(1);
@@ -1030,6 +1041,7 @@ const search_focus_handle = () => {
               padding: 2px 8px;
 
               border-radius: 100px;
+              
               &:hover {
                 color: $fill_primary;
                 background: $primary;
@@ -1617,7 +1629,7 @@ li {
           background: $primary_mix_2;
           font-size: 12px;
           color: $fill_primary;
-          padding: 5px 7px;
+          padding: 4px 7px;
           font-weight: bold;
           border-radius: 10px;
         }

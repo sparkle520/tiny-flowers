@@ -645,7 +645,6 @@ const leave_new_topic = (index) => {
                 <li
                   v-for="(item, index) in new_topic_list"
                   :key="item"
-                  @click="go_to_by_path(item.link)"
                   @mouseenter="enter_new_topic(index)"
                   @mouseleave="leave_new_topic(index)"
                   class="topic_item fade_item fade_out f f_d_c r"
@@ -669,7 +668,8 @@ const leave_new_topic = (index) => {
                       <span class="classification f a_c j_c_c">{{
                         item.classification
                       }}</span>
-                      <span class="title">{{ item.title }}</span>
+                      <span                   @click="go_to_by_path(item.link)"
+                      class="title">{{ item.title }}</span>
                     </div>
                     <span class="short_meg" v-html="item.short_message"></span>
                     <span class="date"
@@ -686,7 +686,6 @@ const leave_new_topic = (index) => {
               <h2 class="home_nav_item fade_out"><span>推荐文章</span></h2>
               <ul class="f f_d_r recommend_item_box">
                 <li
-                  @click="go_to_by_path(item.link)"
                   v-for="(item, index) in recommend_topic_list"
                   :key="item"
                   class="recommend_item re_item fade_out f f_d_r"
@@ -704,7 +703,8 @@ const leave_new_topic = (index) => {
                       <span class="classification f a_c j_c_c">{{
                         item.classification
                       }}</span>
-                      <span class="title">{{ item.title }}</span>
+                      <span                   @click="go_to_by_path(item.link)"
+                      class="title">{{ item.title }}</span>
                     </div>
                     <span class="short_meg" v-html="item.short_message"></span>
                     <div
@@ -846,11 +846,11 @@ const leave_new_topic = (index) => {
     padding: 0 0;
   }
   .home_nav_item {
-    font-size: 15px;
+    font-size: 14px;
     margin: 32px 16px;
     margin-bottom: 24px;
     height: 42px;
-    font-weight: lighter;
+    font-weight: 500;
     color: $fill_primary;
     border-bottom: $primary_mix_4 1px solid;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -899,7 +899,7 @@ const leave_new_topic = (index) => {
   }
               
     .page_1_title {
-      font-size: 1.2em;
+      font-size: 18px;
       top: 50%;
       left: 50%;
       border-radius: 26px;
@@ -1069,7 +1069,7 @@ const leave_new_topic = (index) => {
               box-shadow: 0 4px 5px $fill_shadow;
               border-radius: 10px;
               font-size: 14px;
-              font-weight: lighter;
+              font-weight: 500;
               color: $text;
               will-change: transform, opacity;
               cursor: pointer;
@@ -1104,13 +1104,13 @@ const leave_new_topic = (index) => {
                 &:hover {
                   box-shadow: 0 3px 5px $fill_shadow;
                 }
-                &:active {
+                &:has(.title:active) {
                   animation: jump 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 }
                
                 .img_box {
                   width: inherit;
-                  height: 220px;
+                  height: 216px;
                   overflow: hidden;
                   border-top-left-radius: 10px;
                   border-top-right-radius: 10px;
@@ -1140,25 +1140,25 @@ const leave_new_topic = (index) => {
                 .date {
                   align-self: flex-start;
                   height: 12px;
-                  font-size: 0.7em;
+                  font-size: 12px;
                   color: $text_secondary;
                 }
                 .topic_item_content {
                   margin: 16px;
-                  height: 80px;
+                  height: 84px;
                   .classification {
-                    height: 20px;
                     white-space: nowrap;
-                    font-size: 0.6em;
-                    padding:0 0.4em;
+                    font-size: 12px;
+                    font-weight: 900;
+                    padding:4px;
                     background: $primary_mix_2;
                     border-radius: 0.4em;
                     margin-right: 8px;
                     color: $fill_primary;
                   }
                   .title {
-                    font-size: 1em;
-                    font-weight: 700;
+                    font-size: 16px;
+                    font-weight: 900;
                     height: 20px;
                     color: $text_title;
                     display: -webkit-box;
@@ -1178,7 +1178,7 @@ const leave_new_topic = (index) => {
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
-                    font-size: 0.9em;
+                    font-size: 14px;
                   }
                 }
               }
@@ -1226,7 +1226,7 @@ const leave_new_topic = (index) => {
                 &:hover {
                   box-shadow: 0 0 0 3px $primary;
                                 }
-                &:active {
+                &:has(.title:active)  {
                   animation: jump 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 }
 
@@ -1282,18 +1282,18 @@ const leave_new_topic = (index) => {
                     margin-top: auto;
                   }
                   .classification {
-                    font-size: 0.6em;
-                    padding:0 0.4em;
+                    font-size: 12px;
+                    padding:4px 4px;
                     flex-shrink: 0;
-                    height: 20px;
+                    font-weight: 900;
                     background: $primary_mix_3;
-                    border-radius: 0.4em;
+                    border-radius: 5px;
                     white-space: nowrap;
                     margin-right: 8px;
                     color: $fill_primary;
                   }
                   .title {
-                    font-size: 1em;
+                    font-size: 16px;
                     font-weight: 800;
                     height: 20px;
                     user-select: none;
@@ -1302,6 +1302,7 @@ const leave_new_topic = (index) => {
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     color: $text_title;
+                    
                     cursor: pointer;
                     &:hover {
                       color:$primary;
@@ -1315,11 +1316,11 @@ const leave_new_topic = (index) => {
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
-                    font-size: 0.9em;
+                    font-size: 14px;
                     overflow: hidden;
                   }
                   .font_07_em {
-                    font-size: 0.7em;
+                    font-size: 12px;
                   }
                   .user_item{
                     height: 30px;
@@ -1428,12 +1429,12 @@ const leave_new_topic = (index) => {
                     font-size: 14px;
                     overflow: hidden;
                     height: 32px;
-
+                    color: $text;
                     margin-top: 8px;
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
-                    font-weight: 100;
+                    font-weight: 400;
                   }
                 }
               }
@@ -1548,7 +1549,7 @@ const leave_new_topic = (index) => {
     margin-bottom: 8px;
     height: 22px;
     padding-bottom:8px ;
-    font-weight: lighter;
+    font-weight: 500;
     color: $fill_primary;
     border-bottom: $primary_mix_4 1px solid;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1779,7 +1780,7 @@ const leave_new_topic = (index) => {
               box-shadow: 0 4px 5px $fill_shadow;
               border-radius: 10px;
               font-size: 12px;
-              font-weight: lighter;
+              font-weight: 900;
               color: $text;
               will-change: transform, opacity;
               cursor: pointer;
@@ -2147,7 +2148,7 @@ const leave_new_topic = (index) => {
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
-                    font-weight: 100;
+                    font-weight: 400;
                   }
                 }
               }

@@ -458,8 +458,28 @@ $nav_item_len:7;
           margin: 0 10px;
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
           cursor: pointer;
+          &::after{
+            width: 100%;
+            height: 4px;
+            opacity: 0;
+            content: '';
+            position: absolute;
+            background:$primary;
+            top: -26px;
+            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+          }
           &:hover {
             opacity: .5;
+            &::after{
+            width: 100%;
+            height: 4px;
+            content: '';
+            position: absolute;
+            background:$primary;
+            top: -22px;
+            opacity: .8;
+          }
           }
         }
       }
