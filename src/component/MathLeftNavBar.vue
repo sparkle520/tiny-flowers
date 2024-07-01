@@ -78,9 +78,9 @@ const show_children = (item) => {
   color: $text_title;
   font-family: 'misans';
   .left_nav {
-    box-shadow: $fill_shadow 0px 0px 20px;
+    box-shadow: $fill_shadow 0px 0px 5px;
     background: $fill;
-    border-radius: 5px;
+    border-radius: $border_radius;
     padding: 16px 0;
     padding-top: 0;
     .left_nav_icon{

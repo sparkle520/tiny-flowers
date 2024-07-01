@@ -59,11 +59,11 @@ const props =ref({
   width: 1100px;
   margin: 0 auto;
    height: 378px;
-  border-radius: 10px;
+  border-radius: 4px;
   margin-top: 90px;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-  box-shadow:1px 2px 5px #5656561b;
+  box-shadow:0 0 5px $fill_shadow;
 
   .t_t_img{
     width: inherit;
@@ -104,11 +104,11 @@ const props =ref({
   width: 100vw;
   margin: 0 auto;
    height: 208px;
-  border-radius: 10px;
+  border-radius: 4px;
   margin-top: 90px;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-  box-shadow:1px 2px 5px #5656561b;
+  box-shadow:0 0 5px $fill_shadow;
 
   .t_t_img{
     width: inherit;

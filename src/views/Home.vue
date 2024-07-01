@@ -902,6 +902,7 @@ const leave_new_topic = (index) => {
       font-size: 18px;
       top: 50%;
       left: 50%;
+    
       border-radius: 26px;
       transform: translate(-50%, -50%);
      
@@ -922,16 +923,18 @@ const leave_new_topic = (index) => {
                   top: 200px;
                   left: 50%;
                   transform: translateX(-50%);
+                  animation: typing 2s steps(42, end), blink-caret .75s step-end infinite;
+
                 }
       }
 
       @keyframes title {
         0% {
-          transform: scale(2);
+          transform: translateY(128px);
           opacity: 0;
         }
         100% {
-          transform: scale(1);
+          transform: translateY(0);
           opacity: 1;
         }
       }
@@ -975,7 +978,7 @@ const leave_new_topic = (index) => {
           margin: 16px auto;
           background: $fill;
           padding: 8px;
-          border-radius: 10px;
+          border-radius: $border_radius;
           box-shadow: 0 4px 10px $fill_shadow;
 
           .notice_text {
@@ -1026,7 +1029,7 @@ const leave_new_topic = (index) => {
                 grid-area: rect_4;
               }
               .rect_item {
-                border-radius: 10px;
+                border-radius: $border_radius;
                 background: $fill;
                 user-select: none;
                 overflow: hidden;
@@ -1057,7 +1060,7 @@ const leave_new_topic = (index) => {
             width: 1100px;
             height: 36px;
             margin-bottom: 16px;
-            border-radius: 10px;
+            border-radius: $border_radius;
 
             gap: 16px;
             .page_2_nav_item {
@@ -1067,7 +1070,7 @@ const leave_new_topic = (index) => {
               user-select: none;
               background: $fill;
               box-shadow: 0 4px 5px $fill_shadow;
-              border-radius: 10px;
+              border-radius: $border_radius;
               font-size: 14px;
               font-weight: 500;
               color: $text;
@@ -1093,7 +1096,7 @@ const leave_new_topic = (index) => {
               flex-wrap: wrap;
               margin-bottom: 32px;
               .topic_item {
-                border-radius: 10px;
+                border-radius: $border_radius;
                 width: 356px;
                 height: 300px;
                 color: $text;
@@ -1112,8 +1115,8 @@ const leave_new_topic = (index) => {
                   width: inherit;
                   height: 216px;
                   overflow: hidden;
-                  border-top-left-radius: 10px;
-                  border-top-right-radius: 10px;
+                  border-top-left-radius: $border_radius;
+                  border-top-right-radius: $border_radius;
                   position: relative;
                   &::after {
                     content: "";
@@ -1129,10 +1132,10 @@ const leave_new_topic = (index) => {
                   .img {
                     width: inherit;
                     height: inherit;
-                    border-radius: 10px;
+                    border-radius: $border_radius;
                     object-fit: cover;
-                    border-top-right-radius: 10px;
-                    border-top-left-radius: 10px;
+                    border-top-right-radius: $border_radius;
+                    border-top-left-radius: $border_radius;
                     transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
                   }
                 }
@@ -1152,7 +1155,7 @@ const leave_new_topic = (index) => {
                     font-weight: 900;
                     padding:4px;
                     background: $primary_mix_2;
-                    border-radius: 0.4em;
+                    border-radius: 5px;
                     margin-right: 8px;
                     color: $fill_primary;
                   }
@@ -1186,7 +1189,7 @@ const leave_new_topic = (index) => {
           }
           .recommend_topic_box {
             width: inherit;
-            border-radius: 10px;
+            border-radius: $border_radius;
             margin-bottom: 32px;
             background: $fill_body;
             box-shadow: 0 4px 10px $fill_shadow;
@@ -1201,7 +1204,7 @@ const leave_new_topic = (index) => {
               .recommend_item {
                 width: 1068px;
                 height: 136px;
-                border-radius: 10px;
+                border-radius: $border_radius;
                 margin: 0 auto;
                 background: $fill;
                 transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1247,8 +1250,8 @@ const leave_new_topic = (index) => {
                     );
                   }
                   .img_box {
-                    border-bottom-right-radius: 10px;
-                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: $border_radius;
+                    border-top-right-radius: $border_radius;
                     border-bottom-left-radius: 0;
                     border-top-left-radius: 0;
                   }
@@ -1257,8 +1260,8 @@ const leave_new_topic = (index) => {
                   width: 534px;
                   height: 136px;
                   order: 1;
-                  border-bottom-left-radius: 10px;
-                  border-top-left-radius: 10px;
+                  border-bottom-left-radius: $border_radius;
+                  border-top-left-radius: $border_radius;
                   overflow: hidden;
 
                   img {
@@ -1334,8 +1337,8 @@ const leave_new_topic = (index) => {
                   }
                   .date {
                     justify-self: flex-end;
-                    letter-spacing: 0.1em;
-                    font-size: 0.7em;
+                    letter-spacing: 1px;
+                    font-size: 12px;
                     color: $text_secondary;
                   }
                 }
@@ -1344,7 +1347,7 @@ const leave_new_topic = (index) => {
           }
           .re_note_box {
             width: 1100px;
-            border-radius: 10px;
+            border-radius: $border_radius;
             background: $fill_body;
 
             box-shadow: 0 4px 10px $fill_shadow;
@@ -1354,14 +1357,12 @@ const leave_new_topic = (index) => {
               margin-bottom: 16px;
               padding: 0;
               width: 1068px;
-              height: 376px;
               gap: 16px;
 
               .re_note_item {
                 width: 255px;
-                height: inherit;
                 background: $fill;
-                border-radius: 10px;
+                border-radius: $border_radius;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 .re_note_img_box {
                   width: inherit;
@@ -1407,7 +1408,7 @@ const leave_new_topic = (index) => {
                   left: 0;
                   bottom: 0;
                   width: 223px;
-                  padding: 0 16px;
+                  padding: 8px 16px;
                   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                   height: 62px;
                   overflow: hidden;
@@ -1556,7 +1557,7 @@ const leave_new_topic = (index) => {
     span {
       background: $primary_mix_2;
       box-shadow: $fill_shadow 0 10px 10px;
-      border-radius: 10px;
+      border-radius: $border_radius;
       padding: 4px 8px;
     }
   }
@@ -1677,7 +1678,7 @@ const leave_new_topic = (index) => {
           background: $fill;
           
           padding: 4px;
-          border-radius: 10px;
+          border-radius: $border_radius;
           box-shadow: 0 4px 10px $fill_shadow;
           font-size: 12px;
           svg{
@@ -1734,7 +1735,7 @@ const leave_new_topic = (index) => {
                 grid-area: rect_4;
               }
               .rect_item {
-                border-radius: 10px;
+                border-radius: $border_radius;
                 background: $fill;
                 user-select: none;
                 overflow: hidden;
@@ -1768,7 +1769,7 @@ const leave_new_topic = (index) => {
             width: calc(100vw - 20px);
             height: 36px;
             margin-bottom: 8px;
-            border-radius: 10px;
+            border-radius: $border_radius;
 
             gap: 4px;
             .page_2_nav_item {
@@ -1778,7 +1779,7 @@ const leave_new_topic = (index) => {
               user-select: none;
               background: $fill;
               box-shadow: 0 4px 5px $fill_shadow;
-              border-radius: 10px;
+              border-radius: $border_radius;
               font-size: 12px;
               font-weight: 900;
               color: $text;
@@ -1804,7 +1805,7 @@ const leave_new_topic = (index) => {
               flex-wrap: wrap;
               margin-bottom: 16px;
               .topic_item {
-                border-radius: 10px;
+                border-radius: $border_radius;
                 width: calc((100vw - 24px)/2);
                 height: 180px;
                 color: $text;
@@ -1823,8 +1824,8 @@ const leave_new_topic = (index) => {
                   width: inherit;
                   height: 220px;
                   overflow: hidden;
-                  border-top-left-radius: 10px;
-                  border-top-right-radius: 10px;
+                  border-top-left-radius: $border_radius;
+                  border-top-right-radius: $border_radius;
                   position: relative;
                   &::after {
                     content: "";
@@ -1840,10 +1841,10 @@ const leave_new_topic = (index) => {
                   .img {
                     width: inherit;
                     height: inherit;
-                    border-radius: 10px;
+                    border-radius: $border_radius;
                     object-fit: cover;
-                    border-top-right-radius: 10px;
-                    border-top-left-radius: 10px;
+                    border-top-right-radius: $border_radius;
+                    border-top-left-radius: $border_radius;
                     transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
                   }
                 }
@@ -1897,7 +1898,7 @@ const leave_new_topic = (index) => {
           }
           .recommend_topic_box {
             width: inherit;
-            border-radius: 10px;
+            border-radius: $border_radius;
             margin-bottom: 16px;
             box-shadow: 0 4px 10px $fill_shadow;
             background: none;
@@ -1911,7 +1912,7 @@ const leave_new_topic = (index) => {
               .recommend_item {
                 width: calc(100vw - 20px);
                 height: 128px;
-                border-radius: 10px;
+                border-radius: $border_radius;
                 margin: 0 auto;
                 background: $fill;
                 transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -1960,8 +1961,8 @@ const leave_new_topic = (index) => {
                   }
                   .img_box {
                     display: none;
-                    border-bottom-right-radius: 10px;
-                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: $border_radius;
+                    border-top-right-radius: $border_radius;
                     border-bottom-left-radius: 0;
                     border-top-left-radius: 0;
                   }
@@ -1972,8 +1973,8 @@ const leave_new_topic = (index) => {
                   width: calc(100vw - 20px);
                   height: 136px;
                   order: 1;
-                  border-bottom-left-radius: 10px;
-                  border-top-left-radius: 10px;
+                  border-bottom-left-radius: $border_radius;
+                  border-top-left-radius: $border_radius;
                   overflow: hidden;
 
                   img {
@@ -2049,7 +2050,7 @@ const leave_new_topic = (index) => {
                   }
                   .date {
                     justify-self: flex-end;
-                    letter-spacing: 0.1em;
+                    letter-spacing: 1px;
                     font-size: 10px;
                     color: $text_secondary;
                   }
@@ -2059,7 +2060,7 @@ const leave_new_topic = (index) => {
           }
           .re_note_box {
             width: calc(100vw - 20px);
-            border-radius: 10px;
+            border-radius: $border_radius;
             box-shadow: 0 4px 10px $fill_shadow;
             margin-bottom: 16px;
             background: none;
@@ -2073,9 +2074,9 @@ const leave_new_topic = (index) => {
               flex-wrap: wrap;
               .re_note_item {
                 width: calc((100vw - 24px)/2);
-                height: calc((100vw - 24px)/1.6 + 80px);
+                height: calc((100vw - 24px)/1.6 + 88px);
                 background: $fill;
-                border-radius: 10px;
+                border-radius: $border_radius;
                 transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                 .re_note_img_box {
                   width: inherit;
@@ -2120,7 +2121,7 @@ const leave_new_topic = (index) => {
                 .note_info_box {
                  
                   width: calc((100vw - 24px)/2 - 16px);
-                  padding: 0 8px;
+                  padding: 8px 8px;
                   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                   height: 62px;
                   overflow: hidden;

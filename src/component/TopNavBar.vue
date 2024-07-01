@@ -22,19 +22,19 @@ const {current_theme} = storeToRefs(theme_store)
 onBeforeMount(() => {});
 onMounted(() => {
   document.addEventListener("scroll", nav_handle);
-  top_nav_main  = document.querySelector("#top_nav_main");
+  // top_nav_main  = document.querySelector("#top_nav_main");
   content_bg  = document.querySelector(".content_bg");
 });
 onUnmounted(() => {
   document.removeEventListener("scroll", nav_handle);
 });
 
-let top_nav_main;
+// let top_nav_main;
 let content_bg;
 const nav_handle = () => {
   let wScrY = window.scrollY;
-  let sl=-Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
-  top_nav_main.style.left=sl+'px';
+  // let sl=-Math.max(document.body.scrollLeft,document.documentElement.scrollLeft);
+  // top_nav_main.style.left=sl+'px';
   if(wScrY < 70){
     content_bg.style.opacity = 0;
   }else{

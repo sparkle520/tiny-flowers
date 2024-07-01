@@ -103,7 +103,7 @@ onMounted(() => {
   .note_context_switch_box {
     width: 96%;
     margin: 0 auto;
-    border-radius: 10px;
+    border-radius: 4px;
     height: 12vh;
     box-shadow: $fill_shadow 0px 3px 10px;
     .note_switch_item {
@@ -156,7 +156,7 @@ onMounted(() => {
     margin: 0 auto;
     border-radius: 10px;
     height: 12vh;
-    box-shadow: $fill_shadow 0px 3px 10px;
+    box-shadow: $fill_shadow 0px 0px 5px;
     .note_switch_item {
       width: 50%;
       height: inherit;

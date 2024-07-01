@@ -88,7 +88,7 @@ onMounted(() => {
   .topic_author_info_box {
     width: 90%;
     background: $fill;
-    border-radius: 5px;
+    border-radius: 4px;
     box-shadow: 0 0 5px $fill_shadow;
     font-weight: 900;
     margin: 2vh auto;

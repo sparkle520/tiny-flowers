@@ -707,7 +707,7 @@ const search_focus_handle = () => {
       bottom: 0;
       transform: translateY(120%);
       box-shadow: $fill_shadow 2px 3px 10px;
-      border-radius: 10px;
+      border-radius: $border_radius;
       overflow-y: scroll;
       .query_time {
         margin-left: 32px;
@@ -747,7 +747,7 @@ const search_focus_handle = () => {
       width: inherit;
       height: inherit;
       
-      border-radius: 10px;
+      border-radius: $border_radius;
       background: $fill;
       padding-left: 16px;
       border: none;
@@ -856,13 +856,12 @@ const search_focus_handle = () => {
       background: $fill;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       margin: 0 0 16px 0;
-      border-radius: 10px;
+      border-radius: $border_radius;
       box-shadow: 0px 13px 15px $fill_shadow;
       overflow-y: hidden;
-     
       &:hover {
         transform: translateY(-8px);
-        box-shadow: 0 3px 5px #1f2d3d33;
+        box-shadow: 0 3px 5px $fill_shadow;
         .tag_box {
           opacity: 1;
           transform: translateY(0);
@@ -875,7 +874,7 @@ const search_focus_handle = () => {
         .item_img {
           max-width: 250px;
           height: 168px;
-          border-radius: 10px;
+          border-radius: $border_radius;
           object-fit: cover;
           margin-right: 16px;
         }
@@ -952,7 +951,7 @@ const search_focus_handle = () => {
       }
       .topic_item_grid {
         width: 32%;
-        border-radius: 10px;
+        border-radius: $border_radius;
         height: 370px;
         background: $fill;
         box-shadow: 0 13px 15px $fill_shadow;
@@ -984,7 +983,7 @@ const search_focus_handle = () => {
             color: $fill_primary;
             padding: 4px 7px;
             font-weight: bold;
-            border-radius: 10px;
+            border-radius: $border_radius;
           }
           .date {
             height: 24px;
@@ -1066,8 +1065,8 @@ const search_focus_handle = () => {
     width: 288px;
     background-color: $fill;
     animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    border-radius: 10px;
-    box-shadow: $fill_shadow 2px 3px 10px;
+    border-radius: $border_radius;
+    box-shadow: $fill_shadow 0 0 5px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 32px;
     margin-bottom: 16px;
@@ -1077,7 +1076,7 @@ const search_focus_handle = () => {
       top: 0;
       margin: 0;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: $border_radius;
       background:linear-gradient( $primary_mix_8,$fill);
       z-index: 0;
       width: 288px;
@@ -1721,7 +1720,7 @@ width: 288px;
     top: 0;
     margin: 0;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: $border_radius;
     background:linear-gradient( $primary_mix_8,$fill);
     z-index: 0;
     width: 288px;

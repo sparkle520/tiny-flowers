@@ -1,5 +1,6 @@
 $primary: var(--primary, #9966ff); //主题色 
 $fill_body: var(--fill_body, #fff);
+$border_radius: var(--border_radius, 10px);
 
 $fill_primary: var(--fill_primary, #fff); //主题色文字的背景填充色 
 $primary_mix_1: var(--primary_mix_1, color-mix(in srgb ,$primary,$fill_body 10%)); 

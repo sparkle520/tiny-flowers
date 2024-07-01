@@ -390,7 +390,7 @@ font-family: 'misans';
       user-select: none;
       font-size: 14px;
       height: 40px;
-      border-radius: 15px;
+      border-radius: $border_radius;
       color: $primary;
       padding: 0 8px;
       background: linear-gradient(90deg, transparent 0%, $fill 10%);
@@ -424,7 +424,7 @@ font-family: 'misans';
         background: $primary_mix_3;
         padding: 10px;
         font-weight: 900;
-        border-radius: 10px;
+        border-radius: $border_radius;
         color: $fill_primary;
         transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
         .count {
@@ -440,8 +440,8 @@ font-family: 'misans';
   }
 
   .com_box {
-    border-radius: 10px;
-    box-shadow: $fill_shadow 0px 0px 20px;
+    border-radius: $border_radius;
+    box-shadow: $fill_shadow 0px 0px 5px;
     background: $fill;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -466,7 +466,7 @@ font-family: 'misans';
           border: none;
           font-size: 1.2em;
           padding-left: 20px;
-          border-radius: 10px;
+          border-radius: $border_radius;
           box-shadow: $primary 0 0 0 1px;
 
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -536,7 +536,7 @@ font-family: 'misans';
         border-radius: 5px;
         background: $fill;
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-        box-shadow: $fill_shadow 0px 0px 20px;
+        box-shadow: $fill_shadow 0px 0px 5px;
 
         .content_item_top_box {
           width: 968px;
@@ -797,7 +797,7 @@ font-family: 'misans';
           border: none;
           font-size: 1.2em;
           padding-left: 20px;
-          border-radius: 10px;
+          border-radius: $border_radius;
           box-shadow: $primary 0 0 0 1px;
 
           transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -843,7 +843,7 @@ font-family: 'misans';
           z-index: 10000;
           transform: translateY(120%);
           box-shadow: $fill_shadow 2px 3px 10px;
-          border-radius: 10px;
+          border-radius: $border_radius;
           overflow-y: scroll;
           .query_time {
             margin-left: 16px;

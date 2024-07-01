@@ -71,8 +71,8 @@ const change_layout = (current_layout) => {
   .personal_item {
     width: inherit;
     background-color: $fill;
-    border-radius: 5px;
-    box-shadow: $fill_shadow 1px 1px 5px;
+    border-radius: 4px;
+    box-shadow: $fill_shadow 0 0 5px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 30px;
     margin-bottom: 20px;
@@ -95,14 +95,14 @@ const change_layout = (current_layout) => {
       }
     }
     .personal_name {
-      font-size: 1.5em;
+      font-size: 22px;
       font-weight: 900;
       color: $text;
     }
     .personal_signature {
       margin: 20px 0;
       color: $text;
-      font-size: .9em;
+      font-size: 14px;
     }
     .topic_class_box{
       width: 70%;
