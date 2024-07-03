@@ -4,7 +4,7 @@ export const useUserStore = defineStore('user', {
     state: () => ({
 
         name: 'refrain',
-        signature: "人一旦失去重要的东西，就很难再获得了",
+        signature: "我时常消极但又觉得生活很美好.",
         avatar:'https://sparkle-1317157616.cos.ap-beijing.myqcloud.com/b91665cd60c32bbcc133b95ea611cb65_1.jpg',
         aphorism:'Personality is to a man what perfume is to a flower.<br>(个性之于人恰如芳香之于花。)',
         e_mail:'1427702848@qq.com',  
