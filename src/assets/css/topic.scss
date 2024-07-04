@@ -39,13 +39,15 @@ font-family: 'misans';
     box-shadow: $fill_shadow 1px 2px 5px;
     display: flex;
     flex-direction: column;
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    animation: topic_content 5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation: topic_content 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     @keyframes topic_content {
       0%{
         opacity: 0;
+        transform: translateX(-50px);
       }100%{
         opacity: 1;
+        transform: translateX(0px);
       }
     }
     .topic_text {

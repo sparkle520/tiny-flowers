@@ -276,6 +276,7 @@ const reset_clock = () => {
             </svg>
           </button>
         </div>
+        待优化
       </div>
       <div class="math_top_right_box"></div>
     </div>
@@ -290,7 +291,7 @@ const reset_clock = () => {
           class="markdown-body com_box"
         ></div>
       </div>
-      <div class="s_box">
+      <div class="s_box f f_d_c">
         <div class="s_top_box">
           <div
             v-if="!show_solution"
@@ -314,7 +315,7 @@ const reset_clock = () => {
             class="markdown-body com_box"
           ></div>
         </div>
-        <div class="discuss_box flex f_d_c">
+        <div class="discuss_box f f_d_c">
           <div
             v-if="!show_comment"
             class="show_comment flex a_c j_c_c"
@@ -338,24 +339,6 @@ const reset_clock = () => {
 </template>
 
 <style lang="scss" scoped>
-$math_details_main_bg: var(--math_details_main_bg, #fdfbfb);
-$math_details_main_bg_opacity: var(--math_details_main_bg_opacity, 1);
-$cover_bg: var(--cover_bg, #53505071);
-$question_bank_box_bg: var(--question_bank_box_bg, #ffff);
-$question_bank_header_border: var(--question_bank_header_border, #e5e5e5);
-$question_bank_li_border: var(--question_bank_li_border, #e6e6e6);
-$question_bank_li_color: var(--question_bank_li_color, #4d4949);
-$question_bank_li_active_bg: var(--question_bank_li_active_bg, #e7e7e7);
-$question_bank_li_hover_bg: var(--question_bank_li_hover_bg, #e7e7e7b0);
-$btn_bg: var(--btn_bg, #ebebeb);
-$hint_color: var(--hint_color, #868484);
-$hint_box_shadow: var(--hint_box_shadow, #86848466);
-$hint_box_bg :var(--hint_box_bg, #fdfdfd);
-$right_bg:var(--right_bg, #f3f3f3);
-$show_btn_bg:var(--show_btn_bg, #b6bbbe);
-$resize_bg:var(--resize_bg, #999999);
-$right_bottom_top_box_bg:var(--right_bottom_top_box_bg, #dcdddf);
-$right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
 
 .math_details_main {
   width: max(1440px,100vw);
@@ -387,7 +370,8 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
         border: none;
         height: 38px;
         width: 38px;
-        background: $btn_bg;
+        background: $fill;
+        box-shadow: $fill_shadow 0 0 5px;
         &:hover {
           .clock_icon {
             animation: shrink 0.3s ease-in-out forwards;
@@ -402,15 +386,15 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
           content: "计时";
           position: absolute;
           bottom: 0%;
-          color: $hint_color;
+          color: $text;
 
           left: 50%;
           transform: translateX(-50%) translateY(100%);
           width: 100%;
           opacity: 0;
           font-size: 11px;
-          background: $hint_box_bg;
-          box-shadow: $hint_box_shadow 2px 1px 5px;
+          background: $fill;
+          box-shadow: $fill_shadow 2px 1px 5px;
           border-radius: 5px;
           padding: 8px 4px;
           transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -424,7 +408,7 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
           height: 38px;
 
           width: 20px;
-          background: $btn_bg;
+          background: $fill;
           .hidden_icon {
             transform: scale(2);
           }
@@ -445,12 +429,12 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
             left: 50%;
             transform: translateX(-50%) translateY(100%);
             width: 200%;
-            color: $hint_color;
+            color: $text;
 
             opacity: 0;
             font-size: 11px;
-            background: $hint_box_bg;
-            box-shadow: $hint_box_shadow 2px 1px 5px;
+            background: $fill;
+            box-shadow: $fill_shadow 2px 1px 5px;
             border-radius: 5px;
             padding: 8px 4px;
             transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -482,8 +466,8 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
             width: 100%;
             opacity: 0;
             font-size: 11px;
-            background: $hint_box_bg;
-            box-shadow: $hint_box_shadow 2px 1px 5px;
+            background: $fill;
+            box-shadow: $fill_shadow 2px 1px 5px;
             border-radius: 5px;
             padding: 8px 4px;
             transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -522,10 +506,10 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
           width: 100%;
           opacity: 0;
           font-size: 11px;
-          color: $hint_color;
+          color: $text;
 
-          background: $hint_box_bg;
-          box-shadow: $hint_box_shadow 2px 1px 5px;
+          background: $fill;
+          box-shadow: $fill_shadow 2px 1px 5px;
           border-radius: 5px;
           padding: 8px 4px;
           transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -570,7 +554,7 @@ $right_top_top_box_bg:var(--right_top_top_box_bg, #849bae);
     width: 1100px;
     height: 100%;
     background: $fill;
-
+    gap: 32px;
 box-shadow: $fill_shadow 0 0 5px;
     border-radius: 5px;
 
@@ -619,8 +603,9 @@ box-shadow: $fill_shadow 0 0 5px;
     }
     .discuss_box {
       width: 1100px;
-      background-color: $question_bank_box_bg;
+      background-color: $fill;
       display: flex;
+      margin-top: 32px;
       margin-top: 32px;
       border-radius: 5px;
       box-shadow: $fill_shadow 0 0 5px;

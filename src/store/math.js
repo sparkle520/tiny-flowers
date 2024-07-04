@@ -5,6 +5,34 @@ export const useMathStore = defineStore('math', {
     state: () => ({
         data: [
             {
+                id: 15 ,
+                tags: '定积分',
+                sort: '1?3',
+                link: '/math/details/15',
+                from:'330(数一)'
+            },
+            {
+                id: 14 ,
+                tags: '极限',
+                sort: '1?1',
+                link: '/math/details/14',
+                from:''
+            },
+            {
+                id: 13 ,
+                tags: '定积分',
+                sort: '1?3',
+                link: '/math/details/13',
+                from:'330(数一)'
+            },
+            {
+                id: 12  ,
+                tags: '极限',
+                sort: '1?1',
+                link: '/math/details/12',
+                from:'330(数一)'
+            },
+            {
                 id: 11,
                 tags: '曲线积分',
                 sort: '1?6',
@@ -37,7 +65,7 @@ export const useMathStore = defineStore('math', {
                 tags: '随机变量与分布',
                 sort: '3?2',
                 link: '/math/details/7',
-                from:'24数一'
+                from:'数一真题'
             },
             {
                 id: 6,

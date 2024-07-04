@@ -48,6 +48,21 @@ export const useThemeStore = defineStore('theme', {
                     ['fill_body','#1f1f1f'],
                 ])
             },
+            {
+                theme_name:'afraid',
+                color_dict:new Map([
+                    ['primary','#d72323'],
+                    ['fill_primary','#fff'],
+                    ['text','#fffefa'],
+                    ['text_title','#ffff'],
+                    ['text_subtitle','#ffff'],
+                    ['text_secondary','#ffff'],
+                    ['text_placeholder','#ffff'],
+                    ['text_link','#e41749'],
+                    ['fill','#000000'],
+                    ['fill_body','#0D0D0D'],
+                ])
+            },
         ],
         light:[
             {
@@ -159,7 +174,7 @@ export const useThemeStore = defineStore('theme', {
                 theme_name:'莫兰迪-1',
                 color_dict:new Map([
                     ['primary','#75809C'],
-                    ['fill_primary','#F8F8F8'],
+                    ['fill_primary','#ffff'],
                     ['text','#82898D'],
                     ['text_title','#8E9AAB'],
                     ['text_subtitle','#a0aab9'],
@@ -174,7 +189,7 @@ export const useThemeStore = defineStore('theme', {
                 theme_name:'莫兰迪-2',
                 color_dict:new Map([
                     ['primary','#FD9270'],
-                    ['fill_primary','#F8F8F8'],
+                    ['fill_primary','#ffff'],
                     ['text','#72626C'],
                     ['text_title','#E1AA8D'],
                     ['text_subtitle','#e7b89f'],
@@ -185,6 +200,52 @@ export const useThemeStore = defineStore('theme', {
                     ['fill_body','#F8F8F8'],
                 ])
             },
+            {
+                theme_name:'中国红',
+                color_dict:new Map([
+                    ['primary','#E60000'],
+                    ['fill_primary','#ffff'],
+                    ['text','#491508'],
+                    ['text_title','#dd0000'],
+                    ['text_subtitle','#eb4c2f'],
+                    ['text_secondary','#f77456'],
+                    ['text_placeholder','#ff987e'],
+                    ['text_link','#cf311a'],
+                    ['fill','#ffff'],
+                    ['fill_body','#F8F8F8'],
+                ])
+            },
+            {
+                theme_name:'木乃伊棕',
+                color_dict:new Map([
+                    ['primary','#8f4b28'],
+                    ['fill_primary','#ffff'],
+                    ['text','#211a17'],
+                    ['text_title','#b9846a'],
+                    ['text_subtitle','#c69881'],
+                    ['text_secondary','#d2ac99'],
+                    ['text_placeholder','#dec0b2'],
+                    ['text_link','#966953'],
+                    ['fill','#ffff'],
+                    ['fill_body','#F8F8F8'],
+                ])
+            },
+            {
+                theme_name:'mystery',
+                color_dict:new Map([
+                    ['primary','#516b91'],
+                    ['fill_primary','#ffff'],
+                    ['text','#636979'],
+                    ['text_title','#8a9ab5'],
+                    ['text_subtitle','#9daac1'],
+                    ['text_secondary','#b0bbcd'],
+                    ['text_placeholder','#c4cbda'],
+                    ['text_link','#46576f'],
+                    ['fill','#fff'],
+                    ['fill_body','#F8F8F8'],
+                ])
+            },
+            
            
         ],
         current_theme:'0?0'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

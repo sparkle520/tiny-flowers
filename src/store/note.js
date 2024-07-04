@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 
 export const useNoteStore = defineStore('note', {
     state: () => ({
-        classification: ['学习笔记', '技术分享', '生活随想'],
         data: [
             {
                 id: 4,

@@ -610,6 +610,7 @@ font-family: 'misans';
           .book_item {
             list-style: none;
             border-radius: 10px;
+            cursor: pointer;
             box-shadow: $fill_shadow 0px 6px 15px 0px;
             transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
             &::before {

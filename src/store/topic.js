@@ -8,6 +8,45 @@ export const useTopicStore = defineStore('topic', {
            
 
             {
+                id: 8,
+                title: 'IOC(Aspect Orient Programming)',
+                link: '/article/topic/7',
+                create_date: '2024?07?4?18:20',
+                img: 'https://pic.imgdb.cn/item/6687064ad9c307b7e9c83a34.png',
+                author: '',
+                tags: '数据校验?JSR303?java',
+                classification: '学习笔记',
+                short_message: 'Aspect Oriented Programming（面向切面编程），OOP是面向对象编程，AOP是在OOP基础之上的一种更高级的设计思想.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 7,
+                title: 'AOP(Aspect Orient Programming)',
+                link: '/article/topic/7',
+                create_date: '2024?07?4?18:20',
+                img: 'https://pic.imgdb.cn/item/6686bc04d9c307b7e9594ac0.png',
+                author: '',
+                tags: '数据校验?JSR303?java',
+                classification: '学习笔记',
+                short_message: 'Aspect Oriented Programming（面向切面编程），OOP是面向对象编程，AOP是在OOP基础之上的一种更高级的设计思想.',
+                update_date: '',
+                is_visible: true
+            },
+            {
+                id: 6,
+                title: '数据校验JSR303',
+                link: '/article/topic/6',
+                create_date: '2024?07?4?18:20',
+                img: 'https://pic.imgdb.cn/item/6686eb30d9c307b7e9aceded.png',
+                author: '',
+                tags: '数据校验?JSR303',
+                classification: '学习笔记',
+                short_message: 'JSR是Java Specification Requests的缩写，意思是Java规范提案.是指向JCP(Java Community Process)提出新增一个标准化技术规范的正式请求.',
+                update_date: '',
+                is_visible: true
+            },
+            {
                 id: 5,
                 title: '从n维向量空间到线性无关和线性相关',
                 link: '/article/topic/5',

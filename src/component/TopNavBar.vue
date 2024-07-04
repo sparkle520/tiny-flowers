@@ -313,8 +313,8 @@ $nav_item_len:7;
     z-index: 1000000000000;
     clip-path: circle(0);
     .theme_box{
-      width: 300px;
-      min-height: 600px;
+      width: 600px;
+      height: 80vh;
       background: $fill;
       border-radius: 10px;
       padding: 0 16px;
@@ -346,7 +346,7 @@ $nav_item_len:7;
         font-size: 14px;
       }
       .light_box{
-        width: 284px;
+        width: 584px;
         padding: 8px;
         border-radius: 10px;
         box-shadow: $fill_shadow 0 0 5px;
@@ -354,7 +354,7 @@ $nav_item_len:7;
         flex-wrap: wrap;
       }
       .dark_box{
-        width: 284px;
+        width: 584px;
         padding: 8px;
         border-radius: 10px;
         box-shadow: $fill_shadow 0 0 5px;

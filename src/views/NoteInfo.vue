@@ -135,7 +135,7 @@ font-family: 'misans';
   .note_top_box {
     width: 1100px;
     overflow: hidden;
-margin: 70px auto 32px auto;
+margin: 90px auto 32px auto;
 border-radius: 10px;
 background: $fill;
 box-shadow: $fill_shadow  0 0 5px;

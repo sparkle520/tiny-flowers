@@ -61,7 +61,7 @@ const props =ref({
    height: 378px;
   border-radius: 4px;
   margin-top: 90px;
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   animation: topic_top_bg 2s cubic-bezier(0.075, 0.82, 0.165, 1);
   box-shadow:0 0 5px $fill_shadow;
 
@@ -92,9 +92,11 @@ const props =ref({
   @keyframes topic_top_bg {
     0% {
       opacity: 0;
+      transform:translateY(-50px);
     }
     100% {
       opacity: 1;
+      transform:translateY(0);
     }
   }
 

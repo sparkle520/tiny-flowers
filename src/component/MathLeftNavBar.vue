@@ -77,6 +77,7 @@ const show_children = (item) => {
   overflow: scroll;
   color: $text_title;
   font-family: 'misans';
+  
   .left_nav {
     box-shadow: $fill_shadow 0px 0px 5px;
     background: $fill;
@@ -96,7 +97,6 @@ const show_children = (item) => {
     h3{
       margin: 0;
       padding:16px 8px ;
-      cursor: none;
       color: $primary;
       font-size: 14px;
       height: 38px;

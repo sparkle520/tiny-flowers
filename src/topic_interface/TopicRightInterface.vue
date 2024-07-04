@@ -71,10 +71,10 @@ const change_layout = (current_layout) => {
     background-color: $fill;
     border-radius: 4px;
     box-shadow: $fill_shadow 0 0 5px;
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-bottom: 30px;
     margin-bottom: 20px;
-    animation: move_left 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation: move_left 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   }
   .intro {
@@ -125,11 +125,13 @@ const change_layout = (current_layout) => {
 }
 @keyframes move_left {
   0% {
-    transform: translateX(100px) scale(1);
+    opacity: 0;
+    transform: translateX(50px);
   }
   100% {
-    transform: translateX(0px) scale(1);
-  }
+    opacity: 1;
+    transform: translateY(0);
+    }
 }
 @media (max-width: 600px) {
   #topic_right_main {

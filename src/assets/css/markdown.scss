@@ -128,8 +128,8 @@ table{
     }
   }
   code {
-    background:$primary_mix_4 !important;
-    color: $fill_primary !important;
+    background:color-mix(in srgb, $primary_mix_9 50%, $fill 50%) !important;
+    color: $primary !important;
     font-family: 'yahei' !important;
   }
   pre>code{
