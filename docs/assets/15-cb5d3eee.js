@@ -1,0 +1,1 @@
+const e="设$(-\\infty,+\\infty)$上的非负连续函数$f(x)$满足$f(x)f(1-x)=1$,则$\\displaystyle\\int_0^1\\frac{\\left|x-\\frac12\\right|}{1+f(x)}\\mathrm{d}x=\\underline{ }\\underline{ }\\underline{ }.$";export{e as default};
