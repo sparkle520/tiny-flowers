@@ -6,10 +6,15 @@
 import {  ref, onBeforeMount, onMounted, nextTick ,onUnmounted, watch} from "vue";
 import { useTopicStore } from "../store/topic";
 const topic_store = useTopicStore();
+import { select_by_id } from "/src/assets/js/topic.js";
+const { params } = useRoute();
+import { useRoute } from "vue-router";
 
 
 onBeforeMount(() => {
-  props.value = topic_store.data[topic_store.current_topic_index]
+ 
+  props.value = topic_store.data[topic_store.length()-params.index]
+
 });
 onUnmounted(()=>{
 })

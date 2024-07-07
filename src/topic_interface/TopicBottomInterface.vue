@@ -9,13 +9,14 @@ import { useRouter } from "vue-router";
 import { useTopicStore } from "/src/store/topic.js";
 import Gitalk from "gitalk";
 const router = useRouter();
-
+const { params } = useRoute();
+import { useRoute } from "vue-router";
 import { useConfigStore } from "../store/config";
 const config_store = useConfigStore();
 const user_store = useUserStore();
 const topic_store = useTopicStore();
 onBeforeMount(() => {
-  props.value = topic_store.data[topic_store.current_topic_index]
+  props.value = topic_store.data[topic_store.length()-params.index]
   if(props.value.author == ''){
     props.value.author =  user_store.name
   }
@@ -77,16 +78,16 @@ const next = ref(
   },
 )
 const init_pre_next_data = () => {
-  if (topic_store.current_topic_index == 0) {
-    next.value= topic_store.data[topic_store.current_topic_index + 1]
+  if (topic_store.length()-params.index == 0) {
+    next.value= topic_store.data[topic_store.length()-params.index + 1]
     pre.value.is_hidden = true
 
-  } else if (topic_store.current_topic_index == topic_store.length() - 1) {
-    pre.value = topic_store.data[topic_store.current_topic_index - 1]
+  } else if (topic_store.length()-params.index == topic_store.length() - 1) {
+    pre.value = topic_store.data[topic_store.length()-params.index - 1]
     next.value.is_hidden = true
   } else {
-    next.value = topic_store.data[topic_store.current_topic_index + 1]
-    pre.value = topic_store.data[topic_store.current_topic_index - 1]
+    next.value = topic_store.data[topic_store.length()-params.index + 1]
+    pre.value = topic_store.data[topic_store.length()-params.index - 1]
   }
 }
 </script>

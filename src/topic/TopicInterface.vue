@@ -63,7 +63,9 @@ const get_md_file = (index) => {
   const _path = `/src/store_data/topic_data/${index}.md`;
   const modules = import.meta.glob("/src/store_data/topic_data/*.md", { as: "raw" });
   for (const path in modules) {
+  
     if (path == _path) {
+
       modules[path]().then((mod) => {
         // content.value =  marked(mod);
         const dom = document.querySelector('#t_t')
