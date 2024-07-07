@@ -103,6 +103,7 @@ const scroll_handle = () => {
   if (item_list == null) {
     item_list = document.querySelectorAll(".topic_item")
   }
+ 
   for (let i = 0; i < item_list.length; i++) {
     if (window.scrollY >=
       item_list[i].offsetTop - window.innerHeight / 1.2) {
@@ -111,6 +112,7 @@ const scroll_handle = () => {
       r_i_a_o(item_list[i])
     }
   }
+
 };
 
 onUnmounted(() => {
@@ -428,7 +430,7 @@ const search_focus_handle = () => {
                     class="item_classification r">{{
                       item.classification
                     }}</span>{{ item.title }}</span>
-                <span class="short_msg" v-html="item.short_message"></span>
+                <span @click="jump_to_topic(item.link)"  class="short_msg" v-html="item.short_message"></span>
                 <div class="date f f_d_r justify_content_center">
                   {{ user_store.name }} /
                   {{ item.create_date.split("?")[1].replace(/^0+/, "") }}月{{
@@ -462,7 +464,7 @@ const search_focus_handle = () => {
                   }}-{{ item.create_date.split("?")[2] }}</span>
                 </div>
                 <span @click="jump_to_topic(item.link)" class="topic_title">{{ item.title }}</span>
-                <span class="topic_short_msg" v-html="item.short_message"></span>
+                <span @click="jump_to_topic(item.link)" class="topic_short_msg" v-html="item.short_message"></span>
                 <div class="tags_box f f_d_r">
                   <span v-for="tag in item.tags.split('?')" class="tag_item"
                     @click="router.push(`/article/list/all/1?search=${tag}`)" :key="tag">#{{ tag }}</span>
@@ -547,22 +549,9 @@ const search_focus_handle = () => {
       </div>
     </div>
   </div>
+  <pageFoot></pageFoot>
   <Utils></Utils>
-  <div class="topic_list_foot r f f_d_r a_c justify_content_center">
-    <div class="left_foot f f_d_c  justify_content_center">
-      <span class="title_foot">人生格言</span>
-      <span class="text_foot" v-html="user_store.aphorism"></span>
-    </div>
-    <div class="mid_foot f f_d_c">
-      <span class="title_foot"></span>
-    </div>
-    <div class="right_foot f f_d_c justify_content_center">
-      <span class="title_foot">联系我</span>
-      <span class="text_foot">邮箱: {{ user_store.e_mail }}</span>
-      <span class="text_foot">GitHub Account: {{ user_store.github_account }}</span>
-      <span class="text_foot">小红书ID: {{ user_store.red_book_ID }}</span>
-    </div>
-  </div>
+ 
 </template>
 <style lang="scss" scoped>
 #topic_list_main {
@@ -888,6 +877,11 @@ const search_focus_handle = () => {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        cursor: pointer;
+        &:hover{
+          text-decoration: underline;
+          color: color-mix(in srgb, $primary 60%  , $text 40%);
+        }
       }
 
       .date {
@@ -928,7 +922,16 @@ const search_focus_handle = () => {
       flex-wrap: wrap;
       margin-bottom: 128px;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+      animation: topic_grid_box 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      @keyframes topic_grid_box {
+        0%{
+          opacity: 0;
+          transform: translateY(-36px);
+        }100%{
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
       .topic_grid_inner_box {
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         width: 100%;
@@ -1016,6 +1019,11 @@ const search_focus_handle = () => {
             -webkit-box-orient: vertical;
             overflow: hidden;
             color: $text;
+            cursor: pointer;
+            &:hover{
+          text-decoration: underline;
+          color: color-mix(in srgb, $primary 60%  , $text 40%);
+           }
           }
 
           .tags_box {
@@ -1222,43 +1230,7 @@ const search_focus_handle = () => {
   }
 }
 
-.topic_list_foot {
-  width: max(1440px, 100vw);
-  background: $fill_body;
-  color: $primary;
-  z-index: 10;
-  height: 200px;
-  gap: 16px;
 
-  .title_foot {
-    font-size: 16px;
-  }
-
-  .text_foot {
-    font-size: 14px;
-    font-weight: 700;
-  }
-
-  .left_foot {
-    width: 300px;
-    height: 152px;
-    gap: 8px;
-    line-height: 26px;
-  }
-
-  .mid_foot {
-    width: 300px;
-    height: 152px;
-  }
-
-  .right_foot {
-    width: 300px;
-    height: 152px;
-    gap: 8px;
-    line-height: 22px;
-
-  }
-}
 
 .topic_list_box {
   transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -2031,42 +2003,6 @@ const search_focus_handle = () => {
     }
   }
 
-  .topic_list_foot {
-    width: calc(100vw - 20px);
-    padding: 0 10px;
-    height: 130px;
-    gap: 8px;
-    z-index: 1;
-    color: $primary;
-    background: $fill_body;
-
-    .title_foot {
-      font-size: 12px;
-    }
-
-    .text_foot {
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .left_foot {
-      width: calc((100vw - 24px)/2);
-      height: auto;
-      gap: 4px;
-      line-height: 15px;
-    }
-
-    .mid_foot {
-      width: 0;
-      height: 152px;
-    }
-
-    .right_foot {
-      width: calc((100vw - 24px)/2);
-      height: auto;
-      gap: 4px;
-      line-height: 15px;
-    }
-  }
+  
 }
 </style>

@@ -8,6 +8,19 @@ export const useTopicStore = defineStore('topic', {
            
 
             {
+                id: 9,
+                title: 'spring 事务',
+                link: '/article/topic/9',
+                create_date: '2024?07?6?z21:23',
+                img: 'https://pic.imgdb.cn/item/66890d67d9c307b7e902003a.png',
+                author: '',
+                tags: '事务?java',
+                classification: '学习笔记',
+                short_message: '.',
+                update_date: '',
+                is_visible: true
+            },
+            {
                 id: 8,
                 title: 'IOC(Inversion of Control)',
                 link: '/article/topic/8',

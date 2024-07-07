@@ -12,6 +12,7 @@ import NoteRightInterface from '/src/note_interface/NoteRightInterface.vue'
 import NoteBottomInterface from '/src/note_interface/NoteBottomInterface.vue'
 import { change_theme } from "/src/assets/js/topic.js";
 import hljs from 'highlight.js';
+import NoteFootInterface from "../note_interface/NoteFootInterface.vue";
 
 // import md_str from '/src/assets/topic_md/topic1.md?raw'
 import { useConfigStore } from "../store/config";
@@ -94,6 +95,7 @@ const get_md_file = (id,index) => {
       </div>
       <NoteRightInterface></NoteRightInterface>
     </div>
+    <NoteFootInterface></NoteFootInterface>
   </div>
   <Utils></Utils>
 </template>

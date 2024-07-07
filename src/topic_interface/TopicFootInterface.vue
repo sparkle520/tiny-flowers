@@ -13,11 +13,8 @@ onMounted(() => {
 
 </script>
 <template>
-    <div id="main">
-    </div>
+   <PageFoot></PageFoot>
 </template>
 <style lang="scss" scoped>
-#main {
-    width: 100%;
-}
+
 </style>

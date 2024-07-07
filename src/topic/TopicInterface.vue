@@ -99,6 +99,7 @@ const get_md_file = (index) => {
       </div>
       <TopicRightInterface></TopicRightInterface>
     </div>
+    <TopicFootInterface></TopicFootInterface>
   </div>
   <Utils></Utils>
 </template>
