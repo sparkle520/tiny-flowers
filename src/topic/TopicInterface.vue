@@ -60,8 +60,8 @@ onMounted(() => {
 
 });
 const get_md_file = (index) => {
-  const _path = `/src/assets/topic_md/${index}.md`;
-  const modules = import.meta.glob("/src/assets/topic_md/*.md", { as: "raw" });
+  const _path = `/src/store_data/topic_data/${index}.md`;
+  const modules = import.meta.glob("/src/store_data/topic_data/*.md", { as: "raw" });
   for (const path in modules) {
     if (path == _path) {
       modules[path]().then((mod) => {

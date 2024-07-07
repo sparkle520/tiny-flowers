@@ -494,7 +494,7 @@ const leave_new_topic = (index) => {
                       }}</span>
                       <span @click="go_to_by_path(item.link)" class="title">{{ item.title }}</span>
                     </div>
-                    <span class="short_meg" v-html="item.short_message"></span>
+                    <span @click="go_to_by_path(item.link)" class="short_meg" v-html="item.short_message"></span>
                     <span class="date">{{ item.create_date.split("?")[0] }}/{{
                       item.create_date.split("?")[1]
                     }}/{{ item.create_date.split("?")[2] }}
@@ -521,7 +521,7 @@ const leave_new_topic = (index) => {
                       }}</span>
                       <span @click="go_to_by_path(item.link)" class="title">{{ item.title }}</span>
                     </div>
-                    <span class="short_meg" v-html="item.short_message"></span>
+                    <span @click="go_to_by_path(item.link)" class="short_meg r" v-html="item.short_message"></span>
                     <div class="content_bottom_box f f_d_r a_c justify_content_space_between">
                       <div class="user_item f f_d_r a_c">
                         <img class="user_avatar" :src="user_store.avatar" alt="" />
@@ -548,7 +548,7 @@ const leave_new_topic = (index) => {
                   </div>
                   <div class="note_info_box">
                     <div @click="router.push(item.link)">{{ item.name }}</div>
-                    <div class="note_short_message r">
+                    <div @click="router.push(item.link)" class="note_short_message r">
                       {{ item.short_message }}
                     </div>
                   </div>
@@ -1003,6 +1003,12 @@ const leave_new_topic = (index) => {
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     font-size: 14px;
+                    cursor: pointer;
+
+                    &:hover {
+                      text-decoration: underline;
+                      color: color-mix(in srgb, $primary 60%, $text 40%);
+                    }
                   }
                 }
               }
@@ -1146,12 +1152,25 @@ const leave_new_topic = (index) => {
                   .short_meg {
                     margin: 16px 0;
                     height: 16px;
+
                     color: $text;
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
                     font-size: 14px;
                     overflow: hidden;
+                    cursor: pointer;
+                    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+                   
+
+                    &:hover {
+                      color: color-mix(in srgb, $primary 60%, $text 40%);
+
+          text-decoration: underline;
+          color: color-mix(in srgb, $primary 60%  , $text 40%);
+           
+                    }
                   }
 
                   .font_07_em {
@@ -1275,6 +1294,12 @@ const leave_new_topic = (index) => {
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
                     font-weight: 400;
+                    cursor: pointer;
+
+                    &:hover {
+                      text-decoration: underline;
+                      color: color-mix(in srgb, $primary 60%, $text 40%);
+                    }
                   }
                 }
               }
@@ -2051,6 +2076,6 @@ const leave_new_topic = (index) => {
     }
   }
 
-  
+
 }
 </style>

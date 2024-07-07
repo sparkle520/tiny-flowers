@@ -23,7 +23,7 @@ const search_text = ref("");
 const route = useRoute();
 const router = useRouter();
 const tags_list = ref([]);
-const modules = import.meta.glob("/src/math_data/*/*.md", { as: "raw" });
+const modules = import.meta.glob("/src/store_data/math_data/*/*.md", { as: "raw" });
 
 const render_marked_latex = (dom, mod, callback) => {
   dom.innerHTML = marked(mod, true)
@@ -38,8 +38,8 @@ const init_content = () => {
   );
   for (let i = 0; i < subject_list.length; i++) {
     const id = current_data.value[i].id;
-    const solution_path = `/src/math_data/solution/${id}.md`;
-    const problem_path = `/src/math_data/problem/${id}.md`;
+    const solution_path = `/src/store_data/math_data/solution/${id}.md`;
+    const problem_path = `/src/store_data/math_data/problem/${id}.md`;
     for (const path in modules) {
       if (path == solution_path) {
         modules[path]().then((mod) => {
@@ -265,7 +265,7 @@ const math_search_handle = (e) => {
     </div>
     <div style="width:180px;" class="right_box"></div>
   </div>
- <PageFoot></PageFoot>
+  <PageFoot></PageFoot>
 </template>
 <style lang="scss" scoped>
 $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf17);
@@ -284,7 +284,7 @@ $subject_solution_context_bg: var(--subject_solution_context_bg, #d0cfcf17);
   min-height: 100vh;
   color: $text;
   background: $fill_body;
-  
+
 
   gap: 16px;
 

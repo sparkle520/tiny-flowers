@@ -9,9 +9,7 @@ export const useConfigStore = defineStore('config', {
 
     }),
     actions: {
-        change_g_theme() {
-            this.theme = !this.theme;
-        },
+       
         change_g_list_layout(v) {
             this.list_layout = v;
         },
