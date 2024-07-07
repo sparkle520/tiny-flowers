@@ -9,14 +9,14 @@ export const useTopicStore = defineStore('topic', {
 
             {
                 id: 10,
-                title: 'node 包管理工具',
+                title: 'node 包管理工具 nvm',
                 link: '/article/topic/10',
                 create_date: '2024?07?07?20:14',
-                img: 'https://pic.imgdb.cn/item/668a84ffd9c307b7e943f576.jpg',
+                img: 'https://pic.imgdb.cn/item/668a9d17d9c307b7e96a608d.png',
                 author: '',
-                tags: 'node?包管理',
+                tags: 'node?包管理?nvm',
                 classification: '学习笔记',
-                short_message: '.',
+                short_message: 'node 版本切换简洁的方式 nvm (Node Version Manager).',
                 update_date: '',
                 is_visible: true
             },
@@ -35,7 +35,7 @@ export const useTopicStore = defineStore('topic', {
             },
             {
                 id: 8,
-                title: 'IOC(Inversion of Control)',
+                title: 'IOC (Inversion of Control)',
                 link: '/article/topic/8',
                 create_date: '2024?07?05?17:23',
                 img: 'https://pic.imgdb.cn/item/6687064ad9c307b7e9c83a34.png',
@@ -48,7 +48,7 @@ export const useTopicStore = defineStore('topic', {
             },
             {
                 id: 7,
-                title: 'AOP(Aspect Orient Programming)',
+                title: 'AOP (Aspect Orient Programming)',
                 link: '/article/topic/7',
                 create_date: '2024?07?04?18:20',
                 img: 'https://pic.imgdb.cn/item/6686bc04d9c307b7e9594ac0.png',

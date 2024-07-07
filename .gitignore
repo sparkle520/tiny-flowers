@@ -27,9 +27,4 @@ coverage
 *.sln
 *.sw?
 .gitignore
-src/assets/video/film.mp4
-src/assets/video/test.mp4
-src/assets/video/test2.mp4
-src/assets/video/test3.mp4
-src/assets/music/*
-src/assets/imgs/*
+
