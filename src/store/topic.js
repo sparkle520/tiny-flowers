@@ -29,7 +29,7 @@ export const useTopicStore = defineStore('topic', {
                 author: '',
                 tags: '事务?java',
                 classification: '学习笔记',
-                short_message: '.',
+                short_message: '待完成.',
                 update_date: '',
                 is_visible: true
             },
