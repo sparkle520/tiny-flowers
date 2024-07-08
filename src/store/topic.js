@@ -29,7 +29,7 @@ export const useTopicStore = defineStore('topic', {
                 author: '',
                 tags: '事务?java',
                 classification: '学习笔记',
-                short_message: '待完成.',
+                short_message: '事务是指是程序中一系列严密的逻辑操作，而且所有操作必须全部成功完成，否则在每个操作中所作的所有更改都会被撤消.即要么都完成，要么都失败.',
                 update_date: '',
                 is_visible: true
             },
