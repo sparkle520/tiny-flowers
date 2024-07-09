@@ -135,7 +135,7 @@ const init_pre_next_data = () => {
 #topic_bottom_main {
   width: 100%;
   .tag_box{
-    width: calc(100vw - 32px);
+    width: calc(100% - 32px);
     margin-bottom: 32px;
     padding: 0 16px;
     .tag{

@@ -9,7 +9,6 @@ import { useRoute } from "vue-router";
 import MathJax, { initMathJax, renderByMathjax } from 'mathjax-vue3'
 import hljs from 'highlight.js';
 
-import { change_theme } from "/src/assets/js/topic.js";
 import { useConfigStore } from "../store/config";
 import { useTopicStore } from "../store/topic";
 const { params } = useRoute();
@@ -41,7 +40,6 @@ const topic_store = useTopicStore();
 const { theme } = storeToRefs(config_store);
 const { layout } = storeToRefs(config_store);
 config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
   change_layout(state.layout);
 });
 onBeforeMount(() => {get_topic_data()});
@@ -55,7 +53,6 @@ onMounted(() => {
   if(window.innerWidth >= 600){
     change_layout(layout.value);
   }
-  change_theme(theme.value);
   init_content();
 
 });

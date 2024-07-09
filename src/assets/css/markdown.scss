@@ -27,7 +27,7 @@
 table{
   border-collapse:collapse !important;
   table-layout:auto !important;
-  width: 80% !important;
+  width: 96% !important;
   border-radius:5px !important;
   overflow:hidden !important;
   margin: 16px auto !important;
@@ -42,14 +42,13 @@ table{
     border: none !important;
     }
     td,tr{
-      /* padding: 5px;
-      width: 33%; */
+      padding: 5px 0;
       background: transparent !important;
       border:none !important;
       
       border-bottom:1px $primary solid  !important;
       border-top:1px $primary solid  !important;
-      text-align: center !important;
+      text-align: left !important;
       vertical-align:middle !important;
       /* font-size: 15px; */
     
@@ -130,7 +129,8 @@ table{
   code {
     background:color-mix(in srgb, $primary_mix_9 60%, $fill 40%) !important;
     color: $primary !important;
-    font-family: 'yahei' !important;
+    font-family: 'Monaco' !important;
+    font-size: 14px;
   }
   pre>code{
     color: $text !important; 

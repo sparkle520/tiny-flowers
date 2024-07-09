@@ -245,6 +245,21 @@ export const useThemeStore = defineStore('theme', {
                     ['fill_body','#F8F8F8'],
                 ])
             },
+            {
+                theme_name:'graceful',
+                color_dict:new Map([
+                    ['primary','#fa9eb6'],
+                    ['fill_primary','#ffff'],
+                    ['text','#898bc9'],
+                    ['text_title','#898bc9'],
+                    ['text_subtitle','#b3b5da'],
+                    ['text_secondary','#c0c1e0'],
+                    ['text_placeholder','#cccde6'],
+                    ['text_link','#cccde6'],
+                    ['fill','#fff'],
+                    ['fill_body','#F8F8F8'],
+                ])
+            },
             
            
         ],
@@ -261,7 +276,7 @@ export const useThemeStore = defineStore('theme', {
                     document.getElementsByTagName('body')[0].style.setProperty(`--${v}`, `${k}`);
                    })
             }
-           
+            localStorage.setItem('theme_data',`${model}?${index}`);  
         }
     }
 })

@@ -8,6 +8,19 @@ export const useTopicStore = defineStore('topic', {
            
 
             {
+                id: 11,
+                title: 'mysql 索引 (index)',
+                link: '/article/topic/11',
+                create_date: '2024?07?09?21:12',
+                img: 'https://pic.imgdb.cn/item/668cc658d9c307b7e9716e29.jpg',
+                author: '',
+                tags: '索引?mysql',
+                classification: '学习笔记',
+                short_message: '索引在 sql 调优中占据着重要的地位，索引 (Index) 是帮助MySQL高效获取数据的数据结构.',
+                update_date: '',
+                is_visible: true
+            },
+            {
                 id: 10,
                 title: 'node 包管理工具 nvm',
                 link: '/article/topic/10',

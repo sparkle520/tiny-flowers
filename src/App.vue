@@ -2,21 +2,16 @@
 import { ref, watch } from "vue";
 import { clickEffect } from "/src/assets/js/mouse.js";
 import { useRoute } from "vue-router";
+import { useThemeStore } from "/src/store/theme";
+const theme_store = useThemeStore(); 
 const route = useRoute()
-const transition = ['fade', 'fade']
-// watch(
-//   () => router.currentRoute.value.path,
-//   () => {
 
-//     console.log(router.currentRoute.value.meta.index);
-//     console.log(router.back);
-//     if (true) {
-//           transitionName.value = transition[0] 
-//         } else {
-//           transitionName.value = transition[1]
-//         }
-//   },{immediate: true,deep: true}
-// );
+if(localStorage.getItem('theme_data')){
+  theme_store.current_theme = localStorage.getItem('theme_data')
+  console.log(theme_store.current_theme);
+  theme_store.change_theme(parseInt(theme_store.current_theme.split('?')[0]),parseInt(theme_store.current_theme.split('?')[1]))
+}
+
 watch(() => route.path, (to, from) => {
 
   text.value = false
@@ -24,14 +19,7 @@ watch(() => route.path, (to, from) => {
     text.value = true
   }, 100)
 })
-// router.beforeEach((to, from, next) => {
-//     if (to.meta.index > from.meta.index) {
-//       transitionName.value = transition[0]
-//     } else {
-//       transitionName.value = transition[1]
 
-//     }
-// })
 clickEffect();
 const text = ref(true)
 </script>

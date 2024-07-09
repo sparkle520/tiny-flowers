@@ -6,7 +6,6 @@
 import {  ref, onBeforeMount, onMounted, nextTick ,onUnmounted, watch} from "vue";
 import { useTopicStore } from "../store/topic";
 const topic_store = useTopicStore();
-import { select_by_id } from "/src/assets/js/topic.js";
 const { params } = useRoute();
 import { useRoute } from "vue-router";
 

@@ -10,7 +10,6 @@ import NoteTopInterface from '/src/note_interface/NoteTopInterface.vue'
 import NoteBgInterface from '/src/note_interface/NoteBgInterface.vue'
 import NoteRightInterface from '/src/note_interface/NoteRightInterface.vue'
 import NoteBottomInterface from '/src/note_interface/NoteBottomInterface.vue'
-import { change_theme } from "/src/assets/js/topic.js";
 import hljs from 'highlight.js';
 import NoteFootInterface from "../note_interface/NoteFootInterface.vue";
 
@@ -38,7 +37,6 @@ const config_store = useConfigStore();
 const { theme } = storeToRefs(config_store);
 const { layout } = storeToRefs(config_store);
 config_store.$subscribe((mutation, state) => {
-  change_theme(state.theme);
   change_layout(state.layout);
 });
 onBeforeMount(() => {
@@ -53,7 +51,6 @@ onMounted(() => {
     change_layout(layout.value);
 
   }
-  change_theme(theme.value);
   initContent();
 });
 
